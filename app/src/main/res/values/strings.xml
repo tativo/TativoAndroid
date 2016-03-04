@@ -10,6 +10,7 @@
     <string name="txtNumeroExt">Numero Ext.</string>
     <string name="txtNumeroInt">Numero Int.</string>
     <string name="txtTelefonoCelular">Teléfono Celular</string>
+    <string name="spnBanco">Banco</string>
 
     <!--LogIn-->
     <string name="txtLogInContrasena">Contraseña</string>
@@ -61,4 +62,14 @@
     <string name="ckTerminosCondiciones3">Manifiesto que he leído en su totalidad el <a href="www.tativo.com">Aviso de Privacidad</a> y consiento que mis datos personales sean tratados y transferido conforme a los términos y condiciones que se señalan en los términos y condiciones.</string>
     <string name="ckTerminosCondiciones4">Por este conducto autorizo a Tativo para a través de su personal facultado, lleve a cabo investigaciones de mi comportamiento crediticio.</string>
     <string name="btnInfPersonal">Continuar</string>
+
+    <!--Bloque 2 - Informacion Personal -->
+    <string name="lblTarjetaDebito">¿Cuentas con tarjeta de débito?</string>
+    <string name="txtNumeroTarjetaCLABE">Número de tarjeta o CLABE</string>
+    <string name="lblRecibesNomina">¿Es donde recibes tu nomina?</string>
+    <string name="spnFrecuenciaPago">Frecuencia de pago</string>
+    <string name="spnMedioPago">Medio de Pago</string>
+    <string name="txtFechaProximoPago">Fecha de próximo pago</string>
+    <string name="btnDatosDeposito">Enviar</string>
+
 </resources>
