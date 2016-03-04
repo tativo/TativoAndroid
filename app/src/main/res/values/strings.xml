@@ -6,6 +6,7 @@
     <string name="spnEstado">Estado</string>
     <string name="spnMunicipio">Municipio</string>
     <string name="spnColonia">Colonia</string>
+    <string name="txtCodigoPostal">Código Postal</string>
     <string name="txtCalle">Calle</string>
     <string name="txtNumeroExt">Numero Ext.</string>
     <string name="txtNumeroInt">Numero Int.</string>
@@ -21,7 +22,6 @@
 
     <!--Registro-->
     <string name="lblTituRegistro">Información Personal</string>
-
     <string name="txtApellidoPaterno">Apellido Paterno</string>
     <string name="txtApellidoMaterno">Apellido Materno</string>
     <string name="txtCorreo">Correo electrónico</string>
@@ -51,7 +51,6 @@
     <string name="txtPersonasDependientes">Personas depedientes</string>
     <string name="spnGenero">Género</string>
     <string name="spnEstadoCivil">Estado Civil</string>
-    <string name="txtCodigoPostal">Códogo Postal</string>
     <string name="spnMarcaCelular">Estado Civil</string>
     <string name="lblTarjetaCredito">¿Cuentas con alguna tarjeta de crédito?</string>
     <string name="txt4DigitosTarjeta">¿Cuales son los últimos 4 digitos de la tarjeta?</string>
@@ -63,7 +62,7 @@
     <string name="ckTerminosCondiciones4">Por este conducto autorizo a Tativo para a través de su personal facultado, lleve a cabo investigaciones de mi comportamiento crediticio.</string>
     <string name="btnInfPersonal">Continuar</string>
 
-    <!--Bloque 2 - Informacion Personal -->
+    <!--Bloque 3 - Informacion Deposito -->
     <string name="lblTarjetaDebito">¿Cuentas con tarjeta de débito?</string>
     <string name="txtNumeroTarjetaCLABE">Número de tarjeta o CLABE</string>
     <string name="lblRecibesNomina">¿Es donde recibes tu nomina?</string>
@@ -72,4 +71,9 @@
     <string name="txtFechaProximoPago">Fecha de próximo pago</string>
     <string name="btnDatosDeposito">Enviar</string>
 
+    <!--Bloque 4 - Informacion Laboral -->
+    <string name="spnAreaLaboral">Área que laboras</string>
+    <string name="txtSueldoMensual">Sueldo mensual</string>
+    <string name="txtPaginaEmpresa">Pagina web de la empresa</string>
+    <string name="txtActividades">Describe tus actividades</string>
 </resources>
