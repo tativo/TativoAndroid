@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Tativo</string>
+    <string name="txtLogInContrasena">Contraseña</string>
+    <string name="txtLogInUsuario">Usuario</string>
+    <string name="lblTituloLogIn">Inicio de sesion</string>
+    <string name="btnLogIn">Entrar</string>
+</resources>

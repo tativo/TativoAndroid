@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TativoRelativeLayoutPrincipal"
+    tools:context=".LogIn.Actividades.Act_LogIn">
+
+    <ImageView
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:id="@+id/imageView"
+        android:background="@drawable/tativo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="65dp"/>
+
+    <LinearLayout style="@style/TativoLinearLayoutCentroPantalla"
+        android:id="@+id/linearLayout">
+        <LinearLayout style="@style/TativoLayoutBordeRelleno">
+            <TextView
+                style="@style/TativoTextViewTitulo"
+                android:text="@string/lblTituloLogIn" />
+        </LinearLayout>
+        <LinearLayout style="@style/TativoLinearLayoutBorde">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/txtUsuario"
+                    android:hint="@string/txtLogInUsuario"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    style="@style/TativoAutoCompleteTextView"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <LinearLayout style="@style/TativoLinearLayoutBorde">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/email"
+                    android:hint="@string/txtLogInContrasena"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    style="@style/TativoAutoCompleteTextView"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <Button
+            android:text="@string/btnLogIn"
+            style="@style/TativoBotonAceptar"/>
+    </LinearLayout>
+</RelativeLayout>
