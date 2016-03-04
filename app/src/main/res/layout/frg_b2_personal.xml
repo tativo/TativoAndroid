@@ -278,6 +278,7 @@
             <Button
                 android:id="@+id/btnInfPersonal"
                 android:text="@string/btnInfPersonal"
+                android:layout_marginBottom="60dp"
                 style="@style/TativoBotonAceptar"/>
         </LinearLayout>
     </ScrollView>
