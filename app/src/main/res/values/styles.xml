@@ -25,9 +25,20 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorBlanco</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">center|left</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginLeft">2dp</item>
+    </style>
+    <style name="TativoTextViewSubTitulo">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorBlanco</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginLeft">2dp</item>
     </style>
 
     <style name="TativoLinearLayoutBorde">
@@ -42,6 +53,14 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/border_relleno</item>
+    </style>
+    <style name="TativoLayoutTitulo">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:background">@color/colorAzulOscuro</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:alpha">0.95</item>
     </style>
 
     <style name="TativoBotonAceptar">
@@ -60,6 +79,11 @@
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
         <item name="android:paddingTop">16dp</item>
+        <item name="android:background">@color/colorBlanco</item>
+    </style>
+    <style name="TativoRelativeLayoutPrincipalSinMargen">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/colorBlanco</item>
     </style>
 
