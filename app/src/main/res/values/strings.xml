@@ -53,6 +53,7 @@
     <string name="spnEstadoCivil">Estado Civil</string>
     <string name="spnMarcaCelular">Estado Civil</string>
     <string name="lblTarjetaCredito">¿Cuentas con alguna tarjeta de crédito?</string>
+    <string name="lblCuentanosSobreTi">Cuentanos sobre ti</string>
     <string name="txt4DigitosTarjeta">¿Cuales son los últimos 4 digitos de la tarjeta?</string>
     <string name="lblCreditoHipotecario">¿Tienes crédito hipotecario vigente?</string>
     <string name="lblCreditoAutomotriz">¿Has tenido crédito automotriz en los últimos 2 años?</string>
