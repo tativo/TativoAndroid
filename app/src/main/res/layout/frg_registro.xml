@@ -1,16 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    style="@style/TativoRelativeLayoutPrincipal"
     tools:context=".LogIn.Actividades.Act_LogIn">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
+    <LinearLayout
+        style="@style/TativoLinearLayoutCentroPantalla">
+        <LinearLayout style="@style/TativoLayoutBordeRelleno">
+            <TextView
+                style="@style/TativoTextViewTitulo"
+                android:text="@string/lblTituRegistro" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/TativoLinearLayoutBorde">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/txtNombre"
+                    android:hint="@string/txtNombre"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    style="@style/TativoAutoCompleteTextView"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <LinearLayout style="@style/TativoLinearLayoutBorde">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/txtApellidoPaterno"
+                    android:hint="@string/txtApellidoPaterno"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    style="@style/TativoAutoCompleteTextView"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <LinearLayout style="@style/TativoLinearLayoutBorde">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/txtApellidoMaterno"
+                    android:hint="@string/txtApellidoMaterno"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    style="@style/TativoAutoCompleteTextView"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <LinearLayout style="@style/TativoLinearLayoutBorde">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/txtCorreo"
+                    android:hint="@string/txtCorreo"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    style="@style/TativoAutoCompleteTextView"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <LinearLayout style="@style/TativoLinearLayoutBorde">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/txtContrasena"
+                    android:hint="@string/txtContrasena"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    style="@style/TativoAutoCompleteTextView"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <LinearLayout style="@style/TativoLinearLayoutBorde">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:id="@+id/txtConfirmaContrasena"
+                    android:hint="@string/txtConfirmacionContrasena"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    style="@style/TativoAutoCompleteTextView"/>
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <Button
+            android:text="@string/btnRegistro"
+            style="@style/TativoBotonAceptar"/>
+    </LinearLayout>
+
 </RelativeLayout>
