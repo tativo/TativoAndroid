@@ -12,6 +12,9 @@
     <string name="txtNumeroInt">Numero Int.</string>
     <string name="txtTelefonoCelular">Teléfono Celular</string>
     <string name="spnBanco">Banco</string>
+    <string name="spnHintMaterialSpinner">Elige una opción</string>
+    <string name="swtTextON">Si</string>
+    <string name="swtTxtOFF">No</string>
 
     <!--LogIn-->
     <string name="txtLogInContrasena">Contraseña</string>
@@ -77,4 +80,29 @@
     <string name="txtSueldoMensual">Sueldo mensual</string>
     <string name="txtPaginaEmpresa">Pagina web de la empresa</string>
     <string name="txtActividades">Describe tus actividades</string>
+
+    <!--Bloque 5 - Informacion General -->
+    <string name="spnEdoNacimiento">Estado de nacimiento</string>
+    <string name="spnTipoVivienda">Tipo de vivienda</string>
+    <string name="spnConQuienVives">¿Con quién vives?</string>
+    <string name="spnViviendoAhi">Años viviendi ahí</string>
+    <string name="txtTelefonoFijo">Teléfono fijo</string>
+    <string name="swtTienesAutomovil">¿Tienes automóvil?</string>
+    <string name="swtEsPropio">¿Es propio?</string>
+    <string name="spnNivelEstudio">Nivel de estudios</string>
+    <string name="txtNombreEscuela">Nombre de la institución educativa</string>
+    <string name="spnCurso">Si pudieras tomar un curso, ¿de que área te interesaría?</string>
+    <string name="spnIngles">¿Cómo te consideras en el idioma inglés?</string>
+    <string name="spnActividad">¿Qué actividad va contigo?</string>
+    <string name="txtEspecificaActividad">Especifica la actividad</string>
+    <string name="spIngresoExtra">¿Cuánto ingreso extra aproximado tienes al mes?</string>
+    <string name="txtActivdadIngresoExtra">¿De qué actividad(es) proviene(n) este ingreso extra?</string>
+    <string name="lblDispositivos">¿Cuentas con algino de los siguientes dispositivos?</string>
+    <string name="ckDispositivo1">Celular inteligente</string>
+    <string name="ckDispositivo2">Tablet</string>
+    <string name="ckDispositivo3">Computadora</string>
+    <string name="txtParaQue">¿Para qué ocupas el servicio?</string>
+    <string name="lblRedesSociales">¿Qué redes sociales utilizas más?</string>
+    <string name="lblDondeInternet">En orden de mayor a menor, ¿en dónde utilizas más internet?</string>
+    <string name="btnInfGenerales">Enviar</string>
 </resources>

@@ -11,12 +11,14 @@
     <style name="TativoAutoCompleteTextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">5dp</item>
-        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
         <item name="android:background">@color/colorTransparente</item>
         <item name="android:singleLine">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">8dp</item>
     </style>
 
     <style name="TativoTextViewTitulo">
@@ -29,6 +31,8 @@
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginBottom">5dp</item>
         <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:paddingLeft">15dp</item>
+
     </style>
     <style name="TativoTextViewSubTitulo">
         <item name="android:layout_width">match_parent</item>
@@ -39,6 +43,7 @@
         <item name="android:gravity">center|left</item>
         <item name="android:layout_marginTop">5dp</item>
         <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:paddingLeft">15dp</item>
     </style>
 
     <style name="TativoLinearLayoutBorde">
@@ -46,7 +51,18 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/border</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:padding">5dp</item>
+    </style>
+
+    <style name="TativoLinearLayoutBordeSwitch">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/border</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
     </style>
 
     <style name="TativoLayoutBordeRelleno">
@@ -70,6 +86,7 @@
         <item name="android:textSize">18dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorBlanco</item>
+        <item name="android:layout_marginBottom">60dp</item>
     </style>
 
     <style name="TativoRelativeLayoutPrincipal">
@@ -101,6 +118,37 @@
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:fillViewport">true</item>
+    </style>
+
+    <style name="TativoTextInputLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+    <style name="TativoTextViewSwitch">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:background">@color/colorTransparente</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">8dp</item>
+    </style>
+
+    <style name="TativoSwitch">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textOn">@string/swtTextON</item>
+        <item name="android:textOff">@string/swtTxtOFF</item>
     </style>
 
     <string-array name="Lista">
