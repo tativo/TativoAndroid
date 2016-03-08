@@ -17,7 +17,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_b2_personal);
 
-        btnInfPersonal = (Button) findViewById(R.id.btnRegistro);
+        btnInfPersonal = (Button) findViewById(R.id.btnInfPersonal);
 
         btnInfPersonal.setOnClickListener(new View.OnClickListener() {
             @Override
