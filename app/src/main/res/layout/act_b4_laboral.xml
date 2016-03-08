@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/TativoRelativeLayoutPrincipalSinMargen"
+    android:orientation="vertical"
+    tools:context=".LogIn.Actividades.Act_LogIn">
+
+    <ScrollView style="@style/TativoScrollView">
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TativoRelativeLayoutPrincipal"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtCodigoPostal"
+                        android:hint="@string/txtCodigoPostal"
+                        android:inputType="number"
+                        android:maxLength="18"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spnEstado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/Lista"
+
+                    app:ms_hint="@string/spnEstado"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_thickness="0dp"
+                    app:ms_alignLabels="true">
+                </fr.ganfra.materialspinner.MaterialSpinner>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spnMunicipio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/Lista"
+
+                    app:ms_hint="@string/spnMunicipio"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_thickness="0dp"
+                    app:ms_alignLabels="true">
+                </fr.ganfra.materialspinner.MaterialSpinner>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spnColonia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/Lista"
+
+                    app:ms_hint="@string/spnColonia"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_thickness="0dp"
+                    app:ms_alignLabels="true">
+                </fr.ganfra.materialspinner.MaterialSpinner>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtCalle"
+                        android:hint="@string/txtCalle"
+                        android:inputType="textCapSentences"
+                        android:maxLength="18"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtNumeroExt"
+                        android:hint="@string/txtNumeroExt"
+                        android:inputType="text"
+                        android:maxLength="18"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtNumeroInt"
+                        android:hint="@string/txtNumeroInt"
+                        android:inputType="text"
+                        android:maxLength="18"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spnAreaLaboral"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/Lista"
+                    app:ms_hint="@string/spnAreaLaboral"
+                    app:ms_enableErrorLabel="false"
+                    app:ms_thickness="0dp"
+                    app:ms_alignLabels="true">
+                </fr.ganfra.materialspinner.MaterialSpinner>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtSueldoMensual"
+                        android:hint="@string/txtSueldoMensual"
+                        android:inputType="number"
+                        android:maxLength="18"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtPaginaEmpresa"
+                        android:hint="@string/txtPaginaEmpresa"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtActividades"
+                        android:hint="@string/txtActividades"
+                        android:inputType="textCapSentences|textAutoCorrect"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnLaboral"
+                android:text="@string/btnLaboral"
+                style="@style/TativoBotonAceptar"/>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout style="@style/TativoLayoutTitulo">
+        <TextView
+            style="@style/TativoTextViewTitulo"
+            android:text="RESPECTO AL TRABAJO" />
+        <TextView
+            style="@style/TativoTextViewSubTitulo"
+            android:text="Información laboral" />
+    </LinearLayout>
+</RelativeLayout>

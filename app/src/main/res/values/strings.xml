@@ -80,6 +80,7 @@
     <string name="txtSueldoMensual">Sueldo mensual</string>
     <string name="txtPaginaEmpresa">Pagina web de la empresa</string>
     <string name="txtActividades">Describe tus actividades</string>
+    <string name="btnLaboral">Guardar y continuar</string>
 
     <!--Bloque 5 - Informacion General -->
     <string name="spnEdoNacimiento">Estado de nacimiento</string>
@@ -104,5 +105,5 @@
     <string name="txtParaQue">¿Para qué ocupas el servicio?</string>
     <string name="lblRedesSociales">¿Qué redes sociales utilizas más?</string>
     <string name="lblDondeInternet">En orden de mayor a menor, ¿en dónde utilizas más internet?</string>
-    <string name="btnInfGenerales">Enviar</string>
+    <string name="btnInfGeneral">Enviar</string>
 </resources>

@@ -25,7 +25,7 @@ public class Splash extends Activity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
-                    Intent intent = new Intent(Splash.this,Act_Cotizador.class);
+                    Intent intent = new Intent(Splash.this,Act_LogIn.class);
                     startActivity(intent);
                 }
             }

@@ -1,4 +1,4 @@
-package com.tativo.app.tativo.LogIn.Actividades;
+package com.tativo.app.tativo.Bloques.Actividades;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,25 +6,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.tativo.app.tativo.Bloques.Actividades.Act_B1_Referencias;
 import com.tativo.app.tativo.R;
 
-public class Act_LogIn extends AppCompatActivity {
+public class Act_B5_General extends AppCompatActivity {
 
-    Button btnRegistro;
-
+    Button btnInfGeneral;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_login);
+        setContentView(R.layout.act_b5_general);
 
-        btnRegistro = (Button) findViewById(R.id.btnRegistro);
+        btnInfGeneral = (Button) findViewById(R.id.btnInfGeneral);
 
-        btnRegistro.setOnClickListener(new View.OnClickListener() {
+        btnInfGeneral.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Act_B1_Referencias.class);
+                Intent i = new Intent(getApplicationContext(), Act_Documentos.class);
                 startActivity(i);
                 finish();
             }

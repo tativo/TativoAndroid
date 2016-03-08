@@ -12,6 +12,6 @@
         android:id="@+id/fragment"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:name="com.tativo.app.tativo.Bloques.Fragmentos.Frg_B1_Referencias"
+        android:name="com.tativo.app.tativo.LogIn.Fragmentos.Frg_Registro"
         ></fragment>
 </RelativeLayout>

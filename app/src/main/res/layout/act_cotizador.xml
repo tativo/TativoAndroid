@@ -4,13 +4,5 @@
     style="@style/TativoRelativeLayoutPrincipalSinMargen"
     tools:context="com.tativo.app.tativo.LogIn.Actividades.Act_Cotizador">
 
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/frg_b1_referencias"
-        android:id="@+id/fragment"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:name="com.tativo.app.tativo.LogIn.Fragmentos.Frg_Registro"
-        ></fragment>
+
 </RelativeLayout>
