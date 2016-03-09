@@ -48,6 +48,7 @@
     <string name="spnTrabajando">Años trabajando ahí</string>
 
 
+
     <!--Bloque 2 - Informacion Personal -->
     <string name="lblTituloInfPersonal">Información Personal</string>
     <string name="txtFechaNacimiento">Fecha de nacimiento</string>
@@ -106,4 +107,7 @@
     <string name="lblRedesSociales">¿Qué redes sociales utilizas más?</string>
     <string name="lblDondeInternet">En orden de mayor a menor, ¿en dónde utilizas más internet?</string>
     <string name="btnInfGeneral">Enviar</string>
+
+
+
 </resources>

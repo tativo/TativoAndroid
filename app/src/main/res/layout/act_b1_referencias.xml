@@ -15,6 +15,12 @@
             android:orientation="vertical">
 
             <!-- REFERENCIA 1 -->
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:text="New Button"
+                    android:id="@+id/btnFocoInicial"/>
+
             <LinearLayout style="@style/TativoLayoutBordeRelleno">
                 <TextView
                     style="@style/TativoTextViewTitulo"
@@ -26,6 +32,7 @@
                     <AutoCompleteTextView
                         android:id="@+id/txtNombreRef1"
                         android:hint="@string/txtNombre"
+                        android:nextFocusDown="@+id/txtApellidosRef1"
                         android:inputType="textCapWords|textAutoCorrect"
                         android:maxLines="1"
                         style="@style/TativoAutoCompleteTextView"/>
