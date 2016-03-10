@@ -27,6 +27,7 @@ import com.tativo.app.tativo.Bloques.Clases.Catrelacionespersonal;
 import com.tativo.app.tativo.LogIn.Actividades.Act_Cotizador;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
+import com.tativo.app.tativo.Utilidades.Utilerias;
 
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -58,6 +59,62 @@ public class Act_B1_Referencias extends AppCompatActivity {
         new AsyncLoadData().execute();
         new AsyncEstatusSolicitud().execute();
         btnFocoInicial.requestFocus();
+    }
+
+    public void FocusManager(){
+        FocusNextControl(R.id.txtNombreRef1, "T", R.id.txtApellidosRef1, "T");
+        FocusNextControl(R.id.txtApellidosRef1, "T", R.id.spnRelacionRef1, "S");
+        FocusNextControl(R.id.spnRelacionRef1, "S", R.id.txtTelefonoCelularRef1, "T");
+        FocusNextControl(R.id.txtTelefonoCelularRef1, "T", R.id.spnAmistadRef1, "S");
+        FocusNextControl(R.id.spnAmistadRef1, "S", R.id.txtNombreRef2, "T");
+
+    }
+
+    public void FocusNextControl(int o,String ot, int d,String dt )
+    {
+        final EditText destino = (dt.toUpperCase()=="T"?(EditText) findViewById(d):null);
+        final Spinner destinoS = (dt.toUpperCase()=="S"?(Spinner) findViewById(d):null);
+
+        if(ot.toUpperCase()=="T"){
+            EditText origen = (EditText) findViewById(o);
+            origen.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE ||
+                            actionId == EditorInfo.IME_ACTION_NEXT) {
+                        if(destino!=null)
+                            destino.requestFocus();
+                        else {
+                            destinoS.requestFocus();
+                            destinoS.performClick();
+                        }
+                        return false;
+                    }
+                    return false;
+                }
+            });
+        }
+        if(ot.toUpperCase()=="S"){
+            Spinner origen = (Spinner) findViewById(o);
+            origen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (position != -1) {
+                        if(destino!=null)
+                            destino.requestFocus();
+                        else {
+                            destinoS.requestFocus();
+                            destinoS.performClick();
+                        }
+                    }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
     }
 
     public void LlenarCamposOcultos(Bundle bundle) {
@@ -119,200 +176,11 @@ public class Act_B1_Referencias extends AppCompatActivity {
         btnFocoInicial.setFocusableInTouchMode(true);
 
     }
-    private void FocusManager() {
-
+    private void EventManager(){
         txtTelefonoCelularRef1.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         txtTelefonoCelularRef2.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         txtTelefonoRefLaboral.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
-        //Region Focos de Pantalla
-        txtNombreRef1.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        actionId == EditorInfo.IME_ACTION_NEXT) {
-                    txtApellidosRef1.requestFocus();
-                    return false;
-                }
-                return false;
-            }
-        });
-
-        txtApellidosRef1.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        actionId == EditorInfo.IME_ACTION_NEXT) {
-                    spnRelacionRef1.requestFocus();
-                    spnRelacionRef1.performClick();
-                    return false;
-                }
-                return false;
-            }
-        });
-
-        spnRelacionRef1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != -1) {
-                    txtTelefonoCelularRef1.requestFocus();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        txtTelefonoCelularRef1.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        actionId == EditorInfo.IME_ACTION_NEXT) {
-                    spnAmistadRef1.requestFocus();
-                    spnAmistadRef1.performClick();
-                    return false;
-                }
-                return false;
-            }
-        });
-
-        spnAmistadRef1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != -1) {
-                    txtNombreRef2.requestFocus();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-
-
-        txtNombreRef2.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        actionId == EditorInfo.IME_ACTION_NEXT) {
-                    txtApellidosRef2.requestFocus();
-                    return false;
-                }
-                return false;
-            }
-        });
-
-        txtApellidosRef2.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        actionId == EditorInfo.IME_ACTION_NEXT) {
-                    spnRelacionRef2.requestFocus();
-                    spnRelacionRef2.performClick();
-                    return false;
-                }
-                return false;
-            }
-        });
-
-        spnRelacionRef2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != -1) {
-                    txtTelefonoCelularRef2.requestFocus();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        txtTelefonoCelularRef2.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        actionId == EditorInfo.IME_ACTION_NEXT) {
-                    spnAmistadRef2.requestFocus();
-                    spnAmistadRef2.performClick();
-                    return false;
-                }
-                return false;
-            }
-        });
-
-        spnAmistadRef2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != -1) {
-                    txtNombreEmpresa.requestFocus();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        txtNombreEmpresa.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        actionId == EditorInfo.IME_ACTION_NEXT) {
-                    txtTelefonoRefLaboral.requestFocus();
-                    return false;
-                }
-                return false;
-            }
-        });
-
-        txtTelefonoRefLaboral.setOnEditorActionListener(new EditText.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE ||
-                        actionId == EditorInfo.IME_ACTION_NEXT) {
-                    spnTrabajando.requestFocus();
-                    spnTrabajando.performClick();
-                    return false;
-                }
-                return false;
-            }
-        });
-
-        spnTrabajando.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != -1) {
-                    btnReferencias.requestFocus();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        //Endregion
-        /*
-        EMULAR ONBLUR
-        txtEdit.setOnFocusChangeListener(new OnFocusChangeListener() {
-        public void onFocusChange(View v, boolean hasFocus) {
-            if (!hasFocus) {
-               // code to execute when EditText loses focus
-            }
-        }
-        });
-      */
-    }
-    private void EventManager(){
         btnReferencias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
