@@ -162,6 +162,7 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:textOn">@string/swtTextON</item>
         <item name="android:textOff">@string/swtTxtOFF</item>
+        <item name="android:layout_marginTop">5dp</item>
     </style>
 
     <style name="TativoTituloCotizador">
