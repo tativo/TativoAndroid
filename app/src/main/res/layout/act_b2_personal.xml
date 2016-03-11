@@ -163,7 +163,9 @@
                     app:ms_alignLabels="true">
                 </fr.ganfra.materialspinner.MaterialSpinner>
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde">
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

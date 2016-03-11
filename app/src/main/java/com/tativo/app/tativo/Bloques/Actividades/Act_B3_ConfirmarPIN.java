@@ -8,24 +8,25 @@ import android.widget.Button;
 
 import com.tativo.app.tativo.R;
 
-public class Act_B3_InfDeposito extends AppCompatActivity {
+public class Act_B3_ConfirmarPIN extends AppCompatActivity {
 
-    Button btnDatosDeposito;
+    Button btnConfirmarPIN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_b3_infdeposito);
+        setContentView(R.layout.act_b3_confirmarpin);
 
-        btnDatosDeposito = (Button) findViewById(R.id.btnDatosDeposito);
+        btnConfirmarPIN = (Button) findViewById(R.id.btnConfirmarPIN);
 
-        btnDatosDeposito.setOnClickListener(new View.OnClickListener() {
+        btnConfirmarPIN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Act_B3_ConfirmarPIN.class);
+                Intent i = new Intent(getApplicationContext(), Act_B4_Laboral.class);
                 startActivity(i);
                 finish();
             }
         });
+
     }
 }

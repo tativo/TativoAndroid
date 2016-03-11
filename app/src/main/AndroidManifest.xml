@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tativo.app.tativo">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -17,7 +17,6 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
         </activity>
         <activity android:name=".LogIn.Actividades.Act_LogIn" />
@@ -41,7 +40,9 @@
         <activity android:name=".Bloques.Actividades.Act_B3_InfDeposito" />
         <activity android:name=".Bloques.Actividades.Act_B4_Laboral" />
         <activity android:name=".Bloques.Actividades.Act_B5_General" />
-        <activity android:name=".Bloques.Actividades.Act_Documentos"></activity>
+        <activity android:name=".Bloques.Actividades.Act_Documentos" />
+        <activity android:name=".Bloques.Actividades.Act_VerificaCeular" />
+        <activity android:name=".Bloques.Actividades.Act_B3_ConfirmarPIN"></activity>
     </application>
 
 </manifest>

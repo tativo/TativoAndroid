@@ -48,14 +48,13 @@
     <string name="spnTrabajando">Años trabajando ahí</string>
 
 
-
     <!--Bloque 2 - Informacion Personal -->
     <string name="lblTituloInfPersonal">Información Personal</string>
     <string name="txtFechaNacimiento">Fecha de nacimiento</string>
     <string name="txtPersonasDependientes">Personas depedientes</string>
     <string name="spnGenero">Género</string>
     <string name="spnEstadoCivil">Estado Civil</string>
-    <string name="spnMarcaCelular">Estado Civil</string>
+    <string name="spnMarcaCelular">Estad Civil</string>
     <string name="lblTarjetaCredito">¿Cuentas con alguna tarjeta de crédito?</string>
     <string name="lblCuentanosSobreTi">Cuentanos sobre ti</string>
     <string name="txt4DigitosTarjeta">¿Cuales son los últimos 4 digitos de la tarjeta?</string>
@@ -75,6 +74,14 @@
     <string name="spnMedioPago">Medio de Pago</string>
     <string name="txtFechaProximoPago">Fecha de próximo pago</string>
     <string name="btnDatosDeposito">Enviar</string>
+
+
+    <!--Bloque 3 - PIN -->
+    <string name="lblTituloPIN">Validación de numero celular</string>
+    <string name="lblMsjPIN">Hemos enviado un PIN al celular que ingresaste en un paso anterior. Revisa tu teléfono y haznos el favor de infresarlo aquí. Te esperamos lo que quieras :)</string>
+    <string name="txtPIN">PIN de seguridad</string>
+    <string name="btnConfirmarPIN">Continuar</string>
+
 
     <!--Bloque 4 - Informacion Laboral -->
     <string name="spnAreaLaboral">Área que laboras</string>
@@ -107,7 +114,6 @@
     <string name="lblRedesSociales">¿Qué redes sociales utilizas más?</string>
     <string name="lblDondeInternet">En orden de mayor a menor, ¿en dónde utilizas más internet?</string>
     <string name="btnInfGeneral">Enviar</string>
-
 
 
 </resources>
