@@ -4,16 +4,19 @@
     style="@style/TativoRelativeLayoutPrincipal"
     tools:context=".LogIn.Actividades.Act_LogIn">
 
-    <ImageView
-        android:layout_width="130dp"
-        android:layout_height="50dp"
-        android:id="@+id/imageView"
-        android:background="@drawable/tativo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp"/>
-
     <LinearLayout style="@style/TativoLinearLayoutCentroPantalla"
         android:id="@+id/linearLayout">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp">
+            <ImageView
+                android:layout_width="130dp"
+                android:layout_height="50dp"
+                android:id="@+id/imageView"
+                android:background="@drawable/tativo"/>
+        </LinearLayout>
         <LinearLayout style="@style/TativoLayoutBordeRelleno">
             <TextView
                 style="@style/TativoTextViewTitulo"
