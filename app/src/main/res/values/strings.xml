@@ -115,5 +115,24 @@
     <string name="lblDondeInternet">En orden de mayor a menor, ¿en dónde utilizas más internet?</string>
     <string name="btnInfGeneral">Enviar</string>
 
+    <!--Bloque 6 - Documentos -->
+    <string name="lblInformacionAcreditado">Información de acreditado</string>
+    <string name="hnNombreCompleto">Nombre completo</string>
+    <string name="hnDireccion">Dirección</string>
+
+    <string name="lblInformacionDeposito">Información de depósito</string>
+    <string name="hnNombreBanco">Nombre de banco</string>
+    <string name="hnMonto">Monto solicitado (capital)</string>
+    <string name="hnInteres">Interés</string>
+    <string name="hnIVA">IVA</string>
+    <string name="hnTotal">Total a pagar</string>
+    <string name="hnFechaInicio">Fecha de inicio</string>
+    <string name="hnPlazo">Plazo</string>
+    <string name="hnFechaLimite">Fecha límite de pago</string>
+
+    <string name="btnVerDocumentos">Ver documentos</string>
+    <string name="btnSubirFoto">Seleccionar y subir</string>
+    <string name="btnAceptarDocumentos">Enviar</string>
 
 </resources>
+

@@ -12,6 +12,7 @@
             android:layout_height="wrap_content"
             style="@style/TativoRelativeLayoutPrincipal"
             android:layout_marginTop="60dp"
+            android:paddingBottom="80dp"
             android:orientation="vertical">
 
             <LinearLayout style="@style/TativoLinearLayoutBorde">
@@ -244,28 +245,30 @@
                     android:id="@+id/ckTerminosCondiciones1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/ckTerminosCondiciones1">
+                    android:text="@string/ckTerminosCondiciones1"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp">
                 </CheckBox>
                 <CheckBox
                     android:id="@+id/ckTerminosCondiciones2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ckTerminosCondiciones2"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginBottom="8dp" >
                 </CheckBox>
                 <CheckBox
                     android:id="@+id/ckTerminosCondiciones3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ckTerminosCondiciones3"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginBottom="8dp">
                 </CheckBox>
                 <CheckBox
                     android:id="@+id/ckTerminosCondiciones4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ckTerminosCondiciones4"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginBottom="8dp">
                 </CheckBox>
             </LinearLayout>
             <Button

@@ -1,16 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.tativo.app.tativo.Bloques.Actividades.Act_Documentos">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/TativoRelativeLayoutPrincipalSinMargen"
+    android:orientation="vertical"
+    tools:context=".LogIn.Actividades.Act_LogIn">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Documentos"/>
+    <ScrollView style="@style/TativoScrollView">
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TativoRelativeLayoutPrincipal"
+            android:layout_marginTop="60dp"
+            android:paddingBottom="80dp"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/TativoLayoutBordeRelleno">
+                <TextView style="@style/TativoTextViewEncabezado"
+                    android:text="@string/lblInformacionAcreditado"/>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/hnNombreCompleto" />
+                <TextView style="@style/TativoTextView" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/hnDireccion" />
+                <TextView style="@style/TativoTextView" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/txtTelefono" />
+                <TextView style="@style/TativoTextView"/>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/txtCorreo" />
+                <TextView style="@style/TativoTextView"/>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLayoutBordeRelleno">
+                <TextView style="@style/TativoTextViewEncabezado"
+                    android:text="@string/lblInformacionDeposito"/>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/hnNombreBanco" />
+                <TextView style="@style/TativoTextView"/>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/txtNumeroTarjetaCLABE" />
+                <TextView style="@style/TativoTextView" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/hnMonto" />
+                <TextView style="@style/TativoTextView" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/hnInteres" />
+                <TextView style="@style/TativoTextView" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/hnIVA" />
+                <TextView style="@style/TativoTextView" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/hnTotal" />
+                <TextView style="@style/TativoTextView" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/hnFechaInicio" />
+                <TextView style="@style/TativoTextView" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/hnPlazo" />
+                <TextView style="@style/TativoTextView" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/hnFechaLimite" />
+                <TextView style="@style/TativoTextView" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout style="@style/TativoLayoutTitulo">
+        <TextView
+            style="@style/TativoTextViewTitulo"
+            android:text="FIRMA DE DOCUMENTOS" />
+        <TextView
+            style="@style/TativoTextViewSubTitulo"
+            android:text="" />
+    </LinearLayout>
 </RelativeLayout>

@@ -12,6 +12,7 @@
             android:layout_height="wrap_content"
             style="@style/TativoRelativeLayoutPrincipal"
             android:layout_marginTop="60dp"
+            android:paddingBottom="80dp"
             android:orientation="vertical">
 
             <LinearLayout style="@style/TativoLinearLayoutBorde">
