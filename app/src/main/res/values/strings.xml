@@ -15,6 +15,7 @@
     <string name="spnHintMaterialSpinner">Elige una opción</string>
     <string name="swtTextON">Si</string>
     <string name="swtTxtOFF">No</string>
+    <string name="txtRequerido">Campo requerido</string>
 
     <!--LogIn-->
     <string name="txtLogInContrasena">Contraseña</string>

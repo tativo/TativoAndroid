@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -29,10 +30,14 @@ import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
 import com.tativo.app.tativo.Utilidades.Utilerias;
 
+import org.json.JSONObject;
+import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.jar.JarEntry;
 
@@ -45,7 +50,8 @@ public class Act_B1_Referencias extends AppCompatActivity {
     AdapterAnio spnCatanioAdapter;
     ArrayList<Catrelacionespersonal> listaCatrelacionespersonal = new ArrayList<Catrelacionespersonal>();
     ArrayList<Catanio> listaCatanio = new ArrayList<Catanio>();
-    TextView hidenClienteID,hidenImporteSolicitado,hidenFechaPago,hidenSolicitudID;
+    CheckBox ckReferenciasAcepta;
+    TextView hidenClienteID,hidenImporteSolicitado,hidenFechaPago,hidenSolicitudID,hidenReferenciaLaboralid,hidenReferenciaPersonalidRef1,hidenReferenciaPersonalidRef2,hidenUltimaActEmpresa,hidenUltimaActRef1,hidenUltimaActRef2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +63,7 @@ public class Act_B1_Referencias extends AppCompatActivity {
         FocusManager();
         EventManager();
         new AsyncLoadData().execute();
-        new AsyncEstatusSolicitud().execute();
+        //new AsyncEstatusSolicitud().execute();
         btnFocoInicial.requestFocus();
     }
 
@@ -126,11 +132,17 @@ public class Act_B1_Referencias extends AppCompatActivity {
     }
 
     public void LlenarCamposOcultos(Bundle bundle) {
-        if(bundle!=null){
+        if (bundle != null) {
             hidenClienteID.setText(bundle.getString("ClienteID"));
             hidenImporteSolicitado.setText(bundle.getString("ImporteSolicitado"));
             hidenFechaPago.setText(bundle.getString("FechaPago"));
             hidenSolicitudID.setText(bundle.getString("SolicitudID"));
+        } else {
+            //Campos dumi cuando no se manda nada en el intent
+            hidenClienteID.setText("6ACDFF99-2070-41F9-B712-A2761134BAE1");
+            hidenImporteSolicitado.setText("2000");
+            hidenFechaPago.setText("31/03/2016");
+            hidenSolicitudID.setText("769073AF-0AC1-4536-ACDB-AB01BE649E72");
         }
     }
     private void LoadFormControls(){
@@ -140,6 +152,12 @@ public class Act_B1_Referencias extends AppCompatActivity {
         hidenImporteSolicitado = (TextView) findViewById(R.id.hidenImporteSolicitado);
         hidenFechaPago = (TextView) findViewById(R.id.hidenFechaPago);
         hidenSolicitudID = (TextView) findViewById(R.id.hidenSolicitudID);
+        hidenReferenciaLaboralid = (TextView) findViewById(R.id.hidenReferenciaLaboralid);
+        hidenReferenciaPersonalidRef1 =(TextView) findViewById(R.id.hidenReferenciaPersonalidRef1);
+        hidenReferenciaPersonalidRef2=(TextView) findViewById(R.id.hidenReferenciaPersonalidRef2);
+        hidenUltimaActEmpresa=(TextView) findViewById(R.id.hidenUltimaActEmpresa);
+        hidenUltimaActRef1=(TextView) findViewById(R.id.hidenUltimaActRef1);
+        hidenUltimaActRef2=(TextView) findViewById(R.id.hidenUltimaActRef2);
 
         //Combos
         spnRelacionRef1 = (Spinner) findViewById(R.id.spnRelacionRef1);
@@ -172,6 +190,9 @@ public class Act_B1_Referencias extends AppCompatActivity {
         txtNombreEmpresa = (EditText) findViewById(R.id.txtNombreEmpresa);
         txtTelefonoRefLaboral = (EditText) findViewById(R.id.txtTelefonoRefLaboral);
 
+        //CheckBox
+        ckReferenciasAcepta = (CheckBox) findViewById(R.id.ckReferenciasAcepta);
+
         //Botones
         btnReferencias = (Button) findViewById(R.id.btnReferencias);
         btnReferencias.setFocusable(true);
@@ -182,7 +203,7 @@ public class Act_B1_Referencias extends AppCompatActivity {
         btnFocoInicial.setFocusableInTouchMode(true);
 
     }
-    private void EventManager(){
+    private void EventManager() {
         txtTelefonoCelularRef1.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         txtTelefonoCelularRef2.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         txtTelefonoRefLaboral.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -190,11 +211,8 @@ public class Act_B1_Referencias extends AppCompatActivity {
         btnReferencias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ValidaGuardar()){
-                    Intent i = new Intent(getApplicationContext(), Act_B2_Personal.class);
-                    startActivity(i);
-                    finish();
-                }
+                if (ValidaGuardar())
+                    new AsyncSaveData().execute();
             }
         });
     }
@@ -212,13 +230,13 @@ public class Act_B1_Referencias extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
             spnRelacionRefAdapter = new AdapterRelacionPersonal(listaCatrelacionespersonal);
-            spnRelacionRefAdapter = new AdapterRelacionPersonal(listaCatrelacionespersonal);
-            spnCatanioAdapter =  new AdapterAnio(listaCatanio);
+            spnCatanioAdapter = new AdapterAnio(listaCatanio);
             spnRelacionRef1.setAdapter(spnRelacionRefAdapter);
             spnRelacionRef2.setAdapter(spnRelacionRefAdapter);
             spnAmistadRef1.setAdapter(spnCatanioAdapter);
             spnAmistadRef2.setAdapter(spnCatanioAdapter);
             spnTrabajando.setAdapter(spnCatanioAdapter);
+            new AsyncInfoBloque().execute();
         }
 
         @Override
@@ -351,14 +369,181 @@ public class Act_B1_Referencias extends AppCompatActivity {
     }
     //Endregion
 
+    //Region Existe Info del BLOQUE
+    private class AsyncInfoBloque extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+        }
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage("Cargando...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+
+    private void GetInfoBloque(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatanio";
+        String METHOD_NAME = "GetCatanio";
+        String NAMESPACE = "http://tempuri.org/";
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,null);
+        if(respuesta != null) {
+            try {
+                String[] listaRespuesta;
+                listaRespuesta = new String[respuesta.getPropertyCount()];
+                SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
+                for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
+                    SoapObject item = (SoapObject) listaElementos.getProperty(i);
+                    Catanio entidad = new Catanio();
+                    entidad.setAnioid(Integer.parseInt(item.getProperty("Anioid").toString()));
+                    entidad.setDescripcion(item.getProperty("Descripcion").toString());
+                    listaCatanio.add(entidad);
+                }
+                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
+                Boolean ev = Boolean.parseBoolean(esValido.toString());
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    //Endregion
+
     //Region Guardar
     private boolean ValidaGuardar() {
-        if (txtNombreRef1.getText().toString().trim().length() == 0) {
-            txtNombreRef1.setError("Este campo es requerido");
-            txtNombreRef1.requestFocus();
-            return false;
+        ArrayList<Object> Objetos = new ArrayList<Object>();
+        Objetos.add(txtNombreRef1);
+        Objetos.add(txtApellidosRef1);
+        Objetos.add(spnRelacionRef1);
+        Objetos.add(txtTelefonoCelularRef1);
+        Objetos.add(spnAmistadRef1);
+        Objetos.add(txtNombreRef2);
+        Objetos.add(txtApellidosRef2);
+        Objetos.add(spnRelacionRef2);
+        Objetos.add(txtTelefonoCelularRef2);
+        Objetos.add(spnAmistadRef2);
+        Objetos.add(txtNombreEmpresa);
+        Objetos.add(txtTelefonoRefLaboral);
+        Objetos.add(spnTrabajando);
+        Objetos.add(ckReferenciasAcepta);
+        Collections.reverse(Objetos);
+        boolean requeridos = false;
+        for (Object item:Objetos) {
+            if(item instanceof EditText){
+                if (((EditText) item).getText().toString().trim().length() == 0) {
+                    ((EditText) item).setError(getString(R.string.txtRequerido));
+                    ((EditText) item).requestFocus();
+                    requeridos = true;
+                }
+            }
+            if(item instanceof Spinner){
+                if(((Spinner) item).getSelectedItemPosition() == 0){
+                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.txtRequerido));
+                    ((Spinner) item).requestFocus();
+                    requeridos = true;
+                }
+            }
+            if(item instanceof CheckBox){
+                if(!((CheckBox) item).isChecked()){
+                    ((CheckBox) item).requestFocus();
+                    requeridos = true;
+                }
+            }
         }
-        return true;
+        return !requeridos;
+    }
+    private class AsyncSaveData extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            SaveInfoBloque();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            Intent i = new Intent(getApplicationContext(), Act_B2_Personal.class);
+            i.putExtra("ClienteID", hidenClienteID.getText().toString());
+            i.putExtra("ImporteSolicitado", hidenImporteSolicitado.getText().toString());
+            i.putExtra("FechaPago", hidenFechaPago.getText().toString());
+            i.putExtra("SolicitudID", hidenSolicitudID.getText().toString());
+            startActivity(i);
+            finish();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage("Guardando...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void SaveInfoBloque(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/SetCatreferenciaspersonalTelefono";
+        String METHOD_NAME = "SetCatreferenciaspersonalTelefono";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("value");
+        pi1.setValue(getEntityToSave());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private String getEntityToSave() {
+        JSONObject DatosEntidad = new JSONObject();
+        try {
+            DatosEntidad.put("NombreRef1", txtNombreRef1.getText().toString());
+            DatosEntidad.put("ApellidosRef1",txtApellidosRef1.getText().toString());
+            DatosEntidad.put("RelacionidRef1",  ((Catrelacionespersonal) spnRelacionRef1.getSelectedItem()).getRelacionid());
+            DatosEntidad.put("TelefonoRef1", txtTelefonoCelularRef1.getText().toString());
+            DatosEntidad.put("AñoidRef1", ((Catanio) spnAmistadRef1.getSelectedItem()).getAnioid());
+
+            DatosEntidad.put("NombreRef2", txtNombreRef2.getText().toString());
+            DatosEntidad.put("ApellidosRef2",txtApellidosRef2.getText().toString());
+            DatosEntidad.put("RelacionidRef2", ((Catrelacionespersonal) spnRelacionRef2.getSelectedItem()).getRelacionid());
+            DatosEntidad.put("TelefonoRef2", txtTelefonoCelularRef2.getText().toString());
+            DatosEntidad.put("AñoidRef2", ((Catanio) spnAmistadRef2.getSelectedItem()).getAnioid());
+
+
+            DatosEntidad.put("NombreEmpresa", txtNombreEmpresa.getText().toString());
+            DatosEntidad.put("TelefonoEmpresa", txtTelefonoRefLaboral.getText().toString());
+            DatosEntidad.put("AñoidEmpresa", ((Catanio) spnTrabajando.getSelectedItem()).getAnioid());
+
+            //Campos de los controles ocultos debemos considerar que tienen valor para el momento en que
+            //la app lo posicione sobre el bloque actual carge los datos que guardo con anterioridad
+            DatosEntidad.put("Clienteid", hidenClienteID.getText().toString());
+            DatosEntidad.put("ReferenciaLaboralid", hidenReferenciaLaboralid.getText().toString());
+            DatosEntidad.put("ReferenciaPersonalidRef1", hidenReferenciaPersonalidRef1.getText().toString());
+            DatosEntidad.put("ReferenciaPersonalidRef2", hidenReferenciaPersonalidRef2.getText().toString());
+            DatosEntidad.put("UltimaActEmpresa", Integer.parseInt(hidenUltimaActEmpresa.getText().toString()));
+            DatosEntidad.put("UltimaActRef1", Integer.parseInt(hidenUltimaActRef1.getText().toString()));
+            DatosEntidad.put("UltimaActRef2", Integer.parseInt(hidenUltimaActRef2.getText().toString()));
+        } catch (Exception ex) {
+
+        }
+        return "";
     }
     //EndGuardar
 
