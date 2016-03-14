@@ -68,6 +68,14 @@ public class Act_B1_Referencias extends AppCompatActivity {
         FocusNextControl(R.id.txtTelefonoCelularRef1, "T", R.id.spnAmistadRef1, "S");
         FocusNextControl(R.id.spnAmistadRef1, "S", R.id.txtNombreRef2, "T");
 
+        FocusNextControl(R.id.txtNombreRef2, "T", R.id.txtApellidosRef2, "T");
+        FocusNextControl(R.id.txtApellidosRef2, "T", R.id.spnRelacionRef2, "S");
+        FocusNextControl(R.id.spnRelacionRef2, "S", R.id.txtTelefonoCelularRef2, "T");
+        FocusNextControl(R.id.txtTelefonoCelularRef2, "T", R.id.spnAmistadRef2, "S");
+        FocusNextControl(R.id.spnAmistadRef2, "S", R.id.txtNombreEmpresa, "T");
+
+        FocusNextControl(R.id.txtNombreEmpresa, "T", R.id.txtTelefonoRefLaboral, "T");
+        FocusNextControl(R.id.txtTelefonoRefLaboral, "T", R.id.spnTrabajando, "S");
     }
 
     public void FocusNextControl(int o,String ot, int d,String dt )
@@ -119,22 +127,20 @@ public class Act_B1_Referencias extends AppCompatActivity {
 
     public void LlenarCamposOcultos(Bundle bundle) {
         if(bundle!=null){
-            /*
             hidenClienteID.setText(bundle.getString("ClienteID"));
             hidenImporteSolicitado.setText(bundle.getString("ImporteSolicitado"));
             hidenFechaPago.setText(bundle.getString("FechaPago"));
             hidenSolicitudID.setText(bundle.getString("SolicitudID"));
-            */
         }
     }
     private void LoadFormControls(){
         //Ocultos
-        /*
+
         hidenClienteID = (TextView) findViewById(R.id.hidenClienteID);
         hidenImporteSolicitado = (TextView) findViewById(R.id.hidenImporteSolicitado);
         hidenFechaPago = (TextView) findViewById(R.id.hidenFechaPago);
         hidenSolicitudID = (TextView) findViewById(R.id.hidenSolicitudID);
-        */
+
         //Combos
         spnRelacionRef1 = (Spinner) findViewById(R.id.spnRelacionRef1);
         spnRelacionRef1.setFocusable(true);
