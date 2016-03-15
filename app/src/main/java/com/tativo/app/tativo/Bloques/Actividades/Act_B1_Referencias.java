@@ -431,29 +431,19 @@ public class Act_B1_Referencias extends AppCompatActivity {
 
         txtNombreRef1.setText(EntityReferenciaPersonal.getNombreRef1());
         txtApellidosRef1.setText(EntityReferenciaPersonal.getApellidosRef1());
-        spnRelacionRef1.setSelection(((ArrayAdapter) spnRelacionRef1.getAdapter()).getPosition(String.valueOf(EntityReferenciaPersonal.getRelacionidRef1())));
+        spnRelacionRef1.setSelection(EntityReferenciaPersonal.getRelacionidRef1());
         txtTelefonoCelularRef1.setText(EntityReferenciaPersonal.getTelefonoRef1());
-        //spnAmistadRef1.setSelection(getIndex(spnAmistadRef1, String.valueOf(EntityReferenciaPersonal.getAñoidRef1())));
+        spnAmistadRef1.setSelection(EntityReferenciaPersonal.getAñoidRef1());
 
         txtNombreRef2.setText(EntityReferenciaPersonal.getNombreRef2());
         txtApellidosRef2.setText(EntityReferenciaPersonal.getApellidosRef2());
-        //spnRelacionRef2.setSelection(getIndex(spnRelacionRef2, String.valueOf(EntityReferenciaPersonal.getRelacionidRef2())));
+        spnRelacionRef2.setSelection(EntityReferenciaPersonal.getRelacionidRef2());
         txtTelefonoCelularRef2.setText(EntityReferenciaPersonal.getTelefonoRef2());
-        //spnAmistadRef2.setSelection(getIndex(spnAmistadRef2, String.valueOf(EntityReferenciaPersonal.getAñoidRef2())));
+        spnAmistadRef2.setSelection(EntityReferenciaPersonal.getAñoidRef2());
 
         txtNombreEmpresa.setText(EntityReferenciaPersonal.getNombreEmpresa());
         txtTelefonoRefLaboral.setText(EntityReferenciaPersonal.getTelefonoEmpresa());
-        //spnTrabajando.setSelection(getIndex(spnTrabajando, String.valueOf(EntityReferenciaPersonal.getAñoidEmpresa())));
-    }
-    private int getIndex(Spinner spinner, String value) {
-        int index = 0;
-        for (int i = 0; i < spinner.getCount(); i++) {
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(value)) {
-                index = i;
-                break;
-            }
-        }
-        return index;
+        spnTrabajando.setSelection(EntityReferenciaPersonal.getAñoidEmpresa());
     }
     //Endregion
 
