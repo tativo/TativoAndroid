@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tativo.app.tativo.Bloques.Clases.Catanio;
+import com.tativo.app.tativo.Bloques.Clases.Catreferenciaspersonal;
 import com.tativo.app.tativo.Bloques.Clases.Catrelacionespersonal;
 import com.tativo.app.tativo.LogIn.Actividades.Act_Cotizador;
 import com.tativo.app.tativo.R;
@@ -52,7 +53,7 @@ public class Act_B1_Referencias extends AppCompatActivity {
     ArrayList<Catanio> listaCatanio = new ArrayList<Catanio>();
     CheckBox ckReferenciasAcepta;
     TextView hidenClienteID,hidenImporteSolicitado,hidenFechaPago,hidenSolicitudID,hidenReferenciaLaboralid,hidenReferenciaPersonalidRef1,hidenReferenciaPersonalidRef2,hidenUltimaActEmpresa,hidenUltimaActRef1,hidenUltimaActRef2;
-
+     Catreferenciaspersonal EntityReferenciaPersonal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,6 +148,10 @@ public class Act_B1_Referencias extends AppCompatActivity {
     }
     private void LoadFormControls(){
         //Ocultos
+        EntityReferenciaPersonal = new Catreferenciaspersonal();
+        EntityReferenciaPersonal.setUltimaActRef1(0);
+        EntityReferenciaPersonal.setUltimaActRef2(0);
+        EntityReferenciaPersonal.setUltimaActEmpresa(0);
 
         hidenClienteID = (TextView) findViewById(R.id.hidenClienteID);
         hidenImporteSolicitado = (TextView) findViewById(R.id.hidenImporteSolicitado);
@@ -373,13 +378,16 @@ public class Act_B1_Referencias extends AppCompatActivity {
     private class AsyncInfoBloque extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
-
+            GetInfoBloque();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
+            if(EntityReferenciaPersonal.getUltimaActRef1() != 0){
+                SetInfoBloque();
+            }
         }
         @Override
         protected void onPreExecute() {
@@ -391,13 +399,20 @@ public class Act_B1_Referencias extends AppCompatActivity {
         protected void onProgressUpdate(Void... values) {
         }
     }
-
     private void GetInfoBloque(){
-        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatanio";
-        String METHOD_NAME = "GetCatanio";
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatRelacionesPersonal";
+        String METHOD_NAME = "GetCatRelacionesPersonal";
         String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("clienteid");
+        pi1.setValue(hidenClienteID.getText().toString());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
         ServiciosSoap oServiciosSoap = new ServiciosSoap();
-        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,null);
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
         if(respuesta != null) {
             try {
                 String[] listaRespuesta;
@@ -405,10 +420,28 @@ public class Act_B1_Referencias extends AppCompatActivity {
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
                 for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
                     SoapObject item = (SoapObject) listaElementos.getProperty(i);
-                    Catanio entidad = new Catanio();
-                    entidad.setAnioid(Integer.parseInt(item.getProperty("Anioid").toString()));
-                    entidad.setDescripcion(item.getProperty("Descripcion").toString());
-                    listaCatanio.add(entidad);
+                    EntityReferenciaPersonal.setReferenciaPersonalidRef1(item.getProperty("ReferenciaPersonalidRef1").toString());
+                    EntityReferenciaPersonal.setClienteid(item.getProperty("Clienteid").toString());
+                    EntityReferenciaPersonal.setNombreRef1(item.getProperty("NombreRef1").toString());
+                    EntityReferenciaPersonal.setApellidosRef1(item.getProperty("ApellidosRef1").toString());
+                    EntityReferenciaPersonal.setTelefonoRef1(item.getProperty("TelefonoRef1").toString());
+                    EntityReferenciaPersonal.setRelacionidRef1(Integer.parseInt(item.getProperty("RelacionidRef1").toString()));
+                    EntityReferenciaPersonal.setAñoidRef1(Integer.parseInt(item.getProperty("AñoidRef1").toString()));
+                    EntityReferenciaPersonal.setUltimaActRef1(Integer.parseInt(item.getProperty("UltimaActRef1").toString()));
+
+                    EntityReferenciaPersonal.setReferenciaPersonalidRef2(item.getProperty("ReferenciaPersonalidRef2").toString());
+                    EntityReferenciaPersonal.setNombreRef2(item.getProperty("NombreRef2").toString());
+                    EntityReferenciaPersonal.setApellidosRef2(item.getProperty("ApellidosRef2").toString());
+                    EntityReferenciaPersonal.setTelefonoRef2(item.getProperty("TelefonoRef2").toString());
+                    EntityReferenciaPersonal.setRelacionidRef2(Integer.parseInt(item.getProperty("RelacionidRef2").toString()));
+                    EntityReferenciaPersonal.setAñoidRef2(Integer.parseInt(item.getProperty("AñoidRef2").toString()));
+                    EntityReferenciaPersonal.setUltimaActRef2(Integer.parseInt(item.getProperty("UltimaActRef2").toString()));
+
+                    EntityReferenciaPersonal.setReferenciaLaboralid(item.getProperty("ReferenciaLaboralid").toString());
+                    EntityReferenciaPersonal.setNombreEmpresa(item.getProperty("NombreEmpresa").toString());
+                    EntityReferenciaPersonal.setTelefonoEmpresa(item.getProperty("TelefonoEmpresa").toString());
+                    EntityReferenciaPersonal.setAñoidEmpresa(Integer.parseInt(item.getProperty("AñoidEmpresa").toString()));
+                    EntityReferenciaPersonal.setUltimaActEmpresa(Integer.parseInt(item.getProperty("UltimaActEmpresa").toString()));
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -417,7 +450,43 @@ public class Act_B1_Referencias extends AppCompatActivity {
             }
         }
     }
+    private void SetInfoBloque() {
+        hidenReferenciaLaboralid.setText(EntityReferenciaPersonal.getReferenciaLaboralid());
+        hidenReferenciaPersonalidRef1.setText(EntityReferenciaPersonal.getReferenciaPersonalidRef1());
+        hidenReferenciaPersonalidRef2.setText(EntityReferenciaPersonal.getReferenciaPersonalidRef2());
+        hidenUltimaActRef1.setText(EntityReferenciaPersonal.getUltimaActRef1());
+        hidenUltimaActRef2.setText(EntityReferenciaPersonal.getUltimaActRef2());
+        hidenUltimaActEmpresa.setText(EntityReferenciaPersonal.getUltimaActEmpresa());
+
+        txtNombreRef1.setText(EntityReferenciaPersonal.getNombreRef1());
+        txtApellidosRef1.setText(EntityReferenciaPersonal.getApellidosRef1());
+        spnRelacionRef1.setSelection(getIndex(spnRelacionRef1, String.valueOf(EntityReferenciaPersonal.getRelacionidRef1())));
+        txtTelefonoCelularRef1.setText(EntityReferenciaPersonal.getTelefonoRef1());
+        spnAmistadRef1.setSelection(getIndex(spnAmistadRef1, String.valueOf(EntityReferenciaPersonal.getAñoidRef1())));
+
+        txtNombreRef2.setText(EntityReferenciaPersonal.getNombreRef2());
+        txtApellidosRef2.setText(EntityReferenciaPersonal.getApellidosRef2());
+        spnRelacionRef2.setSelection(getIndex(spnRelacionRef2, String.valueOf(EntityReferenciaPersonal.getRelacionidRef2())));
+        txtTelefonoCelularRef2.setText(EntityReferenciaPersonal.getTelefonoRef2());
+        spnAmistadRef2.setSelection(getIndex(spnAmistadRef2, String.valueOf(EntityReferenciaPersonal.getAñoidRef2())));
+
+        txtNombreEmpresa.setText(EntityReferenciaPersonal.getNombreEmpresa());
+        txtTelefonoRefLaboral.setText(EntityReferenciaPersonal.getTelefonoEmpresa());
+        spnTrabajando.setSelection(getIndex(spnTrabajando, String.valueOf(EntityReferenciaPersonal.getAñoidEmpresa())));
+    }
+    private int getIndex(Spinner spinner, String value) {
+        int index = 0;
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(value)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
     //Endregion
+
+
 
     //Region Guardar
     private boolean ValidaGuardar() {
