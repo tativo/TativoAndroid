@@ -34,6 +34,8 @@ import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -53,12 +55,13 @@ public class Frg_Registro extends Fragment{
     ProgressDialog progressDialog;
     AutoCompleteTextView txtNombre, txtApellidoPaterno, txtApellidoMaterno, txtCorreo,txtContrasena, txtConfirmaContrasena;
     Button btnRegistro;
+    Globals g;
 
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.frg_registro,container,false);
-        Globals g = (Globals)getActivity ().getApplicationContext();
+        g = (Globals)getActivity ().getApplicationContext();
         progressDialog = new ProgressDialog(v.getContext());
         LoadFormControls(v);
         FocusManager(v);
@@ -210,10 +213,11 @@ public class Frg_Registro extends Fragment{
     }
 
     //GUARDAR
-    private class AsyncSaveData extends AsyncTask<Void, Void, Void> {
+    private class AsyncSaveData extends  AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
             SaveInfoBloque();
+            SaveRegistraSolicitud();
             return null;
         }
 
@@ -221,10 +225,6 @@ public class Frg_Registro extends Fragment{
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
             Intent i = new Intent(getActivity(), Act_B1_Referencias.class);
-            i.putExtra("ClienteID", "");
-            i.putExtra("ImporteSolicitado", "");
-            i.putExtra("FechaPago", "");
-            i.putExtra("SolicitudID", "");
             startActivity(i);
             getActivity().finish();
         }
@@ -276,6 +276,7 @@ public class Frg_Registro extends Fragment{
         pi1.setType(PropertyInfo.STRING_CLASS);
         valores.add(pi1);
 
+
         ServiciosSoap oServiciosSoap = new ServiciosSoap();
         SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
         if(respuesta != null) {
@@ -285,9 +286,48 @@ public class Frg_Registro extends Fragment{
                 if (ev)
                 {
                     SoapObject item = (SoapObject) respuesta.getProperty(0);
-                    int a = item.getPropertyCount();
-                    Globals g = (Globals)getActivity().getApplicationContext();
                     g.setCliendeID(item.getProperty("Clienteid").toString());
+                }
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void SaveRegistraSolicitud(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/RegistrarSolicitudEfectivo";
+        String METHOD_NAME = "RegistrarSolicitudEfectivo";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("ClienteID");
+        pi1.setValue(g.getCliendeID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        pi1 = new PropertyInfo();
+        pi1.setName("FechaVencimiento");
+        pi1.setValue(android.text.format.DateFormat.format("yyyy-MM-dd",g.getFechaPago()).toString());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        pi1 = new PropertyInfo();
+        pi1.setName("Importe");
+        pi1.setValue(String.valueOf(g.getImporteSolicitado()));
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
+                Boolean ev = Boolean.parseBoolean(esValido.toString());
+                if (ev)
+                {
+                    SoapObject item = (SoapObject) respuesta.getProperty(0);
+                    g.setSolicitudID(item.getProperty("Solicitudid").toString());
                 }
             } catch (Exception e) {
                 Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();

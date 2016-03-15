@@ -45,7 +45,7 @@ public class Act_Cotizador extends AppCompatActivity {
                 Date FechaPago = new Date("14/03/2016");
 
                 Globals g = (Globals)getApplicationContext();
-                g.setImporteSolicitado(2000.00);
+                g.setImporteSolicitado(2000);
                 g.setFechaPago(FechaPago);
 
                 Intent i = new Intent(getApplicationContext(), Act_LogIn.class);
