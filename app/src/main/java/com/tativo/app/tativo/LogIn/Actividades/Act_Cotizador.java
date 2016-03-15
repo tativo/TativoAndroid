@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.tativo.app.tativo.R;
+import com.tativo.app.tativo.Utilidades.Globals;
+
+import java.util.Date;
 
 public class Act_Cotizador extends AppCompatActivity {
 
@@ -38,7 +41,14 @@ public class Act_Cotizador extends AppCompatActivity {
         btnListo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(),Act_LogIn.class);
+
+                Date FechaPago = new Date("14/03/2016");
+
+                Globals g = (Globals)getApplicationContext();
+                g.setImporteSolicitado(2000.00);
+                g.setFechaPago(FechaPago);
+
+                Intent i = new Intent(getApplicationContext(), Act_LogIn.class);
                 startActivity(i);
                 finish();
             }

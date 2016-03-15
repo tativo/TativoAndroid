@@ -18,7 +18,7 @@
                     <AutoCompleteTextView
                         android:id="@+id/txtNombre"
                         android:hint="@string/txtNombre"
-                        android:inputType="text"
+                        android:inputType="textAutoComplete|textCapWords"
                         android:maxLines="1"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
@@ -29,7 +29,7 @@
                     <AutoCompleteTextView
                         android:id="@+id/txtApellidoPaterno"
                         android:hint="@string/txtApellidoPaterno"
-                        android:inputType="text"
+                        android:inputType="textAutoComplete|textCapWords"
                         android:maxLines="1"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
@@ -40,7 +40,7 @@
                     <AutoCompleteTextView
                         android:id="@+id/txtApellidoMaterno"
                         android:hint="@string/txtApellidoMaterno"
-                        android:inputType="text"
+                        android:inputType="textAutoComplete|textCapWords"
                         android:maxLines="1"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
@@ -51,7 +51,7 @@
                     <AutoCompleteTextView
                         android:id="@+id/txtCorreo"
                         android:hint="@string/txtCorreo"
-                        android:inputType="text"
+                        android:inputType="textEmailAddress"
                         android:maxLines="1"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
@@ -62,7 +62,8 @@
                     <AutoCompleteTextView
                         android:id="@+id/txtContrasena"
                         android:hint="@string/txtContrasena"
-                        android:inputType="text"
+                        android:inputType="textPassword"
+                        android:password="true"
                         android:maxLines="1"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
@@ -73,7 +74,8 @@
                     <AutoCompleteTextView
                         android:id="@+id/txtConfirmaContrasena"
                         android:hint="@string/txtConfirmacionContrasena"
-                        android:inputType="text"
+                        android:inputType="textPassword"
+                        android:password="true"
                         android:maxLines="1"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
