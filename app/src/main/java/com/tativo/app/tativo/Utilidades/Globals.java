@@ -9,6 +9,9 @@ import java.util.Date;
  */
 public class Globals extends Application {
     private String CliendeID;
+    private double ImporteSolicitado;
+    private Date FechaPago;
+    private String SolicitudID;
 
     public double getImporteSolicitado() {
         return ImporteSolicitado;
@@ -33,10 +36,6 @@ public class Globals extends Application {
     public void setSolicitudID(String solicitudID) {
         SolicitudID = solicitudID;
     }
-
-    private double ImporteSolicitado;
-    private Date FechaPago;
-    private String SolicitudID;
 
     public String getCliendeID() {
         return CliendeID;

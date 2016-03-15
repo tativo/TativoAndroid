@@ -2,6 +2,7 @@ package com.tativo.app.tativo.Bloques.Actividades;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Entity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,6 +30,7 @@ import com.tativo.app.tativo.Bloques.Clases.Catreferenciaspersonal;
 import com.tativo.app.tativo.Bloques.Clases.Catrelacionespersonal;
 import com.tativo.app.tativo.LogIn.Actividades.Act_Cotizador;
 import com.tativo.app.tativo.R;
+import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
 import com.tativo.app.tativo.Utilidades.Utilerias;
 
@@ -52,20 +55,21 @@ public class Act_B1_Referencias extends AppCompatActivity {
     ArrayList<Catrelacionespersonal> listaCatrelacionespersonal = new ArrayList<Catrelacionespersonal>();
     ArrayList<Catanio> listaCatanio = new ArrayList<Catanio>();
     CheckBox ckReferenciasAcepta;
-    TextView hidenClienteID,hidenImporteSolicitado,hidenFechaPago,hidenSolicitudID,hidenReferenciaLaboralid,hidenReferenciaPersonalidRef1,hidenReferenciaPersonalidRef2,hidenUltimaActEmpresa,hidenUltimaActRef1,hidenUltimaActRef2;
-     Catreferenciaspersonal EntityReferenciaPersonal;
+    Catreferenciaspersonal EntityReferenciaPersonal;
+    Globals Sesion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_b1_referencias);
         progressDialog = new ProgressDialog(Act_B1_Referencias.this);
         LoadFormControls();
-        LlenarCamposOcultos(getIntent().getExtras());
         FocusManager();
         EventManager();
         new AsyncLoadData().execute();
-        //new AsyncEstatusSolicitud().execute();
+        Sesion = (Globals) getApplicationContext();
         btnFocoInicial.requestFocus();
+        //Sesion.setCliendeID("014B2F7C-EF3D-4251-8439-BA73EC0AC0AA");
     }
 
     public void FocusManager(){
@@ -115,7 +119,7 @@ public class Act_B1_Referencias extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if (position != -1) {
-                        if(destino!=null)
+                        if (destino != null)
                             destino.requestFocus();
                         else {
                             destinoS.requestFocus();
@@ -131,38 +135,12 @@ public class Act_B1_Referencias extends AppCompatActivity {
             });
         }
     }
-
-    public void LlenarCamposOcultos(Bundle bundle) {
-        if (bundle != null) {
-            hidenClienteID.setText(bundle.getString("ClienteID"));
-            hidenImporteSolicitado.setText(bundle.getString("ImporteSolicitado"));
-            hidenFechaPago.setText(bundle.getString("FechaPago"));
-            hidenSolicitudID.setText(bundle.getString("SolicitudID"));
-        } else {
-            //Campos dumi cuando no se manda nada en el intent
-            hidenClienteID.setText("6ACDFF99-2070-41F9-B712-A2761134BAE1");
-            hidenImporteSolicitado.setText("2000");
-            hidenFechaPago.setText("31/03/2016");
-            hidenSolicitudID.setText("769073AF-0AC1-4536-ACDB-AB01BE649E72");
-        }
-    }
     private void LoadFormControls(){
-        //Ocultos
+        //Entidad
         EntityReferenciaPersonal = new Catreferenciaspersonal();
         EntityReferenciaPersonal.setUltimaActRef1(0);
         EntityReferenciaPersonal.setUltimaActRef2(0);
         EntityReferenciaPersonal.setUltimaActEmpresa(0);
-
-        hidenClienteID = (TextView) findViewById(R.id.hidenClienteID);
-        hidenImporteSolicitado = (TextView) findViewById(R.id.hidenImporteSolicitado);
-        hidenFechaPago = (TextView) findViewById(R.id.hidenFechaPago);
-        hidenSolicitudID = (TextView) findViewById(R.id.hidenSolicitudID);
-        hidenReferenciaLaboralid = (TextView) findViewById(R.id.hidenReferenciaLaboralid);
-        hidenReferenciaPersonalidRef1 =(TextView) findViewById(R.id.hidenReferenciaPersonalidRef1);
-        hidenReferenciaPersonalidRef2=(TextView) findViewById(R.id.hidenReferenciaPersonalidRef2);
-        hidenUltimaActEmpresa=(TextView) findViewById(R.id.hidenUltimaActEmpresa);
-        hidenUltimaActRef1=(TextView) findViewById(R.id.hidenUltimaActRef1);
-        hidenUltimaActRef2=(TextView) findViewById(R.id.hidenUltimaActRef2);
 
         //Combos
         spnRelacionRef1 = (Spinner) findViewById(R.id.spnRelacionRef1);
@@ -233,7 +211,7 @@ public class Act_B1_Referencias extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            progressDialog.dismiss();
+            //progressDialog.dismiss();
             spnRelacionRefAdapter = new AdapterRelacionPersonal(listaCatrelacionespersonal);
             spnCatanioAdapter = new AdapterAnio(listaCatanio);
             spnRelacionRef1.setAdapter(spnRelacionRefAdapter);
@@ -391,8 +369,8 @@ public class Act_B1_Referencias extends AppCompatActivity {
         }
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage("Cargando...");
-            progressDialog.show();
+            //progressDialog.setMessage("Cargando...");
+            //progressDialog.show();
         }
 
         @Override
@@ -400,14 +378,14 @@ public class Act_B1_Referencias extends AppCompatActivity {
         }
     }
     private void GetInfoBloque(){
-        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatRelacionesPersonal";
-        String METHOD_NAME = "GetCatRelacionesPersonal";
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatreferenciaspersonal";
+        String METHOD_NAME = "GetCatreferenciaspersonal";
         String NAMESPACE = "http://tempuri.org/";
 
         ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
         PropertyInfo pi1 = new PropertyInfo();
         pi1.setName("clienteid");
-        pi1.setValue(hidenClienteID.getText().toString());
+        pi1.setValue(Sesion.getCliendeID());
         pi1.setType(PropertyInfo.STRING_CLASS);
         valores.add(pi1);
 
@@ -417,9 +395,8 @@ public class Act_B1_Referencias extends AppCompatActivity {
             try {
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
-                SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
-                for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
-                    SoapObject item = (SoapObject) listaElementos.getProperty(i);
+                SoapObject item = (SoapObject) respuesta.getProperty(0);
+                if(Integer.parseInt(item.getProperty("UltimaActRef1").toString())!=0){
                     EntityReferenciaPersonal.setReferenciaPersonalidRef1(item.getProperty("ReferenciaPersonalidRef1").toString());
                     EntityReferenciaPersonal.setClienteid(item.getProperty("Clienteid").toString());
                     EntityReferenciaPersonal.setNombreRef1(item.getProperty("NombreRef1").toString());
@@ -451,28 +428,22 @@ public class Act_B1_Referencias extends AppCompatActivity {
         }
     }
     private void SetInfoBloque() {
-        hidenReferenciaLaboralid.setText(EntityReferenciaPersonal.getReferenciaLaboralid());
-        hidenReferenciaPersonalidRef1.setText(EntityReferenciaPersonal.getReferenciaPersonalidRef1());
-        hidenReferenciaPersonalidRef2.setText(EntityReferenciaPersonal.getReferenciaPersonalidRef2());
-        hidenUltimaActRef1.setText(EntityReferenciaPersonal.getUltimaActRef1());
-        hidenUltimaActRef2.setText(EntityReferenciaPersonal.getUltimaActRef2());
-        hidenUltimaActEmpresa.setText(EntityReferenciaPersonal.getUltimaActEmpresa());
 
         txtNombreRef1.setText(EntityReferenciaPersonal.getNombreRef1());
         txtApellidosRef1.setText(EntityReferenciaPersonal.getApellidosRef1());
-        spnRelacionRef1.setSelection(getIndex(spnRelacionRef1, String.valueOf(EntityReferenciaPersonal.getRelacionidRef1())));
+        spnRelacionRef1.setSelection(((ArrayAdapter) spnRelacionRef1.getAdapter()).getPosition(String.valueOf(EntityReferenciaPersonal.getRelacionidRef1())));
         txtTelefonoCelularRef1.setText(EntityReferenciaPersonal.getTelefonoRef1());
-        spnAmistadRef1.setSelection(getIndex(spnAmistadRef1, String.valueOf(EntityReferenciaPersonal.getAñoidRef1())));
+        //spnAmistadRef1.setSelection(getIndex(spnAmistadRef1, String.valueOf(EntityReferenciaPersonal.getAñoidRef1())));
 
         txtNombreRef2.setText(EntityReferenciaPersonal.getNombreRef2());
         txtApellidosRef2.setText(EntityReferenciaPersonal.getApellidosRef2());
-        spnRelacionRef2.setSelection(getIndex(spnRelacionRef2, String.valueOf(EntityReferenciaPersonal.getRelacionidRef2())));
+        //spnRelacionRef2.setSelection(getIndex(spnRelacionRef2, String.valueOf(EntityReferenciaPersonal.getRelacionidRef2())));
         txtTelefonoCelularRef2.setText(EntityReferenciaPersonal.getTelefonoRef2());
-        spnAmistadRef2.setSelection(getIndex(spnAmistadRef2, String.valueOf(EntityReferenciaPersonal.getAñoidRef2())));
+        //spnAmistadRef2.setSelection(getIndex(spnAmistadRef2, String.valueOf(EntityReferenciaPersonal.getAñoidRef2())));
 
         txtNombreEmpresa.setText(EntityReferenciaPersonal.getNombreEmpresa());
         txtTelefonoRefLaboral.setText(EntityReferenciaPersonal.getTelefonoEmpresa());
-        spnTrabajando.setSelection(getIndex(spnTrabajando, String.valueOf(EntityReferenciaPersonal.getAñoidEmpresa())));
+        //spnTrabajando.setSelection(getIndex(spnTrabajando, String.valueOf(EntityReferenciaPersonal.getAñoidEmpresa())));
     }
     private int getIndex(Spinner spinner, String value) {
         int index = 0;
@@ -542,10 +513,6 @@ public class Act_B1_Referencias extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
             Intent i = new Intent(getApplicationContext(), Act_B2_Personal.class);
-            i.putExtra("ClienteID", hidenClienteID.getText().toString());
-            i.putExtra("ImporteSolicitado", hidenImporteSolicitado.getText().toString());
-            i.putExtra("FechaPago", hidenFechaPago.getText().toString());
-            i.putExtra("SolicitudID", hidenSolicitudID.getText().toString());
             startActivity(i);
             finish();
         }
@@ -602,17 +569,17 @@ public class Act_B1_Referencias extends AppCompatActivity {
 
             //Campos de los controles ocultos debemos considerar que tienen valor para el momento en que
             //la app lo posicione sobre el bloque actual carge los datos que guardo con anterioridad
-            DatosEntidad.put("Clienteid", hidenClienteID.getText().toString());
-            DatosEntidad.put("ReferenciaLaboralid", hidenReferenciaLaboralid.getText().toString());
-            DatosEntidad.put("ReferenciaPersonalidRef1", hidenReferenciaPersonalidRef1.getText().toString());
-            DatosEntidad.put("ReferenciaPersonalidRef2", hidenReferenciaPersonalidRef2.getText().toString());
-            DatosEntidad.put("UltimaActEmpresa", Integer.parseInt(hidenUltimaActEmpresa.getText().toString()));
-            DatosEntidad.put("UltimaActRef1", Integer.parseInt(hidenUltimaActRef1.getText().toString()));
-            DatosEntidad.put("UltimaActRef2", Integer.parseInt(hidenUltimaActRef2.getText().toString()));
+            DatosEntidad.put("Clienteid", Sesion.getCliendeID());
+            DatosEntidad.put("ReferenciaLaboralid", EntityReferenciaPersonal.getReferenciaLaboralid());
+            DatosEntidad.put("ReferenciaPersonalidRef1", EntityReferenciaPersonal.getReferenciaPersonalidRef1());
+            DatosEntidad.put("ReferenciaPersonalidRef2", EntityReferenciaPersonal.getReferenciaPersonalidRef2());
+            DatosEntidad.put("UltimaActEmpresa", EntityReferenciaPersonal.getUltimaActEmpresa());
+            DatosEntidad.put("UltimaActRef1", EntityReferenciaPersonal.getUltimaActRef1());
+            DatosEntidad.put("UltimaActRef2", EntityReferenciaPersonal.getUltimaActRef2());
         } catch (Exception ex) {
 
         }
-        return "";
+        return DatosEntidad.toString();
     }
     //EndGuardar
 
