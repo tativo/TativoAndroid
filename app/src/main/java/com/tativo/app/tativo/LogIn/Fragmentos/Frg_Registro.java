@@ -2,6 +2,7 @@ package com.tativo.app.tativo.LogIn.Fragmentos;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -96,6 +97,16 @@ public class Frg_Registro extends Fragment{
             public void onClick(View v) {
                 if (ValidaGuardar()) {
                     new AsyncSaveData().execute();
+                }
+            }
+        });
+
+        txtCorreo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                {
+                    new AsyncValidaCorreo().execute();
                 }
             }
         });
@@ -213,7 +224,8 @@ public class Frg_Registro extends Fragment{
     }
 
     //GUARDAR
-    private class AsyncSaveData extends  AsyncTask<Void, Void, Void> {
+    private class AsyncSaveData extends  AsyncTask<Void, Void, Void>
+    {
         @Override
         protected Void doInBackground(Void... params) {
             SaveInfoBloque();
@@ -335,4 +347,77 @@ public class Frg_Registro extends Fragment{
         }
     }
     //GUARDAR
+
+    //VALIDAR CORREO
+    private class AsyncValidaCorreo extends  AsyncTask<Void, Void, Boolean>
+    {
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            Boolean CorreoValido = true;
+            CorreoValido = ValidaCorreo();
+            return CorreoValido;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean CorreoValido) {
+            progressDialog.dismiss();
+            if (CorreoValido)
+            {
+                txtCorreo.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ok, 0);
+            }
+            else
+            {
+                Drawable d = (Drawable) getContext().getResources().getDrawable(R.drawable.error);
+                txtCorreo.setError("correo duplicado");
+                txtCorreo.requestFocus();
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage("validando correo...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+
+
+    private Boolean ValidaCorreo(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/ValidaCorreoCliente";
+        String METHOD_NAME = "ValidaCorreoCliente";
+        String NAMESPACE = "http://tempuri.org/";
+        Boolean r = true;
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("correo");
+        pi1.setValue(txtCorreo.getText().toString());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
+                Boolean ev = Boolean.parseBoolean(esValido.toString());
+                if (ev) {
+                    SoapObject item = (SoapObject) respuesta.getProperty(0);
+                    if (Integer.parseInt(item.getProperty("UltimaAct").toString().trim()) == 0) {
+                        r = true;
+                    }
+                    else {
+                        r = false;
+                    }
+                }
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+        return  r;
+    }
+    //VALIDAR CORREO
+
 }
