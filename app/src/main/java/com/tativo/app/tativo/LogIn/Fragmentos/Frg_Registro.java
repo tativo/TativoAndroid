@@ -106,7 +106,12 @@ public class Frg_Registro extends Fragment{
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus)
                 {
-                    new AsyncValidaCorreo().execute();
+                    if (txtCorreo.getText().toString().toString().length() > 5 && isEmailValid(txtCorreo.getText().toString().trim()))
+                    {
+                        new AsyncValidaCorreo().execute();
+                    }
+                    else
+                        txtCorreo.setError(getText(R.string.FormatoCorreoInvalido));
                 }
             }
         });
@@ -137,7 +142,7 @@ public class Frg_Registro extends Fragment{
         }
         if (!isEmailValid(txtCorreo.getText().toString().trim()))
         {
-            txtCorreo.setError("El formato de correo no es valido");
+            txtCorreo.setError(getText(R.string.FormatoCorreoInvalido));
             txtCorreo.requestFocus();
             return false;
         }
@@ -153,14 +158,13 @@ public class Frg_Registro extends Fragment{
         }
         if (!txtConfirmaContrasena.getText().toString().trim().matches(txtContrasena.getText().toString().trim()))
         {
-            txtConfirmaContrasena.setError("La confirmación no es igual");
+            txtConfirmaContrasena.setError(getText(R.string.ConfirmacionContrasena));
             txtConfirmaContrasena.requestFocus();
             return false;
         }
 
         return true;
     }
-
 
     public void FocusNextControl(int o,String ot, int d,String dt, View v )
     {
@@ -243,7 +247,7 @@ public class Frg_Registro extends Fragment{
 
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage("Guardando...");
+            progressDialog.setMessage(getText(R.string.Guardando));
             progressDialog.show();
         }
 
@@ -367,15 +371,15 @@ public class Frg_Registro extends Fragment{
             }
             else
             {
-                Drawable d = (Drawable) getContext().getResources().getDrawable(R.drawable.error);
-                txtCorreo.setError("correo duplicado");
+                //Drawable d = (Drawable) getContext().getResources().getDrawable(R.drawable.error);
+                txtCorreo.setError(getText(R.string.CorreoDuplicado));
                 txtCorreo.requestFocus();
             }
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage("validando correo...");
+            progressDialog.setMessage(getText(R.string.ValidandoCorreo));
             progressDialog.show();
         }
 
@@ -383,7 +387,6 @@ public class Frg_Registro extends Fragment{
         protected void onProgressUpdate(Void... values) {
         }
     }
-
 
     private Boolean ValidaCorreo(){
         String SOAP_ACTION = "http://tempuri.org/IService1/ValidaCorreoCliente";
@@ -419,5 +422,4 @@ public class Frg_Registro extends Fragment{
         return  r;
     }
     //VALIDAR CORREO
-
 }

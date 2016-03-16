@@ -15,14 +15,12 @@
     <string name="spnHintMaterialSpinner">Elige una opción</string>
     <string name="swtTextON">Si</string>
     <string name="swtTxtOFF">No</string>
-    <string name="txtRequerido">Campo requerido</string>
 
     <!--LogIn-->
     <string name="txtLogInContrasena">Contraseña</string>
     <string name="txtLogInUsuario">Correo electrónico</string>
     <string name="lblTituloLogIn">Inicio de sesion</string>
     <string name="btnLogIn">Entrar</string>
-
 
     <!--Registro-->
     <string name="lblTituRegistro">Información Personal</string>
@@ -47,7 +45,6 @@
     <string name="spnRelacion">Relación</string>
     <string name="spnAmistad">Años de amistad</string>
     <string name="spnTrabajando">Años trabajando ahí</string>
-
 
     <!--Bloque 2 - Informacion Personal -->
     <string name="lblTituloInfPersonal">Información Personal</string>
@@ -134,6 +131,14 @@
     <string name="btnVerDocumentos">Ver documentos</string>
     <string name="btnSubirFoto">Seleccionar y subir</string>
     <string name="btnAceptarDocumentos">Enviar</string>
+
+    <!-- MENSAJES -->
+    <string name="FormatoCorreoInvalido">Formato de correo invalido</string>
+    <string name="CorreoDuplicado">Este correo ya fue registrado</string>
+    <string name="ValidandoCorreo">Validando correo...</string>
+    <string name="ConfirmacionContrasena">Las confirmacion no es igual</string>
+    <string name="txtRequerido">Campo requerido</string>
+    <string name="Guardando">Guardando datos...</string>
 
 </resources>
 
