@@ -8,9 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 
-import com.tativo.app.tativo.Bloques.Actividades.Act_B1_Referencias;
 import com.tativo.app.tativo.Bloques.Actividades.Act_B2_Personal;
 import com.tativo.app.tativo.R;
 

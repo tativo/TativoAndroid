@@ -5,7 +5,7 @@
     <string name="txtNombre">Nombre(s)</string>
     <string name="spnEstado">Estado</string>
     <string name="spnMunicipio">Municipio</string>
-    <string name="lblEstadoMunicipio">Estado/Municipio</string>
+    <string name="lblEstadoMunicipio">Municipio/Estado</string>
     <string name="spnColonia">Colonia</string>
     <string name="txtCodigoPostal">Código Postal</string>
     <string name="txtCalle">Calle</string>
@@ -140,6 +140,9 @@
     <string name="ConfirmacionContrasena">Las confirmacion no es igual</string>
     <string name="txtRequerido">Campo requerido</string>
     <string name="Guardando">Guardando datos...</string>
+    <string name="FormatoCP">Codigo postal incorrecto</string>
+    <string name="CPNoEncontrado">Codigo postal no encontrado</string>
+    <string name="Buscando">Buscando...</string>
 
 </resources>
 

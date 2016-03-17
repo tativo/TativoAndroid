@@ -82,6 +82,7 @@
                         android:hint="@string/txtCodigoPostal"
                         android:inputType="number"
                         android:maxLines="1"
+                        android:maxLength="5"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
