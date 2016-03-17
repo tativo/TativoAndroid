@@ -5,6 +5,7 @@
     <string name="txtNombre">Nombre(s)</string>
     <string name="spnEstado">Estado</string>
     <string name="spnMunicipio">Municipio</string>
+    <string name="lblEstadoMunicipio">Estado/Municipio</string>
     <string name="spnColonia">Colonia</string>
     <string name="txtCodigoPostal">Código Postal</string>
     <string name="txtCalle">Calle</string>
@@ -58,7 +59,7 @@
     <string name="txt4DigitosTarjeta">¿Cuales son los últimos 4 digitos de la tarjeta?</string>
     <string name="lblCreditoHipotecario">¿Tienes crédito hipotecario vigente?</string>
     <string name="lblCreditoAutomotriz">¿Has tenido crédito automotriz en los últimos 2 años?</string>
-    <string name="ckTerminosCondiciones1">Acepto que tativo trate mis datos económicos / financieron para las descritas en este <a href="www.tativo.com">Aviso de Privacidad</a>.</string>
+    <string name="ckTerminosCondiciones1">Acepto que tativo trate mis datos económicos / financieron para las descritas en este <a href="http://www.tativo.com">Aviso de Privacidad.</a></string>
     <string name="ckTerminosCondiciones2">Acepto que tativo utilice mi información personal sensible que yo voluntariamente revele para las finalidades descritas en este <a href="www.tativo.com">Aviso de Privacidad</a>.</string>
     <string name="ckTerminosCondiciones3">Manifiesto que he leído en su totalidad el <a href="www.tativo.com">Aviso de Privacidad</a> y consiento que mis datos personales sean tratados y transferido conforme a los términos y condiciones que se señalan en los términos y condiciones.</string>
     <string name="ckTerminosCondiciones4">Por este conducto autorizo a Tativo para a través de su personal facultado, lleve a cabo investigaciones de mi comportamiento crediticio.</string>

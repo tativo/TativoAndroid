@@ -16,15 +16,28 @@
             android:orientation="vertical">
 
             <LinearLayout style="@style/TativoLinearLayoutBorde">
-                <android.support.design.widget.TextInputLayout
-                    style="@style/TativoTextInputLayout">
-                    <AutoCompleteTextView
-                        android:id="@+id/txtFechaNacimiento"
-                        android:hint="@string/txtFechaNacimiento"
-                        android:inputType="date"
-                        android:maxLines="1"
-                        style="@style/TativoAutoCompleteTextView"/>
-                </android.support.design.widget.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/TativoTextInputLayout"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+                        <AutoCompleteTextView
+                            android:id="@+id/txtFechaNacimiento"
+                            android:hint="@string/txtFechaNacimiento"
+                            android:inputType="date"
+                            android:maxLines="1"
+                            style="@style/TativoAutoCompleteTextView"/>
+                    </android.support.design.widget.TextInputLayout>
+                    <Button
+                        android:id="@+id/btnFechaNacimiento"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@android:drawable/ic_menu_my_calendar"
+                        style="@style/Widget.AppCompat.Button.Borderless"/>
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
                 <android.support.design.widget.TextInputLayout
@@ -72,29 +85,15 @@
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde">
-                <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/spnEstados"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/Lista"
-                    app:ms_hint="@string/spnEstado"
-                    app:ms_enableErrorLabel="false"
-                    app:ms_thickness="0dp"
-                    app:ms_alignLabels="true">
-                </fr.ganfra.materialspinner.MaterialSpinner>
-            </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde">
-                <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/spnMunicipio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/Lista"
-                    app:ms_hint="@string/spnMunicipio"
-                    app:ms_enableErrorLabel="false"
-                    app:ms_thickness="0dp"
-                    app:ms_alignLabels="true">
-                </fr.ganfra.materialspinner.MaterialSpinner>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:padding="8dp">
+                <TextView style="@style/TativoTextViewHint"
+                    android:hint="@string/lblEstadoMunicipio"
+                    android:id="@+id/hnEstadoMunicipioTitulo" />
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/hnEstadoMunicipioTexto"
+
+                    android:singleLine="false"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
                 <fr.ganfra.materialspinner.MaterialSpinner
