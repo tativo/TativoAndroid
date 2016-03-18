@@ -4,25 +4,32 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tativo.app.tativo.LogIn.Clases.DatosCodigoPostal;
+import com.tativo.app.tativo.Bloques.Clases.Catcolonia;
+import com.tativo.app.tativo.Bloques.Clases.Catestadoscivil;
+import com.tativo.app.tativo.Bloques.Clases.Catmarcastelefonos;
+import com.tativo.app.tativo.Bloques.Clases.DatosCodigoPostal;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
@@ -36,6 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -50,6 +58,13 @@ public class Act_B2_Personal extends AppCompatActivity {
     ProgressDialog progressDialog;
     Globals g;
     DatosCodigoPostal datosCP;
+    AdapterEstadosCivil EstadosCivilAdapter;
+    AdapterMarcaTelefono MarcaTelefonoAdapter;
+    AdapterColonias ColoniasAdapter;
+    ArrayList<Catestadoscivil> lstCatestadoscivil = new ArrayList<Catestadoscivil>();
+    ArrayList<Catmarcastelefonos> lstCatMarcaTelefono = new ArrayList<Catmarcastelefonos>();
+    ArrayList<Catcolonia> lstCatColonia = new ArrayList<Catcolonia>();
+
 
     int year_x, month_x, day_x;
     static final int DILOG_ID = 0;
@@ -64,11 +79,14 @@ public class Act_B2_Personal extends AppCompatActivity {
         LoadFormControls();
         FocusManager();
         EventManager();
+        new AsyncLoadData().execute();
 
         final Calendar cal = Calendar.getInstance();
         year_x = cal.get(Calendar.YEAR);
         month_x = cal.get(Calendar.MONTH);
         day_x = cal.get(Calendar.DAY_OF_MONTH);
+
+        spnColonia.setEnabled(false);
 
         txtFechaNacimiento.requestFocus();
     }
@@ -161,6 +179,8 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
         });
 
+
+
     }
 
     public void FocusNextControl(int o,String ot, int d,String dt)
@@ -221,6 +241,10 @@ public class Act_B2_Personal extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
             Boolean encontroCP = false;
             encontroCP = TraerDatosCodigoPostal();
+            if (encontroCP)
+            {
+                GetCatColonia();
+            }
             return encontroCP;
         }
 
@@ -230,12 +254,16 @@ public class Act_B2_Personal extends AppCompatActivity {
             if (encontroCP)
             {
                 hnEstadoMunicipioTexto.setText(datosCP.getMunicipio() + "/" + datosCP.getEstado());
+                spnColonia.setEnabled(true);
+                ColoniasAdapter = new AdapterColonias(lstCatColonia);
+                spnColonia.setAdapter(ColoniasAdapter);
             }
             else
             {
                 hnEstadoMunicipioTexto.setText("");
                 txtCodigoPostal.setError(getText(R.string.CPNoEncontrado));
                 txtCodigoPostal.requestFocus();
+                spnColonia.setEnabled(false);
             }
         }
 
@@ -296,6 +324,234 @@ public class Act_B2_Personal extends AppCompatActivity {
     //CODIGO POSTAL
 
 
+
+    //LLENA SPINNER
+    private class AsyncLoadData extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            GetCatEstadosCivil();
+            GetCatMarcaTelefono();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            EstadosCivilAdapter = new AdapterEstadosCivil(lstCatestadoscivil);
+            spnEstadoCivil.setAdapter(EstadosCivilAdapter);
+
+            MarcaTelefonoAdapter = new AdapterMarcaTelefono(lstCatMarcaTelefono);
+            spnMarcaCelular.setAdapter(MarcaTelefonoAdapter);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage(getText(R.string.Cargando));
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+
+    private void GetCatEstadosCivil(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatEstadosCivil";
+        String METHOD_NAME = "GetCatEstadosCivil";
+        String NAMESPACE = "http://tempuri.org/";
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,null);
+        if(respuesta != null) {
+            try {
+                String[] listaRespuesta;
+                listaRespuesta = new String[respuesta.getPropertyCount()];
+                SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
+                for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
+                    SoapObject item = (SoapObject) listaElementos.getProperty(i);
+                    Catestadoscivil entidad = new Catestadoscivil();
+                    entidad.setEstadocivilid(Integer.parseInt(item.getProperty("Estadocivilid").toString()));
+                    entidad.setDescripcion(item.getProperty("Descripcion").toString());
+                    lstCatestadoscivil.add(entidad);
+                }
+                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
+                Boolean ev = Boolean.parseBoolean(esValido.toString());
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private class AdapterEstadosCivil extends BaseAdapter implements SpinnerAdapter {
+        private final List<Catestadoscivil> data;
+
+        public AdapterEstadosCivil(List<Catestadoscivil> data){
+            this.data = data;
+        }
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+        @Override
+        public Object getItem(int position) {
+            return data.get(position);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+        @Override
+        public View getView(int position, View recycle, ViewGroup parent) {
+            TextView text;
+            if (recycle != null){
+                text = (TextView) recycle;
+            } else {
+                text = (TextView) getLayoutInflater().inflate(
+                        android.R.layout.simple_dropdown_item_1line, parent, false
+                );
+            }
+            text.setTextColor(Color.BLACK);
+            text.setText(data.get(position).getDescripcion());
+            return text;
+        }
+    }
+
+
+    private void GetCatMarcaTelefono(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatMarcasTelefonos";
+        String METHOD_NAME = "GetCatMarcasTelefonos";
+        String NAMESPACE = "http://tempuri.org/";
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,null);
+        if(respuesta != null) {
+            try {
+                String[] listaRespuesta;
+                listaRespuesta = new String[respuesta.getPropertyCount()];
+                SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
+                for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
+                    SoapObject item = (SoapObject) listaElementos.getProperty(i);
+                    Catmarcastelefonos entidad = new Catmarcastelefonos();
+                    entidad.setMarcaid(Integer.parseInt(item.getProperty("Marcaid").toString()));
+                    entidad.setDescripcion(item.getProperty("Descripcion").toString());
+                    lstCatMarcaTelefono.add(entidad);
+                }
+                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
+                Boolean ev = Boolean.parseBoolean(esValido.toString());
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private class AdapterMarcaTelefono extends BaseAdapter implements SpinnerAdapter {
+        private final List<Catmarcastelefonos> data;
+
+        public AdapterMarcaTelefono(List<Catmarcastelefonos> data){
+            this.data = data;
+        }
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+        @Override
+        public Object getItem(int position) {
+            return data.get(position);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+        @Override
+        public View getView(int position, View recycle, ViewGroup parent) {
+            TextView text;
+            if (recycle != null){
+                text = (TextView) recycle;
+            } else {
+                text = (TextView) getLayoutInflater().inflate(
+                        android.R.layout.simple_dropdown_item_1line, parent, false
+                );
+            }
+            text.setTextColor(Color.BLACK);
+            text.setText(data.get(position).getDescripcion());
+            return text;
+        }
+    }
+
+
+    private void GetCatColonia(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatcolonia";
+        String METHOD_NAME = "GetCatcolonia";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("codigopostal");
+        pi1.setValue(txtCodigoPostal.getText().toString());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+                String[] listaRespuesta;
+                listaRespuesta = new String[respuesta.getPropertyCount()];
+                SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
+                for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
+                    SoapObject item = (SoapObject) listaElementos.getProperty(i);
+                    Catcolonia entidad = new Catcolonia();
+                    entidad.setCiudadid(item.getProperty("Ciudadid").toString());
+                    entidad.setColoniaid(item.getProperty("Coloniaid").toString());
+                    entidad.setColonia(item.getProperty("Colonia").toString());
+                    lstCatColonia.add(entidad);
+                }
+                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
+                Boolean ev = Boolean.parseBoolean(esValido.toString());
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private class AdapterColonias extends BaseAdapter implements SpinnerAdapter {
+        private final List<Catcolonia> data;
+
+        public AdapterColonias(List<Catcolonia> data){
+            this.data = data;
+        }
+        @Override
+        public int getCount() {
+            return data.size();
+        }
+        @Override
+        public Object getItem(int position) {
+            return data.get(position);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+        @Override
+        public View getView(int position, View recycle, ViewGroup parent) {
+            TextView text;
+            if (recycle != null){
+                text = (TextView) recycle;
+            } else {
+                text = (TextView) getLayoutInflater().inflate(
+                        android.R.layout.simple_dropdown_item_1line, parent, false
+                );
+            }
+            text.setTextColor(Color.BLACK);
+            text.setText(data.get(position).getColonia());
+            return text;
+        }
+    }
+
+
+
+    //LLENA SPINNER
 
 
 

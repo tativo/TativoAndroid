@@ -194,13 +194,11 @@
     </style>
 
     <string-array name="Lista">
-        <item>Valor1</item>
-        <item>Valor2</item>
-        <item>Valor3</item>
-        <item>Valor4</item>
-        <item>Valor5</item>
-        <item>Valor6</item>
-        <item>Valor7</item>
-        <item>Valor8</item>
+        <item>vacio</item>
+    </string-array>
+
+    <string-array name="ListaGenero">
+        <item>Hombre</item>
+        <item>Mujer</item>
     </string-array>
 </resources>

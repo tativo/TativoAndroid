@@ -1,4 +1,4 @@
-package com.tativo.app.tativo.LogIn.Clases;
+package com.tativo.app.tativo.Bloques.Clases;
 
 /**
  * Created by sistemasprimos on 17/03/16.

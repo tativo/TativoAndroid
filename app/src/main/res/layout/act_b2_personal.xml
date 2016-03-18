@@ -29,6 +29,7 @@
                             android:hint="@string/txtFechaNacimiento"
                             android:inputType="date"
                             android:maxLines="1"
+                            android:maxLength="10"
                             style="@style/TativoAutoCompleteTextView"/>
                     </android.support.design.widget.TextInputLayout>
                     <Button
@@ -47,6 +48,7 @@
                         android:hint="@string/txtPersonasDependientes"
                         android:inputType="number"
                         android:maxLines="1"
+                        android:maxLength="3"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -55,7 +57,7 @@
                     android:id="@+id/spnGenero"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/Lista"
+                    android:entries="@array/ListaGenero"
                     app:ms_hint="@string/spnGenero"
                     app:ms_enableErrorLabel="false"
                     app:ms_thickness="0dp"
@@ -67,7 +69,6 @@
                     android:id="@+id/spnEstadoCivil"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/Lista"
                     app:ms_hint="@string/spnEstadoCivil"
                     app:ms_enableErrorLabel="false"
                     app:ms_thickness="0dp"
@@ -93,7 +94,6 @@
                     android:id="@+id/hnEstadoMunicipioTitulo" />
                 <TextView style="@style/TativoTextView"
                     android:id="@+id/hnEstadoMunicipioTexto"
-
                     android:singleLine="false"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
@@ -105,6 +105,7 @@
                     app:ms_hint="@string/spnColonia"
                     app:ms_enableErrorLabel="false"
                     app:ms_thickness="0dp"
+                    app:ms_multiline="false"
                     app:ms_alignLabels="true">
                 </fr.ganfra.materialspinner.MaterialSpinner>
             </LinearLayout>
@@ -116,6 +117,7 @@
                         android:hint="@string/txtCalle"
                         android:inputType="textCapSentences"
                         android:maxLines="1"
+                        android:maxLength="250"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -127,6 +129,7 @@
                         android:hint="@string/txtNumeroExt"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:maxLength="100"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -138,6 +141,7 @@
                         android:hint="@string/txtNumeroInt"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:maxLength="100"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -149,6 +153,7 @@
                         android:hint="@string/txtTelefonoCelular"
                         android:inputType="phone"
                         android:maxLines="1"
+                        android:maxLength="30"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>

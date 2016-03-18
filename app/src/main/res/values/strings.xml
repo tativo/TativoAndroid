@@ -53,7 +53,7 @@
     <string name="txtPersonasDependientes">Personas depedientes</string>
     <string name="spnGenero">Género</string>
     <string name="spnEstadoCivil">Estado Civil</string>
-    <string name="spnMarcaCelular">Estad Civil</string>
+    <string name="spnMarcaCelular">Marca del celular</string>
     <string name="lblTarjetaCredito">¿Cuentas con alguna tarjeta de crédito?</string>
     <string name="lblCuentanosSobreTi">Cuentanos sobre ti</string>
     <string name="txt4DigitosTarjeta">¿Cuales son los últimos 4 digitos de la tarjeta?</string>
@@ -143,6 +143,7 @@
     <string name="FormatoCP">Codigo postal incorrecto</string>
     <string name="CPNoEncontrado">Codigo postal no encontrado</string>
     <string name="Buscando">Buscando...</string>
+    <string name="Cargando">Cargando...</string>
 
 </resources>
 
