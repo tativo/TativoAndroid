@@ -26,14 +26,18 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tativo.app.tativo.Bloques.Clases.Catanio;
 import com.tativo.app.tativo.Bloques.Clases.Catcolonia;
+import com.tativo.app.tativo.Bloques.Clases.Catdatospersonal;
 import com.tativo.app.tativo.Bloques.Clases.Catestadoscivil;
+import com.tativo.app.tativo.Bloques.Clases.Catidentidadcliente;
 import com.tativo.app.tativo.Bloques.Clases.Catmarcastelefonos;
 import com.tativo.app.tativo.Bloques.Clases.DatosCodigoPostal;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
 
+import org.json.JSONObject;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -42,6 +46,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +56,7 @@ public class Act_B2_Personal extends AppCompatActivity {
 
     Button btnInfPersonal, btnFechaNacimiento;
     AutoCompleteTextView txtFechaNacimiento, txtDependientes, txtCodigoPostal, txtCalle, txtNumeroExt, txtNumeroInt, txtTelefonoCelular, txt4DigitosTarjeta;
+    TextView txtAgregarColonia;
     MaterialSpinner spnGenero, spnEstadoCivil, spnColonia, spnMarcaCelular;
     Switch swtTarjetaCredito, swtCreditoHipotecario, swtCreditoAutomotriz;
     CheckBox ckTerminosCondiciones1, ckTerminosCondiciones2, ckTerminosCondiciones3, ckTerminosCondiciones4;
@@ -58,12 +64,15 @@ public class Act_B2_Personal extends AppCompatActivity {
     ProgressDialog progressDialog;
     Globals g;
     DatosCodigoPostal datosCP;
+    Catdatospersonal catdatospersonal;
+    Catidentidadcliente catidentidadcliente;
     AdapterEstadosCivil EstadosCivilAdapter;
     AdapterMarcaTelefono MarcaTelefonoAdapter;
     AdapterColonias ColoniasAdapter;
     ArrayList<Catestadoscivil> lstCatestadoscivil = new ArrayList<Catestadoscivil>();
     ArrayList<Catmarcastelefonos> lstCatMarcaTelefono = new ArrayList<Catmarcastelefonos>();
     ArrayList<Catcolonia> lstCatColonia = new ArrayList<Catcolonia>();
+
 
 
     int year_x, month_x, day_x;
@@ -88,6 +97,9 @@ public class Act_B2_Personal extends AppCompatActivity {
 
         spnColonia.setEnabled(false);
 
+        catdatospersonal = new Catdatospersonal();
+        catidentidadcliente = new Catidentidadcliente();
+
         txtFechaNacimiento.requestFocus();
     }
 
@@ -104,6 +116,8 @@ public class Act_B2_Personal extends AppCompatActivity {
         txtTelefonoCelular = (AutoCompleteTextView) findViewById(R.id.txtTelefonoCelular);
         txt4DigitosTarjeta = (AutoCompleteTextView) findViewById(R.id.txt4DigitosTarjeta);
 
+        txtAgregarColonia = (TextView) findViewById(R.id.txtAgregarColonia);
+
         spnGenero = (MaterialSpinner) findViewById(R.id.spnGenero);
         spnEstadoCivil = (MaterialSpinner) findViewById(R.id.spnEstadoCivil);
         spnColonia = (MaterialSpinner) findViewById(R.id.spnColonia);
@@ -119,8 +133,6 @@ public class Act_B2_Personal extends AppCompatActivity {
         ckTerminosCondiciones4 = (CheckBox) findViewById(R.id.ckTerminosCondiciones4);
 
         hnEstadoMunicipioTexto = (TextView) findViewById(R.id.hnEstadoMunicipioTexto);
-
-
     }
 
     public void FocusManager()
@@ -158,29 +170,36 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
         });
 
-        btnInfPersonal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Act_B3_InfDeposito.class);
-                startActivity(i);
-                finish();
-            }
-        });
-
         txtCodigoPostal.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     if (txtCodigoPostal.getText().toString().trim().length() == 5) {
                         new AsyncTraerDatosCodigoPostal().execute();
-                    } else
-                        txtCodigoPostal.setError(getText(R.string.FormatoCP));
+                    } else {
+                        if (txtCodigoPostal.getText().toString().trim().length() > 0)
+                            txtCodigoPostal.setError(getText(R.string.FormatoCP));
+                    }
+
                 }
             }
         });
 
+        btnInfPersonal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ValidaGuardar()) {
+                    new AsyncGuardar().execute();
+                }
+            }
+        });
 
-
+        txtAgregarColonia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"Agregar Colonia",Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void FocusNextControl(int o,String ot, int d,String dt)
@@ -380,7 +399,6 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterEstadosCivil extends BaseAdapter implements SpinnerAdapter {
         private final List<Catestadoscivil> data;
 
@@ -416,7 +434,6 @@ public class Act_B2_Personal extends AppCompatActivity {
         }
     }
 
-
     private void GetCatMarcaTelefono(){
         String SOAP_ACTION = "http://tempuri.org/IService1/GetCatMarcasTelefonos";
         String METHOD_NAME = "GetCatMarcasTelefonos";
@@ -442,7 +459,6 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterMarcaTelefono extends BaseAdapter implements SpinnerAdapter {
         private final List<Catmarcastelefonos> data;
 
@@ -478,7 +494,6 @@ public class Act_B2_Personal extends AppCompatActivity {
         }
     }
 
-
     private void GetCatColonia(){
         String SOAP_ACTION = "http://tempuri.org/IService1/GetCatcolonia";
         String METHOD_NAME = "GetCatcolonia";
@@ -495,6 +510,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
         if(respuesta != null) {
             try {
+                lstCatColonia = new ArrayList<Catcolonia>();
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
@@ -513,7 +529,6 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterColonias extends BaseAdapter implements SpinnerAdapter {
         private final List<Catcolonia> data;
 
@@ -548,13 +563,260 @@ public class Act_B2_Personal extends AppCompatActivity {
             return text;
         }
     }
-
-
-
     //LLENA SPINNER
 
 
 
+    //GUARDAR
+    private boolean ValidaGuardar() {
+        ArrayList<Object> Objetos = new ArrayList<Object>();
+        Objetos.add(txtFechaNacimiento);
+        Objetos.add(txtDependientes);
+        Objetos.add(txtCodigoPostal);
+        Objetos.add(txtCalle);
+        Objetos.add(txtNumeroExt);
+        Objetos.add(txtNumeroInt);
+        Objetos.add(txtTelefonoCelular);
+        Objetos.add(spnGenero);
+        Objetos.add(spnEstadoCivil);
+        Objetos.add(spnColonia);
+        Objetos.add(spnMarcaCelular);
+        if (swtTarjetaCredito.isChecked())
+            Objetos.add(txt4DigitosTarjeta);
+        Objetos.add(ckTerminosCondiciones1);
+        Objetos.add(ckTerminosCondiciones2);
+        Objetos.add(ckTerminosCondiciones3);
+        Objetos.add(ckTerminosCondiciones4);
+        Collections.reverse(Objetos);
+        boolean requeridos = false;
+        for (Object item:Objetos) {
+            if(item instanceof EditText){
+                if (((EditText) item).getText().toString().trim().length() == 0) {
+                    ((EditText) item).setError(getString(R.string.txtRequerido));
+                    ((EditText) item).requestFocus();
+                    requeridos = true;
+                }
+            }
+            if(item instanceof Spinner){
+                if(((Spinner) item).getSelectedItemPosition() == 0){
+                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.txtRequerido));
+                    ((Spinner) item).requestFocus();
+                    requeridos = true;
+                }
+            }
+            if(item instanceof CheckBox){
+                if(!((CheckBox) item).isChecked()){
+                    ((CheckBox) item).requestFocus();
+                    requeridos = true;
+                }
+            }
+        }
+
+        return !requeridos;
+    }
+
+    private class AsyncGuardar extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            GuardarDatos();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            Intent i = new Intent(getApplicationContext(), Act_B3_InfDeposito.class);
+            startActivity(i);
+            finish();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage(getText(R.string.Guardando));
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GuardarDatos()
+    {
+        String SOAP_ACTION = "http://tempuri.org/IService1/SetCatreferenciaspersonalTelefono";
+        String METHOD_NAME = "SetCatreferenciaspersonalTelefono";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("value");
+        pi1.setValue(getEntityToSave());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private String getEntityToSave() {
+        JSONObject DatosEntidad = new JSONObject();
+        JSONObject DatosPersonales = new JSONObject();
+        JSONObject DatosIdentidad = new JSONObject();
+        try {
+            DatosPersonales.put("Datopersonalid", catdatospersonal.getDatopersonalid().toString());
+            DatosPersonales.put("Clienteid", g.getCliendeID());
+            DatosPersonales.put("Genero", spnGenero.getSelectedItem().toString().substring(0, 1));
+            DatosPersonales.put("Fechanacimiento", txtFechaNacimiento.getText().toString());
+            DatosPersonales.put("Estadocivilid", ((Catestadoscivil) spnEstadoCivil.getSelectedItem()).getEstadocivilid());
+            DatosPersonales.put("Dependientes", txtDependientes.getText().toString());
+            DatosPersonales.put("Telefono", txtTelefonoCelular.getText().toString());
+            DatosPersonales.put("Marcaid", ((Catmarcastelefonos) spnMarcaCelular.getSelectedItem()).getMarcaid());
+            DatosPersonales.put("Calle", txtCalle.getText().toString());
+            DatosPersonales.put("Numeroext", txtNumeroExt.getText().toString());
+            DatosPersonales.put("Numeroint", txtNumeroInt.getText().toString());
+            DatosPersonales.put("Colonia", ((Catcolonia) spnColonia.getSelectedItem()).getColoniaid());
+            DatosPersonales.put("Codigopostal", txtCodigoPostal.getText().toString());
+            DatosPersonales.put("Paisid", datosCP.getPaisID().toString());
+            DatosPersonales.put("Estadoid", datosCP.getEstadoID().toString());
+            DatosPersonales.put("Municipioid", datosCP.getMunicipioID().toString());
+            DatosPersonales.put("Ciudadid", datosCP.getCiudadID().toString());
+            DatosPersonales.put("UltimaAct", catdatospersonal.getUltimaAct());
+
+
+            DatosPersonales.put("Identidadclienteid", catidentidadcliente.getIdentidadclienteid());
+            DatosPersonales.put("Clienteid", g.getCliendeID());
+            DatosPersonales.put("Tarjetacredito", catidentidadcliente.getTarjetacredito());
+            DatosPersonales.put("Ultimoscuatrodigitos", catidentidadcliente.getUltimoscuatrodigitos());
+            DatosPersonales.put("Creditohipotecario", catidentidadcliente.getCreditohipotecario());
+            DatosPersonales.put("Creditoautomotriz", catidentidadcliente.getCreditoautomotriz());
+            DatosPersonales.put("UltimaAct", catidentidadcliente.getUltimaAct());
+            //Campos de los controles ocultos debemos considerar que tienen valor para el momento en que
+            //la app lo posicione sobre el bloque actual carge los datos que guardo con anterioridad
+
+            DatosEntidad.put("DatosPersonales", DatosPersonales);
+            DatosEntidad.put("DatosIdentidad", DatosIdentidad);
+        } catch (Exception ex) {
+
+        }
+        return DatosEntidad.toString();
+    }
+    //GUARDAR
+
+    /*
+    //CARGAR DATOS BLOQUE
+    private class AsyncInfoBloque extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            GetInfoBloque();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            if(EntityReferenciaPersonal.getUltimaActRef1() != 0){
+                SetInfoBloque();
+            }
+        }
+        @Override
+        protected void onPreExecute() {
+            //progressDialog.setMessage("Cargando...");
+            //progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GetInfoBloque(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatreferenciaspersonal";
+        String METHOD_NAME = "GetCatreferenciaspersonal";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("clienteid");
+        pi1.setValue(g.getCliendeID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+                String[] listaRespuesta;
+                listaRespuesta = new String[respuesta.getPropertyCount()];
+                SoapObject item = (SoapObject) respuesta.getProperty(0);
+                if(item.getProperty("Catdatospersonal").toString() != null){
+                    SoapObject itemdp = (SoapObject) respuesta.getProperty(0);
+                    SoapObject itemdi = (SoapObject) respuesta.getProperty(1);
+
+                    catdatospersonal.setDatopersonalid(itemdp.getProperty("Datopersonalid").toString());
+                    catdatospersonal.setClienteid(itemdp.getProperty("Clienteid").toString());
+                    catdatospersonal.setGenero(itemdp.getProperty("Genero").toString());
+                    catdatospersonal.setFechanacimiento(formatoFecha(itemdp.getProperty("Fechanacimiento").toString(), "dd/MM/yyyy"));
+                    catdatospersonal.setEstadocivilid(Integer.parseInt(itemdp.getProperty("Estadocivilid").toString()));
+                    catdatospersonal.setDependientes(Integer.parseInt(itemdp.getProperty("Dependientes").toString()));
+                    catdatospersonal.setTelefono(itemdp.getProperty("Telefono").toString());
+                    catdatospersonal.setMarcaid(Integer.parseInt(itemdp.getProperty("Marcaid").toString()));
+                    catdatospersonal.setCalle(itemdp.getProperty("Calle").toString());
+                    catdatospersonal.setNumeroext(itemdp.getProperty("Numeroext").toString());
+                    catdatospersonal.setNumeroint(itemdp.getProperty("Numeroint").toString());
+                    catdatospersonal.setColonia(itemdp.getProperty("Colonia").toString());
+                    catdatospersonal.setCodigopostal(itemdp.getProperty("Codigopostal").toString());
+                    catdatospersonal.setPaisid(itemdp.getProperty("Paisid").toString());
+                    catdatospersonal.setEstadoid(itemdp.getProperty("Estadoid").toString());
+                    catdatospersonal.setMunicipioid(itemdp.getProperty("Municipioid").toString());
+                    catdatospersonal.setCiudadid(itemdp.getProperty("Ciudadid").toString());
+                    catdatospersonal.setUltimaAct(Integer.parseInt(itemdp.getProperty("UltimaAct").toString()));
+
+
+                    catidentidadcliente.setIdentidadclienteid(itemdi.getProperty("Identidadclienteid").toString());
+                    catidentidadcliente.setClienteid(itemdi.getProperty("Clienteid").toString());
+                    catidentidadcliente.setTarjetacredito(Boolean.parseBoolean(itemdi.getProperty("Tarjetacredito").toString()));
+                    catidentidadcliente.setUltimoscuatrodigitos(itemdi.getProperty("Ultimoscuatrodigitos").toString());
+                    catidentidadcliente.setCreditohipotecario(Boolean.parseBoolean(itemdi.getProperty("Creditohipotecario").toString()));
+                    catidentidadcliente.setCreditoautomotriz(Boolean.parseBoolean(itemdi.getProperty("Creditoautomotriz").toString()));
+                    catidentidadcliente.setUltimaAct(Integer.parseInt(itemdi.getProperty("UltimaAct").toString()));
+
+                }
+                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
+                Boolean ev = Boolean.parseBoolean(esValido.toString());
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private void SetInfoBloque() {
+        int genero = 0;
+        if (catdatospersonal.getGenero().toString() == "M")
+            genero = 1;
+        else
+            genero = 2;
+
+        spnGenero.setSelection(genero);
+        txtFechaNacimiento.setText(catdatospersonal.getFechanacimiento().toString());
+        spnEstadoCivil.setSelection(catdatospersonal.getEstadocivilid());
+        txtDependientes.setText(catdatospersonal.getDependientes());
+        txtTelefonoCelular.setText(catdatospersonal.getTelefono());
+        spnMarcaCelular.setSelection(catdatospersonal.getMarcaid());
+        txtCalle.setText(catdatospersonal.getCalle());
+        txtNumeroExt.setText(catdatospersonal.getNumeroext());
+        txtNumeroInt.setText(catdatospersonal.getNumeroint());
+        //spnColonia.setText(catdatospersonal.getDependientes());
+        txtCodigoPostal.setText(catdatospersonal.getCodigopostal());
+
+        swtTarjetaCredito.setChecked(catidentidadcliente.getTarjetacredito());
+        txt4DigitosTarjeta.setText(catidentidadcliente.getUltimoscuatrodigitos());
+        swtCreditoHipotecario.setChecked(catidentidadcliente.getCreditohipotecario());
+        swtCreditoAutomotriz.setChecked(catidentidadcliente.getCreditoautomotriz());
+
+    }
+    //CARGAR DATOS BLOQUE
+*/
 
 
 
@@ -583,10 +845,26 @@ public class Act_B2_Personal extends AppCompatActivity {
             day_x = dayOfMonth;
 
             String sfecha = day_x+"/"+month_x+"/"+year_x;
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            ParsePosition pp = new ParsePosition(0);
-            Date d = format.parse(sfecha, pp);
-            txtFechaNacimiento.setText(format.format(d).toString());
+            txtFechaNacimiento.setText(formatoFechaString(sfecha,"dd/MM/yyyy"));
         }
     };
+
+    private Date formatoFecha(String Fecha, String Formato)
+    {
+        String sfecha = day_x+"/"+month_x+"/"+year_x;
+        SimpleDateFormat format = new SimpleDateFormat(Formato);
+        ParsePosition pp = new ParsePosition(0);
+        Date d = format.parse(sfecha, pp);
+        return d;
+    }
+
+    private String formatoFechaString(String Fecha, String Formato)
+    {
+        String sfecha = day_x+"/"+month_x+"/"+year_x;
+        SimpleDateFormat format = new SimpleDateFormat(Formato);
+        ParsePosition pp = new ParsePosition(0);
+        Date d = format.parse(sfecha, pp);
+        return format.format(d).toString();
+    }
+
 }

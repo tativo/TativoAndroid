@@ -108,6 +108,20 @@
                     app:ms_multiline="false"
                     app:ms_alignLabels="true">
                 </fr.ganfra.materialspinner.MaterialSpinner>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end">
+                    <TextView
+                        android:id="@+id/txtAgregarColonia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Agregar colonia"
+                        android:textSize="12sp"
+                        android:textColor="@color/colorAzulOscuro"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginRight="8dp"/>
+                </RelativeLayout>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
                 <android.support.design.widget.TextInputLayout
