@@ -8,6 +8,7 @@
     <string name="lblEstadoMunicipio">Municipio/Estado</string>
     <string name="spnColonia">Colonia</string>
     <string name="txtCodigoPostal">Código Postal</string>
+    <string name="txtNuevaColonia">Agregar colonia</string>
     <string name="txtCalle">Calle</string>
     <string name="txtNumeroExt">Numero Ext.</string>
     <string name="txtNumeroInt">Numero Int.</string>

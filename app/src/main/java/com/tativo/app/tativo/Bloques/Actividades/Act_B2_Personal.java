@@ -20,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Switch;
@@ -54,8 +55,8 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class Act_B2_Personal extends AppCompatActivity {
 
-    Button btnInfPersonal, btnFechaNacimiento;
-    AutoCompleteTextView txtFechaNacimiento, txtDependientes, txtCodigoPostal, txtCalle, txtNumeroExt, txtNumeroInt, txtTelefonoCelular, txt4DigitosTarjeta;
+    Button btnInfPersonal, btnFechaNacimiento, btnCancelNuevacolonia;
+    AutoCompleteTextView txtFechaNacimiento, txtDependientes, txtCodigoPostal, txtCalle, txtNumeroExt, txtNumeroInt, txtTelefonoCelular, txt4DigitosTarjeta, txtNuevaColonia;
     TextView txtAgregarColonia;
     MaterialSpinner spnGenero, spnEstadoCivil, spnColonia, spnMarcaCelular;
     Switch swtTarjetaCredito, swtCreditoHipotecario, swtCreditoAutomotriz;
@@ -72,7 +73,7 @@ public class Act_B2_Personal extends AppCompatActivity {
     ArrayList<Catestadoscivil> lstCatestadoscivil = new ArrayList<Catestadoscivil>();
     ArrayList<Catmarcastelefonos> lstCatMarcaTelefono = new ArrayList<Catmarcastelefonos>();
     ArrayList<Catcolonia> lstCatColonia = new ArrayList<Catcolonia>();
-
+    LinearLayout lyNuevaColonia;
 
 
     int year_x, month_x, day_x;
@@ -115,8 +116,11 @@ public class Act_B2_Personal extends AppCompatActivity {
         txtNumeroInt = (AutoCompleteTextView) findViewById(R.id.txtNumeroInt);
         txtTelefonoCelular = (AutoCompleteTextView) findViewById(R.id.txtTelefonoCelular);
         txt4DigitosTarjeta = (AutoCompleteTextView) findViewById(R.id.txt4DigitosTarjeta);
+        txtNuevaColonia = (AutoCompleteTextView) findViewById(R.id.txtNuevaColonia);
 
         txtAgregarColonia = (TextView) findViewById(R.id.txtAgregarColonia);
+        lyNuevaColonia = (LinearLayout) findViewById(R.id.lyNuevaColonia);
+        btnCancelNuevacolonia = (Button) findViewById(R.id.btnCancelNuevacolonia);
 
         spnGenero = (MaterialSpinner) findViewById(R.id.spnGenero);
         spnEstadoCivil = (MaterialSpinner) findViewById(R.id.spnEstadoCivil);
@@ -179,6 +183,12 @@ public class Act_B2_Personal extends AppCompatActivity {
                     } else {
                         if (txtCodigoPostal.getText().toString().trim().length() > 0)
                             txtCodigoPostal.setError(getText(R.string.FormatoCP));
+                        else
+                        {
+                            hnEstadoMunicipioTexto.setText("");
+                            spnColonia.setSelection(0);
+                            spnColonia.setEnabled(false);
+                        }
                     }
 
                 }
@@ -197,7 +207,17 @@ public class Act_B2_Personal extends AppCompatActivity {
         txtAgregarColonia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Agregar Colonia",Toast.LENGTH_LONG).show();
+                lyNuevaColonia.setVisibility(View.VISIBLE);
+                spnColonia.setEnabled(false);
+                txtNuevaColonia.requestFocus();
+            }
+        });
+        btnCancelNuevacolonia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lyNuevaColonia.setVisibility(View.GONE);
+                spnColonia.setEnabled(true);
+                txtCalle.requestFocus();
             }
         });
     }

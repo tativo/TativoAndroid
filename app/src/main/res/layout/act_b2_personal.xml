@@ -97,32 +97,60 @@
                     android:singleLine="false"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
-                <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/spnColonia"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/Lista"
-                    app:ms_hint="@string/spnColonia"
-                    app:ms_enableErrorLabel="false"
-                    app:ms_thickness="0dp"
-                    app:ms_multiline="false"
-                    app:ms_alignLabels="true">
-                </fr.ganfra.materialspinner.MaterialSpinner>
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end">
+                    android:layout_weight="1">
+                    <fr.ganfra.materialspinner.MaterialSpinner
+                        android:id="@+id/spnColonia"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/Lista"
+                        app:ms_hint="@string/spnColonia"
+                        app:ms_enableErrorLabel="false"
+                        app:ms_thickness="0dp"
+                        app:ms_multiline="false"
+                        app:ms_alignLabels="true">
+                    </fr.ganfra.materialspinner.MaterialSpinner>
                     <TextView
                         android:id="@+id/txtAgregarColonia"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Agregar colonia"
                         android:textSize="12sp"
-                        android:textColor="@color/colorAzulOscuro"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginRight="8dp"/>
+                        android:textColor="@color/colorLinlk"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="8dp" />
                 </RelativeLayout>
             </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:visibility="gone"
+                android:id="@+id/lyNuevaColonia">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/TativoTextInputLayout"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+                        <AutoCompleteTextView
+                            android:id="@+id/txtNuevaColonia"
+                            android:hint="@string/txtNuevaColonia"
+                            android:inputType="textCapSentences"
+                            android:maxLines="1"
+                            android:maxLength="250"
+                            style="@style/TativoAutoCompleteTextView"/>
+                    </android.support.design.widget.TextInputLayout>
+                    <Button
+                        android:id="@+id/btnCancelNuevacolonia"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@android:drawable/ic_menu_close_clear_cancel"/>
+                </LinearLayout>
+            </LinearLayout>
+
             <LinearLayout style="@style/TativoLinearLayoutBorde">
                 <android.support.design.widget.TextInputLayout
                     style="@style/TativoTextInputLayout">
