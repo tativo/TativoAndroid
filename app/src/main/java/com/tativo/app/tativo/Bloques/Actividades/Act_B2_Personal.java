@@ -27,7 +27,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tativo.app.tativo.Bloques.Clases.Catanio;
 import com.tativo.app.tativo.Bloques.Clases.Catcolonia;
 import com.tativo.app.tativo.Bloques.Clases.Catdatospersonal;
 import com.tativo.app.tativo.Bloques.Clases.Catestadoscivil;
@@ -52,19 +51,17 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class Act_B2_Personal extends AppCompatActivity {
 
-    Button btnInfPersonal, btnFechaNacimiento, btnCancelNuevacolonia;
+    Button btnInfPersonal, btnFechaNacimiento, btnCancelNuevacolonia, btnFocoInicialB2;
     AutoCompleteTextView txtFechaNacimiento, txtDependientes, txtCodigoPostal, txtCalle, txtNumeroExt, txtNumeroInt, txtTelefonoCelular, txt4DigitosTarjeta, txtNuevaColonia;
-    TextView txtAgregarColonia;
     MaterialSpinner spnGenero, spnEstadoCivil, spnColonia, spnMarcaCelular;
     Switch swtTarjetaCredito, swtCreditoHipotecario, swtCreditoAutomotriz;
     CheckBox ckTerminosCondiciones1, ckTerminosCondiciones2, ckTerminosCondiciones3, ckTerminosCondiciones4;
-    TextView hnEstadoMunicipioTexto;
+    TextView hnEstadoMunicipioTexto, txtAgregarColonia;
     ProgressDialog progressDialog;
     Globals g;
     DatosCodigoPostal datosCP;
@@ -90,8 +87,9 @@ public class Act_B2_Personal extends AppCompatActivity {
         LoadFormControls();
         FocusManager();
         EventManager();
+        btnFocoInicialB2.requestFocus();
         new AsyncLoadData().execute();
-        txtFechaNacimiento.requestFocus();
+
     }
 
     private void LoadFormControls()
@@ -100,10 +98,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         datosCP = new DatosCodigoPostal();
 
-        g.setCliendeID("83F0E461-3887-4185-94FB-D992D9AC7E26");
-        g.setSolicitudID("E34C8263-3EC1-47D0-8854-8215BF90428C");
-
-
+        btnFocoInicialB2 = (Button) findViewById(R.id.btnFocoInicialB2);
         btnInfPersonal = (Button) findViewById(R.id.btnInfPersonal);
         txtFechaNacimiento = (AutoCompleteTextView) findViewById(R.id.txtFechaNacimiento);
         btnFechaNacimiento = (Button) findViewById(R.id.btnFechaNacimiento);
@@ -157,7 +152,6 @@ public class Act_B2_Personal extends AppCompatActivity {
 
     public void FocusManager()
     {
-        FocusNextControl(R.id.txtFechaNacimiento, "T", R.id.txtDependientes, "T");
         FocusNextControl(R.id.txtDependientes, "T", R.id.spnGenero, "S");
         FocusNextControl(R.id.spnGenero, "S", R.id.spnEstadoCivil, "S");
         FocusNextControl(R.id.spnEstadoCivil, "S", R.id.txtCodigoPostal, "T");
@@ -170,11 +164,21 @@ public class Act_B2_Personal extends AppCompatActivity {
 
     private void EventManager()
     {
+        txtFechaNacimiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtFechaNacimiento.setError(null);
+                showDialog(DILOG_ID);
+                txtDependientes.requestFocus();
+            }
+        });
+
         btnFechaNacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 txtFechaNacimiento.setError(null);
                 showDialog(DILOG_ID);
+                txtDependientes.requestFocus();
             }
         });
 
@@ -925,27 +929,11 @@ public class Act_B2_Personal extends AppCompatActivity {
             day_x = dayOfMonth;
 
             String sfecha = day_x+"/"+month_x+"/"+year_x;
-            txtFechaNacimiento.setText(formatoFechaString(sfecha,"dd/MM/yyyy"));
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+            ParsePosition pp = new ParsePosition(0);
+            Date d = format.parse(sfecha, pp);
+            txtFechaNacimiento.setText(format.format(d).toString());
         }
     };
-
-    private Date formatoFecha(String Fecha, String Formato)
-    {
-        String sfecha = day_x+"/"+month_x+"/"+year_x;
-        SimpleDateFormat format = new SimpleDateFormat(Formato, Locale.US);
-
-        ParsePosition pp = new ParsePosition(0);
-        Date d = format.parse(sfecha, pp);
-        return d;
-    }
-
-    private String formatoFechaString(String Fecha, String Formato)
-    {
-        String sfecha = day_x+"/"+month_x+"/"+year_x;
-        SimpleDateFormat format = new SimpleDateFormat(Formato, Locale.US);
-        ParsePosition pp = new ParsePosition(0);
-        Date d = format.parse(sfecha, pp);
-        return format.format(d).toString();
-    }
 
 }
