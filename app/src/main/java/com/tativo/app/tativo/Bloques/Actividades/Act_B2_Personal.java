@@ -37,6 +37,7 @@ import com.tativo.app.tativo.Bloques.Clases.DatosCodigoPostal;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
+import com.tativo.app.tativo.Utilidades.Utilerias;
 
 import org.json.JSONObject;
 import org.ksoap2.serialization.PropertyInfo;
@@ -50,6 +51,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -74,6 +77,7 @@ public class Act_B2_Personal extends AppCompatActivity {
     ArrayList<Catmarcastelefonos> lstCatMarcaTelefono = new ArrayList<Catmarcastelefonos>();
     ArrayList<Catcolonia> lstCatColonia = new ArrayList<Catcolonia>();
     LinearLayout lyNuevaColonia;
+    Boolean NuevaColonia;
 
 
     int year_x, month_x, day_x;
@@ -83,29 +87,23 @@ public class Act_B2_Personal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_b2_personal);
-        g = (Globals) getApplicationContext();
-        progressDialog = new ProgressDialog(this);
-        datosCP = new DatosCodigoPostal();
         LoadFormControls();
         FocusManager();
         EventManager();
         new AsyncLoadData().execute();
-
-        final Calendar cal = Calendar.getInstance();
-        year_x = cal.get(Calendar.YEAR);
-        month_x = cal.get(Calendar.MONTH);
-        day_x = cal.get(Calendar.DAY_OF_MONTH);
-
-        spnColonia.setEnabled(false);
-
-        catdatospersonal = new Catdatospersonal();
-        catidentidadcliente = new Catidentidadcliente();
-
         txtFechaNacimiento.requestFocus();
     }
 
     private void LoadFormControls()
     {
+        g = (Globals) getApplicationContext();
+        progressDialog = new ProgressDialog(this);
+        datosCP = new DatosCodigoPostal();
+
+        g.setCliendeID("83F0E461-3887-4185-94FB-D992D9AC7E26");
+        g.setSolicitudID("E34C8263-3EC1-47D0-8854-8215BF90428C");
+
+
         btnInfPersonal = (Button) findViewById(R.id.btnInfPersonal);
         txtFechaNacimiento = (AutoCompleteTextView) findViewById(R.id.txtFechaNacimiento);
         btnFechaNacimiento = (Button) findViewById(R.id.btnFechaNacimiento);
@@ -137,6 +135,24 @@ public class Act_B2_Personal extends AppCompatActivity {
         ckTerminosCondiciones4 = (CheckBox) findViewById(R.id.ckTerminosCondiciones4);
 
         hnEstadoMunicipioTexto = (TextView) findViewById(R.id.hnEstadoMunicipioTexto);
+
+        NuevaColonia = false;
+        final Calendar cal = Calendar.getInstance();
+        year_x = cal.get(Calendar.YEAR);
+        month_x = cal.get(Calendar.MONTH);
+        day_x = cal.get(Calendar.DAY_OF_MONTH);
+
+        spnColonia.setEnabled(false);
+
+        catdatospersonal = new Catdatospersonal();
+        catdatospersonal.setDatopersonalid("");
+        catdatospersonal.setUltimaAct(0);
+
+        catidentidadcliente = new Catidentidadcliente();
+        catidentidadcliente.setIdentidadclienteid("");
+        catidentidadcliente.setUltimaAct(0);
+
+        txt4DigitosTarjeta.setEnabled(false);
     }
 
     public void FocusManager()
@@ -157,6 +173,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         btnFechaNacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                txtFechaNacimiento.setError(null);
                 showDialog(DILOG_ID);
             }
         });
@@ -169,6 +186,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                     txt4DigitosTarjeta.requestFocus();
                 } else {
                     txt4DigitosTarjeta.setEnabled(false);
+                    txt4DigitosTarjeta.setText("");
                     txtTelefonoCelular.requestFocus();
                 }
             }
@@ -183,8 +201,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                     } else {
                         if (txtCodigoPostal.getText().toString().trim().length() > 0)
                             txtCodigoPostal.setError(getText(R.string.FormatoCP));
-                        else
-                        {
+                        else {
                             hnEstadoMunicipioTexto.setText("");
                             spnColonia.setSelection(0);
                             spnColonia.setEnabled(false);
@@ -209,6 +226,7 @@ public class Act_B2_Personal extends AppCompatActivity {
             public void onClick(View v) {
                 lyNuevaColonia.setVisibility(View.VISIBLE);
                 spnColonia.setEnabled(false);
+                NuevaColonia = true;
                 txtNuevaColonia.requestFocus();
             }
         });
@@ -217,10 +235,45 @@ public class Act_B2_Personal extends AppCompatActivity {
             public void onClick(View v) {
                 lyNuevaColonia.setVisibility(View.GONE);
                 spnColonia.setEnabled(true);
+                NuevaColonia = false;
                 txtCalle.requestFocus();
             }
         });
+
+        ckTerminosCondiciones1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    ckTerminosCondiciones1.setError(null);
+            }
+        });
+
+        ckTerminosCondiciones2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    ckTerminosCondiciones2.setError(null);
+            }
+        });
+
+        ckTerminosCondiciones3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    ckTerminosCondiciones3.setError(null);
+            }
+        });
+
+        ckTerminosCondiciones4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    ckTerminosCondiciones4.setError(null);
+            }
+        });
     }
+
+
 
     public void FocusNextControl(int o,String ot, int d,String dt)
     {
@@ -607,6 +660,8 @@ public class Act_B2_Personal extends AppCompatActivity {
         Objetos.add(ckTerminosCondiciones2);
         Objetos.add(ckTerminosCondiciones3);
         Objetos.add(ckTerminosCondiciones4);
+        if (NuevaColonia)
+            Objetos.add(txtNuevaColonia);
         Collections.reverse(Objetos);
         boolean requeridos = false;
         for (Object item:Objetos) {
@@ -625,7 +680,9 @@ public class Act_B2_Personal extends AppCompatActivity {
                 }
             }
             if(item instanceof CheckBox){
+                ((CheckBox) item).setError(null);
                 if(!((CheckBox) item).isChecked()){
+                    ((CheckBox) item).setError(getString(R.string.txtRequerido));
                     ((CheckBox) item).requestFocus();
                     requeridos = true;
                 }
@@ -662,8 +719,8 @@ public class Act_B2_Personal extends AppCompatActivity {
     }
     private void GuardarDatos()
     {
-        String SOAP_ACTION = "http://tempuri.org/IService1/SetCatreferenciaspersonalTelefono";
-        String METHOD_NAME = "SetCatreferenciaspersonalTelefono";
+        String SOAP_ACTION = "http://tempuri.org/IService1/SetCatDatosIdentidadTelefono";
+        String METHOD_NAME = "SetCatDatosIdentidadTelefono";
         String NAMESPACE = "http://tempuri.org/";
 
         ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
@@ -689,7 +746,7 @@ public class Act_B2_Personal extends AppCompatActivity {
             DatosPersonales.put("Datopersonalid", catdatospersonal.getDatopersonalid().toString());
             DatosPersonales.put("Clienteid", g.getCliendeID());
             DatosPersonales.put("Genero", spnGenero.getSelectedItem().toString().substring(0, 1));
-            DatosPersonales.put("Fechanacimiento", txtFechaNacimiento.getText().toString());
+            DatosPersonales.put("Fechanacimiento", Utilerias.getDate(txtFechaNacimiento.getText().toString()));
             DatosPersonales.put("Estadocivilid", ((Catestadoscivil) spnEstadoCivil.getSelectedItem()).getEstadocivilid());
             DatosPersonales.put("Dependientes", txtDependientes.getText().toString());
             DatosPersonales.put("Telefono", txtTelefonoCelular.getText().toString());
@@ -697,7 +754,10 @@ public class Act_B2_Personal extends AppCompatActivity {
             DatosPersonales.put("Calle", txtCalle.getText().toString());
             DatosPersonales.put("Numeroext", txtNumeroExt.getText().toString());
             DatosPersonales.put("Numeroint", txtNumeroInt.getText().toString());
-            DatosPersonales.put("Colonia", ((Catcolonia) spnColonia.getSelectedItem()).getColoniaid());
+            if (NuevaColonia)
+                DatosPersonales.put("Colonia", txtNuevaColonia.getText().toString());
+            else
+                DatosPersonales.put("Colonia", ((Catcolonia) spnColonia.getSelectedItem()).getColonia().toString());
             DatosPersonales.put("Codigopostal", txtCodigoPostal.getText().toString());
             DatosPersonales.put("Paisid", datosCP.getPaisID().toString());
             DatosPersonales.put("Estadoid", datosCP.getEstadoID().toString());
@@ -706,20 +766,20 @@ public class Act_B2_Personal extends AppCompatActivity {
             DatosPersonales.put("UltimaAct", catdatospersonal.getUltimaAct());
 
 
-            DatosPersonales.put("Identidadclienteid", catidentidadcliente.getIdentidadclienteid());
-            DatosPersonales.put("Clienteid", g.getCliendeID());
-            DatosPersonales.put("Tarjetacredito", catidentidadcliente.getTarjetacredito());
-            DatosPersonales.put("Ultimoscuatrodigitos", catidentidadcliente.getUltimoscuatrodigitos());
-            DatosPersonales.put("Creditohipotecario", catidentidadcliente.getCreditohipotecario());
-            DatosPersonales.put("Creditoautomotriz", catidentidadcliente.getCreditoautomotriz());
-            DatosPersonales.put("UltimaAct", catidentidadcliente.getUltimaAct());
+            DatosIdentidad.put("Identidadclienteid", catidentidadcliente.getIdentidadclienteid());
+            DatosIdentidad.put("Clienteid", g.getCliendeID());
+            DatosIdentidad.put("Tarjetacredito", swtTarjetaCredito.isChecked());
+            DatosIdentidad.put("Ultimoscuatrodigitos", txt4DigitosTarjeta.getText());
+            DatosIdentidad.put("Creditohipotecario", swtCreditoHipotecario.isChecked());
+            DatosIdentidad.put("Creditoautomotriz", swtCreditoAutomotriz.isChecked());
+            DatosIdentidad.put("UltimaAct", catidentidadcliente.getUltimaAct());
             //Campos de los controles ocultos debemos considerar que tienen valor para el momento en que
             //la app lo posicione sobre el bloque actual carge los datos que guardo con anterioridad
 
             DatosEntidad.put("DatosPersonales", DatosPersonales);
             DatosEntidad.put("DatosIdentidad", DatosIdentidad);
         } catch (Exception ex) {
-
+            Toast.makeText(getApplicationContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
         }
         return DatosEntidad.toString();
     }
@@ -872,7 +932,8 @@ public class Act_B2_Personal extends AppCompatActivity {
     private Date formatoFecha(String Fecha, String Formato)
     {
         String sfecha = day_x+"/"+month_x+"/"+year_x;
-        SimpleDateFormat format = new SimpleDateFormat(Formato);
+        SimpleDateFormat format = new SimpleDateFormat(Formato, Locale.US);
+
         ParsePosition pp = new ParsePosition(0);
         Date d = format.parse(sfecha, pp);
         return d;
@@ -881,7 +942,7 @@ public class Act_B2_Personal extends AppCompatActivity {
     private String formatoFechaString(String Fecha, String Formato)
     {
         String sfecha = day_x+"/"+month_x+"/"+year_x;
-        SimpleDateFormat format = new SimpleDateFormat(Formato);
+        SimpleDateFormat format = new SimpleDateFormat(Formato, Locale.US);
         ParsePosition pp = new ParsePosition(0);
         Date d = format.parse(sfecha, pp);
         return format.format(d).toString();

@@ -287,7 +287,8 @@
                     android:textOn="Si"
                     android:textOff="No" />
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde">
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:paddingRight="10dp">
                 <CheckBox
                     android:id="@+id/ckTerminosCondiciones1"
                     android:layout_width="match_parent"
@@ -301,7 +302,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ckTerminosCondiciones2"
-                    android:layout_marginBottom="8dp" >
+                    android:layout_marginBottom="8dp">
                 </CheckBox>
                 <CheckBox
                     android:id="@+id/ckTerminosCondiciones3"
