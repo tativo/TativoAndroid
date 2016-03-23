@@ -17,6 +17,10 @@
     <string name="spnHintMaterialSpinner">Elige una opción</string>
     <string name="swtTextON">Si</string>
     <string name="swtTxtOFF">No</string>
+    <string name="msgRefNoContesto">Llamamos a tus referencias, pero no contestaron. Por favor, vuelve a proporcionarnos otras</string>
+    <string name="msgRefTitulo">Referencias</string>
+    <string name="msgRefOk">De acuerdo</string>
+
 
     <!--LogIn-->
     <string name="txtLogInContrasena">Contraseña</string>

@@ -20,8 +20,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +59,8 @@ public class Act_B1_Referencias extends AppCompatActivity {
     CheckBox ckReferenciasAcepta;
     Catreferenciaspersonal EntityReferenciaPersonal;
     Globals Sesion;
+    LinearLayout lyReferencia1,lyReferencia2,lyReferenciaLaboral;
+    boolean r1 = false, r2 = false, rl = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +70,9 @@ public class Act_B1_Referencias extends AppCompatActivity {
         LoadFormControls();
         FocusManager();
         EventManager();
-        new AsyncLoadData().execute();
         Sesion = (Globals) getApplicationContext();
         btnFocoInicial.requestFocus();
+        new AsyncLoadData().execute();
         //Sesion.setCliendeID("014B2F7C-EF3D-4251-8439-BA73EC0AC0AA");
     }
 
@@ -93,7 +97,6 @@ public class Act_B1_Referencias extends AppCompatActivity {
     {
         final EditText destino = (dt.toUpperCase()=="T"?(EditText) findViewById(d):null);
         final Spinner destinoS = (dt.toUpperCase()=="S"?(Spinner) findViewById(d):null);
-
         if(ot.toUpperCase()=="T"){
             EditText origen = (EditText) findViewById(o);
             origen.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -136,6 +139,12 @@ public class Act_B1_Referencias extends AppCompatActivity {
         }
     }
     private void LoadFormControls(){
+        //Layout
+        lyReferencia1 = (LinearLayout) findViewById(R.id.lyReferencia1);
+        lyReferencia2= (LinearLayout) findViewById(R.id.lyReferencia2);
+        lyReferenciaLaboral= (LinearLayout) findViewById(R.id.lyReferenciaLaboral);
+
+
         //Entidad
         EntityReferenciaPersonal = new Catreferenciaspersonal();
         EntityReferenciaPersonal.setUltimaActRef1(0);
@@ -214,11 +223,13 @@ public class Act_B1_Referencias extends AppCompatActivity {
             //progressDialog.dismiss();
             spnRelacionRefAdapter = new AdapterRelacionPersonal(listaCatrelacionespersonal);
             spnCatanioAdapter = new AdapterAnio(listaCatanio);
+
             spnRelacionRef1.setAdapter(spnRelacionRefAdapter);
             spnRelacionRef2.setAdapter(spnRelacionRefAdapter);
             spnAmistadRef1.setAdapter(spnCatanioAdapter);
             spnAmistadRef2.setAdapter(spnCatanioAdapter);
             spnTrabajando.setAdapter(spnCatanioAdapter);
+
             new AsyncInfoBloque().execute();
         }
 
@@ -363,9 +374,10 @@ public class Act_B1_Referencias extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-            if(EntityReferenciaPersonal.getUltimaActRef1() != 0){
+            if (EntityReferenciaPersonal.getUltimaActRef1() != 0) {
                 SetInfoBloque();
             }
+            ValidaCargaPorBloqueo();
         }
         @Override
         protected void onPreExecute() {
@@ -445,6 +457,30 @@ public class Act_B1_Referencias extends AppCompatActivity {
         txtTelefonoRefLaboral.setText(EntityReferenciaPersonal.getTelefonoEmpresa());
         spnTrabajando.setSelection(EntityReferenciaPersonal.getAñoidEmpresa());
     }
+    private void ValidaCargaPorBloqueo() {
+        if (Sesion.isBloqueoReferencia()) {
+            String[] Bloqueos = Sesion.getBloqueoCliente().getDatos().split(",");
+            for (int i = 0; i < Bloqueos.length; i++) {
+                switch (Bloqueos[i]) {
+                    case "blocRefL":
+                        rl = true;
+                        break;
+                    case "blocRef1":
+                        r1 = true;
+                        break;
+                    case "blocRef2":
+                        r2 = true;
+                        break;
+                }
+            }
+            if (!r1)
+                lyReferencia1.setVisibility(LinearLayout.GONE);
+            if (!r2)
+                lyReferencia2.setVisibility(LinearLayout.GONE);
+            if (!rl)
+                lyReferenciaLaboral.setVisibility(LinearLayout.GONE);
+        }
+    }
     //Endregion
 
 
@@ -502,11 +538,27 @@ public class Act_B1_Referencias extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-            Intent i = new Intent(getApplicationContext(), Act_B2_Personal.class);
+            Intent i = new Intent();
+            switch (Sesion.getBloqueActual()) {
+                case 2:
+                    i = new Intent(getApplicationContext(), Act_B2_Personal.class);
+                    break;
+                case 3:
+                    i = new Intent(getApplicationContext(), Act_B3_InfDeposito.class);
+                    break;
+                case 4:
+                    i = new Intent(getApplicationContext(), Act_B4_Laboral.class);
+                    break;
+                case 5:
+                    i = new Intent(getApplicationContext(), Act_B5_General.class);
+                    break;
+                default:
+                    i = new Intent(getApplicationContext(), Act_B2_Personal.class);
+                    break;
+            }
             startActivity(i);
             finish();
         }
-
         @Override
         protected void onPreExecute() {
             progressDialog.setMessage("Guardando...");
@@ -572,38 +624,4 @@ public class Act_B1_Referencias extends AppCompatActivity {
         return DatosEntidad.toString();
     }
     //EndGuardar
-
-    //Para la revision del estatus de la solicitud utilizaremos una tarea asincrona que se este ejecutando indefinidamente en el servidor
-    private class AsyncEstatusSolicitud extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            int veces=0;
-            while (true){
-                if(veces>5)
-                    break;
-                try{
-                    Thread.sleep(3000);
-                    veces++;
-
-                }catch(InterruptedException ex){
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            Toast.makeText(getApplicationContext(),"Tarea terminada ya pasaron todos los segundos",Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        }
-    }
-
-
 }

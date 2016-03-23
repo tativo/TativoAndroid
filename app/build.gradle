@@ -27,4 +27,5 @@ dependencies {
     compile 'com.github.ganfra:material-spinner:1.1.1'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
     compile files('libs/ksoap2.jar')
+    compile 'io.card:android-sdk:5.3.0'
 }

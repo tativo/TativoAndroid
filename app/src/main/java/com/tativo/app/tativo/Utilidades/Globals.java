@@ -2,6 +2,9 @@ package com.tativo.app.tativo.Utilidades;
 
 import android.app.Application;
 
+import com.tativo.app.tativo.Bloques.Clases.CatBloqueoCliente;
+import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
+
 import java.util.Date;
 
 /**
@@ -12,6 +15,44 @@ public class Globals extends Application {
     private double ImporteSolicitado;
     private Date FechaPago;
     private String SolicitudID;
+
+    //Propiedades para administrar los bloqueos
+    private boolean BloqueoReferencia;
+    private CatBloqueoCliente BloqueoCliente;
+    private DatosSolicitud Solicitud;
+    private int BloqueActual;
+
+    public boolean isBloqueoReferencia() {
+        return BloqueoReferencia;
+    }
+
+    public void setBloqueoReferencia(boolean bloqueoReferencia) {
+        BloqueoReferencia = bloqueoReferencia;
+    }
+
+    public CatBloqueoCliente getBloqueoCliente() {
+        return BloqueoCliente;
+    }
+
+    public void setBloqueoCliente(CatBloqueoCliente bloqueoCliente) {
+        BloqueoCliente = bloqueoCliente;
+    }
+
+    public DatosSolicitud getSolicitud() {
+        return Solicitud;
+    }
+
+    public void setSolicitud(DatosSolicitud solicitud) {
+        Solicitud = solicitud;
+    }
+
+    public int getBloqueActual() {
+        return BloqueActual;
+    }
+
+    public void setBloqueActual(int bloqueActual) {
+        BloqueActual = bloqueActual;
+    }
 
     public double getImporteSolicitado() {
         return ImporteSolicitado;

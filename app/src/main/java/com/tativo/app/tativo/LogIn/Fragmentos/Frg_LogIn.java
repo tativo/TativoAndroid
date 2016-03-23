@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.tativo.app.tativo.Bloques.Actividades.Act_B2_Personal;
+import com.tativo.app.tativo.Bloques.Actividades.Act_B3_InfDeposito;
 import com.tativo.app.tativo.R;
 
 /**
@@ -33,7 +34,7 @@ public class Frg_LogIn extends Fragment {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Act_B2_Personal.class);
+                Intent i = new Intent(getActivity(), Act_B3_InfDeposito.class);
                 startActivity(i);
                 getActivity().finish();
             }
