@@ -483,8 +483,6 @@ public class Act_B1_Referencias extends AppCompatActivity {
     }
     //Endregion
 
-
-
     //Region Guardar
     private boolean ValidaGuardar() {
         ArrayList<Object> Objetos = new ArrayList<Object>();

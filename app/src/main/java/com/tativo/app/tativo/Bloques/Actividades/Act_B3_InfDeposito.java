@@ -20,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -30,7 +31,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tativo.app.tativo.Bloques.Clases.CatBloqueoCliente;
+import com.tativo.app.tativo.Bloques.Clases.Catanio;
 import com.tativo.app.tativo.Bloques.Clases.Catbanco;
+import com.tativo.app.tativo.Bloques.Clases.Catdatosdeposito;
 import com.tativo.app.tativo.Bloques.Clases.Catformasdepago;
 import com.tativo.app.tativo.Bloques.Clases.Catperiodosdepago;
 import com.tativo.app.tativo.Bloques.Clases.Catrelacionespersonal;
@@ -38,7 +41,9 @@ import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
+import com.tativo.app.tativo.Utilidades.Utilerias;
 
+import org.json.JSONObject;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -47,6 +52,7 @@ import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -73,10 +79,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
     AdapterCatformasdepago spnMedioPagoAdapter;
     AdapterCatperiodosdepago spnFrecuenciaPagoAdapter;
 
-    CatBloqueoCliente Bloqueos = new CatBloqueoCliente();
-    DatosSolicitud Solicitud = new DatosSolicitud();
-
-
+    Catdatosdeposito EntityCatdatosdeposito = new Catdatosdeposito();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +89,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         EventManager();
         new AsyncLoadData().execute();
         Sesion = (Globals) getApplicationContext();
+        Sesion.setCliendeID("B293489F-914B-4AF4-B5B3-69FDC09167ED");
         btnFocoInicialB3.requestFocus();
         new AsyncEstatusSolicitud().execute();
     }
@@ -197,9 +201,8 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         btnDatosDeposito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), Act_B3_ConfirmarPIN.class);
-                startActivity(i);
-                finish();
+                if (ValidaGuardar())
+                    new AsyncSaveData().execute();
             }
         });
 
@@ -447,16 +450,13 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
     }
     //Endregion
 
-
     //Region CARD IO
     public void onScanPress(View v) {
         Intent scanIntent = new Intent(this, CardIOActivity.class);
-
         // customize these values to suit your needs.
         scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, true); // default: false
         scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, false); // default: false
         scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_POSTAL_CODE, false); // default: false
-
         // MY_SCAN_REQUEST_CODE is arbitrary and is only used within this activity.
         startActivityForResult(scanIntent, MY_SCAN_REQUEST_CODE);
     }
@@ -522,7 +522,108 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
     }
     //Endregion
 
+    //Region Guardar
+    private boolean ValidaGuardar() {
+        ArrayList<Object> Objetos = new ArrayList<Object>();
+        Objetos.add(spnBanco);
+        Objetos.add(txtNumeroTarjetaCLABE);
+        Objetos.add(spnFrecuenciaPago);
+        Objetos.add(spnMedioPago);
+        Objetos.add(txtFechaProximoPago);
+        Collections.reverse(Objetos);
+        boolean requeridos = false;
+        for (Object item:Objetos) {
+            if(item instanceof EditText){
+                if (((EditText) item).getText().toString().trim().length() == 0) {
+                    ((EditText) item).setError(getString(R.string.txtRequerido));
+                    ((EditText) item).requestFocus();
+                    requeridos = true;
+                }
+            }
+            if(item instanceof Spinner){
+                if(((Spinner) item).getSelectedItemPosition() == 0){
+                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.txtRequerido));
+                    ((Spinner) item).requestFocus();
+                    requeridos = true;
+                }
+            }
+            if(item instanceof CheckBox){
+                if(!((CheckBox) item).isChecked()){
+                    ((CheckBox) item).requestFocus();
+                    requeridos = true;
+                }
+            }
+        }
+        return !requeridos;
+    }
+    private class AsyncSaveData extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            SaveInfoBloque();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            Intent i = new Intent(getApplicationContext(), Act_B4_Laboral.class);
+            startActivity(i);
+            finish();
+        }
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage("Guardando...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void SaveInfoBloque(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/SetCatdatosdepositoTelefono";
+        String METHOD_NAME = "SetCatdatosdepositoTelefono";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("value");
+        pi1.setValue(getEntityToSave());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private String getEntityToSave() {
+        JSONObject DatosEntidad = new JSONObject();
+        try {
+            DatosEntidad.put("Datodepositoid", EntityCatdatosdeposito.getDatodepositoid());
+            DatosEntidad.put("Clienteid",Sesion.getCliendeID());
+            DatosEntidad.put("Bancoid",  ((Catbanco) spnBanco.getSelectedItem()).getBancoid());
+            DatosEntidad.put("NumeroDeDeposito", txtNumeroTarjetaCLABE.getText().toString());
+            DatosEntidad.put("Recibenomina", swtRecibesNomina.isChecked());
+            DatosEntidad.put("Periododepagoid", ((Catperiodosdepago) spnFrecuenciaPago.getSelectedItem()).getPeriododepagoid());
+            DatosEntidad.put("Formadepagoid", ((Catformasdepago) spnMedioPago.getSelectedItem()).getFormadepagoid());
+            DatosEntidad.put("Fechaproxpago", Utilerias.getDate(txtFechaProximoPago.getText().toString()));
+            DatosEntidad.put("UltimaAct", EntityCatdatosdeposito.getUltimaAct());
+
+        } catch (Exception ex) {
+
+        }
+        return DatosEntidad.toString();
+    }
+    //EndGuardar
+
+
     //Region Estatus Solicitud y Bloqueos
+    CatBloqueoCliente Bloqueos = new CatBloqueoCliente();
+    DatosSolicitud Solicitud = new DatosSolicitud();
     private class AsyncEstatusSolicitud extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {

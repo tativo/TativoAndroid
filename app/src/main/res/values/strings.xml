@@ -20,6 +20,7 @@
     <string name="msgRefNoContesto">Llamamos a tus referencias, pero no contestaron. Por favor, vuelve a proporcionarnos otras</string>
     <string name="msgRefTitulo">Referencias</string>
     <string name="msgRefOk">De acuerdo</string>
+    <string name="msgCamposRequeridos">Favor de llenar todos los campos requeridos</string>
 
 
     <!--LogIn-->
