@@ -171,7 +171,7 @@
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
                 <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/spIngresoExtra"
+                    android:id="@+id/spnIngresoExtra"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
@@ -200,19 +200,19 @@
                     android:paddingTop="15dp"
                     android:paddingLeft="5dp"/>
                 <CheckBox
-                    android:id="@+id/ckTerminosCondiciones1"
+                    android:id="@+id/ckTieneCelular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ckDispositivo1">
                 </CheckBox>
                 <CheckBox
-                    android:id="@+id/ckTerminosCondiciones2"
+                    android:id="@+id/ckTieneTablet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ckDispositivo2">
                 </CheckBox>
                 <CheckBox
-                    android:id="@+id/ckTerminosCondiciones3"
+                    android:id="@+id/ckTieneComputadora"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ckDispositivo3">
