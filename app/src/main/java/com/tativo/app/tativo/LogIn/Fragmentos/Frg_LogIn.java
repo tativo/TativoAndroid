@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.tativo.app.tativo.Bloques.Actividades.Act_B2_Personal;
-import com.tativo.app.tativo.Bloques.Actividades.Act_B4_Laboral;
+import com.tativo.app.tativo.Bloques.Actividades.Act_B3_InfDeposito;
 import com.tativo.app.tativo.R;
 
 /**

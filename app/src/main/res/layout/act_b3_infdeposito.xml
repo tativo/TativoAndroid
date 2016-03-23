@@ -15,6 +15,12 @@
             android:paddingBottom="80dp"
             android:orientation="vertical">
 
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="New Button"
+                android:id="@+id/btnFocoInicialB3"/>
+
             <LinearLayout style="@style/TativoLinearLayoutBordeSwitch">
                 <TextView
                     android:id="@+id/lblTarjetaDebito"
@@ -105,15 +111,28 @@
                 </fr.ganfra.materialspinner.MaterialSpinner>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
-                <android.support.design.widget.TextInputLayout
-                    style="@style/TativoTextInputLayout">
-                    <AutoCompleteTextView
-                        android:id="@+id/txtFechaProximoPago"
-                        android:hint="@string/txtFechaProximoPago"
-                        android:inputType="date"
-                        android:maxLines="1"
-                        style="@style/TativoAutoCompleteTextView"/>
-                </android.support.design.widget.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/TativoTextInputLayout"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+                        <AutoCompleteTextView
+                            android:id="@+id/txtFechaProximoPago"
+                            android:hint="@string/txtFechaProximoPago"
+                            android:inputType="date"
+                            android:maxLines="1"
+                            style="@style/TativoAutoCompleteTextView"/>
+                    </android.support.design.widget.TextInputLayout>
+                    <Button
+                        android:id="@+id/btnFechaProximoPago"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@android:drawable/ic_menu_my_calendar"
+                        style="@style/Widget.AppCompat.Button.Borderless"/>
+                </LinearLayout>
             </LinearLayout>
             <Button
                 android:id="@+id/btnDatosDeposito"
