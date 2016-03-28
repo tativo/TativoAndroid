@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
@@ -89,9 +90,14 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         EventManager();
         new AsyncLoadData().execute();
         Sesion = (Globals) getApplicationContext();
-        Sesion.setCliendeID("B293489F-914B-4AF4-B5B3-69FDC09167ED");
+        //Sesion.setCliendeID("37E53F11-0F00-4C7C-981D-FEE966235600");
         btnFocoInicialB3.requestFocus();
-        new AsyncEstatusSolicitud().execute();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new AsyncEstatusSolicitud().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new AsyncEstatusSolicitud().execute();
+        }
     }
 
     public void FocusNextControl(int o,String ot, int d,String dt )
@@ -201,8 +207,13 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         btnDatosDeposito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ValidaGuardar())
-                    new AsyncSaveData().execute();
+                if (ValidaGuardar()){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        new AsyncSaveData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }else{
+                        new AsyncSaveData().execute();
+                    }
+                }
             }
         });
 
@@ -249,9 +260,6 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
             spnBanco.setAdapter(spnBancoAdapter);
             spnMedioPago.setAdapter(spnMedioPagoAdapter);
             spnFrecuenciaPago.setAdapter(spnFrecuenciaPagoAdapter);
-            /*
-            new AsyncInfoBloque().execute();
-            */
         }
 
         @Override
@@ -566,7 +574,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-            Intent i = new Intent(getApplicationContext(), Act_B4_Laboral.class);
+            Intent i = new Intent(getApplicationContext(), Act_B3_ConfirmarPIN.class);
             startActivity(i);
             finish();
         }
