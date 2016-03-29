@@ -74,6 +74,7 @@
                         android:hint="@string/txtTelefonoFijo"
                         android:inputType="phone"
                         android:maxLines="1"
+                        android:maxLength="10"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -158,16 +159,20 @@
                     app:ms_alignLabels="true">
                 </fr.ganfra.materialspinner.MaterialSpinner>
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde">
-                <android.support.design.widget.TextInputLayout
-                    style="@style/TativoTextInputLayout">
-                    <AutoCompleteTextView
-                        android:id="@+id/txtEspecificaActividad"
-                        android:hint="@string/txtEspecificaActividad"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        style="@style/TativoAutoCompleteTextView"/>
-                </android.support.design.widget.TextInputLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:visibility="gone"
+                android:id="@+id/lyEspecificaActividad">
+                <LinearLayout style="@style/TativoLinearLayoutBorde">
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/TativoTextInputLayout">
+                        <AutoCompleteTextView
+                            android:id="@+id/txtEspecificaActividad"
+                            android:hint="@string/txtEspecificaActividad"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            style="@style/TativoAutoCompleteTextView"/>
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
                 <fr.ganfra.materialspinner.MaterialSpinner
@@ -181,16 +186,20 @@
                     app:ms_alignLabels="true">
                 </fr.ganfra.materialspinner.MaterialSpinner>
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde">
-                <android.support.design.widget.TextInputLayout
-                    style="@style/TativoTextInputLayout">
-                    <AutoCompleteTextView
-                        android:id="@+id/txtActivdadIngresoExtra"
-                        android:hint="@string/txtActivdadIngresoExtra"
-                        android:inputType="textAutoCorrect|textCapCharacters"
-                        android:maxLines="1"
-                        style="@style/TativoAutoCompleteTextView"/>
-                </android.support.design.widget.TextInputLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde"
+                android:visibility="gone"
+                android:id="@+id/lyIngresoExtra">
+                <LinearLayout style="@style/TativoLinearLayoutBorde">
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/TativoTextInputLayout">
+                        <AutoCompleteTextView
+                            android:id="@+id/txtActivdadIngresoExtra"
+                            android:hint="@string/txtActivdadIngresoExtra"
+                            android:inputType="textAutoCorrect|textCapCharacters"
+                            android:maxLines="1"
+                            style="@style/TativoAutoCompleteTextView"/>
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
                 <TextView

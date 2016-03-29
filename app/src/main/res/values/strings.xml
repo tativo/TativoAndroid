@@ -111,7 +111,7 @@
     <string name="txtEspecificaActividad">Especifica la actividad</string>
     <string name="spIngresoExtra">¿Cuánto ingreso extra aproximado tienes al mes?</string>
     <string name="txtActivdadIngresoExtra">¿De qué actividad(es) proviene(n) este ingreso extra?</string>
-    <string name="lblDispositivos">¿Cuentas con algino de los siguientes dispositivos?</string>
+    <string name="lblDispositivos">¿Cuentas con alguno de los siguientes dispositivos?</string>
     <string name="ckDispositivo1">Celular inteligente</string>
     <string name="ckDispositivo2">Tablet</string>
     <string name="ckDispositivo3">Computadora</string>

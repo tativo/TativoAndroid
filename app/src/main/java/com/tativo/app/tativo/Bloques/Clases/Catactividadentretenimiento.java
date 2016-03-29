@@ -3,7 +3,7 @@ package com.tativo.app.tativo.Bloques.Clases;
 /**
  * Created by sistemasprimos on 23/03/16.
  */
-public class Catatividadentretenimiento {
+public class Catactividadentretenimiento {
     private int Actividadentretenimientoid;
     private String Descripcion;
 
