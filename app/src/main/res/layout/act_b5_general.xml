@@ -54,6 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spnConQuienVives"
                     app:ms_enableErrorLabel="false"
                     app:ms_thickness="0dp"
@@ -113,6 +114,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spnNivelEstudio"
                     app:ms_enableErrorLabel="false"
                     app:ms_thickness="0dp"
@@ -127,6 +129,7 @@
                         android:hint="@string/txtNombreEscuela"
                         android:inputType="textCapSentences|textAutoCorrect"
                         android:maxLines="1"
+                        android:maxLength="250"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -136,6 +139,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spnCurso"
                     app:ms_enableErrorLabel="false"
                     app:ms_thickness="0dp"
@@ -148,6 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spnIngles"
                     app:ms_enableErrorLabel="false"
                     app:ms_thickness="0dp"
@@ -160,6 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spnActividad"
                     app:ms_enableErrorLabel="false"
                     app:ms_thickness="0dp"
@@ -175,8 +181,9 @@
                         <AutoCompleteTextView
                             android:id="@+id/txtEspecificaActividad"
                             android:hint="@string/txtEspecificaActividad"
-                            android:inputType="number"
+                            android:inputType="textAutoCorrect|textCapCharacters"
                             android:maxLines="1"
+                            android:maxLength="250"
                             style="@style/TativoAutoCompleteTextView"/>
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
@@ -187,6 +194,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spIngresoExtra"
                     app:ms_enableErrorLabel="false"
                     app:ms_thickness="0dp"
@@ -204,6 +212,7 @@
                             android:hint="@string/txtActivdadIngresoExtra"
                             android:inputType="textAutoCorrect|textCapCharacters"
                             android:maxLines="1"
+                            android:maxLength="250"
                             style="@style/TativoAutoCompleteTextView"/>
                     </android.support.design.widget.TextInputLayout>
                 </LinearLayout>
@@ -242,6 +251,7 @@
                         android:hint="@string/txtParaQue"
                         android:inputType="textCapCharacters|textAutoCorrect"
                         android:maxLines="1"
+                        android:maxLength="500"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -257,6 +267,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spnHintMaterialSpinner"
                     app:ms_enableFloatingLabel="false"
                     app:ms_enableErrorLabel="false"
@@ -268,6 +279,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spnHintMaterialSpinner"
                     app:ms_enableFloatingLabel="false"
                     app:ms_enableErrorLabel="false"
@@ -279,6 +291,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spnHintMaterialSpinner"
                     app:ms_enableFloatingLabel="false"
                     app:ms_enableErrorLabel="false"
@@ -298,6 +311,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spnHintMaterialSpinner"
                     app:ms_enableFloatingLabel="false"
                     app:ms_enableErrorLabel="false"
@@ -309,6 +323,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spnHintMaterialSpinner"
                     app:ms_enableFloatingLabel="false"
                     app:ms_enableErrorLabel="false"
@@ -320,6 +335,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
+
                     app:ms_hint="@string/spnHintMaterialSpinner"
                     app:ms_enableFloatingLabel="false"
                     app:ms_enableErrorLabel="false"

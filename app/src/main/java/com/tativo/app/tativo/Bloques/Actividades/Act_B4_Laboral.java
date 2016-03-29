@@ -1,9 +1,12 @@
 package com.tativo.app.tativo.Bloques.Actividades;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -22,22 +25,22 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tativo.app.tativo.Bloques.Clases.CatBloqueoCliente;
 import com.tativo.app.tativo.Bloques.Clases.Catareaslaborales;
 import com.tativo.app.tativo.Bloques.Clases.Catcolonia;
 import com.tativo.app.tativo.Bloques.Clases.Catdatosempleo;
-import com.tativo.app.tativo.Bloques.Clases.Catestadoscivil;
-import com.tativo.app.tativo.Bloques.Clases.Catmarcastelefonos;
 import com.tativo.app.tativo.Bloques.Clases.DatosCodigoPostal;
+import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
-import com.tativo.app.tativo.Utilidades.Utilerias;
 
 import org.json.JSONObject;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +51,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
 
     AutoCompleteTextView txtCodigoPostal, txtCalle, txtNumeroExt, txtNumeroInt, txtSueldoMensual, txtPaginaEmpresa, txtActividades, txtNuevaColonia;
     MaterialSpinner spnColonia, spnAreaLaboral;
-    Button btnLaboral, btnCancelNuevacolonia;
+    Button btnLaboral, btnCancelNuevacolonia, btnFocoInicialB4;
 
     ProgressDialog progressDialog;
     Globals Sesion;
@@ -72,6 +75,12 @@ public class Act_B4_Laboral extends AppCompatActivity {
         FocusManager();
         EventManager();
         new AsyncLoadData().execute();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new AsyncEstatusSolicitud().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new AsyncEstatusSolicitud().execute();
+        }
     }
 
     private void LoadFormControls()
@@ -88,6 +97,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
         catdatosempleo.setDatosempleoid("");
         catdatosempleo.setUltimaAct(0);
 
+        btnFocoInicialB4 = (Button) findViewById(R.id.btnFocoInicialB4);
         btnLaboral = (Button) findViewById(R.id.btnLaboral);
 
         txtAgregarColonia = (TextView) findViewById(R.id.txtAgregarColonia);
@@ -132,7 +142,11 @@ public class Act_B4_Laboral extends AppCompatActivity {
             public void onClick(View v) {
                 if (ValidaGuardar())
                 {
-                    new AsyncGuardar().execute();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        new AsyncGuardar().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }else{
+                        new AsyncGuardar().execute();
+                    }
                 }
             }
         });
@@ -328,6 +342,8 @@ public class Act_B4_Laboral extends AppCompatActivity {
             progressDialog.dismiss();
             AreasLaboralesAdapter = new AdapterAreasLaborales(lstCatAreasLaborales);
             spnAreaLaboral.setAdapter(AreasLaboralesAdapter);
+
+            new AsyncInfoBloque().execute();
         }
 
         @Override
@@ -516,7 +532,6 @@ public class Act_B4_Laboral extends AppCompatActivity {
         }
         return !requeridos;
     }
-
     private class AsyncGuardar extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
@@ -542,7 +557,6 @@ public class Act_B4_Laboral extends AppCompatActivity {
         protected void onProgressUpdate(Void... values) {
         }
     }
-
     private void GuardarDatos()
     {
         String SOAP_ACTION = "http://tempuri.org/IService1/SetCatdatosempleoTelefono";
@@ -564,7 +578,6 @@ public class Act_B4_Laboral extends AppCompatActivity {
             }
         }
     }
-
     private String getEntityToSave() {
         JSONObject DatosEntidad = new JSONObject();
         try {
@@ -594,4 +607,221 @@ public class Act_B4_Laboral extends AppCompatActivity {
         return DatosEntidad.toString();
     }
     //GUARDAR
+
+
+    //Info del BLOQUE
+    private class AsyncInfoBloque extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            GetInfoBloque();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            if (catdatosempleo.getUltimaAct() != 0) {
+                SetInfoBloque();
+            }
+            btnFocoInicialB4.requestFocus();
+        }
+        @Override
+        protected void onPreExecute() {
+            //progressDialog.setMessage("Cargando...");
+            //progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GetInfoBloque(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatdatosempleo";
+        String METHOD_NAME = "GetCatdatosempleo";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("Clienteid");
+        pi1.setValue(Sesion.getCliendeID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
+        if(respuesta != null) {
+            try
+            {
+                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
+                Boolean ev = Boolean.parseBoolean(esValido.toString());
+                if (ev)
+                {
+                    String[] listaRespuesta;
+                    listaRespuesta = new String[respuesta.getPropertyCount()];
+                    SoapObject item = (SoapObject) respuesta.getProperty(0);
+                    if(Integer.parseInt(item.getProperty("UltimaAct").toString())!=0)
+                    {
+                        catdatosempleo.setDatosempleoid(item.getProperty("Datosempleoid").toString());
+                        catdatosempleo.setClienteid(item.getProperty("Clienteid").toString());
+                        catdatosempleo.setTieneempleo(Boolean.parseBoolean(item.getProperty("Tieneempleo").toString()));
+                        catdatosempleo.setCalle(item.getProperty("Calle").toString());
+                        catdatosempleo.setNumeroext(item.getProperty("Numeroext").toString());
+                        catdatosempleo.setNumeroint(item.getProperty("numeroint").toString());
+                        catdatosempleo.setColonia(item.getProperty("Colonia").toString());
+                        catdatosempleo.setCodigopostal(item.getProperty("Codigopostal").toString());
+                        catdatosempleo.setPaisid(item.getProperty("Paisid").toString());
+                        catdatosempleo.setEstadoid(item.getProperty("Estadoid").toString());
+                        catdatosempleo.setMunicipioid(item.getProperty("Municipioid").toString());
+                        catdatosempleo.setCiudadid(item.getProperty("Ciudadid").toString());
+                        catdatosempleo.setArealaboralid(Integer.parseInt(item.getProperty("Arealaboralid").toString()));
+                        catdatosempleo.setDescripcionactividad(item.getProperty("Descripcionactividad").toString());
+                        catdatosempleo.setSueldoMensual(Double.parseDouble(item.getProperty("Sueldomensual").toString()));
+                        catdatosempleo.setPaginaweb(item.getProperty("Paginaweb").toString());
+                        catdatosempleo.setUltimaAct(Integer.parseInt(item.getProperty("UltimaAct").toString()));
+                    }
+                }
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private void SetInfoBloque() {
+        txtCodigoPostal.setText(catdatosempleo.getCodigopostal());
+
+
+        txtCalle.setText(catdatosempleo.getCalle());
+        txtNumeroExt.setText(catdatosempleo.getNumeroext());
+        txtNumeroInt.setText(catdatosempleo.getNumeroint());
+        int ix = getIndexColonia(catdatosempleo.getColonia());
+        if (ix > 0)
+            spnColonia.setSelection(ix);
+        else
+        {
+            lyNuevaColonia.setVisibility(View.VISIBLE);
+            txtNuevaColonia.setText(catdatosempleo.getColonia());
+        }
+        spnAreaLaboral.setSelection(catdatosempleo.getArealaboralid());
+        txtActividades.setText(catdatosempleo.getDescripcionactividad());
+        txtSueldoMensual.setText(catdatosempleo.getSueldoMensual().toString());
+        txtPaginaEmpresa.setText(catdatosempleo.getPaginaweb());
+    }
+    //Info del BLOQUE
+
+
+
+    //Region Estatus Solicitud y Bloqueos
+    CatBloqueoCliente Bloqueos = new CatBloqueoCliente();
+    DatosSolicitud Solicitud = new DatosSolicitud();
+    private class AsyncEstatusSolicitud extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            while (true) {
+                try {
+                    GetEstatusSolicitud();
+                    if(Bloqueos.getBloqueoid()!=0)
+                        break;
+                    Thread.sleep(30000);
+                } catch (InterruptedException ex) {
+                }
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            //Si salio del ciclo quiere decir que encontro bloqueos
+            if (Bloqueos.getBloqueoid() != 0) {
+                new AlertDialog.Builder(Act_B4_Laboral.this)
+                        .setTitle(R.string.msgRefTitulo)
+                        .setMessage(R.string.msgRefNoContesto)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.msgRefOk, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Sesion.setBloqueoReferencia(true);
+                                Sesion.setBloqueoCliente(Bloqueos);
+                                Sesion.setSolicitud(Solicitud);
+                                Sesion.setBloqueActual(4);
+                                Intent i = new Intent(getApplicationContext(), Act_B1_Referencias.class);
+                                startActivity(i);
+                                finish();
+                            }
+                        }).create().show();
+            }
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GetEstatusSolicitud(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetEstatusSolicitud";
+        String METHOD_NAME = "GetEstatusSolicitud";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("ClienteID");
+        pi1.setValue(Sesion.getCliendeID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+
+                if(Boolean.parseBoolean(respuesta.getProperty("EsValido").toString())){
+                    SoapObject Datos = (SoapObject) respuesta.getProperty("Datos");
+                    SoapObject datosSolicitud = (SoapObject) Datos.getProperty("datosSolicitud");
+                    SoapObject bloqueoCliente = (SoapObject) Datos.getProperty("bloqueoCliente");
+
+                    //Llenamos los datos del bloqueo de la solicitud
+                    if(Integer.parseInt(bloqueoCliente.getProperty("Bloqueoid").toString())!=0){
+                        Bloqueos.setBloqueoid(Integer.parseInt(bloqueoCliente.getProperty("Bloqueoid").toString()));
+                        Bloqueos.setClienteid(bloqueoCliente.getProperty("Clienteid").toString());
+                        Bloqueos.setBloque(Integer.parseInt(bloqueoCliente.getProperty("Bloque").toString()));
+                        Bloqueos.setEstatus(Integer.parseInt(bloqueoCliente.getProperty("Estatus").toString()));
+                        Bloqueos.setDatos(bloqueoCliente.getProperty("Datos").toString());
+                    }
+                    //Llenamos los datos de la solicitud
+                    Solicitud.setEstatusCliente(datosSolicitud.getProperty("EstatusCliente").toString());
+                    Solicitud.setPagareEnviado(Boolean.parseBoolean(datosSolicitud.getProperty("PagareEnviado").toString()));
+                    Solicitud.setDentroDeHorario(Boolean.parseBoolean(datosSolicitud.getProperty("DentroDeHorario").toString()));
+                    Solicitud.setSolicitudid(datosSolicitud.getProperty("Solicitudid").toString());
+                    Solicitud.setImporteSolicitud(Double.parseDouble(datosSolicitud.getProperty("ImporteSolicitud").toString()));
+                    Solicitud.setImporteSolicitud(Double.parseDouble(datosSolicitud.getProperty("ImporteSolicitud").toString()));
+                    Solicitud.setIntereses(Double.parseDouble(datosSolicitud.getProperty("Intereses").toString()));
+                    Solicitud.setIVA(Double.parseDouble(datosSolicitud.getProperty("IVA").toString()));
+                    Solicitud.setTotalPagar(Double.parseDouble(datosSolicitud.getProperty("TotalPagar").toString()));
+                    //Solicitud.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(datosSolicitud.getProperty("FechaSolicitud").toString()));
+                    Solicitud.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd").parse(datosSolicitud.getProperty("FechaSolicitud").toString().substring(0, 10)));
+                    Solicitud.setDiasUso(Integer.parseInt(datosSolicitud.getProperty("DiasUso").toString()));
+                    Solicitud.setFechaVence(new SimpleDateFormat("yyyy-MM-dd").parse(datosSolicitud.getProperty("FechaVence").toString().substring(0, 10)));
+                    Solicitud.setNombreCompleto(datosSolicitud.getProperty("NombreCompleto").toString());
+                    Solicitud.setBloqueCliente(Integer.parseInt(datosSolicitud.getProperty("BloqueCliente").toString()));
+                }else{
+                    //Toast.makeText(getApplicationContext(),"Error: "+respuesta.getProperty("Mensaje").toString(),Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                //Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    //Endregion
+
+    private int getIndexColonia(String myString){
+        int index = 0;
+        for (int i=0;i< lstCatColonia.size();i++){
+            if (lstCatColonia.get(i).getColonia().equals(myString))
+            {
+                index = i + 1;
+            }
+        }
+        return index;
+    }
 }

@@ -125,7 +125,7 @@ public class Act_B5_General extends AppCompatActivity {
     private void LoadFormControls() {
         progressDialog = new ProgressDialog(this);
         Sesion = new Globals();
-        Sesion.setCliendeID("83F0E461-3887-4185-94FB-D992D9AC7E26");
+        //Sesion.setCliendeID("83F0E461-3887-4185-94FB-D992D9AC7E26");
 
         catdatosgeneral = new Catdatosgeneral();
         catdatosgeneral.setDatosgeneralesid("");
