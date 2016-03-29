@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Entity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -25,6 +26,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Switch;
@@ -91,8 +93,6 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         new AsyncLoadData().execute();
         Sesion = (Globals) getApplicationContext();
         //Sesion.setCliendeID("37E53F11-0F00-4C7C-981D-FEE966235600");
-        btnFocoInicialB3.requestFocus();
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new AsyncEstatusSolicitud().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
@@ -260,6 +260,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
             spnBanco.setAdapter(spnBancoAdapter);
             spnMedioPago.setAdapter(spnMedioPagoAdapter);
             spnFrecuenciaPago.setAdapter(spnFrecuenciaPagoAdapter);
+            new AsyncInfoBloque().execute();
         }
 
         @Override
@@ -733,4 +734,89 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         }
     }
     //Endregion
+
+    //Region Existe Info del BLOQUE
+    private class AsyncInfoBloque extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            GetInfoBloque();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            if (EntityCatdatosdeposito.getUltimaAct() != 0) {
+                SetInfoBloque();
+            }
+            btnFocoInicialB3.requestFocus();
+        }
+        @Override
+        protected void onPreExecute() {
+            //progressDialog.setMessage("Cargando...");
+            //progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GetInfoBloque() {
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatdatosdeposito";
+        String METHOD_NAME = "GetCatdatosdeposito";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores = new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("Clienteid");
+        pi1.setValue(Sesion.getCliendeID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE, valores);
+
+        if (respuesta != null) {
+            try {
+                if (Boolean.parseBoolean(respuesta.getProperty("EsValido").toString())) {
+                    SoapObject Datos = (SoapObject) respuesta.getProperty("Datos");
+                    if(Integer.parseInt(Datos.getProperty("UltimaAct").toString())!=0){
+                        EntityCatdatosdeposito.setDatodepositoid(Datos.getProperty("Datodepositoid").toString());
+                        EntityCatdatosdeposito.setClienteid(Datos.getProperty("Clienteid").toString());
+                        EntityCatdatosdeposito.setBancoid(Datos.getProperty("Bancoid").toString());
+                        EntityCatdatosdeposito.setNumeroDeDeposito(Datos.getProperty("NumeroDeDeposito").toString());
+                        EntityCatdatosdeposito.setRecibenomina(Boolean.parseBoolean(Datos.getProperty("Recibenomina").toString()));
+                        EntityCatdatosdeposito.setPeriododepagoid(Integer.parseInt(Datos.getProperty("Periododepagoid").toString()));
+                        EntityCatdatosdeposito.setFormadepagoid(Integer.parseInt(Datos.getProperty("Formadepagoid").toString()));
+                        EntityCatdatosdeposito.setFechaproxpago(new SimpleDateFormat("yyyy-MM-dd").parse(Datos.getProperty("Fechaproxpago").toString().substring(0, 10)));
+                        EntityCatdatosdeposito.setUltimaAct(Integer.parseInt(Datos.getProperty("UltimaAct").toString()));
+                    }
+                } else {
+                    //Toast.makeText(getApplicationContext(),"Error: "+respuesta.getProperty("Mensaje").toString(),Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                //Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private void SetInfoBloque() {
+        spnBanco.setSelection(getIndexBancos(EntityCatdatosdeposito.getBancoid()));
+        txtNumeroTarjetaCLABE.setText(EntityCatdatosdeposito.getNumeroDeDeposito());
+        swtRecibesNomina.setChecked(EntityCatdatosdeposito.isRecibenomina());
+        spnFrecuenciaPago.setSelection(EntityCatdatosdeposito.getPeriododepagoid());
+        spnMedioPago.setSelection(EntityCatdatosdeposito.getFormadepagoid());
+        txtFechaProximoPago.setText(new SimpleDateFormat("dd/MM/yyyy").format(EntityCatdatosdeposito.getFechaproxpago()));
+    }
+    private int getIndexBancos(String myString) {
+        int index = 0;
+        for (int i = 0; i < ListaCatbanco.size(); i++) {
+            if (ListaCatbanco.get(i).getBancoid().equals(myString)) {
+                index = i + 1;
+            }
+        }
+        return index;
+    }
+    //Endregion
+
+
 }
