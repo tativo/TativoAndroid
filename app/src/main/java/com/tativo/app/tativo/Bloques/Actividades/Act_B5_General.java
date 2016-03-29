@@ -1,10 +1,13 @@
 package com.tativo.app.tativo.Bloques.Actividades;
 
 import android.accounts.AccountAuthenticatorResponse;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -26,6 +29,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tativo.app.tativo.Bloques.Clases.CatBloqueoCliente;
 import com.tativo.app.tativo.Bloques.Clases.Catanio;
 import com.tativo.app.tativo.Bloques.Clases.Catactividadentretenimiento;
 import com.tativo.app.tativo.Bloques.Clases.Catcurso;
@@ -38,6 +42,7 @@ import com.tativo.app.tativo.Bloques.Clases.Catnivelingles;
 import com.tativo.app.tativo.Bloques.Clases.Catredessociales;
 import com.tativo.app.tativo.Bloques.Clases.Cattipovivienda;
 import com.tativo.app.tativo.Bloques.Clases.Catvivecon;
+import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
@@ -47,6 +52,7 @@ import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,7 +65,7 @@ public class Act_B5_General extends AppCompatActivity {
     AutoCompleteTextView txtTelefonoFijo, txtNombreEscuela, txtEspecificaActividad, txtActivdadIngresoExtra, txtParaQue;
     Switch swtTienesAutomovil, swtEsPropio;
     CheckBox ckTieneCelular, ckTieneTablet, ckTieneComputadora;
-    Button btnInfGeneral;
+    Button btnInfGeneral, btnFocoInicialB5;
     LinearLayout lyEspecificaActividad, lyIngresoExtra;
 
     Globals Sesion;
@@ -108,6 +114,12 @@ public class Act_B5_General extends AppCompatActivity {
         FocusManager();
         EventManager();
         new AsyncLoadData().execute();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new AsyncEstatusSolicitud().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new AsyncEstatusSolicitud().execute();
+        }
     }
 
     private void LoadFormControls() {
@@ -135,13 +147,11 @@ public class Act_B5_General extends AppCompatActivity {
         spnDondeInternet2 = (MaterialSpinner) findViewById(R.id.spnDondeInternet2);
         spnDondeInternet3 = (MaterialSpinner) findViewById(R.id.spnDondeInternet3);
 
-
         txtTelefonoFijo = (AutoCompleteTextView) findViewById(R.id.txtTelefonoFijo);
         txtNombreEscuela = (AutoCompleteTextView) findViewById(R.id.txtNombreEscuela);
         txtEspecificaActividad = (AutoCompleteTextView) findViewById(R.id.txtEspecificaActividad);
         txtActivdadIngresoExtra = (AutoCompleteTextView) findViewById(R.id.txtActivdadIngresoExtra);
         txtParaQue = (AutoCompleteTextView) findViewById(R.id.txtParaQue);
-
 
         swtTienesAutomovil = (Switch) findViewById(R.id.swtTienesAutomovil);
         swtEsPropio = (Switch) findViewById(R.id.swtEsPropio);
@@ -154,6 +164,7 @@ public class Act_B5_General extends AppCompatActivity {
         lyEspecificaActividad = (LinearLayout) findViewById(R.id.lyEspecificaActividad);
         lyIngresoExtra = (LinearLayout) findViewById(R.id.lyIngresoExtra);
 
+        btnFocoInicialB5 = (Button) findViewById(R.id.btnFocoInicialB5);
         btnInfGeneral = (Button) findViewById(R.id.btnInfGeneral);
     }
 
@@ -240,7 +251,6 @@ public class Act_B5_General extends AppCompatActivity {
 
         spnActividad.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             protected Adapter initializedAdapter = null;
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (initializedAdapter != parent.getAdapter()) {
@@ -250,10 +260,10 @@ public class Act_B5_General extends AppCompatActivity {
                 Catactividadentretenimiento cat = (Catactividadentretenimiento) parent.getItemAtPosition(position);
                 if (cat.getDescripcion().toString().toLowerCase().equals("otro")) {
                     lyEspecificaActividad.setVisibility(View.VISIBLE);
-                    txtEspecificaActividad.requestFocus();
+                    //txtEspecificaActividad.requestFocus();
                 } else {
                     lyEspecificaActividad.setVisibility(View.GONE);
-                    spnIngresoExtra.requestFocus();
+                    //spnIngresoExtra.requestFocus();
                 }
             }
 
@@ -277,7 +287,7 @@ public class Act_B5_General extends AppCompatActivity {
                     lyIngresoExtra.setVisibility(View.GONE);
                 } else {
                     lyIngresoExtra.setVisibility(View.VISIBLE);
-                    txtActivdadIngresoExtra.requestFocus();
+                    //txtActivdadIngresoExtra.requestFocus();
                 }
             }
 
@@ -292,7 +302,11 @@ public class Act_B5_General extends AppCompatActivity {
             public void onClick(View v) {
                 if (ValidaGuardar())
                 {
-                    new AsyncGuardar().execute();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        new AsyncGuardar().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }else{
+                        new AsyncGuardar().execute();
+                    }
                 }
             }
         });
@@ -355,6 +369,8 @@ public class Act_B5_General extends AppCompatActivity {
             spnDondeInternet1.setAdapter(dondeInternetAdapter);
             spnDondeInternet2.setAdapter(dondeInternetAdapter);
             spnDondeInternet3.setAdapter(dondeInternetAdapter);
+
+            new AsyncInfoBloque().execute();
         }
 
         @Override
@@ -1191,15 +1207,21 @@ public class Act_B5_General extends AppCompatActivity {
             DatosEntidad.put("Cursoid", ((Catcurso) spnCurso.getSelectedItem()).getCursoid());
             DatosEntidad.put("Nivelinglesid", ((Catnivelingles) spnIngles.getSelectedItem()).getNivelinglesid());
             DatosEntidad.put("Actividadentretenimientoid", ((Catactividadentretenimiento) spnActividad.getSelectedItem()).getActividadentretenimientoid());
-            DatosEntidad.put("Especificacionactividad", txtEspecificaActividad.getText().toString());
+            if (lyEspecificaActividad.getVisibility() != View.GONE)
+                DatosEntidad.put("Especificacionactividad", txtEspecificaActividad.getText().toString().trim());
+            else
+                DatosEntidad.put("Especificacionactividad", "");
             DatosEntidad.put("Ingresoextraid", ((Catingresoextra) spnIngresoExtra.getSelectedItem()).getIngresoextraid());
-            DatosEntidad.put("Actividadingresoextra", txtEspecificaActividad.getText().toString());
+            if (lyIngresoExtra.getVisibility() != View.GONE)
+                DatosEntidad.put("Actividadingresoextra", txtActivdadIngresoExtra.getText().toString().trim());
+            else
+                DatosEntidad.put("Actividadingresoextra", "");
             DatosEntidad.put("Tienecelularinteligente", ckTieneCelular.isChecked());
             DatosEntidad.put("Tienetablet", ckTieneTablet.isChecked());
             DatosEntidad.put("Tienecomputadora", ckTieneComputadora.isChecked());
             DatosEntidad.put("Paraqueocupaselservicio", txtParaQue.getText().toString());
             DatosEntidad.put("Redessocialesid1", ((Catredessociales) spnRedesSociales1.getSelectedItem()).getRedessocialesid());
-            DatosEntidad.put("Redessocialesid3", ((Catredessociales) spnRedesSociales2.getSelectedItem()).getRedessocialesid());
+            DatosEntidad.put("Redessocialesid2", ((Catredessociales) spnRedesSociales2.getSelectedItem()).getRedessocialesid());
             DatosEntidad.put("Redessocialesid3", ((Catredessociales) spnRedesSociales3.getSelectedItem()).getRedessocialesid());
             DatosEntidad.put("Dondeinternetid1", ((Catdondeinternet) spnDondeInternet1.getSelectedItem()).getDondeinternetid());
             DatosEntidad.put("Dondeinternetid2", ((Catdondeinternet) spnDondeInternet2.getSelectedItem()).getDondeinternetid());
@@ -1212,4 +1234,237 @@ public class Act_B5_General extends AppCompatActivity {
     }
     //GUARDAR
 
+
+    //Info del BLOQUE
+    private class AsyncInfoBloque extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            GetInfoBloque();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            if (catdatosgeneral.getUltimaAct() != 0) {
+                SetInfoBloque();
+            }
+            btnFocoInicialB5.requestFocus();
+        }
+        @Override
+        protected void onPreExecute() {
+            //progressDialog.setMessage("Cargando...");
+            //progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GetInfoBloque(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatDatosGenerales";
+        String METHOD_NAME = "GetCatDatosGenerales";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("Clienteid");
+        pi1.setValue(Sesion.getCliendeID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
+        if(respuesta != null) {
+            try
+            {
+                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
+                Boolean ev = Boolean.parseBoolean(esValido.toString());
+                if (ev)
+                {
+                    String[] listaRespuesta;
+                    listaRespuesta = new String[respuesta.getPropertyCount()];
+                    SoapObject item = (SoapObject) respuesta.getProperty(0);
+                    if(Integer.parseInt(item.getProperty("UltimaAct").toString())!=0){
+                        catdatosgeneral.setDatosgeneralesid(item.getProperty("Datosgeneralesid").toString());
+                        catdatosgeneral.setClienteid(item.getProperty("Clienteid").toString());
+                        catdatosgeneral.setEstadonacimientoid(item.getProperty("Estadonacimientoid").toString());
+                        catdatosgeneral.setTipoviviendaid(Integer.parseInt(item.getProperty("Tipoviviendaid").toString()));
+                        catdatosgeneral.setViveconid(Integer.parseInt(item.getProperty("Viveconid").toString()));
+                        catdatosgeneral.setAñoid(Integer.parseInt(item.getProperty("Añoid").toString()));
+                        catdatosgeneral.setTelefonofijo(item.getProperty("Telefonofijo").toString());
+                        catdatosgeneral.setAutomovil(Boolean.parseBoolean(item.getProperty("Automovil").toString()));
+                        catdatosgeneral.setEspropio(Boolean.parseBoolean(item.getProperty("Espropio").toString()));
+                        catdatosgeneral.setNivelestudiosid(Integer.parseInt(item.getProperty("Nivelestudiosid").toString()));
+                        catdatosgeneral.setNombreinstitucioneducativa(item.getProperty("Nombreinstitucioneducativa").toString());
+                        catdatosgeneral.setCursoid(Integer.parseInt(item.getProperty("Cursoid").toString()));
+                        catdatosgeneral.setNivelinglesid(Integer.parseInt(item.getProperty("Nivelinglesid").toString()));
+                        catdatosgeneral.setActividadentretenimientoid(Integer.parseInt(item.getProperty("Actividadentretenimientoid").toString()));
+                        catdatosgeneral.setEspecificacionactividad(item.getProperty("Especificacionactividad").toString().trim());
+                        catdatosgeneral.setIngresoextraid(Integer.parseInt(item.getProperty("Ingresoextraid").toString()));
+                        catdatosgeneral.setActividadingresoextra(item.getProperty("Actividadingresoextra").toString());
+                        catdatosgeneral.setTienecelularinteligente(Boolean.parseBoolean(item.getProperty("Tienecelularinteligente").toString()));
+                        catdatosgeneral.setTienetablet(Boolean.parseBoolean(item.getProperty("Tienetablet").toString()));
+                        catdatosgeneral.setTienecomputadora(Boolean.parseBoolean(item.getProperty("Tienecomputadora").toString()));
+                        catdatosgeneral.setParaqueocupaselservicio(item.getProperty("Paraqueocupaselservicio").toString());
+                        catdatosgeneral.setRedessocialesid1(Integer.parseInt(item.getProperty("Redessocialesid1").toString()));
+                        catdatosgeneral.setRedessocialesid2(Integer.parseInt(item.getProperty("Redessocialesid2").toString()));
+                        catdatosgeneral.setRedessocialesid3(Integer.parseInt(item.getProperty("Redessocialesid3").toString()));
+                        catdatosgeneral.setDondeinternetid1(Integer.parseInt(item.getProperty("Dondeinternetid1").toString()));
+                        catdatosgeneral.setDondeinternetid2(Integer.parseInt(item.getProperty("Dondeinternetid2").toString()));
+                        catdatosgeneral.setDondeinternetid3(Integer.parseInt(item.getProperty("Dondeinternetid3").toString()));
+                        catdatosgeneral.setUltimaAct(Integer.parseInt(item.getProperty("UltimaAct").toString()));
+                    }
+                }
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private void SetInfoBloque() {
+        spnEdoNacimiento.setSelection(getIndexEstado(catdatosgeneral.getEstadonacimientoid()));
+        spnTipoVivienda.setSelection(catdatosgeneral.getTipoviviendaid());
+        spnConQuienVives.setSelection(catdatosgeneral.getViveconid());
+        spnViviendoAhi.setSelection(catdatosgeneral.getAñoid());
+        txtTelefonoFijo.setText(catdatosgeneral.getTelefonofijo());
+        swtTienesAutomovil.setChecked(catdatosgeneral.getAutomovil());
+        swtEsPropio.setChecked(catdatosgeneral.getEspropio());
+        spnNivelEstudio.setSelection(catdatosgeneral.getNivelestudiosid());
+        txtNombreEscuela.setText(catdatosgeneral.getNombreinstitucioneducativa());
+        spnCurso.setSelection(catdatosgeneral.getCursoid());
+        spnIngles.setSelection(catdatosgeneral.getNivelinglesid());
+        spnActividad.setSelection(catdatosgeneral.getActividadentretenimientoid());
+        txtEspecificaActividad.setText(catdatosgeneral.getEspecificacionactividad());
+        spnIngresoExtra.setSelection(catdatosgeneral.getIngresoextraid());
+        txtActivdadIngresoExtra.setText(catdatosgeneral.getActividadingresoextra());
+        ckTieneCelular.setChecked(catdatosgeneral.getTienecelularinteligente());
+        ckTieneTablet.setChecked(catdatosgeneral.getTienetablet());
+        ckTieneComputadora.setChecked(catdatosgeneral.getTienecomputadora());
+        txtParaQue.setText(catdatosgeneral.getParaqueocupaselservicio());
+        spnRedesSociales1.setSelection(catdatosgeneral.getRedessocialesid1());
+        spnRedesSociales2.setSelection(catdatosgeneral.getRedessocialesid2());
+        spnRedesSociales3.setSelection(catdatosgeneral.getRedessocialesid3());
+        spnDondeInternet1.setSelection(catdatosgeneral.getDondeinternetid1());
+        spnDondeInternet2.setSelection(catdatosgeneral.getDondeinternetid2());
+        spnDondeInternet3.setSelection(catdatosgeneral.getDondeinternetid3());
+    }
+    //Info del BLOQUE
+
+
+
+    //Region Estatus Solicitud y Bloqueos
+    CatBloqueoCliente Bloqueos = new CatBloqueoCliente();
+    DatosSolicitud Solicitud = new DatosSolicitud();
+    private class AsyncEstatusSolicitud extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            while (true) {
+                try {
+                    GetEstatusSolicitud();
+                    if(Bloqueos.getBloqueoid()!=0)
+                        break;
+                    Thread.sleep(30000);
+                } catch (InterruptedException ex) {
+                }
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            //Si salio del ciclo quiere decir que encontro bloqueos
+            if (Bloqueos.getBloqueoid() != 0) {
+                new AlertDialog.Builder(Act_B5_General.this)
+                        .setTitle(R.string.msgRefTitulo)
+                        .setMessage(R.string.msgRefNoContesto)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.msgRefOk, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Sesion.setBloqueoReferencia(true);
+                                Sesion.setBloqueoCliente(Bloqueos);
+                                Sesion.setSolicitud(Solicitud);
+                                Sesion.setBloqueActual(5);
+                                Intent i = new Intent(getApplicationContext(), Act_B1_Referencias.class);
+                                startActivity(i);
+                                finish();
+                            }
+                        }).create().show();
+            }
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GetEstatusSolicitud(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetEstatusSolicitud";
+        String METHOD_NAME = "GetEstatusSolicitud";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("ClienteID");
+        pi1.setValue(Sesion.getCliendeID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+
+                if(Boolean.parseBoolean(respuesta.getProperty("EsValido").toString())){
+                    SoapObject Datos = (SoapObject) respuesta.getProperty("Datos");
+                    SoapObject datosSolicitud = (SoapObject) Datos.getProperty("datosSolicitud");
+                    SoapObject bloqueoCliente = (SoapObject) Datos.getProperty("bloqueoCliente");
+
+                    //Llenamos los datos del bloqueo de la solicitud
+                    if(Integer.parseInt(bloqueoCliente.getProperty("Bloqueoid").toString())!=0){
+                        Bloqueos.setBloqueoid(Integer.parseInt(bloqueoCliente.getProperty("Bloqueoid").toString()));
+                        Bloqueos.setClienteid(bloqueoCliente.getProperty("Clienteid").toString());
+                        Bloqueos.setBloque(Integer.parseInt(bloqueoCliente.getProperty("Bloque").toString()));
+                        Bloqueos.setEstatus(Integer.parseInt(bloqueoCliente.getProperty("Estatus").toString()));
+                        Bloqueos.setDatos(bloqueoCliente.getProperty("Datos").toString());
+                    }
+                    //Llenamos los datos de la solicitud
+                    Solicitud.setEstatusCliente(datosSolicitud.getProperty("EstatusCliente").toString());
+                    Solicitud.setPagareEnviado(Boolean.parseBoolean(datosSolicitud.getProperty("PagareEnviado").toString()));
+                    Solicitud.setDentroDeHorario(Boolean.parseBoolean(datosSolicitud.getProperty("DentroDeHorario").toString()));
+                    Solicitud.setSolicitudid(datosSolicitud.getProperty("Solicitudid").toString());
+                    Solicitud.setImporteSolicitud(Double.parseDouble(datosSolicitud.getProperty("ImporteSolicitud").toString()));
+                    Solicitud.setImporteSolicitud(Double.parseDouble(datosSolicitud.getProperty("ImporteSolicitud").toString()));
+                    Solicitud.setIntereses(Double.parseDouble(datosSolicitud.getProperty("Intereses").toString()));
+                    Solicitud.setIVA(Double.parseDouble(datosSolicitud.getProperty("IVA").toString()));
+                    Solicitud.setTotalPagar(Double.parseDouble(datosSolicitud.getProperty("TotalPagar").toString()));
+                    //Solicitud.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(datosSolicitud.getProperty("FechaSolicitud").toString()));
+                    Solicitud.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd").parse(datosSolicitud.getProperty("FechaSolicitud").toString().substring(0, 10)));
+                    Solicitud.setDiasUso(Integer.parseInt(datosSolicitud.getProperty("DiasUso").toString()));
+                    Solicitud.setFechaVence(new SimpleDateFormat("yyyy-MM-dd").parse(datosSolicitud.getProperty("FechaVence").toString().substring(0, 10)));
+                    Solicitud.setNombreCompleto(datosSolicitud.getProperty("NombreCompleto").toString());
+                    Solicitud.setBloqueCliente(Integer.parseInt(datosSolicitud.getProperty("BloqueCliente").toString()));
+                }else{
+                    //Toast.makeText(getApplicationContext(),"Error: "+respuesta.getProperty("Mensaje").toString(),Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                //Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    //Endregion
+
+    private int getIndexEstado(String myString){
+        int index = 0;
+        for (int i=0;i< lstEstados.size();i++){
+            if (lstEstados.get(i).getEstadoid().equals(myString))
+            {
+                index = i+1;
+            }
+        }
+        return index;
+    }
 }
