@@ -210,7 +210,7 @@
                         <AutoCompleteTextView
                             android:id="@+id/txtActivdadIngresoExtra"
                             android:hint="@string/txtActivdadIngresoExtra"
-                            android:inputType="textAutoCorrect|textCapCharacters"
+                            android:inputType="textCapWords|textAutoCorrect"
                             android:maxLines="1"
                             android:maxLength="250"
                             style="@style/TativoAutoCompleteTextView"/>
@@ -249,7 +249,7 @@
                     <AutoCompleteTextView
                         android:id="@+id/txtParaQue"
                         android:hint="@string/txtParaQue"
-                        android:inputType="textCapCharacters|textAutoCorrect"
+                        android:inputType="textCapWords|textAutoCorrect"
                         android:maxLines="1"
                         android:maxLength="500"
                         style="@style/TativoAutoCompleteTextView"/>

@@ -168,9 +168,10 @@ public class Act_B2_Personal extends AppCompatActivity {
         FocusNextControl(R.id.spnEstadoCivil, "S", R.id.txtCodigoPostal, "T");
         FocusNextControl(R.id.txtCodigoPostal, "T", R.id.spnColonia, "S");
         FocusNextControl(R.id.spnColonia, "S", R.id.txtCalle, "T");
+        FocusNextControl(R.id.txtCalle, "T", R.id.txtNumeroExt, "T");
         FocusNextControl(R.id.txtNumeroExt, "T", R.id.txtNumeroInt, "T");
         FocusNextControl(R.id.txtNumeroInt, "T", R.id.txtTelefonoCelular, "T");
-        FocusNextControl(R.id.txtTelefonoCelular, "T", R.id.spnEstadoCivil, "S");
+        FocusNextControl(R.id.txtTelefonoCelular, "T", R.id.spnMarcaCelular, "S");
     }
 
     private void EventManager()
