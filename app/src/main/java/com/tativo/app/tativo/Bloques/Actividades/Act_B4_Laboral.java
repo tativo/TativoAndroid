@@ -55,7 +55,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
 
     ProgressDialog progressDialog;
     Globals Sesion;
-    Boolean NuevaColonia;
+    Boolean NuevaColonia,edicionCP=false;
     DatosCodigoPostal datosCP;
     ArrayList<Catcolonia> lstCatColonia = new ArrayList<Catcolonia>();
     AdapterColonias ColoniasAdapter;
@@ -154,7 +154,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
         txtCodigoPostal.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
+                if (!hasFocus && edicionCP) {
                     if (txtCodigoPostal.getText().toString().trim().length() == 5) {
                         new AsyncTraerDatosCodigoPostal().execute();
                     } else {
@@ -166,7 +166,16 @@ public class Act_B4_Laboral extends AppCompatActivity {
                             spnColonia.setEnabled(false);
                         }
                     }
+                    edicionCP = false;
                 }
+            }
+        });
+
+        txtCodigoPostal.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                edicionCP = true;
+                return false;
             }
         });
 
@@ -174,6 +183,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 lyNuevaColonia.setVisibility(View.VISIBLE);
+                spnColonia.setSelection(0);
                 spnColonia.setEnabled(false);
                 NuevaColonia = true;
                 txtNuevaColonia.requestFocus();
@@ -610,6 +620,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
 
 
     //Info del BLOQUE
+    String indexColonias ="0";
     private class AsyncInfoBloque extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
@@ -649,36 +660,55 @@ public class Act_B4_Laboral extends AppCompatActivity {
 
         ServiciosSoap oServiciosSoap = new ServiciosSoap();
         SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
-        if(respuesta != null) {
-            try
-            {
-                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
-                Boolean ev = Boolean.parseBoolean(esValido.toString());
-                if (ev)
-                {
-                    String[] listaRespuesta;
-                    listaRespuesta = new String[respuesta.getPropertyCount()];
-                    SoapObject item = (SoapObject) respuesta.getProperty(0);
-                    if(Integer.parseInt(item.getProperty("UltimaAct").toString())!=0)
-                    {
-                        catdatosempleo.setDatosempleoid(item.getProperty("Datosempleoid").toString());
-                        catdatosempleo.setClienteid(item.getProperty("Clienteid").toString());
-                        catdatosempleo.setTieneempleo(Boolean.parseBoolean(item.getProperty("Tieneempleo").toString()));
-                        catdatosempleo.setCalle(item.getProperty("Calle").toString());
-                        catdatosempleo.setNumeroext(item.getProperty("Numeroext").toString());
-                        catdatosempleo.setNumeroint(item.getProperty("numeroint").toString());
-                        catdatosempleo.setColonia(item.getProperty("Colonia").toString());
-                        catdatosempleo.setCodigopostal(item.getProperty("Codigopostal").toString());
-                        catdatosempleo.setPaisid(item.getProperty("Paisid").toString());
-                        catdatosempleo.setEstadoid(item.getProperty("Estadoid").toString());
-                        catdatosempleo.setMunicipioid(item.getProperty("Municipioid").toString());
-                        catdatosempleo.setCiudadid(item.getProperty("Ciudadid").toString());
-                        catdatosempleo.setArealaboralid(Integer.parseInt(item.getProperty("Arealaboralid").toString()));
-                        catdatosempleo.setDescripcionactividad(item.getProperty("Descripcionactividad").toString());
-                        catdatosempleo.setSueldoMensual(Double.parseDouble(item.getProperty("Sueldomensual").toString()));
-                        catdatosempleo.setPaginaweb(item.getProperty("Paginaweb").toString());
-                        catdatosempleo.setUltimaAct(Integer.parseInt(item.getProperty("UltimaAct").toString()));
+        if (respuesta != null) {
+            try {
+                if (Boolean.parseBoolean(respuesta.getProperty("EsValido").toString())) {
+                    SoapObject Datos = (SoapObject) respuesta.getProperty("Datos");
+                    SoapObject DatosCodigoPostal = (SoapObject) Datos.getProperty("CP");
+                    SoapObject DatosColonias = (SoapObject) Datos.getProperty("Colonias");
+                    indexColonias = Datos.getProperty("IndexColonia").toString().toUpperCase().trim();
+
+                    if (Integer.parseInt(Datos.getProperty("UltimaAct").toString()) != 0) {
+                        catdatosempleo.setDatosempleoid(Datos.getProperty("Datosempleoid").toString());
+                        catdatosempleo.setClienteid(Datos.getProperty("Clienteid").toString());
+                        catdatosempleo.setTieneempleo(Boolean.parseBoolean(Datos.getProperty("Tieneempleo").toString()));
+                        catdatosempleo.setCalle(Datos.getProperty("Calle").toString());
+                        catdatosempleo.setNumeroext(Datos.getProperty("Numeroext").toString());
+                        catdatosempleo.setNumeroint(Datos.getProperty("numeroint").toString());
+                        catdatosempleo.setColonia(Datos.getProperty("Colonia").toString());
+                        catdatosempleo.setCodigopostal(Datos.getProperty("Codigopostal").toString());
+                        catdatosempleo.setPaisid(Datos.getProperty("Paisid").toString());
+                        catdatosempleo.setEstadoid(Datos.getProperty("Estadoid").toString());
+                        catdatosempleo.setMunicipioid(Datos.getProperty("Municipioid").toString());
+                        catdatosempleo.setCiudadid(Datos.getProperty("Ciudadid").toString());
+                        catdatosempleo.setArealaboralid(Integer.parseInt(Datos.getProperty("Arealaboralid").toString()));
+                        catdatosempleo.setDescripcionactividad(Datos.getProperty("Descripcionactividad").toString());
+                        catdatosempleo.setSueldoMensual(Double.parseDouble(Datos.getProperty("Sueldomensual").toString()));
+                        catdatosempleo.setPaginaweb(Datos.getProperty("Paginaweb").toString());
+                        catdatosempleo.setUltimaAct(Integer.parseInt(Datos.getProperty("UltimaAct").toString()));
                     }
+
+                    lstCatColonia = new ArrayList<Catcolonia>();
+                    for (int i = 0; i < DatosColonias.getPropertyCount(); i++) {
+                        SoapObject item = (SoapObject) DatosColonias.getProperty(i);
+                        Catcolonia entidad = new Catcolonia();
+                        entidad.setCiudadid(item.getProperty("Ciudadid").toString());
+                        entidad.setColoniaid(item.getProperty("Coloniaid").toString());
+                        entidad.setColonia(item.getProperty("Colonia").toString());
+                        lstCatColonia.add(entidad);
+                    }
+
+                    datosCP.setPaisID(DatosCodigoPostal.getProperty("PaisID").toString().trim());
+                    datosCP.setPais(DatosCodigoPostal.getProperty("Pais").toString().trim());
+                    datosCP.setEstadoID(DatosCodigoPostal.getProperty("EstadoID").toString().trim());
+                    datosCP.setEstado(DatosCodigoPostal.getProperty("Estado").toString().trim());
+                    datosCP.setMunicipioID(DatosCodigoPostal.getProperty("MunicipioID").toString().trim());
+                    datosCP.setMunicipio(DatosCodigoPostal.getProperty("Municipio").toString().trim());
+                    datosCP.setCiudadID(DatosCodigoPostal.getProperty("CiudadID").toString().trim());
+                    datosCP.setCiudad(DatosCodigoPostal.getProperty("Ciudad").toString().trim());
+                    datosCP.setColoniaID(DatosCodigoPostal.getProperty("ColoniaID").toString().trim());
+                    datosCP.setColonia(DatosCodigoPostal.getProperty("Colonia").toString().trim());
+
                 }
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
@@ -687,22 +717,43 @@ public class Act_B4_Laboral extends AppCompatActivity {
     }
     private void SetInfoBloque() {
         txtCodigoPostal.setText(catdatosempleo.getCodigopostal());
-
         txtCalle.setText(catdatosempleo.getCalle());
         txtNumeroExt.setText(catdatosempleo.getNumeroext());
         txtNumeroInt.setText(catdatosempleo.getNumeroint());
-        int ix = getIndexColonia(catdatosempleo.getColonia());
-        if (ix > 0)
-            spnColonia.setSelection(ix);
-        else
-        {
-            lyNuevaColonia.setVisibility(View.VISIBLE);
-            txtNuevaColonia.setText(catdatosempleo.getColonia());
+
+        //Preguntamos si el usuario ya ingreso los datos del codigo postal para mostrarlos en pantalla
+        if (catdatosempleo.getCodigopostal().trim().length() > 0) {
+            hnEstadoMunicipioTexto.setText(datosCP.getMunicipio() + "/" + datosCP.getEstado());
+            spnColonia.setEnabled(true);
+            ColoniasAdapter = new AdapterColonias(lstCatColonia);
+            spnColonia.setAdapter(ColoniasAdapter);
         }
+        //Preguntamos si el usuario ya ingreso o selecciono una colonia
+        if (catdatosempleo.getColonia().trim().length() > 0) {
+            if (indexColonias.trim().toUpperCase().equals("0")) {
+                lyNuevaColonia.setVisibility(View.VISIBLE);
+                spnColonia.setSelection(0);
+                spnColonia.setEnabled(false);
+                NuevaColonia = true;
+                txtNuevaColonia.setText(catdatosempleo.getColonia().trim());
+            } else {
+                spnColonia.setSelection(getIndexColonia(indexColonias));
+            }
+        }
+
         spnAreaLaboral.setSelection(catdatosempleo.getArealaboralid());
         txtActividades.setText(catdatosempleo.getDescripcionactividad());
         txtSueldoMensual.setText(catdatosempleo.getSueldoMensual().toString());
         txtPaginaEmpresa.setText(catdatosempleo.getPaginaweb());
+    }
+    private int getIndexColonia(String myString) {
+        int index = 0;
+        for (int i = 0; i < lstCatColonia.size(); i++) {
+            if (lstCatColonia.get(i).getColoniaid().toUpperCase().trim().equals(myString)) {
+                index = i + 1;
+            }
+        }
+        return index;
     }
     //Info del BLOQUE
 
@@ -812,15 +863,4 @@ public class Act_B4_Laboral extends AppCompatActivity {
         }
     }
     //Endregion
-
-    private int getIndexColonia(String myString){
-        int index = 0;
-        for (int i=0;i< lstCatColonia.size();i++){
-            if (lstCatColonia.get(i).getColonia().equals(myString))
-            {
-                index = i + 1;
-            }
-        }
-        return index;
-    }
 }
