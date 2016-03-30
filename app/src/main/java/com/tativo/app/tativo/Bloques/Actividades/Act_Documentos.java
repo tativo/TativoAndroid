@@ -129,10 +129,12 @@ public class Act_Documentos extends AppCompatActivity {
 
 
     //GUARDAR
+
     //GUARDAR
 
 
     //Info del BLOQUE
+
     //Info del BLOQUE
 
     //Region Estatus Solicitud y Bloqueos

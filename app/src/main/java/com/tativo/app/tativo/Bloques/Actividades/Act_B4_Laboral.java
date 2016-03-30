@@ -87,7 +87,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
     {
         Sesion = (Globals) getApplicationContext();
 
-        Sesion.setCliendeID("83F0E461-3887-4185-94FB-D992D9AC7E26");
+        //Sesion.setCliendeID("83F0E461-3887-4185-94FB-D992D9AC7E26");
 
         progressDialog = new ProgressDialog(this);
         datosCP = new DatosCodigoPostal();
@@ -687,7 +687,6 @@ public class Act_B4_Laboral extends AppCompatActivity {
     }
     private void SetInfoBloque() {
         txtCodigoPostal.setText(catdatosempleo.getCodigopostal());
-
 
         txtCalle.setText(catdatosempleo.getCalle());
         txtNumeroExt.setText(catdatosempleo.getNumeroext());
