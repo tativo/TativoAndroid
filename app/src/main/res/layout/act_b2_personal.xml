@@ -203,7 +203,7 @@
                         android:hint="@string/txtTelefonoCelular"
                         android:inputType="phone"
                         android:maxLines="1"
-                        android:maxLength="30"
+                        android:maxLength="10"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
