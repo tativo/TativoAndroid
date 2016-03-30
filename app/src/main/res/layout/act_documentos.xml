@@ -22,25 +22,33 @@
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnNombreCompleto" />
-                <TextView style="@style/TativoTextView" />
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblNobreCompleto"
+                    android:text="A"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnDireccion" />
-                <TextView style="@style/TativoTextView" />
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblDireccion"
+                    android:text="D"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/txtTelefono" />
-                <TextView style="@style/TativoTextView"/>
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblTelefono"
+                    android:text="6"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/txtCorreo" />
-                <TextView style="@style/TativoTextView"/>
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblCorreo"
+                    android:text="C"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLayoutBordeRelleno">
                 <TextView style="@style/TativoTextViewEncabezado"
@@ -50,56 +58,74 @@
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnNombreBanco" />
-                <TextView style="@style/TativoTextView"/>
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblNombreBanco"
+                    android:text="B"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/txtNumeroTarjetaCLABE" />
-                <TextView style="@style/TativoTextView" />
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblNumeroTarjetaCLABE"
+                    android:text="1"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnMonto" />
-                <TextView style="@style/TativoTextView" />
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblMonto"
+                    android:text="$"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnInteres" />
-                <TextView style="@style/TativoTextView" />
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblInteres"
+                    android:text="$"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnIVA" />
-                <TextView style="@style/TativoTextView" />
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblIVA"
+                    android:text="$"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnTotal" />
-                <TextView style="@style/TativoTextView" />
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblTotalPagar"
+                    android:text="$"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnFechaInicio" />
-                <TextView style="@style/TativoTextView" />
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblFechaInicio"
+                    android:text="F"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnPlazo" />
-                <TextView style="@style/TativoTextView" />
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblPlazo"
+                    android:text="0"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp"
                 android:layout_marginBottom="20dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnFechaLimite" />
-                <TextView style="@style/TativoTextView" />
+                <TextView style="@style/TativoTextView"
+                    android:id="@+id/lblFechaLimite"
+                    android:text="F"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,102 +137,120 @@
                     android:textAlignment="center"
                     android:text="Haz clic en el botón para ver los documentos y posteriormente aceptar términos y condiciones"/>
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBordeGris"
-                android:padding="30dp">
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAzulOscuro"
-                    android:textColor="@color/colorBlanco"
-                    android:text="@string/btnVerDocumentos"/>
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="Carga de documentos"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="Sube aquí tu identificación oficial (frente y vuelta)"/>
-            </LinearLayout>
-
-            <LinearLayout style="@style/TativoLinearLayoutBordeGris"
-                android:padding="30dp">
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAmarillo"
-                    android:textColor="@color/colorBlanco"
-                    android:text="@string/btnSubirFoto"/>
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAmarillo"
-                    android:textColor="@color/colorBlanco"
-                    android:text="@string/btnSubirFoto"
-                    android:layout_marginTop="10dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="Coloca tu firma digital"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="Ingresa tu nombre tal cual lo pusiste en tu registro"/>
-            </LinearLayout>
-
-
-            <LinearLayout style="@style/TativoLinearLayoutBordeGris"
-                android:paddingBottom="8dp">
-                <android.support.design.widget.TextInputLayout
-                    style="@style/TativoTextInputLayout">
-                    <AutoCompleteTextView
+                android:id="@+id/lybtnVerDocumentos">
+                <LinearLayout style="@style/TativoLinearLayoutBordeGris"
+                    android:padding="30dp">
+                    <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/txtFirma"
-                        android:inputType="textCapWords|textAutoCorrect"
-                        android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textSize="8dp"
-                    android:text="he leído y autorizo el uso de mi forma electrónica en este pagaré"/>
+                        android:background="@color/colorAzulOscuro"
+                        android:textColor="@color/colorBlanco"
+                        android:text="@string/btnVerDocumentos"
+                        android:id="@+id/btnVerDocumentos"/>
+                </LinearLayout>
             </LinearLayout>
 
-            <Button
-                android:layout_marginTop="15dp"
-                android:id="@+id/btnAceptarDocumentos"
-                android:text="@string/btnAceptarDocumentos"
-                style="@style/TativoBotonAceptar"/>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/lyCargaDocumentos"
+                android:visibility="visible">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Carga de documentos"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Sube aquí tu identificación oficial (frente y vuelta)"/>
+                </LinearLayout>
+
+                <LinearLayout style="@style/TativoLinearLayoutBordeGris"
+                    android:padding="30dp">
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorAmarillo"
+                        android:textColor="@color/colorBlanco"
+                        android:text="@string/btnSubirFoto"
+                        android:id="@+id/btnFotoFrontal"/>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorAmarillo"
+                        android:textColor="@color/colorBlanco"
+                        android:text="@string/btnSubirFoto"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/btnFotoTrasera"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Coloca tu firma digital"
+                        android:textStyle="bold" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:text="Ingresa tu nombre tal cual lo pusiste en tu registro"/>
+                </LinearLayout>
+
+
+                <LinearLayout style="@style/TativoLinearLayoutBordeGris"
+                    android:paddingBottom="8dp">
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/TativoTextInputLayout">
+                        <AutoCompleteTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtFirmaDocumentos"
+                            android:inputType="textCapWords|textAutoCorrect"
+                            android:maxLines="1" />
+                    </android.support.design.widget.TextInputLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textSize="8dp"
+                        android:text="he leído y autorizo el uso de mi forma electrónica en este pagaré"/>
+                </LinearLayout>
+
+                <Button
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/btnAceptarDocumentos"
+                    android:text="@string/btnAceptarDocumentos"
+                    style="@style/TativoBotonAceptar"/>
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
     <LinearLayout style="@style/TativoLayoutTitulo">

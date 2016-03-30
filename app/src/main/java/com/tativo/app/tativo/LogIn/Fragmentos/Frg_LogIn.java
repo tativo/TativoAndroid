@@ -13,6 +13,7 @@ import com.tativo.app.tativo.Bloques.Actividades.Act_B3_ConfirmarPIN;
 import com.tativo.app.tativo.Bloques.Actividades.Act_B3_InfDeposito;
 import com.tativo.app.tativo.Bloques.Actividades.Act_B4_Laboral;
 import com.tativo.app.tativo.Bloques.Actividades.Act_B5_General;
+import com.tativo.app.tativo.Bloques.Actividades.Act_Documentos;
 import com.tativo.app.tativo.R;
 
 /**
@@ -36,7 +37,7 @@ public class Frg_LogIn extends Fragment {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Act_B4_Laboral.class);
+                Intent i = new Intent(getActivity(), Act_Documentos.class);
                 startActivity(i);
                 getActivity().finish();
             }
