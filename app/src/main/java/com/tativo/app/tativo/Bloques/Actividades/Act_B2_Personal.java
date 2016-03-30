@@ -1,11 +1,14 @@
 package com.tativo.app.tativo.Bloques.Actividades;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -27,12 +30,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tativo.app.tativo.Bloques.Clases.CatBloqueoCliente;
 import com.tativo.app.tativo.Bloques.Clases.Catcolonia;
 import com.tativo.app.tativo.Bloques.Clases.Catdatospersonal;
 import com.tativo.app.tativo.Bloques.Clases.Catestadoscivil;
 import com.tativo.app.tativo.Bloques.Clases.Catidentidadcliente;
 import com.tativo.app.tativo.Bloques.Clases.Catmarcastelefonos;
 import com.tativo.app.tativo.Bloques.Clases.DatosCodigoPostal;
+import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
@@ -63,7 +68,7 @@ public class Act_B2_Personal extends AppCompatActivity {
     CheckBox ckTerminosCondiciones1, ckTerminosCondiciones2, ckTerminosCondiciones3, ckTerminosCondiciones4;
     TextView hnEstadoMunicipioTexto, txtAgregarColonia;
     ProgressDialog progressDialog;
-    Globals g;
+    Globals Sesion;
     DatosCodigoPostal datosCP;
     Catdatospersonal catdatospersonal;
     Catidentidadcliente catidentidadcliente;
@@ -74,7 +79,7 @@ public class Act_B2_Personal extends AppCompatActivity {
     ArrayList<Catmarcastelefonos> lstCatMarcaTelefono = new ArrayList<Catmarcastelefonos>();
     ArrayList<Catcolonia> lstCatColonia = new ArrayList<Catcolonia>();
     LinearLayout lyNuevaColonia;
-    Boolean NuevaColonia;
+    Boolean NuevaColonia,edicionCP=false;
 
 
     int year_x, month_x, day_x;
@@ -84,21 +89,27 @@ public class Act_B2_Personal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_b2_personal);
+        Sesion = (Globals) getApplicationContext();
+        //Sesion.setCliendeID("4137A932-FFEB-4642-B382-EA4DAB45DF62");
         LoadFormControls();
         FocusManager();
         EventManager();
-        btnFocoInicialB2.requestFocus();
         new AsyncLoadData().execute();
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new AsyncEstatusSolicitud().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new AsyncEstatusSolicitud().execute();
+        }
     }
 
     private void LoadFormControls()
     {
-        g = (Globals) getApplicationContext();
         progressDialog = new ProgressDialog(this);
         datosCP = new DatosCodigoPostal();
 
         btnFocoInicialB2 = (Button) findViewById(R.id.btnFocoInicialB2);
+        btnFocoInicialB2.setFocusable(true);
+        btnFocoInicialB2.setFocusableInTouchMode(true);
         btnInfPersonal = (Button) findViewById(R.id.btnInfPersonal);
         txtFechaNacimiento = (AutoCompleteTextView) findViewById(R.id.txtFechaNacimiento);
         btnFechaNacimiento = (Button) findViewById(R.id.btnFechaNacimiento);
@@ -199,7 +210,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         txtCodigoPostal.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
+                if (!hasFocus && edicionCP) {
                     if (txtCodigoPostal.getText().toString().trim().length() == 5) {
                         new AsyncTraerDatosCodigoPostal().execute();
                     } else {
@@ -211,8 +222,17 @@ public class Act_B2_Personal extends AppCompatActivity {
                             spnColonia.setEnabled(false);
                         }
                     }
-
+                    edicionCP = false;
                 }
+            }
+        });
+
+        txtCodigoPostal.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                //if (keyCode == KeyEvent.KEYCODE_ENTER)
+                edicionCP=true;
+                return false;
             }
         });
 
@@ -229,6 +249,7 @@ public class Act_B2_Personal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 lyNuevaColonia.setVisibility(View.VISIBLE);
+                spnColonia.setSelection(0);
                 spnColonia.setEnabled(false);
                 NuevaColonia = true;
                 txtNuevaColonia.requestFocus();
@@ -326,10 +347,6 @@ public class Act_B2_Personal extends AppCompatActivity {
         }
     }
 
-
-
-
-
     //CODIGO POSTAL
     private class AsyncTraerDatosCodigoPostal extends AsyncTask<Void, Void, Boolean>
     {
@@ -356,6 +373,9 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
             else
             {
+                lstCatColonia = new ArrayList<Catcolonia>();
+                ColoniasAdapter = new AdapterColonias(lstCatColonia);
+                spnColonia.setAdapter(ColoniasAdapter);
                 hnEstadoMunicipioTexto.setText("");
                 txtCodigoPostal.setError(getText(R.string.CPNoEncontrado));
                 txtCodigoPostal.requestFocus();
@@ -435,9 +455,9 @@ public class Act_B2_Personal extends AppCompatActivity {
             progressDialog.dismiss();
             EstadosCivilAdapter = new AdapterEstadosCivil(lstCatestadoscivil);
             spnEstadoCivil.setAdapter(EstadosCivilAdapter);
-
             MarcaTelefonoAdapter = new AdapterMarcaTelefono(lstCatMarcaTelefono);
             spnMarcaCelular.setAdapter(MarcaTelefonoAdapter);
+            new AsyncInfoBloque().execute();
         }
 
         @Override
@@ -652,11 +672,11 @@ public class Act_B2_Personal extends AppCompatActivity {
         Objetos.add(txtCodigoPostal);
         Objetos.add(txtCalle);
         Objetos.add(txtNumeroExt);
-        Objetos.add(txtNumeroInt);
         Objetos.add(txtTelefonoCelular);
         Objetos.add(spnGenero);
         Objetos.add(spnEstadoCivil);
-        Objetos.add(spnColonia);
+        if (!NuevaColonia)
+            Objetos.add(spnColonia);
         Objetos.add(spnMarcaCelular);
         if (swtTarjetaCredito.isChecked())
             Objetos.add(txt4DigitosTarjeta);
@@ -748,7 +768,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         JSONObject DatosIdentidad = new JSONObject();
         try {
             DatosPersonales.put("Datopersonalid", catdatospersonal.getDatopersonalid().toString());
-            DatosPersonales.put("Clienteid", g.getCliendeID());
+            DatosPersonales.put("Clienteid", Sesion.getCliendeID());
             DatosPersonales.put("Genero", spnGenero.getSelectedItem().toString().substring(0, 1));
             DatosPersonales.put("Fechanacimiento", Utilerias.getDate(txtFechaNacimiento.getText().toString()));
             DatosPersonales.put("Estadocivilid", ((Catestadoscivil) spnEstadoCivil.getSelectedItem()).getEstadocivilid());
@@ -771,7 +791,7 @@ public class Act_B2_Personal extends AppCompatActivity {
 
 
             DatosIdentidad.put("Identidadclienteid", catidentidadcliente.getIdentidadclienteid());
-            DatosIdentidad.put("Clienteid", g.getCliendeID());
+            DatosIdentidad.put("Clienteid", Sesion.getCliendeID());
             DatosIdentidad.put("Tarjetacredito", swtTarjetaCredito.isChecked());
             DatosIdentidad.put("Ultimoscuatrodigitos", txt4DigitosTarjeta.getText());
             DatosIdentidad.put("Creditohipotecario", swtCreditoHipotecario.isChecked());
@@ -789,8 +809,8 @@ public class Act_B2_Personal extends AppCompatActivity {
     }
     //GUARDAR
 
-    /*
-    //CARGAR DATOS BLOQUE
+    //Region Existe Info del BLOQUE
+    String indexColonias ="0";
     private class AsyncInfoBloque extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
@@ -801,9 +821,10 @@ public class Act_B2_Personal extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-            if(EntityReferenciaPersonal.getUltimaActRef1() != 0){
+            if (catdatospersonal.getUltimaAct() != 0) {
                 SetInfoBloque();
             }
+            btnFocoInicialB2.requestFocus();
         }
         @Override
         protected void onPreExecute() {
@@ -815,15 +836,203 @@ public class Act_B2_Personal extends AppCompatActivity {
         protected void onProgressUpdate(Void... values) {
         }
     }
-    private void GetInfoBloque(){
-        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatreferenciaspersonal";
-        String METHOD_NAME = "GetCatreferenciaspersonal";
+    private void GetInfoBloque() {
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetCatDatosIdentidad";
+        String METHOD_NAME = "GetCatDatosIdentidad";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores = new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("clienteid");
+        pi1.setValue(Sesion.getCliendeID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE, valores);
+
+        if (respuesta != null) {
+            try {
+                if (Boolean.parseBoolean(respuesta.getProperty("EsValido").toString())) {
+                    SoapObject Datos = (SoapObject) respuesta.getProperty("Datos");
+                    SoapObject DatosPersonales = (SoapObject) Datos.getProperty("DatosPersonales");
+                    SoapObject DatosIdentidad = (SoapObject)  Datos.getProperty("DatosIdentidad");
+                    SoapObject DatosCodigoPostal = (SoapObject) Datos.getProperty("CP");
+                    SoapObject DatosColonias = (SoapObject) Datos.getProperty("Colonias");
+                    indexColonias = Datos.getProperty("IndexColonia").toString().toUpperCase().trim();
+
+                    if(Integer.parseInt(DatosPersonales.getProperty("UltimaAct").toString())!=0){
+                        catdatospersonal.setDatopersonalid(DatosPersonales.getProperty("Datopersonalid").toString());
+                        catdatospersonal.setClienteid(DatosPersonales.getProperty("Clienteid").toString());
+                        catdatospersonal.setGenero(DatosPersonales.getProperty("Genero").toString());
+                        catdatospersonal.setFechanacimiento(new SimpleDateFormat("yyyy-MM-dd").parse(DatosPersonales.getProperty("Fechanacimiento").toString().substring(0, 10)));
+                        catdatospersonal.setEstadocivilid(Integer.parseInt(DatosPersonales.getProperty("Estadocivilid").toString()));
+                        catdatospersonal.setDependientes(Integer.parseInt(DatosPersonales.getProperty("Dependientes").toString()));
+                        catdatospersonal.setTelefono(DatosPersonales.getProperty("Telefono").toString());
+                        catdatospersonal.setMarcaid(Integer.parseInt(DatosPersonales.getProperty("Marcaid").toString()));
+                        catdatospersonal.setCalle(DatosPersonales.getProperty("Calle").toString());
+                        catdatospersonal.setNumeroext(DatosPersonales.getProperty("Numeroext").toString());
+                        catdatospersonal.setNumeroint(DatosPersonales.getProperty("Numeroint").toString());
+                        catdatospersonal.setColonia(DatosPersonales.getProperty("Colonia").toString());
+                        catdatospersonal.setCodigopostal(DatosPersonales.getProperty("Codigopostal").toString());
+                        catdatospersonal.setPaisid(DatosPersonales.getProperty("Paisid").toString());
+                        catdatospersonal.setEstadoid(DatosPersonales.getProperty("Estadoid").toString());
+                        catdatospersonal.setMunicipioid(DatosPersonales.getProperty("Municipioid").toString());
+                        catdatospersonal.setCiudadid(DatosPersonales.getProperty("Ciudadid").toString());
+                        catdatospersonal.setUltimaAct(Integer.parseInt(DatosPersonales.getProperty("UltimaAct").toString()));
+                    }
+
+                    if(Integer.parseInt(DatosIdentidad.getProperty("UltimaAct").toString()) != 0) {
+                        catidentidadcliente.setIdentidadclienteid(DatosIdentidad.getProperty("Identidadclienteid").toString());
+                        catidentidadcliente.setClienteid(DatosIdentidad.getProperty("Clienteid").toString());
+                        catidentidadcliente.setTarjetacredito(Boolean.parseBoolean(DatosIdentidad.getProperty("Tarjetacredito").toString()));
+                        catidentidadcliente.setUltimoscuatrodigitos(DatosIdentidad.getProperty("Ultimoscuatrodigitos").toString());
+                        catidentidadcliente.setCreditohipotecario(Boolean.parseBoolean(DatosIdentidad.getProperty("Creditohipotecario").toString()));
+                        catidentidadcliente.setCreditoautomotriz(Boolean.parseBoolean(DatosIdentidad.getProperty("Creditoautomotriz").toString()));
+                        catidentidadcliente.setUltimaAct(Integer.parseInt(DatosIdentidad.getProperty("UltimaAct").toString()));
+                    }
+
+                    lstCatColonia = new ArrayList<Catcolonia>();
+                    for (int i = 0; i < DatosColonias.getPropertyCount(); i++) {
+                        SoapObject item = (SoapObject) DatosColonias.getProperty(i);
+                        Catcolonia entidad = new Catcolonia();
+                        entidad.setCiudadid(item.getProperty("Ciudadid").toString());
+                        entidad.setColoniaid(item.getProperty("Coloniaid").toString());
+                        entidad.setColonia(item.getProperty("Colonia").toString());
+                        lstCatColonia.add(entidad);
+                    }
+
+                    datosCP.setPaisID(DatosCodigoPostal.getProperty("PaisID").toString().trim());
+                    datosCP.setPais(DatosCodigoPostal.getProperty("Pais").toString().trim());
+                    datosCP.setEstadoID(DatosCodigoPostal.getProperty("EstadoID").toString().trim());
+                    datosCP.setEstado(DatosCodigoPostal.getProperty("Estado").toString().trim());
+                    datosCP.setMunicipioID(DatosCodigoPostal.getProperty("MunicipioID").toString().trim());
+                    datosCP.setMunicipio(DatosCodigoPostal.getProperty("Municipio").toString().trim());
+                    datosCP.setCiudadID(DatosCodigoPostal.getProperty("CiudadID").toString().trim());
+                    datosCP.setCiudad(DatosCodigoPostal.getProperty("Ciudad").toString().trim());
+                    datosCP.setColoniaID(DatosCodigoPostal.getProperty("ColoniaID").toString().trim());
+                    datosCP.setColonia(DatosCodigoPostal.getProperty("Colonia").toString().trim());
+
+
+
+                } else {
+                    //Toast.makeText(getApplicationContext(),"Error: "+respuesta.getProperty("Mensaje").toString(),Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                //Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private void SetInfoBloque() {
+        txtFechaNacimiento.setText(new SimpleDateFormat("dd/MM/yyyy").format(catdatospersonal.getFechanacimiento()));
+        txtDependientes.setText(String.valueOf(catdatospersonal.getDependientes()));
+        spnGenero.setSelection((catdatospersonal.getGenero().toString() == "M" ? 1 : 2));
+        spnEstadoCivil.setSelection(catdatospersonal.getEstadocivilid());
+        txtCodigoPostal.setText(catdatospersonal.getCodigopostal());
+        //Preguntamos si el usuario ya ingreso los datos del codigo postal para mostrarlos en pantalla
+        if(catdatospersonal.getCodigopostal().trim().length()>0){
+            hnEstadoMunicipioTexto.setText(datosCP.getMunicipio() + "/" + datosCP.getEstado());
+            spnColonia.setEnabled(true);
+            ColoniasAdapter = new AdapterColonias(lstCatColonia);
+            spnColonia.setAdapter(ColoniasAdapter);
+        }
+        //Preguntamos si el usuario ya ingreso o selecciono una colonia
+        if(catdatospersonal.getColonia().trim().length()>0){
+            if(indexColonias.trim().toUpperCase().equals("0")){
+                lyNuevaColonia.setVisibility(View.VISIBLE);
+                spnColonia.setSelection(0);
+                spnColonia.setEnabled(false);
+                NuevaColonia = true;
+                txtNuevaColonia.setText(catdatospersonal.getColonia().trim());
+            }else{
+                spnColonia.setSelection(getIndexColonia(indexColonias));
+            }
+        }
+        txtCalle.setText(catdatospersonal.getCalle());
+        txtNumeroExt.setText(catdatospersonal.getNumeroext());
+        txtNumeroInt.setText(catdatospersonal.getNumeroint());
+        txtTelefonoCelular.setText(catdatospersonal.getTelefono());
+        spnMarcaCelular.setSelection(catdatospersonal.getMarcaid());
+
+        //Llenamos los datos de identidad
+        swtTarjetaCredito.setChecked(catidentidadcliente.getTarjetacredito());
+        if(catidentidadcliente.getTarjetacredito()){
+            txt4DigitosTarjeta.setText(catidentidadcliente.getUltimoscuatrodigitos());
+            txt4DigitosTarjeta.setEnabled(catidentidadcliente.getTarjetacredito());
+        }
+        swtCreditoHipotecario.setChecked(catidentidadcliente.getCreditohipotecario());
+        swtCreditoAutomotriz.setChecked(catidentidadcliente.getCreditoautomotriz());
+    }
+    private int getIndexColonia(String myString) {
+        int index = 0;
+        for (int i = 0; i < lstCatColonia.size(); i++) {
+            if (lstCatColonia.get(i).getColoniaid().toUpperCase().trim().equals(myString)) {
+                index = i + 1;
+            }
+        }
+        return index;
+    }
+    //Endregion
+
+
+    //Region Estatus Solicitud y Bloqueos
+    CatBloqueoCliente Bloqueos = new CatBloqueoCliente();
+    DatosSolicitud Solicitud = new DatosSolicitud();
+    private class AsyncEstatusSolicitud extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            while (true) {
+                try {
+                    GetEstatusSolicitud();
+                    if(Bloqueos.getBloqueoid()!=0)
+                        break;
+                    Thread.sleep(30000);
+                } catch (InterruptedException ex) {
+                }
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            //Si salio del ciclo quiere decir que encontro bloqueos
+            if (Bloqueos.getBloqueoid() != 0) {
+                new AlertDialog.Builder(Act_B2_Personal.this)
+                        .setTitle(R.string.msgRefTitulo)
+                        .setMessage(R.string.msgRefNoContesto)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.msgRefOk, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Sesion.setBloqueoReferencia(true);
+                                Sesion.setBloqueoCliente(Bloqueos);
+                                Sesion.setSolicitud(Solicitud);
+                                Sesion.setBloqueActual(2);
+                                Intent i = new Intent(getApplicationContext(), Act_B1_Referencias.class);
+                                startActivity(i);
+                                finish();
+                            }
+                        }).create().show();
+            }
+        }
+
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GetEstatusSolicitud(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetEstatusSolicitud";
+        String METHOD_NAME = "GetEstatusSolicitud";
         String NAMESPACE = "http://tempuri.org/";
 
         ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
         PropertyInfo pi1 = new PropertyInfo();
-        pi1.setName("clienteid");
-        pi1.setValue(g.getCliendeID());
+        pi1.setName("ClienteID");
+        pi1.setValue(Sesion.getCliendeID());
         pi1.setType(PropertyInfo.STRING_CLASS);
         valores.add(pi1);
 
@@ -831,82 +1040,45 @@ public class Act_B2_Personal extends AppCompatActivity {
         SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
         if(respuesta != null) {
             try {
-                String[] listaRespuesta;
-                listaRespuesta = new String[respuesta.getPropertyCount()];
-                SoapObject item = (SoapObject) respuesta.getProperty(0);
-                if(item.getProperty("Catdatospersonal").toString() != null){
-                    SoapObject itemdp = (SoapObject) respuesta.getProperty(0);
-                    SoapObject itemdi = (SoapObject) respuesta.getProperty(1);
 
-                    catdatospersonal.setDatopersonalid(itemdp.getProperty("Datopersonalid").toString());
-                    catdatospersonal.setClienteid(itemdp.getProperty("Clienteid").toString());
-                    catdatospersonal.setGenero(itemdp.getProperty("Genero").toString());
-                    catdatospersonal.setFechanacimiento(formatoFecha(itemdp.getProperty("Fechanacimiento").toString(), "dd/MM/yyyy"));
-                    catdatospersonal.setEstadocivilid(Integer.parseInt(itemdp.getProperty("Estadocivilid").toString()));
-                    catdatospersonal.setDependientes(Integer.parseInt(itemdp.getProperty("Dependientes").toString()));
-                    catdatospersonal.setTelefono(itemdp.getProperty("Telefono").toString());
-                    catdatospersonal.setMarcaid(Integer.parseInt(itemdp.getProperty("Marcaid").toString()));
-                    catdatospersonal.setCalle(itemdp.getProperty("Calle").toString());
-                    catdatospersonal.setNumeroext(itemdp.getProperty("Numeroext").toString());
-                    catdatospersonal.setNumeroint(itemdp.getProperty("Numeroint").toString());
-                    catdatospersonal.setColonia(itemdp.getProperty("Colonia").toString());
-                    catdatospersonal.setCodigopostal(itemdp.getProperty("Codigopostal").toString());
-                    catdatospersonal.setPaisid(itemdp.getProperty("Paisid").toString());
-                    catdatospersonal.setEstadoid(itemdp.getProperty("Estadoid").toString());
-                    catdatospersonal.setMunicipioid(itemdp.getProperty("Municipioid").toString());
-                    catdatospersonal.setCiudadid(itemdp.getProperty("Ciudadid").toString());
-                    catdatospersonal.setUltimaAct(Integer.parseInt(itemdp.getProperty("UltimaAct").toString()));
+                if(Boolean.parseBoolean(respuesta.getProperty("EsValido").toString())){
+                    SoapObject Datos = (SoapObject) respuesta.getProperty("Datos");
+                    SoapObject datosSolicitud = (SoapObject) Datos.getProperty("datosSolicitud");
+                    SoapObject bloqueoCliente = (SoapObject) Datos.getProperty("bloqueoCliente");
 
-
-                    catidentidadcliente.setIdentidadclienteid(itemdi.getProperty("Identidadclienteid").toString());
-                    catidentidadcliente.setClienteid(itemdi.getProperty("Clienteid").toString());
-                    catidentidadcliente.setTarjetacredito(Boolean.parseBoolean(itemdi.getProperty("Tarjetacredito").toString()));
-                    catidentidadcliente.setUltimoscuatrodigitos(itemdi.getProperty("Ultimoscuatrodigitos").toString());
-                    catidentidadcliente.setCreditohipotecario(Boolean.parseBoolean(itemdi.getProperty("Creditohipotecario").toString()));
-                    catidentidadcliente.setCreditoautomotriz(Boolean.parseBoolean(itemdi.getProperty("Creditoautomotriz").toString()));
-                    catidentidadcliente.setUltimaAct(Integer.parseInt(itemdi.getProperty("UltimaAct").toString()));
-
+                    //Llenamos los datos del bloqueo de la solicitud
+                    if(Integer.parseInt(bloqueoCliente.getProperty("Bloqueoid").toString())!=0){
+                        Bloqueos.setBloqueoid(Integer.parseInt(bloqueoCliente.getProperty("Bloqueoid").toString()));
+                        Bloqueos.setClienteid(bloqueoCliente.getProperty("Clienteid").toString());
+                        Bloqueos.setBloque(Integer.parseInt(bloqueoCliente.getProperty("Bloque").toString()));
+                        Bloqueos.setEstatus(Integer.parseInt(bloqueoCliente.getProperty("Estatus").toString()));
+                        Bloqueos.setDatos(bloqueoCliente.getProperty("Datos").toString());
+                    }
+                    //Llenamos los datos de la solicitud
+                    Solicitud.setEstatusCliente(datosSolicitud.getProperty("EstatusCliente").toString());
+                    Solicitud.setPagareEnviado(Boolean.parseBoolean(datosSolicitud.getProperty("PagareEnviado").toString()));
+                    Solicitud.setDentroDeHorario(Boolean.parseBoolean(datosSolicitud.getProperty("DentroDeHorario").toString()));
+                    Solicitud.setSolicitudid(datosSolicitud.getProperty("Solicitudid").toString());
+                    Solicitud.setImporteSolicitud(Double.parseDouble(datosSolicitud.getProperty("ImporteSolicitud").toString()));
+                    Solicitud.setImporteSolicitud(Double.parseDouble(datosSolicitud.getProperty("ImporteSolicitud").toString()));
+                    Solicitud.setIntereses(Double.parseDouble(datosSolicitud.getProperty("Intereses").toString()));
+                    Solicitud.setIVA(Double.parseDouble(datosSolicitud.getProperty("IVA").toString()));
+                    Solicitud.setTotalPagar(Double.parseDouble(datosSolicitud.getProperty("TotalPagar").toString()));
+                    //Solicitud.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(datosSolicitud.getProperty("FechaSolicitud").toString()));
+                    Solicitud.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd").parse(datosSolicitud.getProperty("FechaSolicitud").toString().substring(0, 10)));
+                    Solicitud.setDiasUso(Integer.parseInt(datosSolicitud.getProperty("DiasUso").toString()));
+                    Solicitud.setFechaVence(new SimpleDateFormat("yyyy-MM-dd").parse(datosSolicitud.getProperty("FechaVence").toString().substring(0, 10)));
+                    Solicitud.setNombreCompleto(datosSolicitud.getProperty("NombreCompleto").toString());
+                    Solicitud.setBloqueCliente(Integer.parseInt(datosSolicitud.getProperty("BloqueCliente").toString()));
+                }else{
+                    //Toast.makeText(getApplicationContext(),"Error: "+respuesta.getProperty("Mensaje").toString(),Toast.LENGTH_LONG).show();
                 }
-                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
-                Boolean ev = Boolean.parseBoolean(esValido.toString());
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
             }
         }
     }
-    private void SetInfoBloque() {
-        int genero = 0;
-        if (catdatospersonal.getGenero().toString() == "M")
-            genero = 1;
-        else
-            genero = 2;
-
-        spnGenero.setSelection(genero);
-        txtFechaNacimiento.setText(catdatospersonal.getFechanacimiento().toString());
-        spnEstadoCivil.setSelection(catdatospersonal.getEstadocivilid());
-        txtDependientes.setText(catdatospersonal.getDependientes());
-        txtTelefonoCelular.setText(catdatospersonal.getTelefono());
-        spnMarcaCelular.setSelection(catdatospersonal.getMarcaid());
-        txtCalle.setText(catdatospersonal.getCalle());
-        txtNumeroExt.setText(catdatospersonal.getNumeroext());
-        txtNumeroInt.setText(catdatospersonal.getNumeroint());
-        //spnColonia.setText(catdatospersonal.getDependientes());
-        txtCodigoPostal.setText(catdatospersonal.getCodigopostal());
-
-        swtTarjetaCredito.setChecked(catidentidadcliente.getTarjetacredito());
-        txt4DigitosTarjeta.setText(catidentidadcliente.getUltimoscuatrodigitos());
-        swtCreditoHipotecario.setChecked(catidentidadcliente.getCreditohipotecario());
-        swtCreditoAutomotriz.setChecked(catidentidadcliente.getCreditoautomotriz());
-
-    }
-    //CARGAR DATOS BLOQUE
-*/
-
-
-
-
-
-
+    //Endregion
 
 
 
