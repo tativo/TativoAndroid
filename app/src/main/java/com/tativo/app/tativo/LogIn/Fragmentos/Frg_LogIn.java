@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.tativo.app.tativo.Bloques.Actividades.Act_B1_Referencias;
+import com.tativo.app.tativo.Bloques.Actividades.Act_B2_Personal;
 import com.tativo.app.tativo.Bloques.Actividades.Act_B3_ConfirmarPIN;
 import com.tativo.app.tativo.Bloques.Actividades.Act_B3_InfDeposito;
 import com.tativo.app.tativo.Bloques.Actividades.Act_B4_Laboral;

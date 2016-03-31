@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -237,6 +238,8 @@ public class Act_B5_General extends AppCompatActivity {
     }
 
     private void EventManager() {
+        txtTelefonoFijo.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
         swtTienesAutomovil.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

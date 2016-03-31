@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -176,6 +177,8 @@ public class Act_B2_Personal extends AppCompatActivity {
 
     private void EventManager()
     {
+        txtTelefonoCelular.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
         txtFechaNacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
