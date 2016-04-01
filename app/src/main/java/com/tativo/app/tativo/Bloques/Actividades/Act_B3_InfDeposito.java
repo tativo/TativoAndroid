@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Entity;
 import android.content.Intent;
@@ -16,9 +17,11 @@ import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -204,6 +207,11 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
 
     }
     private void EventManager() {
+
+        spnBanco.setOnTouchListener(new spOcultaTeclado());
+        spnFrecuenciaPago.setOnTouchListener(new spOcultaTeclado());
+        spnMedioPago.setOnTouchListener(new spOcultaTeclado());
+
         btnDatosDeposito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -817,6 +825,11 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         return index;
     }
     //Endregion
-
-
+    private class spOcultaTeclado implements View.OnTouchListener {
+        public boolean onTouch(View v, MotionEvent event) {
+            InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            return false;
+        }
+    }
 }

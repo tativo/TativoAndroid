@@ -4,7 +4,6 @@
     style="@style/TativoRelativeLayoutPrincipal"
     tools:context=".LogIn.Actividades.Act_LogIn">
 
-    <ScrollView style="@style/TativoScrollView">
         <LinearLayout style="@style/TativoLinearLayoutCentroPantalla">
             <LinearLayout style="@style/TativoLayoutBordeRelleno">
                 <TextView
@@ -85,5 +84,4 @@
                 android:text="@string/btnRegistro"
                 style="@style/TativoBotonAceptar"/>
         </LinearLayout>
-    </ScrollView>
 </RelativeLayout>

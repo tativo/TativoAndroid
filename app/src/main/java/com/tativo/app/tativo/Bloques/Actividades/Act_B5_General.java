@@ -3,6 +3,7 @@ package com.tativo.app.tativo.Bloques.Actividades;
 import android.accounts.AccountAuthenticatorResponse;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,9 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -179,9 +182,9 @@ public class Act_B5_General extends AppCompatActivity {
         FocusNextControl(R.id.txtNombreEscuela, "T", R.id.spnCurso, "S");
         FocusNextControl(R.id.spnCurso, "S", R.id.spnIngles, "S");
         FocusNextControl(R.id.spnIngles, "S", R.id.spnActividad, "S");
-        FocusNextControl(R.id.spnActividad, "S", R.id.txtEspecificaActividad, "T");
+        //FocusNextControl(R.id.spnActividad, "S", R.id.txtEspecificaActividad, "T");
         FocusNextControl(R.id.txtEspecificaActividad, "T", R.id.spnIngresoExtra, "S");
-        FocusNextControl(R.id.spnIngresoExtra, "S", R.id.txtActivdadIngresoExtra, "T");
+        //FocusNextControl(R.id.spnIngresoExtra, "S", R.id.txtActivdadIngresoExtra, "T");
         FocusNextControl(R.id.txtActivdadIngresoExtra, "T", R.id.txtParaQue, "T");
         FocusNextControl(R.id.txtParaQue, "T", R.id.spnRedesSociales1, "S");
         FocusNextControl(R.id.spnRedesSociales1, "S", R.id.spnRedesSociales2, "S");
@@ -238,6 +241,22 @@ public class Act_B5_General extends AppCompatActivity {
     }
 
     private void EventManager() {
+        spnEdoNacimiento.setOnTouchListener(new spOcultaTeclado());
+        spnTipoVivienda.setOnTouchListener(new spOcultaTeclado());
+        spnConQuienVives.setOnTouchListener(new spOcultaTeclado());
+        spnViviendoAhi.setOnTouchListener(new spOcultaTeclado());
+        spnNivelEstudio.setOnTouchListener(new spOcultaTeclado());
+        spnCurso.setOnTouchListener(new spOcultaTeclado());
+        spnIngles.setOnTouchListener(new spOcultaTeclado());
+        spnActividad.setOnTouchListener(new spOcultaTeclado());
+        spnIngresoExtra.setOnTouchListener(new spOcultaTeclado());
+        spnRedesSociales1.setOnTouchListener(new spOcultaTeclado());
+        spnRedesSociales2.setOnTouchListener(new spOcultaTeclado());
+        spnRedesSociales3.setOnTouchListener(new spOcultaTeclado());
+        spnDondeInternet1.setOnTouchListener(new spOcultaTeclado());
+        spnDondeInternet2.setOnTouchListener(new spOcultaTeclado());
+        spnDondeInternet3.setOnTouchListener(new spOcultaTeclado());
+
         txtTelefonoFijo.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         swtTienesAutomovil.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -1469,5 +1488,13 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
         return index;
+    }
+
+    private class spOcultaTeclado implements View.OnTouchListener {
+        public boolean onTouch(View v, MotionEvent event) {
+            InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            return false;
+        }
     }
 }

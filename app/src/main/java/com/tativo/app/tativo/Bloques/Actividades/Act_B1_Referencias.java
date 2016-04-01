@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -196,6 +197,12 @@ public class Act_B1_Referencias extends AppCompatActivity {
 
     }
     private void EventManager() {
+        spnRelacionRef1.setOnTouchListener(new spOcultaTeclado());
+        spnRelacionRef2.setOnTouchListener(new spOcultaTeclado());
+        spnAmistadRef1.setOnTouchListener(new spOcultaTeclado());
+        spnAmistadRef2.setOnTouchListener(new spOcultaTeclado());
+        spnTrabajando.setOnTouchListener(new spOcultaTeclado());
+
         txtTelefonoCelularRef1.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         txtTelefonoCelularRef2.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
         txtTelefonoRefLaboral.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
@@ -622,4 +629,12 @@ public class Act_B1_Referencias extends AppCompatActivity {
         return DatosEntidad.toString();
     }
     //EndGuardar
+
+    private class spOcultaTeclado implements View.OnTouchListener {
+        public boolean onTouch(View v, MotionEvent event) {
+            InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            return false;
+        }
+    }
 }

@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,9 +14,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
@@ -177,6 +180,11 @@ public class Act_B2_Personal extends AppCompatActivity {
 
     private void EventManager()
     {
+        spnGenero.setOnTouchListener(new spOcultaTeclado());
+        spnEstadoCivil.setOnTouchListener(new spOcultaTeclado());
+        spnColonia.setOnTouchListener(new spOcultaTeclado());
+        spnMarcaCelular.setOnTouchListener(new spOcultaTeclado());
+
         txtTelefonoCelular.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         txtFechaNacimiento.setOnClickListener(new View.OnClickListener() {
@@ -1112,4 +1120,11 @@ public class Act_B2_Personal extends AppCompatActivity {
         }
     };
 
+    private class spOcultaTeclado implements View.OnTouchListener {
+        public boolean onTouch(View v, MotionEvent event) {
+            InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            return false;
+        }
+    }
 }
