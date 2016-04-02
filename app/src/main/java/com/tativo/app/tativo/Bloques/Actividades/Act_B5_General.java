@@ -1188,7 +1188,9 @@ public class Act_B5_General extends AppCompatActivity {
             }
             else
             {
-                Intent i = new Intent(getApplicationContext(), Act_Documentos.class);
+                Intent i = new Intent(getApplicationContext(), Act_Mensajes.class);
+                i.putExtra("Titulo","¡FELICIDADES!");
+                i.putExtra("Texto","ya casi, estamos trabajando en ello...");
                 startActivity(i);
                 finish();
             }

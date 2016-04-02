@@ -41,6 +41,8 @@ public class Frg_LogIn extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), Act_Mensajes.class);
+                i.putExtra("Titulo","¡PRUEBA!");
+                i.putExtra("Texto","Si funciona");
                 startActivity(i);
                 getActivity().finish();
             }
