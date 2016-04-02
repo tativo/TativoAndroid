@@ -77,6 +77,8 @@ public class Act_B4_Laboral extends AppCompatActivity {
         LoadFormControls();
         FocusManager();
         EventManager();
+        Sesion = (Globals) getApplicationContext();
+        Sesion.setCliendeID("B6268909-3823-49AD-A320-A73CF749717F");
         new AsyncLoadData().execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -88,10 +90,6 @@ public class Act_B4_Laboral extends AppCompatActivity {
 
     private void LoadFormControls()
     {
-        Sesion = (Globals) getApplicationContext();
-
-        //Sesion.setCliendeID("83F0E461-3887-4185-94FB-D992D9AC7E26");
-
         progressDialog = new ProgressDialog(this);
         datosCP = new DatosCodigoPostal();
         NuevaColonia = false;
@@ -703,18 +701,18 @@ public class Act_B4_Laboral extends AppCompatActivity {
                         entidad.setColonia(item.getProperty("Colonia").toString());
                         lstCatColonia.add(entidad);
                     }
-
-                    datosCP.setPaisID(DatosCodigoPostal.getProperty("PaisID").toString().trim());
-                    datosCP.setPais(DatosCodigoPostal.getProperty("Pais").toString().trim());
-                    datosCP.setEstadoID(DatosCodigoPostal.getProperty("EstadoID").toString().trim());
-                    datosCP.setEstado(DatosCodigoPostal.getProperty("Estado").toString().trim());
-                    datosCP.setMunicipioID(DatosCodigoPostal.getProperty("MunicipioID").toString().trim());
-                    datosCP.setMunicipio(DatosCodigoPostal.getProperty("Municipio").toString().trim());
-                    datosCP.setCiudadID(DatosCodigoPostal.getProperty("CiudadID").toString().trim());
-                    datosCP.setCiudad(DatosCodigoPostal.getProperty("Ciudad").toString().trim());
-                    datosCP.setColoniaID(DatosCodigoPostal.getProperty("ColoniaID").toString().trim());
-                    datosCP.setColonia(DatosCodigoPostal.getProperty("Colonia").toString().trim());
-
+                    if (DatosCodigoPostal.getProperty("PaisID") != null ) {
+                        datosCP.setPaisID(DatosCodigoPostal.getProperty("PaisID").toString().trim());
+                        datosCP.setPais(DatosCodigoPostal.getProperty("Pais").toString().trim());
+                        datosCP.setEstadoID(DatosCodigoPostal.getProperty("EstadoID").toString().trim());
+                        datosCP.setEstado(DatosCodigoPostal.getProperty("Estado").toString().trim());
+                        datosCP.setMunicipioID(DatosCodigoPostal.getProperty("MunicipioID").toString().trim());
+                        datosCP.setMunicipio(DatosCodigoPostal.getProperty("Municipio").toString().trim());
+                        datosCP.setCiudadID(DatosCodigoPostal.getProperty("CiudadID").toString().trim());
+                        datosCP.setCiudad(DatosCodigoPostal.getProperty("Ciudad").toString().trim());
+                        datosCP.setColoniaID(DatosCodigoPostal.getProperty("ColoniaID").toString().trim());
+                        datosCP.setColonia(DatosCodigoPostal.getProperty("Colonia").toString().trim());
+                    }
                 }
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();

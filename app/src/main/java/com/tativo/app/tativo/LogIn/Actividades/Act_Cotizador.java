@@ -10,8 +10,13 @@ import android.widget.TextView;
 
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
+import com.tativo.app.tativo.Utilidades.Utilerias;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.util.concurrent.ExecutionException;
 
 public class Act_Cotizador extends AppCompatActivity {
 
@@ -42,11 +47,19 @@ public class Act_Cotizador extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Date FechaPago = new Date("14/03/2016");
+                String fecha ="01/05/2016";
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                format.setTimeZone(TimeZone.getTimeZone("UTC"));
+                Date newDate = null;
+                try {
+                    newDate = format.parse(fecha);
+                }
+                catch (Exception ex)
+                {}
 
                 Globals g = (Globals)getApplicationContext();
                 g.setImporteSolicitado(2000);
-                g.setFechaPago(FechaPago);
+                g.setFechaPago(newDate);
 
                 Intent i = new Intent(getApplicationContext(), Act_LogIn.class);
                 startActivity(i);

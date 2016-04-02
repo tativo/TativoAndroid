@@ -39,7 +39,7 @@ public class Frg_LogIn extends Fragment {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Act_B5_General.class);
+                Intent i = new Intent(getActivity(), Act_Documentos.class);
                 startActivity(i);
                 getActivity().finish();
             }

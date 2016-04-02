@@ -104,6 +104,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         } else {
             new AsyncEstatusSolicitud().execute();
         }
+        btnFocoInicialB2 = (Button) findViewById(R.id.btnFocoInicialB2);
     }
 
     private void LoadFormControls()
@@ -111,9 +112,6 @@ public class Act_B2_Personal extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         datosCP = new DatosCodigoPostal();
 
-        btnFocoInicialB2 = (Button) findViewById(R.id.btnFocoInicialB2);
-        btnFocoInicialB2.setFocusable(true);
-        btnFocoInicialB2.setFocusableInTouchMode(true);
         btnInfPersonal = (Button) findViewById(R.id.btnInfPersonal);
         txtFechaNacimiento = (AutoCompleteTextView) findViewById(R.id.txtFechaNacimiento);
         btnFechaNacimiento = (Button) findViewById(R.id.btnFechaNacimiento);

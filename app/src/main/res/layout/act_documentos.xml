@@ -23,32 +23,28 @@
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnNombreCompleto" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblNobreCompleto"
-                    android:text="A"/>
+                    android:id="@+id/lblNobreCompleto" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnDireccion" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblDireccion"
-                    android:text="D"/>
+                    android:id="@+id/lblDireccion" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/txtTelefono" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblTelefono"
-                    android:text="6"/>
+                    android:id="@+id/lblTelefono" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/txtCorreo" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblCorreo"
-                    android:text="C"/>
+                    android:id="@+id/lblCorreo" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLayoutBordeRelleno">
                 <TextView style="@style/TativoTextViewEncabezado"
@@ -59,64 +55,56 @@
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnNombreBanco" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblNombreBanco"
-                    android:text="B"/>
+                    android:id="@+id/lblNombreBanco" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/txtNumeroTarjetaCLABE" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblNumeroTarjetaCLABE"
-                    android:text="1"/>
+                    android:id="@+id/lblNumeroTarjetaCLABE" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnMonto" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblMonto"
-                    android:text="$"/>
+                    android:id="@+id/lblMonto" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnInteres" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblInteres"
-                    android:text="$"/>
+                    android:id="@+id/lblInteres" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnIVA" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblIVA"
-                    android:text="$"/>
+                    android:id="@+id/lblIVA" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnTotal" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblTotalPagar"
-                    android:text="$"/>
+                    android:id="@+id/lblTotalPagar" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnFechaInicio" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblFechaInicio"
-                    android:text="F"/>
+                    android:id="@+id/lblFechaInicio" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnPlazo" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblPlazo"
-                    android:text="0"/>
+                    android:id="@+id/lblPlazo" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp"
@@ -124,8 +112,7 @@
                 <TextView style="@style/TativoTextViewHint"
                     android:hint="@string/hnFechaLimite" />
                 <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblFechaLimite"
-                    android:text="F"/>
+                    android:id="@+id/lblFechaLimite" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,7 +147,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/lyCargaDocumentos"
-                android:visibility="visible">
+                android:visibility="gone">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

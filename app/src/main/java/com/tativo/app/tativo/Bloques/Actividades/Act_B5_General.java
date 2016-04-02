@@ -117,6 +117,7 @@ public class Act_B5_General extends AppCompatActivity {
         LoadFormControls();
         FocusManager();
         EventManager();
+        Sesion = (Globals) getApplicationContext();
         new AsyncLoadData().execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -128,7 +129,6 @@ public class Act_B5_General extends AppCompatActivity {
 
     private void LoadFormControls() {
         progressDialog = new ProgressDialog(this);
-        Sesion = new Globals();
         //Sesion.setCliendeID("3C47CB5B-00B6-4EC9-AD21-6F2D1FCF0DAF");
 
         catdatosgeneral = new Catdatosgeneral();
@@ -182,10 +182,12 @@ public class Act_B5_General extends AppCompatActivity {
         FocusNextControl(R.id.txtNombreEscuela, "T", R.id.spnCurso, "S");
         FocusNextControl(R.id.spnCurso, "S", R.id.spnIngles, "S");
         FocusNextControl(R.id.spnIngles, "S", R.id.spnActividad, "S");
+
         //FocusNextControl(R.id.spnActividad, "S", R.id.txtEspecificaActividad, "T");
         FocusNextControl(R.id.txtEspecificaActividad, "T", R.id.spnIngresoExtra, "S");
         //FocusNextControl(R.id.spnIngresoExtra, "S", R.id.txtActivdadIngresoExtra, "T");
         FocusNextControl(R.id.txtActivdadIngresoExtra, "T", R.id.txtParaQue, "T");
+
         FocusNextControl(R.id.txtParaQue, "T", R.id.spnRedesSociales1, "S");
         FocusNextControl(R.id.spnRedesSociales1, "S", R.id.spnRedesSociales2, "S");
         FocusNextControl(R.id.spnRedesSociales2, "S", R.id.spnRedesSociales3, "S");
@@ -282,10 +284,10 @@ public class Act_B5_General extends AppCompatActivity {
                 Catactividadentretenimiento cat = (Catactividadentretenimiento) parent.getItemAtPosition(position);
                 if (cat.getDescripcion().toString().toLowerCase().equals("otro")) {
                     lyEspecificaActividad.setVisibility(View.VISIBLE);
-                    //txtEspecificaActividad.requestFocus();
+                    txtEspecificaActividad.requestFocus();
                 } else {
                     lyEspecificaActividad.setVisibility(View.GONE);
-                    //spnIngresoExtra.requestFocus();
+                    spnIngresoExtra.requestFocus();
                 }
             }
 
@@ -307,9 +309,10 @@ public class Act_B5_General extends AppCompatActivity {
                 Catingresoextra cat = (Catingresoextra) parent.getItemAtPosition(position);
                 if (cat.getDescripcion().toString().equals("$0")) {
                     lyIngresoExtra.setVisibility(View.GONE);
+                    txtParaQue.requestFocus();
                 } else {
                     lyIngresoExtra.setVisibility(View.VISIBLE);
-                    //txtActivdadIngresoExtra.requestFocus();
+                    txtActivdadIngresoExtra.requestFocus();
                 }
             }
 
