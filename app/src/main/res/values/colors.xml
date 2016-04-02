@@ -13,5 +13,6 @@
     <color name="colorBlanco">#FFFFFF</color>
     <color name="colorTransparente">#00000000</color>
     <color name="colorGris">#D7D7D7</color>
+    <color name="colorMasGris">#cacaca</color>
     <color name="colorLinlk">#58ACFA</color>
 </resources>

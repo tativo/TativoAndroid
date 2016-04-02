@@ -66,7 +66,7 @@ public class Act_Documentos extends AppCompatActivity {
         FocusManager();
         EventManager();
         Sesion = (Globals) getApplicationContext();
-        Sesion.setSolicitudID("8D29BD25-44AD-449D-89C3-5453483FC875");
+        //Sesion.setSolicitudID("4B9EE7FD-4118-4CE5-A97D-E1F8439566C6");
         new AsyncInfoBloque().execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -279,19 +279,23 @@ public class Act_Documentos extends AppCompatActivity {
         NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
         nf.setMaximumFractionDigits(2);
 
-        lblNobreCompleto.setText(datosCaratula.getNombreCompleto());
-        lblDireccion.setText(datosCaratula.getDomicilio());
-        lblTelefono.setText(datosCaratula.getTelefono());
-        lblCorreo.setText(datosCaratula.getCorreo());
-        lblNombreBanco.setText(datosCaratula.getBanco());
-        lblNumeroTarjetaCLABE.setText(datosCaratula.getNumeroDeTarjeta());
-        lblMonto.setText(nf.format(datosCaratula.getCapital()));
-        lblInteres.setText(nf.format(datosCaratula.getInteres()));
-        lblIVA.setText(nf.format(datosCaratula.getIVA()));
-        lblTotalPagar.setText(nf.format(datosCaratula.getTotalPagar()));
-        lblFechaInicio.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaSolicitud()));
-        lblPlazo.setText(String.valueOf(datosCaratula.getPlazo()));
-        lblFechaLimite.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaVence()));
+        if (datosCaratula.getClienteID() != null)
+        {
+            lblNobreCompleto.setText(datosCaratula.getNombreCompleto());
+            lblDireccion.setText(datosCaratula.getDomicilio());
+            lblTelefono.setText(datosCaratula.getTelefono());
+            lblCorreo.setText(datosCaratula.getCorreo());
+            lblNombreBanco.setText(datosCaratula.getBanco());
+            lblNumeroTarjetaCLABE.setText(datosCaratula.getNumeroDeTarjeta());
+            lblMonto.setText(nf.format(datosCaratula.getCapital()));
+            lblInteres.setText(nf.format(datosCaratula.getInteres()));
+            lblIVA.setText(nf.format(datosCaratula.getIVA()));
+            lblTotalPagar.setText(nf.format(datosCaratula.getTotalPagar()));
+            lblFechaInicio.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaSolicitud()));
+            lblPlazo.setText(String.valueOf(datosCaratula.getPlazo()));
+            lblFechaLimite.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaVence()));
+        }
+
 
 
 

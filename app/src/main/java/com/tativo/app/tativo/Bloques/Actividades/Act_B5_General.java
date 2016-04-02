@@ -1179,9 +1179,19 @@ public class Act_B5_General extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-            Intent i = new Intent(getApplicationContext(), Act_Documentos.class);
-            startActivity(i);
-            finish();
+
+            if (Solicitud.isPagareEnviado())
+            {
+                Intent i = new Intent(getApplicationContext(), Act_Documentos.class);
+                startActivity(i);
+                finish();
+            }
+            else
+            {
+                Intent i = new Intent(getApplicationContext(), Act_Documentos.class);
+                startActivity(i);
+                finish();
+            }
         }
 
         @Override
@@ -1442,6 +1452,7 @@ public class Act_B5_General extends AppCompatActivity {
         SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
         if(respuesta != null) {
             try {
+
 
                 if(Boolean.parseBoolean(respuesta.getProperty("EsValido").toString())){
                     SoapObject Datos = (SoapObject) respuesta.getProperty("Datos");
