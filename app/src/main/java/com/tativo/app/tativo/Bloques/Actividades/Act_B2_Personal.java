@@ -194,6 +194,7 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
         });
 
+        /*
         btnFechaNacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,6 +203,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                 txtDependientes.requestFocus();
             }
         });
+*/
 
         swtTarjetaCredito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -237,6 +239,15 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
         });
 
+        txtCodigoPostal.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                edicionCP=true;
+                return false;
+            }
+        });
+
+        /*
         txtCodigoPostal.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -245,7 +256,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                 return false;
             }
         });
-
+*/
         btnInfPersonal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

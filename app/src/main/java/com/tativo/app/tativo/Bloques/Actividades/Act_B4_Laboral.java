@@ -78,7 +78,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
         FocusManager();
         EventManager();
         Sesion = (Globals) getApplicationContext();
-        Sesion.setCliendeID("B6268909-3823-49AD-A320-A73CF749717F");
+        //Sesion.setCliendeID("B6268909-3823-49AD-A320-A73CF749717F");
         new AsyncLoadData().execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -144,11 +144,10 @@ public class Act_B4_Laboral extends AppCompatActivity {
         btnLaboral.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ValidaGuardar())
-                {
+                if (ValidaGuardar()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new AsyncGuardar().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }else{
+                    } else {
                         new AsyncGuardar().execute();
                     }
                 }
@@ -175,6 +174,15 @@ public class Act_B4_Laboral extends AppCompatActivity {
             }
         });
 
+        txtCodigoPostal.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                edicionCP = true;
+                return false;
+            }
+        });
+
+        /*
         txtCodigoPostal.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -182,6 +190,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
                 return false;
             }
         });
+        */
 
         txtAgregarColonia.setOnClickListener(new View.OnClickListener() {
             @Override

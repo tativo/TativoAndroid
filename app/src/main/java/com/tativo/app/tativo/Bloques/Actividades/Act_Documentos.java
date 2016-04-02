@@ -275,29 +275,20 @@ public class Act_Documentos extends AppCompatActivity {
         }
     }
 
-    private String getCurrency(String value) {
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-        symbols.setDecimalSeparator('.');
-        symbols.setMonetaryDecimalSeparator('.');
-        DecimalFormat decimalFormat = new DecimalFormat("$ ###,###.##", symbols);
-        return decimalFormat.format(Double.parseDouble(value));
-    }
-
     private void SetInfoBloque() {
-        //DecimalFormat nf = new DecimalFormat("###,###.##",new DecimalFormatSymbols().setd;
-        //NumberFormat nf = DecimalFormat.getCurrencyInstance(Locale.ENGLISH);
+        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
+        nf.setMaximumFractionDigits(2);
 
-        //nf.setCurrency(Currency.getInstance(Locale.ENGLISH));
         lblNobreCompleto.setText(datosCaratula.getNombreCompleto());
         lblDireccion.setText(datosCaratula.getDomicilio());
         lblTelefono.setText(datosCaratula.getTelefono());
         lblCorreo.setText(datosCaratula.getCorreo());
         lblNombreBanco.setText(datosCaratula.getBanco());
         lblNumeroTarjetaCLABE.setText(datosCaratula.getNumeroDeTarjeta());
-        lblMonto.setText(getCurrency(datosCaratula.getCapital().toString()));
-        //lblInteres.setText(nf.format(datosCaratula.getInteres()));
-        //lblIVA.setText(nf.format(datosCaratula.getIVA()));
-        //lblTotalPagar.setText(nf.format(datosCaratula.getTotalPagar()));
+        lblMonto.setText(nf.format(datosCaratula.getCapital()));
+        lblInteres.setText(nf.format(datosCaratula.getInteres()));
+        lblIVA.setText(nf.format(datosCaratula.getIVA()));
+        lblTotalPagar.setText(nf.format(datosCaratula.getTotalPagar()));
         lblFechaInicio.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaSolicitud()));
         lblPlazo.setText(String.valueOf(datosCaratula.getPlazo()));
         lblFechaLimite.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaVence()));
