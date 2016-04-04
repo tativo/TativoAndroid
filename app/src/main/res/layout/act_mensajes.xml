@@ -24,7 +24,6 @@
                 android:gravity="center"
                 android:background="@color/colorMasGris"
                 android:textStyle="bold"
-                android:text="¡FELICIDADES!"
                 />
         </LinearLayout>
         <LinearLayout
@@ -33,10 +32,11 @@
             <TextView
                 android:id="@+id/lblMSJTexto"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:background="@color/colorGris"
-                android:text="Estamos trabajando en tu solicitud, espera un momento por favor o ve a tu perfil, nosotros te avisaremos"/>
+                android:paddingTop="50dp"
+                android:paddingBottom="50dp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

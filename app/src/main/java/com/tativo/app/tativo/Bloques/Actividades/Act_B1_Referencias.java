@@ -2,7 +2,6 @@ package com.tativo.app.tativo.Bloques.Actividades;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Entity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,29 +22,24 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tativo.app.tativo.Bloques.Clases.Catanio;
 import com.tativo.app.tativo.Bloques.Clases.Catreferenciaspersonal;
 import com.tativo.app.tativo.Bloques.Clases.Catrelacionespersonal;
-import com.tativo.app.tativo.LogIn.Actividades.Act_Cotizador;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
-import com.tativo.app.tativo.Utilidades.Utilerias;
 
 import org.json.JSONObject;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.jar.JarEntry;
 
 public class Act_B1_Referencias extends AppCompatActivity {
     ProgressDialog progressDialog;
@@ -412,10 +405,17 @@ public class Act_B1_Referencias extends AppCompatActivity {
         SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
         if(respuesta != null) {
             try {
+                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
+                Boolean ev = Boolean.parseBoolean(esValido.toString());
+
+                if (ev)
+                {
+
+
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
                 SoapObject item = (SoapObject) respuesta.getProperty(0);
-                if(Integer.parseInt(item.getProperty("UltimaActRef1").toString())!=0){
+                if(Integer.parseInt(item.getProperty("UltimaActRef1").toString())!=0) {
                     EntityReferenciaPersonal.setReferenciaPersonalidRef1(item.getProperty("ReferenciaPersonalidRef1").toString());
                     EntityReferenciaPersonal.setClienteid(item.getProperty("Clienteid").toString());
                     EntityReferenciaPersonal.setNombreRef1(item.getProperty("NombreRef1").toString());
@@ -439,8 +439,8 @@ public class Act_B1_Referencias extends AppCompatActivity {
                     EntityReferenciaPersonal.setAñoidEmpresa(Integer.parseInt(item.getProperty("AñoidEmpresa").toString()));
                     EntityReferenciaPersonal.setUltimaActEmpresa(Integer.parseInt(item.getProperty("UltimaActEmpresa").toString()));
                 }
-                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
-                Boolean ev = Boolean.parseBoolean(esValido.toString());
+                }
+
             } catch (Exception e) {
                 Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
             }
@@ -512,14 +512,14 @@ public class Act_B1_Referencias extends AppCompatActivity {
         for (Object item:Objetos) {
             if(item instanceof EditText){
                 if (((EditText) item).getText().toString().trim().length() == 0) {
-                    ((EditText) item).setError(getString(R.string.txtRequerido));
+                    ((EditText) item).setError(getString(R.string.msjRequerido));
                     ((EditText) item).requestFocus();
                     requeridos = true;
                 }
             }
             if(item instanceof Spinner){
                 if(((Spinner) item).getSelectedItemPosition() == 0){
-                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.txtRequerido));
+                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.msjRequerido));
                     ((Spinner) item).requestFocus();
                     requeridos = true;
                 }

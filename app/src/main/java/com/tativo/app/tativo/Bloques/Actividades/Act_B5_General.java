@@ -1,6 +1,5 @@
 package com.tativo.app.tativo.Bloques.Actividades;
 
-import android.accounts.AccountAuthenticatorResponse;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -400,7 +399,7 @@ public class Act_B5_General extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage(getText(R.string.Cargando));
+            progressDialog.setMessage(getText(R.string.msjCargando));
             progressDialog.show();
         }
 
@@ -1145,14 +1144,14 @@ public class Act_B5_General extends AppCompatActivity {
         for (Object item:Objetos) {
             if(item instanceof EditText){
                 if (((EditText) item).getText().toString().trim().length() == 0) {
-                    ((EditText) item).setError(getString(R.string.txtRequerido));
+                    ((EditText) item).setError(getString(R.string.msjRequerido));
                     ((EditText) item).requestFocus();
                     requeridos = true;
                 }
             }
             if(item instanceof Spinner){
                 if(((Spinner) item).getSelectedItemPosition() == 0){
-                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.txtRequerido));
+                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.msjRequerido));
                     ((Spinner) item).requestFocus();
                     requeridos = true;
                 }
@@ -1160,7 +1159,7 @@ public class Act_B5_General extends AppCompatActivity {
             if(item instanceof CheckBox){
                 ((CheckBox) item).setError(null);
                 if(!((CheckBox) item).isChecked()){
-                    ((CheckBox) item).setError(getString(R.string.txtRequerido));
+                    ((CheckBox) item).setError(getString(R.string.msjRequerido));
                     ((CheckBox) item).requestFocus();
                     requeridos = true;
                 }
@@ -1198,7 +1197,7 @@ public class Act_B5_General extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage(getText(R.string.Guardando));
+            progressDialog.setMessage(getText(R.string.msjGuardando));
             progressDialog.show();
         }
 

@@ -66,7 +66,7 @@ public class Act_Documentos extends AppCompatActivity {
         FocusManager();
         EventManager();
         Sesion = (Globals) getApplicationContext();
-        //Sesion.setSolicitudID("4B9EE7FD-4118-4CE5-A97D-E1F8439566C6");
+        //Sesion.setSolicitudID("C0C9B785-02EA-4749-8591-0C7B2FBA746B");
         new AsyncInfoBloque().execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {

@@ -2,20 +2,15 @@ package com.tativo.app.tativo.Bloques.Actividades;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Entity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.PhoneNumberFormattingTextWatcher;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,10 +21,8 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.Switch;
@@ -37,12 +30,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tativo.app.tativo.Bloques.Clases.CatBloqueoCliente;
-import com.tativo.app.tativo.Bloques.Clases.Catanio;
 import com.tativo.app.tativo.Bloques.Clases.Catbanco;
 import com.tativo.app.tativo.Bloques.Clases.Catdatosdeposito;
 import com.tativo.app.tativo.Bloques.Clases.Catformasdepago;
 import com.tativo.app.tativo.Bloques.Clases.Catperiodosdepago;
-import com.tativo.app.tativo.Bloques.Clases.Catrelacionespersonal;
 import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
@@ -552,14 +543,14 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         for (Object item:Objetos) {
             if(item instanceof EditText){
                 if (((EditText) item).getText().toString().trim().length() == 0) {
-                    ((EditText) item).setError(getString(R.string.txtRequerido));
+                    ((EditText) item).setError(getString(R.string.msjRequerido));
                     ((EditText) item).requestFocus();
                     requeridos = true;
                 }
             }
             if(item instanceof Spinner){
                 if(((Spinner) item).getSelectedItemPosition() == 0){
-                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.txtRequerido));
+                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.msjRequerido));
                     ((Spinner) item).requestFocus();
                     requeridos = true;
                 }

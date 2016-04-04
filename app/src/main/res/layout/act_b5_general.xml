@@ -194,7 +194,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/Lista"
-
                     app:ms_hint="@string/spIngresoExtra"
                     app:ms_enableErrorLabel="false"
                     app:ms_thickness="0dp"

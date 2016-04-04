@@ -2,7 +2,6 @@ package com.tativo.app.tativo.Bloques.Actividades;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -14,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.tativo.app.tativo.Bloques.Clases.Catpin;
@@ -25,9 +23,7 @@ import com.tativo.app.tativo.Utilidades.ServiciosSoap;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 
 public class Act_B3_ConfirmarPIN extends AppCompatActivity {
@@ -92,14 +88,14 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
         for (Object item : Objetos) {
             if (item instanceof EditText) {
                 if (((EditText) item).getText().toString().trim().length() == 0) {
-                    ((EditText) item).setError(getString(R.string.txtRequerido));
+                    ((EditText) item).setError(getString(R.string.msjRequerido));
                     ((EditText) item).requestFocus();
                     requeridos = true;
                 }
             }
             if (item instanceof Spinner) {
                 if (((Spinner) item).getSelectedItemPosition() == 0) {
-                    ((TextView) ((Spinner) item).getSelectedView()).setError(getString(R.string.txtRequerido));
+                    ((TextView) ((Spinner) item).getSelectedView()).setError(getString(R.string.msjRequerido));
                     ((Spinner) item).requestFocus();
                     requeridos = true;
                 }

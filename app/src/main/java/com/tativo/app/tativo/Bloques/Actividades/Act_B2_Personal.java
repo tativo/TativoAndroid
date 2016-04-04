@@ -227,7 +227,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                         new AsyncTraerDatosCodigoPostal().execute();
                     } else {
                         if (txtCodigoPostal.getText().toString().trim().length() > 0)
-                            txtCodigoPostal.setError(getText(R.string.FormatoCP));
+                            txtCodigoPostal.setError(getText(R.string.msjFormatoCP));
                         else {
                             hnEstadoMunicipioTexto.setText("");
                             spnColonia.setSelection(0);
@@ -398,7 +398,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                 ColoniasAdapter = new AdapterColonias(lstCatColonia);
                 spnColonia.setAdapter(ColoniasAdapter);
                 hnEstadoMunicipioTexto.setText("");
-                txtCodigoPostal.setError(getText(R.string.CPNoEncontrado));
+                txtCodigoPostal.setError(getText(R.string.msjCPNoEncontrado));
                 txtCodigoPostal.requestFocus();
                 spnColonia.setEnabled(false);
             }
@@ -406,7 +406,7 @@ public class Act_B2_Personal extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage(getText(R.string.Buscando));
+            progressDialog.setMessage(getText(R.string.msjBuscando));
             progressDialog.show();
         }
 
@@ -483,7 +483,7 @@ public class Act_B2_Personal extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage(getText(R.string.Cargando));
+            progressDialog.setMessage(getText(R.string.msjCargando));
             progressDialog.show();
         }
 
@@ -712,14 +712,14 @@ public class Act_B2_Personal extends AppCompatActivity {
         for (Object item:Objetos) {
             if(item instanceof EditText){
                 if (((EditText) item).getText().toString().trim().length() == 0) {
-                    ((EditText) item).setError(getString(R.string.txtRequerido));
+                    ((EditText) item).setError(getString(R.string.msjRequerido));
                     ((EditText) item).requestFocus();
                     requeridos = true;
                 }
             }
             if(item instanceof Spinner){
                 if(((Spinner) item).getSelectedItemPosition() == 0){
-                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.txtRequerido));
+                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.msjRequerido));
                     ((Spinner) item).requestFocus();
                     requeridos = true;
                 }
@@ -727,7 +727,7 @@ public class Act_B2_Personal extends AppCompatActivity {
             if(item instanceof CheckBox){
                 ((CheckBox) item).setError(null);
                 if(!((CheckBox) item).isChecked()){
-                    ((CheckBox) item).setError(getString(R.string.txtRequerido));
+                    ((CheckBox) item).setError(getString(R.string.msjRequerido));
                     ((CheckBox) item).requestFocus();
                     requeridos = true;
                 }
@@ -754,7 +754,7 @@ public class Act_B2_Personal extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage(getText(R.string.Guardando));
+            progressDialog.setMessage(getText(R.string.msjGuardando));
             progressDialog.show();
         }
 

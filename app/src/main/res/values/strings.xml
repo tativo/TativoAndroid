@@ -105,8 +105,8 @@
     <string name="swtEsPropio">¿Es propio?</string>
     <string name="spnNivelEstudio">Nivel de estudios</string>
     <string name="txtNombreEscuela">Nombre de la institución educativa</string>
-    <string name="spnCurso">Si pudieras tomar un curso, ¿de que área te interesaría?</string>
-    <string name="spnIngles">¿Cómo te consideras en el idioma inglés?</string>
+    <string name="spnCurso">Si pudieras tomar un curso<br/> ¿de que área te interesaría?</string>
+    <string name="spnIngles">¿Cómo te consideras <br/> en el idioma inglés?</string>
     <string name="spnActividad">¿Qué actividad va contigo?</string>
     <string name="txtEspecificaActividad">Especifica la actividad</string>
     <string name="spIngresoExtra">¿Cuánto ingreso extra aproximado tienes al mes?</string>
@@ -140,16 +140,60 @@
     <string name="btnAceptarDocumentos">Enviar</string>
 
     <!-- MENSAJES -->
-    <string name="FormatoCorreoInvalido">Formato de correo invalido</string>
-    <string name="CorreoDuplicado">Este correo ya fue registrado</string>
-    <string name="ValidandoCorreo">Validando correo...</string>
-    <string name="ConfirmacionContrasena">Las confirmacion no es igual</string>
-    <string name="txtRequerido">Campo requerido</string>
-    <string name="Guardando">Guardando datos...</string>
-    <string name="FormatoCP">Codigo postal incorrecto</string>
-    <string name="CPNoEncontrado">Codigo postal no encontrado</string>
-    <string name="Buscando">Buscando...</string>
-    <string name="Cargando">Cargando...</string>
+    <string name="msjFormatoCorreoInvalido">Formato de correo invalido</string>
+    <string name="msjCorreoDuplicado">Este correo ya fue registrado</string>
+    <string name="msjValidandoCorreo">Validando correo...</string>
+    <string name="msjConfirmacionContrasena">Las confirmacion no es igual</string>
+    <string name="msjRequerido">Campo requerido</string>
+    <string name="msjGuardando">Guardando datos...</string>
+    <string name="msjFormatoCP">Codigo postal incorrecto</string>
+    <string name="msjCPNoEncontrado">Codigo postal no encontrado</string>
+    <string name="msjBuscando">Buscando...</string>
+    <string name="msjCargando">Cargando...</string>
+
+        <!-- Cuando los datos no se guardaron -->
+        <string name="msjNoGuardadoTitulo">Algo ha ocurrido</string>
+        <string name="msjNoGuardadoCuerpo">Algo pasó mientras guardabamos tus datos. Por favor, prueba más tarde.</string>
+
+        <!-- Cuando no existe usuario en la sesión -->
+        <string name="msjSinUsuarioTitulo">Ummm, detectamos algo.</string>
+        <string name="msjSinUsuarioCuerpo">Parece que no te has registrado como usuario, no podemos guardar tus datos sin que antes hagas eso. Por favor, empieza por llenar el formulario en la parte de registro.</string>
+
+        <!-- Cuando el pin ingresado es incorrecto -->
+        <string name="msjPINIncorrectoTitulo">Disculpa</string>
+        <string name="msjPINIncorrectoCuerpo">¿Enviaste el PIN? Porque parece que no es correcto.</string>
+
+        <!-- Cuando ocurrió un error de validación del pin (error de parte del sistema) -->
+        <string name="msjErrorPINTitulo">Algo ha ocurrido</string>
+        <string name="msjErrorPINCuerpo">¿Enviaste el PIN? Si es así, algo pasó que no lo pudimos validar. Disculpa las molestias e intentalo más tarde.</string>
+
+        <!-- Cuando el pin no se encuentra en sesión -->
+        <string name="msjNoSesionTitulo">Algo ha ocurrido</string>
+        <string name="msjNoSesionCuerpo">¿Enviaste el PIN? Si es así, algo pasó que no lo pudimos validar. Disculpa las molestias e intentalo más tarde.</string>
+
+        <!-- Cuando el crédito fue autorizado  -->
+        <string name="msjAutTitulo">¡Felicidades!</string>
+        <string name="msjAutCuerpo">Tu préstamo ha sido aprobado. Solo falta un último paso, en la siguiente pantalla hay un resumen de la operación y te pediremos que nos otorgues una copia de alguna identificación.</string>
+
+        <!-- Cuando el crédito fue autorizado pero los documentos legales aún aun no se generan  -->
+        <string name="msjAutSinDocTitulo">¡Felicidades!</string>
+        <string name="msjAutSinDocCuerpo">Tu préstamo ha sido aprobado. En unos momentos mas te haremos el depósito, espéranos tantito mientras generamos tus documentos para que nos ayudes a firmarlos.</string>
+
+        <!-- Cuando el crédito está pendiente de autorización (horario laboral)-->
+        <string name="msjPenAutEnHoraTitulo">Tenemos noticias</string>
+        <string name="msjPenAutEnHoraCuerpo">Parece que terminaste más rápido el registro de lo que nosotros esperabamos, te pedimos que nos esperes unos minutos más mientras nuestro equipo te da la respuesta sobre tu petición.</string>
+
+        <!-- Cuando el crédito está pendiente de autorización (horario no laboral)-->
+        <string name="msjPenAutNoEnHoraTitulo">Tenemos noticias</string>
+        <string name="msjPenAutNoEnHoraCuerpo">Gracias por tomarte el tiempo de llenar el registro. En este momento nuestro equipo no se encuentra disponible para darte una respuesta sobre tu petición, mañana a primera hora recibirás un SMS y un correo electrónico con el resultado al que nuestro equipo haya llegado.</string>
+
+        <!-- Cuando el crédito es rechazado -->
+        <string name="msjRechazadoTitulo">Una disculpa</string>
+        <string name="msjRechazadoCuerpo">Nuestro equipo ha llegado a la conclusión de que el préstamo no puede ser posible, te pedimos que veas nuestra sección de Preguntas Frecuentes para saber más de esto.</string>
+
+        <!-- Cuando las referencias ingresadas no contestaron -->
+        <string name="msjRefNoContestaronTitulo"></string>
+        <string name="msjRefNoContestaronCuerpo">Llamamos a tus referencias, pero no contestaron. Por favor, vuelve a proporcionarnos otras.</string>
 
 </resources>
 

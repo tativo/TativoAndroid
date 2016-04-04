@@ -2,7 +2,6 @@ package com.tativo.app.tativo.LogIn.Fragmentos;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,31 +14,21 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tativo.app.tativo.Bloques.Actividades.Act_B1_Referencias;
-import com.tativo.app.tativo.Bloques.Actividades.Act_B2_Personal;
-import com.tativo.app.tativo.Bloques.Clases.Catanio;
-import com.tativo.app.tativo.Bloques.Clases.Catrelacionespersonal;
-import com.tativo.app.tativo.LogIn.Actividades.Act_LogIn;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
 
-import org.json.JSONObject;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -111,7 +100,7 @@ public class Frg_Registro extends Fragment{
                         new AsyncValidaCorreo().execute();
                     }
                     else
-                        txtCorreo.setError(getText(R.string.FormatoCorreoInvalido));
+                        txtCorreo.setError(getText(R.string.msjFormatoCorreoInvalido));
                 }
             }
         });
@@ -121,44 +110,44 @@ public class Frg_Registro extends Fragment{
     {
 
         if (txtNombre.getText().toString().trim().length() == 0) {
-            txtNombre.setError(getString(R.string.txtRequerido));
+            txtNombre.setError(getString(R.string.msjRequerido));
             txtNombre.requestFocus();
             return false;
         }
         if (txtApellidoPaterno.getText().toString().trim().length() == 0) {
-            txtApellidoPaterno.setError(getString(R.string.txtRequerido));
+            txtApellidoPaterno.setError(getString(R.string.msjRequerido));
             txtApellidoPaterno.requestFocus();
             return false;
         }
         if (txtApellidoMaterno.getText().toString().trim().length() == 0) {
-            txtApellidoMaterno.setError(getString(R.string.txtRequerido));
+            txtApellidoMaterno.setError(getString(R.string.msjRequerido));
             txtApellidoMaterno.requestFocus();
             return false;
         }
         if (txtCorreo.getText().toString().trim().length() == 0) {
-            txtCorreo.setError(getString(R.string.txtRequerido));
+            txtCorreo.setError(getString(R.string.msjRequerido));
             txtCorreo.requestFocus();
             return false;
         }
         if (!isEmailValid(txtCorreo.getText().toString().trim()))
         {
-            txtCorreo.setError(getText(R.string.FormatoCorreoInvalido));
+            txtCorreo.setError(getText(R.string.msjFormatoCorreoInvalido));
             txtCorreo.requestFocus();
             return false;
         }
         if (txtContrasena.getText().toString().trim().length() == 0) {
-            txtContrasena.setError(getString(R.string.txtRequerido));
+            txtContrasena.setError(getString(R.string.msjRequerido));
             txtContrasena.requestFocus();
             return false;
         }
         if (txtConfirmaContrasena.getText().toString().trim().length() == 0) {
-            txtConfirmaContrasena.setError(getString(R.string.txtRequerido));
+            txtConfirmaContrasena.setError(getString(R.string.msjRequerido));
             txtConfirmaContrasena.requestFocus();
             return false;
         }
         if (!txtConfirmaContrasena.getText().toString().trim().matches(txtContrasena.getText().toString().trim()))
         {
-            txtConfirmaContrasena.setError(getText(R.string.ConfirmacionContrasena));
+            txtConfirmaContrasena.setError(getText(R.string.msjConfirmacionContrasena));
             txtConfirmaContrasena.requestFocus();
             return false;
         }
@@ -247,7 +236,7 @@ public class Frg_Registro extends Fragment{
 
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage(getText(R.string.Guardando));
+            progressDialog.setMessage(getText(R.string.msjGuardando));
             progressDialog.show();
         }
 
@@ -372,14 +361,14 @@ public class Frg_Registro extends Fragment{
             else
             {
                 //Drawable d = (Drawable) getContext().getResources().getDrawable(R.drawable.error);
-                txtCorreo.setError(getText(R.string.CorreoDuplicado));
+                txtCorreo.setError(getText(R.string.msjCorreoDuplicado));
                 txtCorreo.requestFocus();
             }
         }
 
         @Override
         protected void onPreExecute() {
-            progressDialog.setMessage(getText(R.string.ValidandoCorreo));
+            progressDialog.setMessage(getText(R.string.msjValidandoCorreo));
             progressDialog.show();
         }
 
