@@ -632,8 +632,11 @@ public class Act_B1_Referencias extends AppCompatActivity {
 
     private class spOcultaTeclado implements View.OnTouchListener {
         public boolean onTouch(View v, MotionEvent event) {
-            InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            if (getCurrentFocus() != null)
+            {
+                InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
             return false;
         }
     }

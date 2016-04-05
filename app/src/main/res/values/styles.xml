@@ -106,6 +106,7 @@
         <item name="android:textSize">18dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorBlanco</item>
+        <item name="android:drawableRight">@drawable/sig</item>
     </style>
 
     <style name="TativoRelativeLayoutPrincipal">

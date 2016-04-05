@@ -22,8 +22,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:gravity="center"
-                android:background="@color/colorMasGris"
+                android:background="@color/colorGrisTitulo"
                 android:textStyle="bold"
+                android:text="Titulo"
                 />
         </LinearLayout>
         <LinearLayout
@@ -34,19 +35,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:background="@color/colorGris"
-                android:paddingTop="50dp"
-                android:paddingBottom="50dp" />
+                android:background="@color/colorGrisCuerpo"
+                android:paddingTop="35dp"
+                android:paddingBottom="35dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:text="Cuerpo del mensaje"
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
                 style="@style/TativoBotonAceptar"
+                android:id="@+id/btnIrADocumentos"
+                android:background="@color/colorAzulOscuro"
+                android:layout_marginTop="40dp"
+                android:text="Ir a resumen"
+                android:textAllCaps="false"
+                android:visibility="gone"/>
+            <Button
+                style="@style/TativoBotonAceptar"
+                android:id="@+id/btnIrAPerfil"
                 android:background="@color/colorAzulOscuro"
                 android:layout_marginTop="40dp"
                 android:text="Ir a perfil"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:visibility="gone"/>
+            <Button
+                style="@style/TativoBotonAceptar"
+                android:id="@+id/btnTerminarRegistro"
+                android:background="@color/colorAzulOscuro"
+                android:layout_marginTop="40dp"
+                android:text="Terminar registro"
+                android:textAllCaps="false"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -172,12 +172,12 @@
         <string name="msjNoSesionCuerpo">¿Enviaste el PIN? Si es así, algo pasó que no lo pudimos validar. Disculpa las molestias e intentalo más tarde.</string>
 
         <!-- Cuando el crédito fue autorizado  -->
-        <string name="msjAutTitulo">¡Felicidades!</string>
-        <string name="msjAutCuerpo">Tu préstamo ha sido aprobado. Solo falta un último paso, en la siguiente pantalla hay un resumen de la operación y te pediremos que nos otorgues una copia de alguna identificación.</string>
+        <string name="msjAutPagareEnviadoTitulo">¡Felicidades!</string>
+        <string name="msjAutPagareEnviadoCuerpo">Tu préstamo ha sido aprobado. Solo falta un último paso, en la siguiente pantalla hay un resumen de la operación y te pediremos que nos otorgues una copia de alguna identificación.</string>
 
         <!-- Cuando el crédito fue autorizado pero los documentos legales aún aun no se generan  -->
-        <string name="msjAutSinDocTitulo">¡Felicidades!</string>
-        <string name="msjAutSinDocCuerpo">Tu préstamo ha sido aprobado. En unos momentos mas te haremos el depósito, espéranos tantito mientras generamos tus documentos para que nos ayudes a firmarlos.</string>
+        <string name="msjAutSinDocumentoTitulo">¡Felicidades!</string>
+        <string name="msjAutSinDocumentoCuerpo">Tu préstamo ha sido aprobado. En unos momentos mas te haremos el depósito, espéranos tantito mientras generamos tus documentos para que nos ayudes a firmarlos.</string>
 
         <!-- Cuando el crédito está pendiente de autorización (horario laboral)-->
         <string name="msjPenAutEnHoraTitulo">Tenemos noticias</string>

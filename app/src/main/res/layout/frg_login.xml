@@ -47,6 +47,7 @@
         <Button
             android:id="@+id/btnLogIn"
             android:text="@string/btnLogIn"
+            android:drawableRight="@drawable/sig"
             style="@style/TativoBotonAceptar"/>
     </LinearLayout>
 </RelativeLayout>

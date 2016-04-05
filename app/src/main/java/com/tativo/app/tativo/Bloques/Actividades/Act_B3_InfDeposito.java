@@ -86,7 +86,6 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         EventManager();
         new AsyncLoadData().execute();
         Sesion = (Globals) getApplicationContext();
-        //Sesion.setCliendeID("37E53F11-0F00-4C7C-981D-FEE966235600");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new AsyncEstatusSolicitud().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
@@ -818,8 +817,11 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
     //Endregion
     private class spOcultaTeclado implements View.OnTouchListener {
         public boolean onTouch(View v, MotionEvent event) {
-            InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            if (getCurrentFocus() != null)
+            {
+                InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
             return false;
         }
     }

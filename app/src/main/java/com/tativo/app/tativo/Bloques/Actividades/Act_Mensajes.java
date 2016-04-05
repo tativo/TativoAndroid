@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.tativo.app.tativo.Bloques.Clases.CatBloqueoCliente;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 public class Act_Mensajes extends AppCompatActivity {
 
     TextView lblMSJTitulo, lblMSJTexto;
+    Button btnIrADocumentos, btnIrAPerfil, btnTerminarRegistro;
 
     Globals Sesion;
 
@@ -33,24 +36,37 @@ public class Act_Mensajes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_mensajes);
         Sesion = (Globals) getApplicationContext();
+        Sesion.setCliendeID("C52FB82C-7F3F-4A9F-8AEE-35A94BAF30EF");
+        Sesion.setSolicitudID("D815D5AD-5E53-4FD4-93C5-0898F1E83E60");
         LoadFormControls();
+        EventManager();
+        //new AsyncEstatusSolicitud().execute();
 
-        new AsyncEstatusSolicitud().execute();
-
-        /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new AsyncEstatusSolicitud().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
             new AsyncEstatusSolicitud().execute();
         }
-        */
     }
 
     private void LoadFormControls() {
         lblMSJTitulo = (TextView) findViewById(R.id.lblMSJTitulo);
         lblMSJTexto = (TextView) findViewById(R.id.lblMSJTexto);
+        btnIrADocumentos = (Button) findViewById(R.id.btnIrADocumentos);
+        btnIrAPerfil = (Button) findViewById(R.id.btnIrAPerfil);
+        btnTerminarRegistro = (Button) findViewById(R.id.btnTerminarRegistro);
     }
 
+    private void EventManager() {
+        btnIrADocumentos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Act_Documentos.class);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
 
     //Region Estatus Solicitud y Bloqueos
     CatBloqueoCliente Bloqueos = new CatBloqueoCliente();
@@ -62,6 +78,8 @@ public class Act_Mensajes extends AppCompatActivity {
                 try {
                     GetEstatusSolicitud();
                     if(Bloqueos.getBloqueoid()!=0)
+                        break;
+                    if (Solicitud.getSolicitudid().length() > 0)
                         break;
                     Thread.sleep(30000);
                 } catch (InterruptedException ex) {
@@ -89,6 +107,46 @@ public class Act_Mensajes extends AppCompatActivity {
                                 finish();
                             }
                         }).create().show();
+            }
+            else
+            {
+                if (Solicitud.getEstatusCliente().equals("AUTORIZADO")  && Solicitud.isPagareEnviado() && Solicitud.isDentroDeHorario())
+                {
+                    lblMSJTitulo.setText(R.string.msjAutPagareEnviadoTitulo);
+                    lblMSJTexto.setText(R.string.msjAutPagareEnviadoCuerpo);
+                    btnIrADocumentos.setVisibility(View.VISIBLE);
+                }
+                else if (Solicitud.getEstatusCliente().equals("AUTORIZADO") && Solicitud.isPagareEnviado() && !Solicitud.isDentroDeHorario())
+                {
+                    lblMSJTitulo.setText(R.string.msjPenAutNoEnHoraTitulo);
+                    lblMSJTexto.setText(R.string.msjPenAutNoEnHoraCuerpo);
+                    btnIrAPerfil.setVisibility(View.VISIBLE);
+                }
+                else if (Solicitud.getEstatusCliente().equals("AUTORIZADO") && !Solicitud.isPagareEnviado())
+                {
+                    lblMSJTitulo.setText(R.string.msjAutSinDocumentoTitulo);
+                    lblMSJTexto.setText(R.string.msjAutSinDocumentoCuerpo);
+                    btnIrAPerfil.setVisibility(View.VISIBLE);
+                }
+                else if (Solicitud.getEstatusCliente().equals("PENDIENTE") && Solicitud.isDentroDeHorario())
+                {
+                    lblMSJTitulo.setText(R.string.msjPenAutEnHoraTitulo);
+                    lblMSJTexto.setText(R.string.msjPenAutEnHoraCuerpo);
+                    btnIrAPerfil.setVisibility(View.VISIBLE);
+                    btnIrAPerfil.setVisibility(View.VISIBLE);
+                }
+                else if (Solicitud.getEstatusCliente().equals("PENDIENTE") && !Solicitud.isDentroDeHorario())
+                {
+                    lblMSJTitulo.setText(R.string.msjPenAutNoEnHoraTitulo);
+                    lblMSJTexto.setText(R.string.msjPenAutNoEnHoraCuerpo);
+                    btnIrAPerfil.setVisibility(View.VISIBLE);
+                }
+                else if (Solicitud.getEstatusCliente().equals("RECHAZADO"))
+                {
+                    lblMSJTitulo.setText(R.string.msjRechazadoTitulo);
+                    lblMSJTexto.setText(R.string.msjRechazadoCuerpo);
+                    btnTerminarRegistro.setVisibility(View.VISIBLE);
+                }
             }
         }
 

@@ -78,7 +78,6 @@ public class Act_B4_Laboral extends AppCompatActivity {
         FocusManager();
         EventManager();
         Sesion = (Globals) getApplicationContext();
-        //Sesion.setCliendeID("B6268909-3823-49AD-A320-A73CF749717F");
         new AsyncLoadData().execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -879,8 +878,11 @@ public class Act_B4_Laboral extends AppCompatActivity {
 
     private class spOcultaTeclado implements View.OnTouchListener {
         public boolean onTouch(View v, MotionEvent event) {
-            InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            if (getCurrentFocus() != null)
+            {
+                InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
             return false;
         }
     }

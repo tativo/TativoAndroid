@@ -128,7 +128,6 @@ public class Act_B5_General extends AppCompatActivity {
 
     private void LoadFormControls() {
         progressDialog = new ProgressDialog(this);
-        //Sesion.setCliendeID("3C47CB5B-00B6-4EC9-AD21-6F2D1FCF0DAF");
 
         catdatosgeneral = new Catdatosgeneral();
         catdatosgeneral.setDatosgeneralesid("");
@@ -433,7 +432,6 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterEstados extends BaseAdapter implements SpinnerAdapter {
         private final List<Catestado> data;
 
@@ -497,7 +495,6 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterTipoVivienda extends BaseAdapter implements SpinnerAdapter {
         private final List<Cattipovivienda> data;
 
@@ -561,7 +558,6 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterViveCon extends BaseAdapter implements SpinnerAdapter {
         private final List<Catvivecon> data;
 
@@ -625,7 +621,6 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterAnio extends BaseAdapter implements SpinnerAdapter {
         private final List<Catanio> data;
 
@@ -689,7 +684,6 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterNivelEstudio extends BaseAdapter implements SpinnerAdapter {
         private final List<Catnivelestudio> data;
 
@@ -753,7 +747,6 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterCurso extends BaseAdapter implements SpinnerAdapter {
         private final List<Catcurso> data;
 
@@ -817,7 +810,6 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterNivelIngles extends BaseAdapter implements SpinnerAdapter {
         private final List<Catnivelingles> data;
 
@@ -881,7 +873,6 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterActividadEntretenimiento extends BaseAdapter implements SpinnerAdapter {
         private final List<Catactividadentretenimiento> data;
 
@@ -945,7 +936,6 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterIngresoExtra extends BaseAdapter implements SpinnerAdapter {
         private final List<Catingresoextra> data;
 
@@ -1009,7 +999,6 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterRedesSociales extends BaseAdapter implements SpinnerAdapter {
         private final List<Catredessociales> data;
 
@@ -1073,7 +1062,6 @@ public class Act_B5_General extends AppCompatActivity {
             }
         }
     }
-
     private class AdapterDondeInternet extends BaseAdapter implements SpinnerAdapter {
         private final List<Catdondeinternet> data;
 
@@ -1178,21 +1166,9 @@ public class Act_B5_General extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-
-            if (Solicitud.isPagareEnviado())
-            {
-                Intent i = new Intent(getApplicationContext(), Act_Documentos.class);
-                startActivity(i);
-                finish();
-            }
-            else
-            {
-                Intent i = new Intent(getApplicationContext(), Act_Mensajes.class);
-                i.putExtra("Titulo","¡FELICIDADES!");
-                i.putExtra("Texto","ya casi, estamos trabajando en ello...");
-                startActivity(i);
-                finish();
-            }
+            Intent i = new Intent(getApplicationContext(), Act_Mensajes.class);
+            startActivity(i);
+            finish();
         }
 
         @Override
@@ -1507,8 +1483,11 @@ public class Act_B5_General extends AppCompatActivity {
 
     private class spOcultaTeclado implements View.OnTouchListener {
         public boolean onTouch(View v, MotionEvent event) {
-            InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            if (getCurrentFocus() != null)
+            {
+                InputMethodManager method = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                method.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
             return false;
         }
     }
