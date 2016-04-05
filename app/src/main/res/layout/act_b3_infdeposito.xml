@@ -124,6 +124,8 @@
                             android:hint="@string/txtFechaProximoPago"
                             android:inputType="date"
                             android:maxLines="1"
+                            android:maxLength="10"
+                            android:focusable="false"
                             style="@style/TativoAutoCompleteTextView"/>
                     </android.support.design.widget.TextInputLayout>
                     <Button

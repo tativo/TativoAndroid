@@ -60,6 +60,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
 
@@ -413,7 +414,6 @@ public class Act_B2_Personal extends AppCompatActivity {
         protected void onProgressUpdate(Void... values) {
         }
     }
-
     private Boolean TraerDatosCodigoPostal(){
         String SOAP_ACTION = "http://tempuri.org/IService1/GetCodigoPostal";
         String METHOD_NAME = "GetCodigoPostal";
@@ -735,7 +735,6 @@ public class Act_B2_Personal extends AppCompatActivity {
 
         return !requeridos;
     }
-
     private class AsyncGuardar extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
@@ -1104,10 +1103,35 @@ public class Act_B2_Personal extends AppCompatActivity {
 
     //Para el Date
     @Override
-    protected Dialog onCreateDialog(int id)
-    {
+    protected Dialog onCreateDialog(int id) {
+        /*
         if (id == DILOG_ID)
             return new DatePickerDialog(this, dpickerListner, year_x, month_x, day_x);
+            */
+        if (id == DILOG_ID) {
+            try {
+                String fecha;
+                Date MaxDate = null;
+                Date MinDate = null;
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+                format.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                fecha =  "31/12/" + (year_x - 18);
+                MaxDate = format.parse(fecha);
+
+                fecha =  "01/01/" + (year_x - 55);
+                MinDate = format.parse(fecha);
+
+                DatePickerDialog dp = new DatePickerDialog(this, dpickerListner, (year_x - 18), month_x, day_x);
+                dp.getDatePicker().setMaxDate(MaxDate.getTime());
+                dp.getDatePicker().setMinDate(MinDate.getTime());
+                return dp;
+            }
+            catch (Exception ex)
+            {
+                return  null;
+            }
+        }
 
         return  null;
     }
