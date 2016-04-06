@@ -195,5 +195,16 @@
         <string name="msjRefNoContestaronTitulo"></string>
         <string name="msjRefNoContestaronCuerpo">Llamamos a tus referencias, pero no contestaron. Por favor, vuelve a proporcionarnos otras.</string>
 
+    <!-- TITULOS VENTANA-->
+    <string name="ttlB1">TUS MÁS ALLEGADOS</string>
+    <string name="stlB1">Referencias</string>
+    <string name="ttlB2">VAMOS CONOCIENDONOS MEJOR</string>
+    <string name="stlB2">Información personal</string>
+    <string name="ttlB3">¿DÓNDE QUIERES TU DINERO?</string>
+    <string name="stlB3">Información para depósito</string>
+    <string name="ttlB4">RESPECTO AL TRABAJO</string>
+    <string name="stlB4">Información laboral</string>
+    <string name="ttlB5">CUENTAME MÁS DE TI</string>
+    <string name="stlB5">Información general</string>
 </resources>
 

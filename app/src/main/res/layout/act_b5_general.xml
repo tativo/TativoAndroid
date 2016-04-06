@@ -143,7 +143,8 @@
                     app:ms_hint="@string/spnCurso"
                     app:ms_enableErrorLabel="false"
                     app:ms_thickness="0dp"
-                    app:ms_alignLabels="true">
+                    app:ms_alignLabels="true"
+                    app:ms_multiline="false">
                 </fr.ganfra.materialspinner.MaterialSpinner>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
@@ -351,9 +352,9 @@
     <LinearLayout style="@style/TativoLayoutTitulo">
         <TextView
             style="@style/TativoTextViewTitulo"
-            android:text="CUENTAME MAS DE TI" />
+            android:text="@string/ttlB5" />
         <TextView
             style="@style/TativoTextViewSubTitulo"
-            android:text="Información general" />
+            android:text="@string/stlB5" />
     </LinearLayout>
 </RelativeLayout>

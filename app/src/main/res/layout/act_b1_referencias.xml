@@ -233,9 +233,9 @@
     <LinearLayout style="@style/TativoLayoutTitulo">
         <TextView
             style="@style/TativoTextViewTitulo"
-            android:text="REGISTRA TUS REFERECIAS" />
+            android:text="@string/ttlB1" />
         <TextView
             style="@style/TativoTextViewSubTitulo"
-            android:text="Registro de referencias" />
+            android:text="@string/stlB1" />
     </LinearLayout>
 </RelativeLayout>

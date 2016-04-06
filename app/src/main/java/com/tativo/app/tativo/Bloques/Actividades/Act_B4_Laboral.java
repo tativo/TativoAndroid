@@ -520,12 +520,8 @@ public class Act_B4_Laboral extends AppCompatActivity {
             Objetos.add(spnColonia);
         Objetos.add(txtCalle);
         Objetos.add(txtNumeroExt);
-        Objetos.add(txtNumeroInt);
         Objetos.add(spnAreaLaboral);
         Objetos.add(txtSueldoMensual);
-        Objetos.add(txtPaginaEmpresa);
-        Objetos.add(txtActividades);
-
         Collections.reverse(Objetos);
         boolean requeridos = false;
         for (Object item:Objetos) {

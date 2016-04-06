@@ -689,23 +689,24 @@ public class Act_B2_Personal extends AppCompatActivity {
         ArrayList<Object> Objetos = new ArrayList<Object>();
         Objetos.add(txtFechaNacimiento);
         Objetos.add(txtDependientes);
+        Objetos.add(spnGenero);
+        Objetos.add(spnEstadoCivil);
         Objetos.add(txtCodigoPostal);
+        if (!NuevaColonia)
+            Objetos.add(spnColonia);
+        if (NuevaColonia)
+            Objetos.add(txtNuevaColonia);
         Objetos.add(txtCalle);
         Objetos.add(txtNumeroExt);
         Objetos.add(txtTelefonoCelular);
-        Objetos.add(spnGenero);
-        Objetos.add(spnEstadoCivil);
-        if (!NuevaColonia)
-            Objetos.add(spnColonia);
-        Objetos.add(spnMarcaCelular);
         if (swtTarjetaCredito.isChecked())
             Objetos.add(txt4DigitosTarjeta);
+
         Objetos.add(ckTerminosCondiciones1);
         Objetos.add(ckTerminosCondiciones2);
         Objetos.add(ckTerminosCondiciones3);
         Objetos.add(ckTerminosCondiciones4);
-        if (NuevaColonia)
-            Objetos.add(txtNuevaColonia);
+
         Collections.reverse(Objetos);
         boolean requeridos = false;
         for (Object item:Objetos) {

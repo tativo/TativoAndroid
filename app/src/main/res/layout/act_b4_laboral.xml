@@ -189,9 +189,9 @@
     <LinearLayout style="@style/TativoLayoutTitulo">
         <TextView
             style="@style/TativoTextViewTitulo"
-            android:text="RESPECTO AL TRABAJO" />
+            android:text="@string/ttlB4" />
         <TextView
             style="@style/TativoTextViewSubTitulo"
-            android:text="Información laboral" />
+            android:text="@string/stlB4" />
     </LinearLayout>
 </RelativeLayout>

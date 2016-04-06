@@ -1106,27 +1106,27 @@ public class Act_B5_General extends AppCompatActivity {
     private boolean ValidaGuardar() {
         ArrayList<Object> Objetos = new ArrayList<Object>();
         Objetos.add(spnEdoNacimiento);
-        Objetos.add(spnTipoVivienda);
-        Objetos.add(spnConQuienVives);
-        Objetos.add(spnViviendoAhi);
-        Objetos.add(txtTelefonoFijo);
-        Objetos.add(spnNivelEstudio);
-        Objetos.add(txtNombreEscuela);
-        Objetos.add(spnCurso);
-        Objetos.add(spnIngles);
-        Objetos.add(spnActividad);
-        if (lyEspecificaActividad.getVisibility() != View.GONE)
-            Objetos.add(txtEspecificaActividad);
-        Objetos.add(spnIngresoExtra);
-        if (lyIngresoExtra.getVisibility() != View.GONE)
-            Objetos.add(txtActivdadIngresoExtra);
+        //Objetos.add(spnTipoVivienda);
+        //Objetos.add(spnConQuienVives);
+        //Objetos.add(spnViviendoAhi);
+        //Objetos.add(txtTelefonoFijo);
+        //Objetos.add(spnNivelEstudio);
+        //Objetos.add(txtNombreEscuela);
+        //Objetos.add(spnCurso);
+        //Objetos.add(spnIngles);
+        //Objetos.add(spnActividad);
+        //if (lyEspecificaActividad.getVisibility() != View.GONE)
+            //Objetos.add(txtEspecificaActividad);
+        //Objetos.add(spnIngresoExtra);
+        //if (lyIngresoExtra.getVisibility() != View.GONE)
+            //Objetos.add(txtActivdadIngresoExtra);
         Objetos.add(txtParaQue);
-        Objetos.add(spnRedesSociales1);
-        Objetos.add(spnRedesSociales2);
-        Objetos.add(spnRedesSociales3);
-        Objetos.add(spnDondeInternet1);
-        Objetos.add(spnDondeInternet2);
-        Objetos.add(spnDondeInternet3);
+        //Objetos.add(spnRedesSociales1);
+        //Objetos.add(spnRedesSociales2);
+        //Objetos.add(spnRedesSociales3);
+        //Objetos.add(spnDondeInternet1);
+        //Objetos.add(spnDondeInternet2);
+        //Objetos.add(spnDondeInternet3);
         Collections.reverse(Objetos);
         boolean requeridos = false;
         for (Object item:Objetos) {

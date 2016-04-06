@@ -336,9 +336,9 @@
     <LinearLayout style="@style/TativoLayoutTitulo">
         <TextView
             style="@style/TativoTextViewTitulo"
-            android:text="@string/lblCuentanosSobreTi" />
+            android:text="@string/ttlB2" />
         <TextView
             style="@style/TativoTextViewSubTitulo"
-            android:text="@string/lblTituloInfPersonal" />
+            android:text="@string/stlB2" />
     </LinearLayout>
 </RelativeLayout>

@@ -145,9 +145,9 @@
     <LinearLayout style="@style/TativoLayoutTitulo">
         <TextView
             style="@style/TativoTextViewTitulo"
-            android:text="¿DÓNDE QUIERES TU DINERO?" />
+            android:text="@string/ttlB3" />
         <TextView
             style="@style/TativoTextViewSubTitulo"
-            android:text="Información para depósito" />
+            android:text="@string/stlB3" />
     </LinearLayout>
 </RelativeLayout>
