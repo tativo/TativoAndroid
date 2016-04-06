@@ -1213,36 +1213,63 @@ public class Act_B5_General extends AppCompatActivity {
             DatosEntidad.put("Datosgeneralesid", catdatosgeneral.getDatosgeneralesid());
             DatosEntidad.put("Clienteid", Sesion.getCliendeID());
             DatosEntidad.put("Estadonacimientoid", ((Catestado) spnEdoNacimiento.getSelectedItem()).getEstadoid());
-            DatosEntidad.put("Tipoviviendaid", ((Cattipovivienda) spnTipoVivienda.getSelectedItem()).getTipoviviendaid());
-            DatosEntidad.put("Viveconid", ((Catvivecon) spnConQuienVives.getSelectedItem()).getViveconid());
-            DatosEntidad.put("Añoid", ((Catanio) spnViviendoAhi.getSelectedItem()).getAnioid());
+
+            if (spnTipoVivienda.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Tipoviviendaid", ((Cattipovivienda) spnTipoVivienda.getSelectedItem()).getTipoviviendaid());
+
+            if (spnConQuienVives.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Viveconid", ((Catvivecon) spnConQuienVives.getSelectedItem()).getViveconid());
+
+            if (spnViviendoAhi.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Añoid", ((Catanio) spnViviendoAhi.getSelectedItem()).getAnioid());
+
             DatosEntidad.put("Telefonofijo", txtTelefonoFijo.getText().toString());
             DatosEntidad.put("Automovil", swtTienesAutomovil.isChecked());
             DatosEntidad.put("Espropio", swtEsPropio.isChecked());
-            DatosEntidad.put("Nivelestudiosid", ((Catnivelestudio) spnNivelEstudio.getSelectedItem()).getNivelestudioid());
+
+            if (spnNivelEstudio.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Nivelestudiosid", ((Catnivelestudio) spnNivelEstudio.getSelectedItem()).getNivelestudioid());
+
             DatosEntidad.put("Nombreinstitucioneducativa", txtNombreEscuela.getText().toString());
-            DatosEntidad.put("Cursoid", ((Catcurso) spnCurso.getSelectedItem()).getCursoid());
-            DatosEntidad.put("Nivelinglesid", ((Catnivelingles) spnIngles.getSelectedItem()).getNivelinglesid());
-            DatosEntidad.put("Actividadentretenimientoid", ((Catactividadentretenimiento) spnActividad.getSelectedItem()).getActividadentretenimientoid());
+
+            if (spnCurso.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Cursoid", ((Catcurso) spnCurso.getSelectedItem()).getCursoid());
+
+            if (spnIngles.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Nivelinglesid", ((Catnivelingles) spnIngles.getSelectedItem()).getNivelinglesid());
+
+            if (spnActividad.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Actividadentretenimientoid", ((Catactividadentretenimiento) spnActividad.getSelectedItem()).getActividadentretenimientoid());
+
             if (lyEspecificaActividad.getVisibility() != View.GONE)
                 DatosEntidad.put("Especificacionactividad", txtEspecificaActividad.getText().toString().trim());
             else
                 DatosEntidad.put("Especificacionactividad", "");
-            DatosEntidad.put("Ingresoextraid", ((Catingresoextra) spnIngresoExtra.getSelectedItem()).getIngresoextraid());
+
+            if (spnConQuienVives.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Ingresoextraid", ((Catingresoextra) spnIngresoExtra.getSelectedItem()).getIngresoextraid());
+
             if (lyIngresoExtra.getVisibility() != View.GONE)
                 DatosEntidad.put("Actividadingresoextra", txtActivdadIngresoExtra.getText().toString().trim());
             else
                 DatosEntidad.put("Actividadingresoextra", "");
+
             DatosEntidad.put("Tienecelularinteligente", ckTieneCelular.isChecked());
             DatosEntidad.put("Tienetablet", ckTieneTablet.isChecked());
             DatosEntidad.put("Tienecomputadora", ckTieneComputadora.isChecked());
             DatosEntidad.put("Paraqueocupaselservicio", txtParaQue.getText().toString());
-            DatosEntidad.put("Redessocialesid1", ((Catredessociales) spnRedesSociales1.getSelectedItem()).getRedessocialesid());
-            DatosEntidad.put("Redessocialesid2", ((Catredessociales) spnRedesSociales2.getSelectedItem()).getRedessocialesid());
-            DatosEntidad.put("Redessocialesid3", ((Catredessociales) spnRedesSociales3.getSelectedItem()).getRedessocialesid());
-            DatosEntidad.put("Dondeinternetid1", ((Catdondeinternet) spnDondeInternet1.getSelectedItem()).getDondeinternetid());
-            DatosEntidad.put("Dondeinternetid2", ((Catdondeinternet) spnDondeInternet2.getSelectedItem()).getDondeinternetid());
-            DatosEntidad.put("Dondeinternetid3", ((Catdondeinternet) spnDondeInternet3.getSelectedItem()).getDondeinternetid());
+            if (spnRedesSociales1.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Redessocialesid1", ((Catredessociales) spnRedesSociales1.getSelectedItem()).getRedessocialesid());
+            if (spnRedesSociales2.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Redessocialesid2", ((Catredessociales) spnRedesSociales2.getSelectedItem()).getRedessocialesid());
+            if (spnRedesSociales3.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Redessocialesid3", ((Catredessociales) spnRedesSociales3.getSelectedItem()).getRedessocialesid());
+            if (spnDondeInternet1.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Dondeinternetid1", ((Catdondeinternet) spnDondeInternet1.getSelectedItem()).getDondeinternetid());
+            if (spnDondeInternet2.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Dondeinternetid2", ((Catdondeinternet) spnDondeInternet2.getSelectedItem()).getDondeinternetid());
+            if (spnDondeInternet3.getSelectedItemPosition() > 0)
+                DatosEntidad.put("Dondeinternetid3", ((Catdondeinternet) spnDondeInternet3.getSelectedItem()).getDondeinternetid());
             DatosEntidad.put("UltimaAct", catdatosgeneral.getUltimaAct());
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
