@@ -32,6 +32,11 @@ public class Act_Mensajes extends AppCompatActivity {
     Globals Sesion;
 
     @Override
+    public void onBackPressed() {
+
+    }
+    
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_mensajes);

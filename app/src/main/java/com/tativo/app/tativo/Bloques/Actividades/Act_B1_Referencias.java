@@ -57,6 +57,11 @@ public class Act_B1_Referencias extends AppCompatActivity {
     boolean r1 = false, r2 = false, rl = false;
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_b1_referencias);

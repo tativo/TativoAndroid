@@ -110,6 +110,11 @@ public class Act_B5_General extends AppCompatActivity {
     Catdatosgeneral catdatosgeneral;
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_b5_general);

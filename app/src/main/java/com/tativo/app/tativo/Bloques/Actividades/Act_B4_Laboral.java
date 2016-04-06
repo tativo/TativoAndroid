@@ -71,6 +71,11 @@ public class Act_B4_Laboral extends AppCompatActivity {
     Catdatosempleo catdatosempleo;
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_b4_laboral);

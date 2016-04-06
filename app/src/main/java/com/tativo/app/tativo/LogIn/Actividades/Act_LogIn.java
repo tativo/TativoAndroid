@@ -16,6 +16,11 @@ public class Act_LogIn extends FragmentActivity {
     Button btnfrgLogIn, btnfrgRegistrar;
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_login);

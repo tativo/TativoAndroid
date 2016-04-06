@@ -86,9 +86,13 @@ public class Act_B2_Personal extends AppCompatActivity {
     LinearLayout lyNuevaColonia;
     Boolean NuevaColonia,edicionCP=false;
 
-
     int year_x, month_x, day_x;
     static final int DILOG_ID = 0;
+
+    @Override
+    public void onBackPressed() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

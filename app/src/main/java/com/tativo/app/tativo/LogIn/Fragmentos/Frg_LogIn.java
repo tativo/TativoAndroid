@@ -48,5 +48,4 @@ public class Frg_LogIn extends Fragment {
 
         return v;
     }
-
 }

@@ -49,6 +49,11 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_b3_confirmarpin);

@@ -59,6 +59,11 @@ public class Act_Documentos extends AppCompatActivity {
     DatosDocumentosOperacion datosOperacion;
 
     @Override
+    public void onBackPressed() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_documentos);

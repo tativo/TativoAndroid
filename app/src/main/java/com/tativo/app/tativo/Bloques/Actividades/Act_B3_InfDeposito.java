@@ -77,6 +77,12 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
     AdapterCatperiodosdepago spnFrecuenciaPagoAdapter;
 
     Catdatosdeposito EntityCatdatosdeposito = new Catdatosdeposito();
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
