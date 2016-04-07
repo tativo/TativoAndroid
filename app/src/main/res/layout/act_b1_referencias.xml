@@ -230,12 +230,17 @@
                 style="@style/TativoBotonAceptar"/>
         </LinearLayout>
     </ScrollView>
-    <LinearLayout style="@style/TativoLayoutTitulo">
+    <RelativeLayout style="@style/TativoLayoutTitulo">
         <TextView
+            android:id="@+id/lyTituloB1"
             style="@style/TativoTextViewTitulo"
             android:text="@string/ttlB1" />
         <TextView
             style="@style/TativoTextViewSubTitulo"
-            android:text="@string/stlB1" />
-    </LinearLayout>
+            android:text="@string/stlB1"
+            android:layout_below="@+id/lyTituloB1"/>
+        <TextView
+            style="@style/TativoBloquenDm"
+            android:text="@string/nDmB1"/>
+    </RelativeLayout>
 </RelativeLayout>

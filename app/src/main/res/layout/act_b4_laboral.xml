@@ -186,12 +186,17 @@
                 style="@style/TativoBotonAceptar"/>
         </LinearLayout>
     </ScrollView>
-    <LinearLayout style="@style/TativoLayoutTitulo">
+    <RelativeLayout style="@style/TativoLayoutTitulo">
         <TextView
+            android:id="@+id/lyTituloB4"
             style="@style/TativoTextViewTitulo"
             android:text="@string/ttlB4" />
         <TextView
+            android:layout_below="@+id/lyTituloB4"
             style="@style/TativoTextViewSubTitulo"
             android:text="@string/stlB4" />
-    </LinearLayout>
+        <TextView
+            style="@style/TativoBloquenDm"
+            android:text="@string/nDmB4"/>
+    </RelativeLayout>
 </RelativeLayout>

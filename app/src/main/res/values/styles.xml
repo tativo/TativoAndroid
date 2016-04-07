@@ -59,6 +59,14 @@
         <item name="android:paddingLeft">15dp</item>
     </style>
 
+    <style name="TativoBloquenDm">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@color/colorBlanco</item>
+        <item name="android:gravity">right|bottom</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
     <style name="TativoLinearLayoutBorde">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
