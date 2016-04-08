@@ -50,7 +50,7 @@
         <activity
             android:name=".LogIn.Actividades.Act_LogIn"
             android:configChanges="screenSize|orientation" />
-        <activity android:name=".LogIn.Actividades.Act_Cotizador">
+        <activity android:name=".LogIn.Actividades.Act_Cotizador" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAINACTIVITY" />
 

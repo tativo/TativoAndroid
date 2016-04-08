@@ -186,7 +186,15 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">#ffffff</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:textSize">50dp</item>
+        <item name="android:textSize">35dp</item>
+    </style>
+
+    <style name="TativoContenidoCotizador">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:textSize">25dp</item>
     </style>
 
     <style name="TativoTextViewHint">

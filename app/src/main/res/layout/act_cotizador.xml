@@ -20,21 +20,90 @@
         android:layout_height="0dp"
         android:background="@drawable/pantalla"
         android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:layout_weight="6">
-        <TextView
-            android:id="@+id/lblTitulo1"
-            style="@style/TativoTituloCotizador"
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/divPantallaImagen1"
+            android:orientation="vertical"
+            android:background="@drawable/screenface1"
+            >
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/divPantallaImagen2"
+            android:orientation="vertical"
+            android:background="@drawable/screenface2"
+            >
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/divPantallaTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            >
+            <TextView
+                android:id="@+id/lblTitulo1"
+                style="@style/TativoTituloCotizador"
+                />
+            <TextView
+                android:id="@+id/lblTitulo2"
+                style="@style/TativoTituloCotizador"
+                />
+            <TextView
+                android:id="@+id/lblTitulo3"
+                style="@style/TativoTituloCotizador"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/divPantallaCotizacion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:paddingTop="50dp"
-            />
-        <TextView
-            android:id="@+id/lblTitulo2"
-            style="@style/TativoTituloCotizador"
-            />
-        <TextView
-            android:id="@+id/lblTitulo3"
-            style="@style/TativoTituloCotizador"
-            />
+            android:paddingLeft="70dp"
+            >
+            <TextView
+                android:id="@+id/lblCotizacion1"
+                android:text="ASÍ QUEDAMOS:"
+                style="@style/TativoContenidoCotizador"
+                />
+            <TextView
+                android:id="@+id/lblCotizacion2"
+                android:text=""
+                style="@style/TativoContenidoCotizador"
+                />
+            <TextView
+                android:id="@+id/lblCotizacion3"
+                android:text=""
+                style="@style/TativoContenidoCotizador"
+                />
+            <TextView
+                android:id="@+id/lblCotizacion4"
+                android:text=""
+                style="@style/TativoContenidoCotizador"
+                />
+            <TextView
+                android:id="@+id/lblCotizacion5"
+                android:text="--------------------"
+                style="@style/TativoContenidoCotizador"
+                />
+            <TextView
+                android:id="@+id/lblCotizacion6"
+                android:text=""
+                android:textColor="@color/colorAmarillo"
+                style="@style/TativoContenidoCotizador"
+                />
+        </LinearLayout>
+
+
+
     </LinearLayout>
     <LinearLayout
         android:id="@+id/divBody"
@@ -44,6 +113,48 @@
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
         android:layout_weight="3">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lblQuiero"
+                    android:text="QUIERO "
+                    android:textColor="@color/colorAmarillo"
+                    android:textSize="20dp"
+                    />
+                <kankan.wheel.widget.WheelView android:id="@+id/spnImporte"
+                    android:layout_height="match_parent"
+                    android:layout_width="180dp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/lblPago"
+                    android:text="PAGO EL "
+                    android:textColor="@color/colorAmarillo"
+                    android:textSize="20dp"
+                    />
+                <kankan.wheel.widget.WheelView android:id="@+id/spnFechaPago"
+                    android:layout_height="match_parent"
+                    android:layout_width="180dp"
+                    />
+            </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -51,13 +162,15 @@
         android:background="@drawable/foot"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="2">
+        android:layout_weight="2"
+        android:paddingTop="5dp"
+        >
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnListo"
-            android:background="@drawable/listo"
+            android:background="@drawable/listo1"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
