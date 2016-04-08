@@ -27,9 +27,9 @@
         android:name="android.hardware.camera.flash"
         android:required="false" />
 
-    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Utilidades.Globals"
@@ -43,7 +43,6 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -53,18 +52,10 @@
         <activity android:name=".LogIn.Actividades.Act_Cotizador">
             <intent-filter>
                 <action android:name="android.intent.action.MAINACTIVITY" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <!--
-       <activity android:name=".Splash">
-           <intent-filter>
-               <action android:name="android.intent.action.MAIN" />
-               <category android:name="android.intent.category.LAUNCHER" />
-           </intent-filter>
-       </activity>
-        -->
+
         <activity
             android:name=".Bloques.Actividades.Act_B1_Referencias"
             android:configChanges="screenSize|orientation" />

@@ -46,7 +46,7 @@ import java.util.ArrayList;
 public class Frg_LogIn extends Fragment {
 
     Globals Sesion;
-    Button btnLogIn;
+    Button btnLogIn, btnPrueba;
     View v;
     ProgressDialog progressDialog;
     TextView lblMsjError;
@@ -75,6 +75,8 @@ public class Frg_LogIn extends Fragment {
         txtUsuario = (AutoCompleteTextView) v.findViewById(R.id.txtUsuario);
         textPassword = (AutoCompleteTextView) v.findViewById(R.id.txtPassword);
         lblMsjError = (TextView) v.findViewById(R.id.lblMsjError);
+
+        btnPrueba = (Button) v.findViewById(R.id.btnPrueba);
     }
 
     private void EventManager()
@@ -89,6 +91,15 @@ public class Frg_LogIn extends Fragment {
                 } else {
                     new AsyncValidaUsuario().execute();
                 }
+            }
+        });
+
+        btnPrueba.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), Act_B3_InfDeposito.class);
+                startActivity(i);
+                getActivity().finish();
             }
         });
     }

@@ -216,5 +216,30 @@
     <string name="stlB5">Información general</string>
     <string name="nDmB5">Bloque 5 de 5</string>
 
+    <!-- REQUISITOS -->
+    <string name="reqTitulo">Perate tantito</string>
+    <string name="reqMSJ1">¿QUÉ NECESITAS PARA COMENZAR A UTILIZAR TATIVO?</string>
+    <string name="reqMSJ2">Es muy simple, solo debes contar con los siguientes requisitos</string>
+    <string name="req1">Correo electrónico</string>
+    <string name="req2">Teléfono celular</string>
+    <string name="req3">Identificación oficial (IFE/INE o Pasaporte)</string>
+    <string name="req4">Tarjeta de débito y/o CLABE interbancaria</string>
+    <string name="reqbtnCerrar">Entendido, llévame al registro</string>
+
+
+    <!-- No Cuenta con Tarjeta de Debito -->
+    <string name="ntdTitulo">Antes, un pequeño anuncio</string>
+    <string name="ntdMSJ">Como no tienes tarjeta de débito te recomendamos adquirir alguna tarjeta express (como la tarjeta saldazo de OXXO). Estos son los pasos y las cosas que te van a pedir.</string>
+    <string name="ntdRequisitos">Requisitos</string>
+    <string name="ntdRequisitos1">1. Identificacion vigente</string>
+    <string name="ntdRequisitos2">2. Teléfono celular Telcel</string>
+    <string name="ntdPasos">Pasos</string>
+    <string name="ntdPasos1">1. Ir a una tienda OXXO</string>
+    <string name="ntdPasos2">2. Solicitar una tarjeta Saldazo</string>
+    <string name="ntdPasos3">3. Realizar el registro de la tarjeta</string>
+    <string name="ntdPasos4">4. Pagar el costo de $30* por la tarjeta</string>
+    <string name="ntdPasos5">5. Ingresar a Tativo.com</string>
+    <string name="ntdPasos6">6. Continuar el proceso de solicitud de Tativo</string>
+    <string name="ntdbtnCerrar">Cerrar</string>
 </resources>
 

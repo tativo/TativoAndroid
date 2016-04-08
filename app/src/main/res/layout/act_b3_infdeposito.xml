@@ -30,6 +30,7 @@
                     style="@style/TativoTextViewSwitch"/>
                 <Switch
                     android:id="@+id/swtTarjetaDebito"
+                    android:checked="true"
                     style="@style/TativoSwitch"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">

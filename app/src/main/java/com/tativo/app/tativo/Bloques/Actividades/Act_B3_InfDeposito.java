@@ -2,6 +2,7 @@ package com.tativo.app.tativo.Bloques.Actividades;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -35,6 +37,7 @@ import com.tativo.app.tativo.Bloques.Clases.Catdatosdeposito;
 import com.tativo.app.tativo.Bloques.Clases.Catformasdepago;
 import com.tativo.app.tativo.Bloques.Clases.Catperiodosdepago;
 import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
+import com.tativo.app.tativo.Bloques.Fragmentos.Frg_NoTarjetaDebito;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
@@ -211,10 +214,10 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         btnDatosDeposito.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ValidaGuardar()){
+                if (ValidaGuardar()) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new AsyncSaveData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    }else{
+                    } else {
                         new AsyncSaveData().execute();
                     }
                 }
@@ -243,6 +246,16 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
             }
         });
 
+        swtTarjetaDebito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked)
+                {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    new Frg_NoTarjetaDebito().show(fragmentManager,"frmNoTarjetaDebito");
+                }
+            }
+        });
     }
 
     //Region Llenar datos del formulario
