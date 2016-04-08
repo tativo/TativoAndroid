@@ -29,6 +29,7 @@ import com.tativo.app.tativo.Bloques.Clases.CatBloqueoCliente;
 import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
 import com.tativo.app.tativo.LogIn.Actividades.Act_LogIn;
 import com.tativo.app.tativo.LogIn.Clases.Catcliente;
+import com.tativo.app.tativo.Operaciones.Actividades.Act_Perfil;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
@@ -97,7 +98,7 @@ public class Frg_LogIn extends Fragment {
         btnPrueba.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Act_B3_InfDeposito.class);
+                Intent i = new Intent(getActivity(), Act_Perfil.class);
                 startActivity(i);
                 getActivity().finish();
             }

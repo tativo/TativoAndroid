@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:checked="true"
+            android:icon="@android:drawable/ic_menu_slideshow"
+            android:title="HOME" />
+        <item
+            android:id="@+id/nav_productos"
+            android:icon="@drawable/edit"
+            android:title="Productos" />
+        <item
+            android:id="@+id/nav_carrito"
+            android:icon="@drawable/edit"
+            android:title="Compras" />
+        <item
+            android:id="@+id/nav_ordenes"
+            android:icon="@android:drawable/ic_input_get"
+            android:title="Ordenes" />
+        <item
+            android:id="@+id/nav_facturas"
+            android:icon="@android:drawable/ic_menu_my_calendar"
+            android:title="Facturas" />
+
+        <!-- Sección de configuración -->
+        <item
+            android:id="@+id/configuration_section"
+            android:title="Configuracion">
+            <menu>
+                <item
+                    android:id="@+id/nav_log_out"
+                    android:icon="@android:drawable/ic_lock_power_off"
+                    android:title="Cerrar cesion" />
+            </menu>
+        </item>
+    </group>
+
+</menu>
