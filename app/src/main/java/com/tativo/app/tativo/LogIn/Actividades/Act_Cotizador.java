@@ -1,13 +1,10 @@
 package com.tativo.app.tativo.LogIn.Actividades;
 
-import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
+
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -22,27 +19,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tativo.app.tativo.Bloques.Actividades.Act_B1_Referencias;
-import com.tativo.app.tativo.Bloques.Clases.Catcolonia;
 import com.tativo.app.tativo.Bloques.Clases.Cattasasfinanciamiento;
 import com.tativo.app.tativo.LogIn.Fragmentos.Frg_Requisitos;
+
 import com.tativo.app.tativo.R;
+
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
 import com.tativo.app.tativo.Utilidades.Utilerias;
 
-import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 
-import java.lang.reflect.Array;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
-import java.util.concurrent.ExecutionException;
+
 
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;

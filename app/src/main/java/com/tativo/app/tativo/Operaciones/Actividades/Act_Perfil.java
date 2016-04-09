@@ -1,5 +1,6 @@
 package com.tativo.app.tativo.Operaciones.Actividades;
 
+import android.graphics.Color;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,7 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Cotizador;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Nav;
+import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Perfil;
 import com.tativo.app.tativo.R;
 
 public class Act_Perfil extends AppCompatActivity {
@@ -33,20 +36,22 @@ public class Act_Perfil extends AppCompatActivity {
             setupDrawerContent(navigationView);
         }
 
-        drawerTitle = "HomeCode";
+        drawerTitle = "Pefil";
         if (savedInstanceState == null) {
             selectItem(drawerTitle);
         }
     }
 
     private void setToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
         final ActionBar ab = getSupportActionBar();
         if (ab != null) {
             // Poner ícono del drawer toggle
             ab.setHomeAsUpIndicator(R.drawable.ic_menu);
             ab.setDisplayHomeAsUpEnabled(true);
+
         }
     }
 
@@ -71,7 +76,8 @@ public class Act_Perfil extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            getMenuInflater().inflate(R.menu.main, menu);
+            //AGREGA EL MENU SUPERIOR-DERECHA
+            //getMenuInflater().inflate(R.menu.main, menu);
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -90,10 +96,25 @@ public class Act_Perfil extends AppCompatActivity {
 
     private void selectItem(String title) {
         // Enviar título como arguemento del fragmento
-        Bundle args = new Bundle();
-        args.putString(Frg_Nav.ARG_SECTION_TITLE, title);
 
-        Fragment fragment = Frg_Nav.newInstance(title);
+        Bundle args = new Bundle();
+        Fragment fragment = null;
+        if(title.equals("Perfil"))
+        {
+            args.putString(Frg_Perfil.ARG_SECTION_TITLE, title);
+            fragment = Frg_Perfil.newInstance(title);
+        }
+        else if(title.equals("Cotizador"))
+        {
+            args.putString(Frg_Cotizador.ARG_SECTION_TITLE, title);
+            fragment = Frg_Cotizador.newInstance(title);
+        }
+        else
+        {
+            args.putString(Frg_Nav.ARG_SECTION_TITLE, title);
+            fragment = Frg_Nav.newInstance(title);
+        }
+
         fragment.setArguments(args);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager
@@ -102,7 +123,6 @@ public class Act_Perfil extends AppCompatActivity {
                 .commit();
 
         drawerLayout.closeDrawers(); // Cerrar drawer
-
         setTitle(title); // Setear título actual
 
     }

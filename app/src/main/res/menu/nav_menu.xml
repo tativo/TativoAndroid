@@ -3,32 +3,38 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_Cotizador"
             android:checked="true"
-            android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="HOME" />
+            android:icon="@drawable/controller"
+            android:title="Cotizador" />
         <item
-            android:id="@+id/nav_productos"
-            android:icon="@drawable/edit"
-            android:title="Productos" />
+            android:id="@+id/nav_Perfil"
+            android:checked="true"
+            android:icon="@drawable/user"
+            android:title="Perfil" />
         <item
-            android:id="@+id/nav_carrito"
-            android:icon="@drawable/edit"
-            android:title="Compras" />
+            android:id="@+id/nav_Operaciones"
+            android:icon="@drawable/money"
+            android:title="Operacion" />
         <item
-            android:id="@+id/nav_ordenes"
-            android:icon="@android:drawable/ic_input_get"
-            android:title="Ordenes" />
+            android:id="@+id/nav_Historial"
+            android:icon="@drawable/clock"
+            android:title="Historial" />
+
         <item
-            android:id="@+id/nav_facturas"
-            android:icon="@android:drawable/ic_menu_my_calendar"
-            android:title="Facturas" />
+            android:id="@+id/nav_Servicios"
+            android:icon="@drawable/treestructure"
+            android:title="Servicios" />
 
         <!-- Sección de configuración -->
         <item
             android:id="@+id/configuration_section"
             android:title="Configuracion">
             <menu>
+                <item
+                    android:id="@+id/nav_Contacto"
+                    android:icon="@drawable/assistant"
+                    android:title="Contacto" />
                 <item
                     android:id="@+id/nav_log_out"
                     android:icon="@android:drawable/ic_lock_power_off"
