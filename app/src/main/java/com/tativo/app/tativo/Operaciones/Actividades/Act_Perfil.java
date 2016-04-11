@@ -36,7 +36,7 @@ public class Act_Perfil extends AppCompatActivity {
             setupDrawerContent(navigationView);
         }
 
-        drawerTitle = "Pefil";
+        drawerTitle = "Perfil";
         if (savedInstanceState == null) {
             selectItem(drawerTitle);
         }
