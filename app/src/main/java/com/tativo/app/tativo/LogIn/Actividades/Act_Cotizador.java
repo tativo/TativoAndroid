@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tativo.app.tativo.Bloques.Clases.Cattasasfinanciamiento;
+import com.tativo.app.tativo.LogIn.Clases.CatFechasPago;
 import com.tativo.app.tativo.LogIn.Fragmentos.Frg_Requisitos;
 
 import com.tativo.app.tativo.R;
@@ -49,7 +50,7 @@ public class Act_Cotizador extends AppCompatActivity {
     WheelView spnImporte,spnFechaPago;
     Button btnListo;
 
-    List<Date> FechasPago = new ArrayList<Date>();
+    List<CatFechasPago> FechasPago = new ArrayList<CatFechasPago>();
     List<Double> Importes = new ArrayList<Double>();
 
     ProgressDialog progressDialog;
@@ -143,7 +144,7 @@ public class Act_Cotizador extends AppCompatActivity {
                     imageHandler.cancel(true);
                 }
                 if(touchImporte)
-                    CalcularInteres(Importes.get(spnImporte.getCurrentItem()),FechasPago.get(spnFechaPago.getCurrentItem()));
+                    CalcularInteres(Importes.get(spnImporte.getCurrentItem()),FechasPago.get(spnFechaPago.getCurrentItem()).getFechaPago(),FechasPago.get(spnFechaPago.getCurrentItem()).getDiasDeUso());
             }
         });
         spnImporte.setOnTouchListener(new View.OnTouchListener() {
@@ -159,7 +160,7 @@ public class Act_Cotizador extends AppCompatActivity {
                 if(imageHandler!=null && imageHandler.getStatus() == AsyncTask.Status.RUNNING) {
                     imageHandler.cancel(true);
                 }
-                CalcularInteres(Importes.get(spnImporte.getCurrentItem()),FechasPago.get(spnFechaPago.getCurrentItem()));
+                CalcularInteres(Importes.get(spnImporte.getCurrentItem()),FechasPago.get(spnFechaPago.getCurrentItem()).getFechaPago(),FechasPago.get(spnFechaPago.getCurrentItem()).getDiasDeUso());
             }
         });
 
@@ -168,7 +169,7 @@ public class Act_Cotizador extends AppCompatActivity {
             public void onClick(View v) {
                 Globals g = (Globals) getApplicationContext();
                 g.setImporteSolicitado(Importes.get(spnImporte.getCurrentItem()));
-                g.setFechaPago(FechasPago.get(spnFechaPago.getCurrentItem()));
+                g.setFechaPago(FechasPago.get(spnFechaPago.getCurrentItem()).getFechaPago());
                 FragmentManager fragmento = getFragmentManager();
                 new Frg_Requisitos().show(fragmento,"frmRequisitos");
             }
@@ -290,8 +291,12 @@ public class Act_Cotizador extends AppCompatActivity {
                     SoapObject DatosFechasPago = (SoapObject) Datos.getProperty("FechasPago");
                     SoapObject DatosImportes = (SoapObject) Datos.getProperty("Importes");
                     for (int i = 0; i < DatosFechasPago.getPropertyCount(); i++) {
-                        String Fecha = DatosFechasPago.getProperty(i).toString().substring(0, 10);
-                        FechasPago.add(Utilerias.stringToDate(Fecha));
+
+                        SoapObject itemFechaPago = (SoapObject) DatosFechasPago.getProperty(i);
+                        CatFechasPago fechaPago= new CatFechasPago();
+                        fechaPago.setFechaPago(Utilerias.stringToDate(itemFechaPago.getProperty("FechaPago").toString().substring(0, 10)));
+                        fechaPago.setDiasDeUso(Integer.parseInt(itemFechaPago.getProperty("DiasDeUso").toString()));
+                        FechasPago.add(fechaPago);
                     }
                     for (int i = 0; i < DatosImportes.getPropertyCount(); i++) {
                         Double importe = Double.parseDouble(DatosImportes.getProperty(i).toString());
@@ -345,9 +350,9 @@ public class Act_Cotizador extends AppCompatActivity {
 
     private class FechaPagoAdapter extends AbstractWheelTextAdapter {
 
-        private final List<Date> mDateList;
+        private final List<CatFechasPago> mDateList;
 
-        public FechaPagoAdapter(Context context, List<Date> dateList) {
+        public FechaPagoAdapter(Context context, List<CatFechasPago> dateList) {
             super(context, R.layout.wheel_item);
             this.mDateList = dateList;
         }
@@ -360,7 +365,7 @@ public class Act_Cotizador extends AppCompatActivity {
             //Format the date (Name of the day / number of the day)
             SimpleDateFormat dateFormat = new SimpleDateFormat("EEE dd MMM", Locale.getDefault());
             //Assign the text
-            item.setText( Utilerias.LetraCapital(dateFormat.format(mDateList.get(index))));
+            item.setText( Utilerias.LetraCapital(dateFormat.format(mDateList.get(index).getFechaPago())));
 
             item.setTextColor(Color.BLACK);
 
@@ -418,8 +423,7 @@ public class Act_Cotizador extends AppCompatActivity {
     //End Region
 
     //Region Calculo de Intereses Diarios
-    private void CalcularInteres(Double Importe,Date FechaPago) {
-        long DiasDeUso = Utilerias.Days(new Date(),FechaPago);
+    private void CalcularInteres(Double Importe,Date FechaPago,long DiasDeUso) {
         double costoDiario = Importe * TasaFinanciamiento.getFactorinteresordinario();
         double subtotal = costoDiario * DiasDeUso;
         double iva = (TasaFinanciamiento.getIVA() / 100)+1;
