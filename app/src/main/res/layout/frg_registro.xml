@@ -49,7 +49,7 @@
                     style="@style/TativoTextInputLayout">
                     <AutoCompleteTextView
                         android:id="@+id/txtCorreo"
-                        android:hint="@string/txtCorreo"
+                        android:hint="@string/hnCorreo"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
                         style="@style/TativoAutoCompleteTextView"/>

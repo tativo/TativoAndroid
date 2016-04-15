@@ -35,14 +35,14 @@
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
-                    android:hint="@string/txtTelefono" />
+                    android:hint="@string/hnTelefono" />
                 <TextView style="@style/TativoTextView"
                     android:id="@+id/lblTelefono" />
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
-                    android:hint="@string/txtCorreo" />
+                    android:hint="@string/hnCorreo" />
                 <TextView style="@style/TativoTextView"
                     android:id="@+id/lblCorreo" />
             </LinearLayout>
@@ -60,7 +60,7 @@
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
-                    android:hint="@string/txtNumeroTarjetaCLABE" />
+                    android:hint="@string/hnNumeroTarjetaCLABE" />
                 <TextView style="@style/TativoTextView"
                     android:id="@+id/lblNumeroTarjetaCLABE" />
             </LinearLayout>

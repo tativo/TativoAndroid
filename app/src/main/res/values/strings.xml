@@ -16,12 +16,22 @@
     <string name="spnBanco">Banco</string>
     <string name="spnHintMaterialSpinner">Elige una opción</string>
     <string name="swtTextON">Si</string>
-    <string name="swtTxtOFF">No</string>
+    <string name="swtTextOFF">No</string>
     <string name="msgRefNoContesto">Llamamos a tus referencias, pero no contestaron. Por favor, vuelve a proporcionarnos otras</string>
     <string name="msgRefTitulo">Referencias</string>
     <string name="msgRefOk">De acuerdo</string>
     <string name="msgCamposRequeridos">Favor de llenar todos los campos requeridos</string>
-
+    <string name="hnTelefono">Teléfono</string>
+    <string name="hnCorreo">Correo electrónico</string>
+    <string name="hnNumeroTarjetaCLABE">Número de tarjeta o CLABE</string>
+    <string name="hnMonto">Monto solicitado (capital)</string>
+    <string name="hnInteres">Interés</string>
+    <string name="hnIVA">IVA</string>
+    <string name="hnTotal">Total a pagar</string>
+    <string name="hnFechaInicio">Fecha de inicio</string>
+    <string name="hnPlazo">Plazo</string>
+    <string name="hnFechaLimite">Fecha límite de pago</string>
+    <string name="btnSiguiente">Siguiente</string>
 
     <!--LogIn-->
     <string name="txtLogInContrasena">Contraseña</string>
@@ -33,7 +43,6 @@
     <string name="lblTituRegistro">Información Personal</string>
     <string name="txtApellidoPaterno">Apellido Paterno</string>
     <string name="txtApellidoMaterno">Apellido Materno</string>
-    <string name="txtCorreo">Correo electrónico</string>
     <string name="txtContrasena">Elige una contraseña</string>
     <string name="txtConfirmacionContrasena">Confirma tu contraseña</string>
     <string name="btnRegistro">Aceptar</string>
@@ -45,7 +54,6 @@
     <string name="txtApellidos">Apellidos</string>
     <string name="txtAñosAmistad">Años de amistad</string>
     <string name="txtAñosTrabajando">Años trabajando ahí</string>
-    <string name="txtTelefono">Teléfono</string>
     <string name="txtNombreEmpresa">Nombre de la empresa</string>
     <string name="btnReferencias">Guardar y continuar</string>
     <string name="ckReferenciasAcepta">Al otorgar estos datos acepto que Tativo se ponga en contacto con mis referencias para validad que la informacion sea correcta</string>
@@ -73,7 +81,6 @@
 
     <!--Bloque 3 - Informacion Deposito -->
     <string name="lblTarjetaDebito">¿Cuentas con tarjeta de débito?</string>
-    <string name="txtNumeroTarjetaCLABE">Número de tarjeta o CLABE</string>
     <string name="lblRecibesNomina">¿Es donde recibes tu nomina?</string>
     <string name="spnFrecuenciaPago">Frecuencia de pago</string>
     <string name="spnMedioPago">Medio de Pago</string>
@@ -127,17 +134,31 @@
 
     <string name="lblInformacionDeposito">Información de depósito</string>
     <string name="hnNombreBanco">Nombre de banco</string>
-    <string name="hnMonto">Monto solicitado (capital)</string>
-    <string name="hnInteres">Interés</string>
-    <string name="hnIVA">IVA</string>
-    <string name="hnTotal">Total a pagar</string>
-    <string name="hnFechaInicio">Fecha de inicio</string>
-    <string name="hnPlazo">Plazo</string>
-    <string name="hnFechaLimite">Fecha límite de pago</string>
 
     <string name="btnVerDocumentos">Ver documentos</string>
     <string name="btnSubirFoto">Seleccionar y subir</string>
     <string name="btnAceptarDocumentos">Enviar</string>
+
+    <!--Bloque 6.1 - Caratula Contrato -->
+    <string name="lblttCaratulaContrato">Carátula de Contrato</string>
+    <string name="lblstCaratulaContrato">Has scroll para ver el documento completo</string>
+    <string name="lblInformacionPrestador">Información de Prestador</string>
+    <string name="hnNombreComercial">Nombre Comercial</string>
+    <string name="hnRFC">RFC</string>
+    <string name="hnInformacionCredito">Información de crédito</string>
+    <string name="hnTipoCredito">Tipo de crédito</string>
+    <string name="hnTipoSaldo">Tipo de saldo</string>
+    <string name="hnCAT">CAT</string>
+    <string name="lblCalculoInteres">Metodología de cálculo de interés</string>
+    <string name="hnCalculoOrdinaria">Ordinaria</string>
+    <string name="hnCalculoMoratoria">Moratoria</string>
+    <string name="lblComisiones">Comisiones</string>
+    <string name="hnAnalisis">Análisis</string>
+    <string name="hnOperacion">Operación</string>
+    <string name="hnApertura">Apertura</string>
+    <string name="hnCobranza">Cobranza</string>
+
+
 
     <!-- MENSAJES -->
     <string name="msjFormatoCorreoInvalido">Formato de correo invalido</string>
@@ -241,5 +262,7 @@
     <string name="ntdPasos5">5. Ingresar a Tativo.com</string>
     <string name="ntdPasos6">6. Continuar el proceso de solicitud de Tativo</string>
     <string name="ntdbtnCerrar">Cerrar</string>
+
+
 </resources>
 

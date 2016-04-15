@@ -57,7 +57,7 @@
                         android:orientation="horizontal">
                         <AutoCompleteTextView
                             android:id="@+id/txtNumeroTarjetaCLABE"
-                            android:hint="@string/txtNumeroTarjetaCLABE"
+                            android:hint="@string/hnNumeroTarjetaCLABE"
                             android:inputType="number"
                             android:maxLength="18"
                             android:maxLines="1"
