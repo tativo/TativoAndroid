@@ -98,7 +98,7 @@ public class Frg_LogIn extends Fragment {
         btnPrueba.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Act_Perfil.class);
+                Intent i = new Intent(getActivity(), Act_Documentos.class);
                 startActivity(i);
                 getActivity().finish();
             }

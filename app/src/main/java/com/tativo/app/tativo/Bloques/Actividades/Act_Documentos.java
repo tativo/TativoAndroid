@@ -1,11 +1,13 @@
 package com.tativo.app.tativo.Bloques.Actividades;
 
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -26,6 +28,9 @@ import com.tativo.app.tativo.Bloques.Clases.DatosDocumentoPagare;
 import com.tativo.app.tativo.Bloques.Clases.DatosDocumentosContrato;
 import com.tativo.app.tativo.Bloques.Clases.DatosDocumentosOperacion;
 import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
+import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Contrato;
+import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Cotizador;
+import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Perfil;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
@@ -71,6 +76,8 @@ public class Act_Documentos extends AppCompatActivity {
         FocusManager();
         EventManager();
         Sesion = (Globals) getApplicationContext();
+        Sesion.setCliendeID("BA984F15-FE77-47A3-BCE0-0667D57AFA24");
+        Sesion.setSolicitudID("21F227A4-31D1-499F-A665-D66226DD6CA1");
         new AsyncInfoBloque().execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -119,7 +126,23 @@ public class Act_Documentos extends AppCompatActivity {
     }
 
     private void EventManager() {
+        btnVerDocumentos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmento = getFragmentManager();
+                new Frg_Contrato().show(fragmento, "frmContrato");
 
+                /*
+                android.support.v4.app.Fragment frg = new Frg_Perfil();
+                Bundle args = new Bundle();
+                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.ContratoConten, frg)
+                        .commit();
+                        */
+            }
+        });
     }
 
     public void FocusNextControl(int o, String ot, int d, String dt) {
