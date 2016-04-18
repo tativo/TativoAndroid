@@ -23,13 +23,13 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="@string/lblttCaratulaContrato"
+                android:text="@string/lblttContratoOperacion"
                 android:paddingTop="15dp"
                 android:textSize="18dp" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/lblstCaratulaContrato"
+                android:text="@string/lblstContrato"
                 android:textSize="10sp"
                 android:gravity="center"
                 android:paddingBottom="15dp"/>
@@ -41,184 +41,15 @@
                 android:background="@color/colorGrisCuerpo"
                 android:orientation="vertical">
 
-                <LinearLayout style="@style/TativoLayoutBordeRelleno">
-                    <TextView style="@style/TativoTextViewEncabezado"
-                        android:text="@string/lblInformacionPrestador"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnNombreComercial" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnRFC" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnDireccion" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnTelefono" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnCorreo" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-
-
-                <LinearLayout style="@style/TativoLayoutBordeRelleno">
-                    <TextView style="@style/TativoTextViewEncabezado"
-                        android:text="@string/lblInformacionAcreditado"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnNombreCompleto" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnDireccion" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnTelefono" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnCorreo" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-
-
-                <LinearLayout style="@style/TativoLayoutBordeRelleno">
-                    <TextView style="@style/TativoTextViewEncabezado"
-                        android:text="@string/lblInformacionDeposito"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnNombreBanco" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnNumeroTarjetaCLABE" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-
-
-                <LinearLayout style="@style/TativoLayoutBordeRelleno">
-                    <TextView style="@style/TativoTextViewEncabezado"
-                        android:text="@string/lblCalculoInteres"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnCalculoOrdinaria" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnCalculoMoratoria" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnMonto" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnInteres" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnIVA" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnTotal" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnFechaInicio" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnPlazo" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnFechaLimite" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-
-
-                <LinearLayout style="@style/TativoLayoutBordeRelleno">
-                    <TextView style="@style/TativoTextViewEncabezado"
-                        android:text="@string/lblComisiones"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnAnalisis" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnOperacion" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnApertura" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-                <LinearLayout style="@style/TativoLinearLayoutBorde"
-                    android:padding="8dp">
-                    <TextView style="@style/TativoTextViewHint"
-                        android:hint="@string/hnCobranza" />
-                    <TextView style="@style/TativoTextView"/>
-                </LinearLayout>
-
+                <TextView
+                    android:id="@+id/lblContratoOperacionP1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
                 <CheckBox
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Acepto los términos y condiciones plasmados en la carátula de contrato"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="20dp"
                     android:checked="false"/>
                 <Button
                     android:id="@+id/btnCaratulaContrato"

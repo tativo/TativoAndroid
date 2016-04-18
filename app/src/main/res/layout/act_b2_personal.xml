@@ -301,29 +301,29 @@
                     android:id="@+id/ckTerminosCondiciones1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/ckTerminosCondiciones1"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginBottom="8dp"
+                    android:clickable="true">
                 </CheckBox>
                 <CheckBox
                     android:id="@+id/ckTerminosCondiciones2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/ckTerminosCondiciones2"
+                    android:clickable="true"
                     android:layout_marginBottom="8dp">
                 </CheckBox>
                 <CheckBox
                     android:id="@+id/ckTerminosCondiciones3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/ckTerminosCondiciones3"
+                    android:clickable="true"
                     android:layout_marginBottom="8dp">
                 </CheckBox>
                 <CheckBox
                     android:id="@+id/ckTerminosCondiciones4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/ckTerminosCondiciones4"
+                    android:clickable="true"
                     android:layout_marginBottom="8dp">
                 </CheckBox>
             </LinearLayout>

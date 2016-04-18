@@ -10,9 +10,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -99,6 +102,8 @@ public class Act_B2_Personal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_b2_personal);
         Sesion = (Globals) getApplicationContext();
+
+
         LoadFormControls();
         FocusManager();
         EventManager();
@@ -145,6 +150,23 @@ public class Act_B2_Personal extends AppCompatActivity {
         ckTerminosCondiciones2 = (CheckBox) findViewById(R.id.ckTerminosCondiciones2);
         ckTerminosCondiciones3 = (CheckBox) findViewById(R.id.ckTerminosCondiciones3);
         ckTerminosCondiciones4 = (CheckBox) findViewById(R.id.ckTerminosCondiciones4);
+
+        AplicaFormato(R.id.ckTerminosCondiciones1, R.string.ckTerminosCondiciones1);
+        ckTerminosCondiciones1.setClickable(true);
+        ckTerminosCondiciones1.setMovementMethod(LinkMovementMethod.getInstance());
+
+        AplicaFormato(R.id.ckTerminosCondiciones2, R.string.ckTerminosCondiciones2);
+        ckTerminosCondiciones2.setClickable(true);
+        ckTerminosCondiciones2.setMovementMethod(LinkMovementMethod.getInstance());
+
+        AplicaFormato(R.id.ckTerminosCondiciones3, R.string.ckTerminosCondiciones3);
+        ckTerminosCondiciones3.setClickable(true);
+        ckTerminosCondiciones3.setMovementMethod(LinkMovementMethod.getInstance());
+
+        AplicaFormato(R.id.ckTerminosCondiciones4, R.string.ckTerminosCondiciones4);
+        ckTerminosCondiciones4.setClickable(true);
+        ckTerminosCondiciones4.setMovementMethod(LinkMovementMethod.getInstance());
+
 
         hnEstadoMunicipioTexto = (TextView) findViewById(R.id.hnEstadoMunicipioTexto);
 
@@ -1166,5 +1188,13 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
             return false;
         }
+    }
+
+    private void AplicaFormato(int idT, int idR)
+    {
+        TextView t =(TextView) findViewById(idT);
+        String s = getResources().getString(idR);
+        CharSequence cs = Html.fromHtml(s);
+        t.setText(cs);
     }
 }

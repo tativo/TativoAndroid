@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.tativo.app.tativo.R;
 
 /**
@@ -37,7 +41,11 @@ public class Frg_Contrato extends DialogFragment  {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View v = inflater.inflate(R.layout.frg_contrato, null);
+        View v = inflater.inflate(R.layout.frg_contrato_caratula, null);
+
+        String[] p = {"prueba","de que","funciona"};
+        AplicaFormato(v,R.id.lblContratoOperacionP1, R.string.lblAntecedentesP1, p);
+
         builder.setView(v);
 
         /*
@@ -53,4 +61,16 @@ public class Frg_Contrato extends DialogFragment  {
         */
         return builder.create();
     }
+
+    private void AplicaFormato(View v, int idT, int idR, String[] lstP)
+    {
+        //String par = TextUtils.htmlEncode("prueba");
+        TextView t =(TextView) v.findViewById(idT);
+        String s = getResources().getString(idR);
+        String sf = s;
+        sf = String.format(s, lstP);
+        CharSequence cs = Html.fromHtml(sf);
+        t.setText(cs);
+    }
+
 }

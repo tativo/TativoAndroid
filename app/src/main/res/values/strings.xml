@@ -73,9 +73,9 @@
     <string name="txt4DigitosTarjeta">¿Cuales son los últimos 4 digitos de la tarjeta?</string>
     <string name="lblCreditoHipotecario">¿Tienes crédito hipotecario vigente?</string>
     <string name="lblCreditoAutomotriz">¿Has tenido crédito automotriz en los últimos 2 años?</string>
-    <string name="ckTerminosCondiciones1">Acepto que tativo trate mis datos económicos / financieron para las descritas en este <a href="http://www.tativo.com">Aviso de Privacidad.</a></string>
-    <string name="ckTerminosCondiciones2">Acepto que tativo utilice mi información personal sensible que yo voluntariamente revele para las finalidades descritas en este <a href="www.tativo.com">Aviso de Privacidad</a>.</string>
-    <string name="ckTerminosCondiciones3">Manifiesto que he leído en su totalidad el <a href="www.tativo.com">Aviso de Privacidad</a> y consiento que mis datos personales sean tratados y transferido conforme a los términos y condiciones que se señalan en los términos y condiciones.</string>
+    <string name="ckTerminosCondiciones1">Acepto que tativo trate mis datos económicos / financieron para las descritas en este &lt;a href="http://www.tativo.com">Aviso de Privacidad.&lt;/a></string>
+    <string name="ckTerminosCondiciones2">Acepto que tativo utilice mi información personal sensible que yo voluntariamente revele para las finalidades descritas en este &lt;a href="http://www.tativo.com">Aviso de Privacidad&lt;/a>.</string>
+    <string name="ckTerminosCondiciones3">Manifiesto que he leído en su totalidad el &lt;a href="http://www.tativo.com">Aviso de Privacidad&lt;/a> y consiento que mis datos personales sean tratados y transferido conforme a los términos y condiciones que se señalan en los términos y condiciones.</string>
     <string name="ckTerminosCondiciones4">Por este conducto autorizo a Tativo para a través de su personal facultado, lleve a cabo investigaciones de mi comportamiento crediticio.</string>
     <string name="btnInfPersonal">Continuar</string>
 
@@ -141,7 +141,7 @@
 
     <!--Bloque 6.1 - Caratula Contrato -->
     <string name="lblttCaratulaContrato">Carátula de Contrato</string>
-    <string name="lblstCaratulaContrato">Has scroll para ver el documento completo</string>
+    <string name="lblstContrato">Has scroll para ver el documento completo</string>
     <string name="lblInformacionPrestador">Información de Prestador</string>
     <string name="hnNombreComercial">Nombre Comercial</string>
     <string name="hnRFC">RFC</string>
@@ -158,6 +158,32 @@
     <string name="hnApertura">Apertura</string>
     <string name="hnCobranza">Cobranza</string>
 
+    <!--Bloque 6.2 - Contrato Operacion -->
+    <string name="lblttContratoOperacion">Contrato de Operación</string>
+    <string name="lblContratoOperacionP1">CONTRATO DE APERTURA DE CRÉDITO SIMPLE QUE CELEBRAN, POR UNA PARTE %1$s, S.A. DE C.V., REPRESENTADA EN ÉSTE ACTO POR SU APODERADO LEGAL, QUIEN FIRMA AL CALCE DEL PRESENTE DOCUMENTO, A QUIEN EN LO SUCESIVO SE LE DENOMINARÁ COMO EL “PRESTADOR”, Y POR LA OTRA PARTE, POR SU PROPIO DERECHO, LA PERSONA FÍSICA CUYOS DATOS APARECEN EN LA CARÁTULA DEL PRESENTE INSTRUMENTO (EN ADELANTE LA “CARÁTULA”), A QUIEN EN LO SUCESIVO SE LE DENOMINARÁ COMO EL “ACREDITADO”; COMPARECIENTES A QUIENES DE MANERA CONJUNTA SE LES DENOMINARÁ COMO “LAS PARTES”, LOS CUALES CELEBRAN EL PRESENTE CONTRATO DE CONFORMIDAD CON LOS ANTECEDENTES, DECLARACIONES Y CLÁUSULAS SIGUIENTES:</string>
+    <string name="lblAntecedentes">&lt;b>ANTECEDENTES&lt;/b></string>
+    <string name="lblAntecedentesP1">&lt;b>I.-&lt;/b> El ACREDITADO solicitó al PRESTADOR, a través de la página &lt;b>www.%1$s.com&lt;/b>, el otorgamiento de un crédito simple mediante el llenado de la Carátula del presente Contrato, misma que contiene todos los datos del crédito solicitado, incluyendo montos, plazos, intereses, lugar y formas de pago.</string>
+    <string name="lblDeclaraciones">&lt;b>DECLARACIONES&lt;/b></string>
+    <string name="lblDeclaracionesP1">&lt;b>I.- Declara el “PRESTADOR”, a través de su representante legal, que:&lt;/b></string>
+    <string name="lblDeclaracionesP1a">&lt;b>a)&lt;/b> Es una Sociedad Anónima de Capital Variable que se encuentra legalmente constituida conforme a las leyes de los Estados Unidos Mexicanos, según consta en Escritura Pública No. %1$s de fecha %2$s de %3$s de %4$s, otorgada ante el Lic. %5$s, Notario Público No. %6$s de Culiacán, Sinaloa.</string>
+    <string name="lblDeclaracionesP1b">&lt;b>b)&lt;/b> Su representante cuenta con las facultades necesarias para representarla en los términos y condiciones señaladas en el presente Contrato, mismas que a la fecha no le han sido limitadas, revocadas o modificadas de forma alguna y que están vigentes, lo que acredita con la Escritura Pública mencionada en el inciso a) anterior.</string>
+    <string name="lblDeclaracionesP1c">&lt;b>c)&lt;/b> Su registro federal de contribuyentes es: %1$s.</string>
+    <string name="lblDeclaracionesP1d">&lt;b>d)&lt;/b> Para los efectos derivados del presente Contrato, señala como su domicilio el ubicado en Av. Álvaro Obregón 585-%1$s Sur, Col. Jorge Almada, C.P. 80200, Culiacán, Sinaloa, México.</string>
+    <string name="lblDeclaracionesP1e">&lt;b>e)&lt;/b> El presente instrumento es un Contrato de Adhesión, el cual se encuentra registrado ante el Registro Público de Contratos de Adhesión de la Procuraduría Federal del Consumidor (PROFECO) bajo el número %1$s.</string>
+    <string name="lblDeclaracionesP2">&lt;b>II.- Declara el “EL ACREDITADO”, por su propio derecho y bajo protesta de decir verdad, que:&lt;/b></string>
+    <string name="lblDeclaracionesP2a">&lt;b>a)&lt;/b> Es una persona física, de nacionalidad %1$s, con capacidad plena para celebrar el presente contrato y obligarse en los términos que aquí se establecen de conformidad con los datos proporcionados en la Carátula del presente Contrato.</string>
+    <string name="lblDeclaracionesP2b">&lt;b>b)&lt;/b> Su registro federal de contribuyentes es el mencionado en la Carátula del presente Contrato.</string>
+    <string name="lblDeclaracionesP2c">&lt;b>c)&lt;/b> Señala como su domicilio, para los efectos relacionados con el presente instrumento, el mencionado en la Carátula del presente Contrato.</string>
+    <string name="lblDeclaracionesP2d">&lt;b>d)&lt;/b> Previo a la celebración del presente Contrato el PRESTADOR, le informó y el ACREDITADO comprendió y aceptó todos los términos y condiciones del presente Crédito y de los demás documentos, así como los costos y cargos que se relacionan con el mismo, incluyendo el Costo Anual Total (“CAT”), establecido en términos porcentuales anuales mencionado en la Carátula del presente Contrato.</string>
+    <string name="lblDeclaracionesP2e">&lt;b>e)&lt;/b> Bajo protesta de decir la verdad, toda la información y documentación que proporcionó y presentó al PRESTADOR, así como la información que asentó en la Carátula, es verdadera y correcta, haciéndose absolutamente responsable de cualquier controversia o problema que se genere, derivado de esa misma información.</string>
+    <string name="lblDeclaracionesP2f">&lt;b>f)&lt;/b> El destino de los servicios o productos adquiridos será dedicado tan solo a fines lícitos permitidos por la ley y que no se encuentran dentro de los supuestos establecidos por los artículos 139 Quáter y 400 Bis del Código Penal Federal.</string>
+    <string name="lblDeclaracionesP2g">&lt;b>g)&lt;/b> Bajo protesta de decir verdad, declara estar actuando en nombre y por cuenta propia y no por cuenta o nombre de algún tercero ajeno a este Contrato, y que tiene los recursos y capacidad económica suficiente para el cumplimiento de todas las obligaciones que contrae a su cargo en términos del presente Contrato, mismos recursos que manifiesta provienen y provendrán de fuentes lícitas.</string>
+    <string name="lblDeclaracionesP3"></string>
+    <string name="lblDeclaracionesP3a"></string>
+    <string name="lblDeclaracionesP3b"></string>
+    <string name="lblDeclaracionesP3c"></string>
+    <string name="lblDeclaracionesP3d"></string>
+    <string name="lblClausulas">&lt;b>CLÁUSULAS&lt;/b></string>
 
 
     <!-- MENSAJES -->
