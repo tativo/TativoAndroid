@@ -9,11 +9,21 @@
     <RelativeLayout
         android:id="@+id/ContratoConten"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="aaaaaaaaaaa"/>
+
+        <!--
+        <include layout="@layout/frg_contrato_caratula" />
+        -->
     </RelativeLayout>
+    <Button
+        android:id="@+id/btnCaratulaContrato"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnSiguiente"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textAllCaps="false"
+        android:background="@color/colorAzulOscuro"
+        style="@style/TativoBotonAceptar" />
 </LinearLayout>
