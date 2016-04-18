@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,16 +40,17 @@ public class Frg_Contrato extends DialogFragment  {
         View v = inflater.inflate(R.layout.frg_contrato, null);
         builder.setView(v);
 
+        /*
         Button sig = (Button) v.findViewById(R.id.btnCaratulaContrato);
         sig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-   
+
 
             }
         });
-
+        */
         return builder.create();
     }
 }
