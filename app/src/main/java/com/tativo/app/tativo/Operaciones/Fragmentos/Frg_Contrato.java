@@ -1,5 +1,6 @@
 package com.tativo.app.tativo.Operaciones.Fragmentos;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -171,6 +172,7 @@ public class Frg_Contrato extends DialogFragment  {
             public void onClick(View v) {
                 lyContratoPagare.setVisibility(View.GONE);
                 lyContratoCaratula.setVisibility(View.VISIBLE);
+                listener.onPossitiveButtonClick();
                 dismiss();
             }
         });
@@ -303,4 +305,25 @@ public class Frg_Contrato extends DialogFragment  {
         t.setText(cs);
     }
 
+    public interface DialogResponseContrato {
+        void onPossitiveButtonClick();
+        void onNegativeButtonClick();
+    }
+
+    DialogResponseContrato listener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            listener = (DialogResponseContrato) activity;
+
+        } catch (ClassCastException e) {
+            throw new ClassCastException(
+                    activity.toString() +
+                            " no implementó DialogResponseContrato");
+
+        }
+    }
 }

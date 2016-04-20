@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Locale;
 
-public class Act_Documentos extends AppCompatActivity {
+public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.DialogResponseContrato {
 
     TextView lblNobreCompleto, lblDireccion, lblTelefono, lblCorreo, lblNombreBanco, lblNumeroTarjetaCLABE, lblMonto, lblInteres, lblIVA, lblTotalPagar, lblFechaInicio, lblPlazo, lblFechaLimite;
     Button btnVerDocumentos, btnFotoFrontal, btnFotoTrasera, btnAceptarDocumentos;
@@ -131,16 +131,6 @@ public class Act_Documentos extends AppCompatActivity {
             public void onClick(View v) {
                 FragmentManager fragmento = getFragmentManager();
                 new Frg_Contrato().show(fragmento, "frmContrato");
-
-                /*
-                android.support.v4.app.Fragment frg = new Frg_Perfil();
-                Bundle args = new Bundle();
-                android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager
-                        .beginTransaction()
-                        .replace(R.id.ContratoConten, frg)
-                        .commit();
-                        */
             }
         });
     }
@@ -433,4 +423,20 @@ public class Act_Documentos extends AppCompatActivity {
         }
     }
     //Endregion
+
+
+    @Override
+    public void onPossitiveButtonClick() {
+        btnVerDocumentos.setBackgroundColor(getResources().getColor(R.color.colorAmarillo));
+        lyCargaDocumentos.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onNegativeButtonClick() {
+        Toast.makeText(
+                this,
+                "No se aceptaron los terminos",
+                Toast.LENGTH_LONG)
+                .show();
+    }
 }
