@@ -96,7 +96,7 @@
                         <TextView style="@style/TativoTextViewHint"
                             android:hint="@string/hnNombreCompleto" />
                         <TextView android:id="@+id/lblCaratulaNombreCompleto"
-                            style="@style/TativoTextView"/>
+                            style="@style/TativoTextView" />
                     </LinearLayout>
                     <LinearLayout style="@style/TativoLinearLayoutBorde"
                         android:padding="8dp">
@@ -149,15 +149,17 @@
                         android:padding="8dp">
                         <TextView style="@style/TativoTextViewHint"
                             android:hint="@string/hnCalculoOrdinaria" />
-                        <TextView android:id="@+id/lblbInteresOrdinaria"
-                            style="@style/TativoTextView"/>
+                        <TextView android:id="@+id/lblInteresOrdinaria"
+                            style="@style/TativoTextView"
+                            android:text="@string/lblCalculoOrdinaria"/>
                     </LinearLayout>
                     <LinearLayout style="@style/TativoLinearLayoutBorde"
                         android:padding="8dp">
                         <TextView style="@style/TativoTextViewHint"
                             android:hint="@string/hnCalculoMoratoria" />
                         <TextView android:id="@+id/lblInteresMoratoria"
-                            style="@style/TativoTextView"/>
+                            style="@style/TativoTextView"
+                            android:text="@string/lblCalculoMoratoria"/>
                     </LinearLayout>
                     <LinearLayout style="@style/TativoLinearLayoutBorde"
                         android:padding="8dp">
@@ -198,7 +200,7 @@
                         android:padding="8dp">
                         <TextView style="@style/TativoTextViewHint"
                             android:hint="@string/hnPlazo" />
-                        <TextView android:id="@+id/lblbCaratulaPlazo"
+                        <TextView android:id="@+id/lblCaratulaPlazo"
                             style="@style/TativoTextView"/>
                     </LinearLayout>
                     <LinearLayout style="@style/TativoLinearLayoutBorde"
@@ -259,7 +261,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/btnSiguiente"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:textAllCaps="false"
                         android:background="@color/colorAzulOscuro"
                         style="@style/TativoBotonAceptar" />
@@ -814,7 +816,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/btnSiguiente"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:textAllCaps="false"
                     android:background="@color/colorAzulOscuro"
                     style="@style/TativoBotonAceptar" />
@@ -912,12 +914,14 @@
                     android:id="@+id/lblPagareP11"
                     android:layout_width ="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    android:visibility="gone"/>
                 <TextView
                     android:id="@+id/lblPagareP12"
                     android:layout_width ="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    android:visibility="gone"/>
                 <TextView
                     android:id="@+id/lblPagareP13"
                     android:layout_width ="match_parent"
@@ -925,7 +929,9 @@
                     android:textSize="12sp"/>
                 <TextView
                     android:id="@+id/lblPagareP14"
-                    style="@style/TativoTextoContrato" />
+                    style="@style/TativoTextoContrato"
+                    android:textSize="12sp"
+                    android:visibility="gone"/>
 
                 <CheckBox
                     android:id="@+id/ckTerminosPagare"
@@ -940,7 +946,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/btnSiguiente"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="10dp"
                     android:textAllCaps="false"
                     android:background="@color/colorAzulOscuro"
                     style="@style/TativoBotonAceptar" />
