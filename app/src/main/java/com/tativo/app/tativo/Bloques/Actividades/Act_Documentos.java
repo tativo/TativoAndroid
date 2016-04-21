@@ -5,11 +5,17 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -17,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,6 +39,7 @@ import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Contrato;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Cotizador;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Perfil;
 import com.tativo.app.tativo.R;
+import com.tativo.app.tativo.Utilidades.Config;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
 import com.tativo.app.tativo.Utilidades.Utilerias;
@@ -40,12 +48,19 @@ import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.Date;
 import java.util.Locale;
 
 public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.DialogResponseContrato {
@@ -54,6 +69,9 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
     Button btnVerDocumentos, btnFotoFrontal, btnFotoTrasera, btnAceptarDocumentos;
     LinearLayout lybtnVerDocumentos, lyCargaDocumentos;
     AutoCompleteTextView txtFirmaDocumentos;
+
+    ImageView imgIfeFrontal,imgIfeTrasera;
+    LinearLayout progresFrontal,progresTrasera;
 
     Globals Sesion;
     ProgressDialog progressDialog;
@@ -76,8 +94,8 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         FocusManager();
         EventManager();
         Sesion = (Globals) getApplicationContext();
-        Sesion.setCliendeID("BA984F15-FE77-47A3-BCE0-0667D57AFA24");
-        Sesion.setSolicitudID("21F227A4-31D1-499F-A665-D66226DD6CA1");
+        //Sesion.setCliendeID("BA984F15-FE77-47A3-BCE0-0667D57AFA24");
+        //Sesion.setSolicitudID("21F227A4-31D1-499F-A665-D66226DD6CA1");
         new AsyncInfoBloque().execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -119,6 +137,12 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         lyCargaDocumentos = (LinearLayout) findViewById(R.id.lyCargaDocumentos);
 
         txtFirmaDocumentos = (AutoCompleteTextView) findViewById(R.id.txtFirmaDocumentos);
+
+        imgIfeFrontal = (ImageView) findViewById(R.id.imgIfeFrontal);
+        progresFrontal = (LinearLayout) findViewById(R.id.progresFrontal);
+
+        imgIfeTrasera = (ImageView) findViewById(R.id.imgIfeTrasera);
+        progresTrasera = (LinearLayout) findViewById(R.id.progresTrasera);
     }
 
     public void FocusManager() {
@@ -131,6 +155,19 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
             public void onClick(View v) {
                 FragmentManager fragmento = getFragmentManager();
                 new Frg_Contrato().show(fragmento, "frmContrato");
+            }
+        });
+        btnFotoFrontal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                captureImage(true);
+            }
+        });
+
+        btnFotoTrasera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                captureImage(false);
             }
         });
     }
@@ -423,6 +460,287 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         }
     }
     //Endregion
+
+
+
+    //Region CAPTURA DE IMAGENES
+    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F = 100;
+    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T = 200;
+
+    public static final int MEDIA_TYPE_IMAGE_FRONTAL = 1;
+    public static final int MEDIA_TYPE_IMAGE_TRASERA = 2;
+    private Uri fileUri;
+    private String fileNameFrontal="",fileNameTrasera="";
+    private static final String TAG = Act_Documentos.class.getSimpleName();
+    private boolean isFrontal=false;
+
+
+    private void captureImage(boolean isFrontal) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        fileUri = getOutputMediaFileUri((isFrontal ? MEDIA_TYPE_IMAGE_FRONTAL:MEDIA_TYPE_IMAGE_TRASERA));
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+        // start the image capture Intent
+        startActivityForResult(intent, (isFrontal ? CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F:CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T));
+    }
+    public Uri getOutputMediaFileUri(int type) {
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+    private File getOutputMediaFile(int type) {
+
+        // External sdcard location
+        File mediaStorageDir = new File(
+                Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                Config.IMAGE_DIRECTORY_NAME);
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d(TAG, "Oops! Failed create "
+                        + Config.IMAGE_DIRECTORY_NAME + " directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("HHmmss",
+                Locale.getDefault()).format(new Date());
+
+        File mediaFile;
+
+        if (type == MEDIA_TYPE_IMAGE_FRONTAL) {
+            fileNameFrontal = Sesion.getCliendeID().replace("-","")+"_T"+String.valueOf(MEDIA_TYPE_IMAGE_FRONTAL)+ "_" + timeStamp + ".jpg";
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + fileNameFrontal);
+        } else if (type == MEDIA_TYPE_IMAGE_TRASERA) {
+            fileNameTrasera =Sesion.getCliendeID().replace("-","")+"_T"+String.valueOf(MEDIA_TYPE_IMAGE_TRASERA)+ "_" + timeStamp + ".jpg";
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + fileNameTrasera);
+        } else {
+            return null;
+        }
+        return mediaFile;
+    }
+    /**
+     * Here we store the file url as it will be null after returning from camera
+     * app
+     */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // save file url in bundle as it will be null on screen orientation
+        // changes
+        outState.putParcelable("file_uri", fileUri);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // get the file url
+        fileUri = savedInstanceState.getParcelable("file_uri");
+    }
+    /**
+     * Receiving activity result method will be called after closing the camera
+     * */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // if the result is capturing Image
+        if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T || requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F) {
+            if (resultCode == RESULT_OK) {
+                // bimatp factory
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 8;
+                final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(), options);
+                if(requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F){
+                    isFrontal = true;
+                    imgIfeFrontal.setImageBitmap(bitmap);
+                }else{
+                    isFrontal = false;
+                    imgIfeTrasera.setImageBitmap(bitmap);
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                    new UploadFileToServer(requestCode).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                } else {
+                    new UploadFileToServer(requestCode).execute();
+                }
+
+                // successfully captured the image
+                // launching upload activity
+                //launchUploadActivity(true);
+            } else if (resultCode == RESULT_CANCELED) {
+                // user cancelled Image capture
+                Toast.makeText(getApplicationContext(),
+                        "Se ha cancelado la captura de la imagen", Toast.LENGTH_SHORT)
+                        .show();
+            } else {
+                // failed to capture image
+                Toast.makeText(getApplicationContext(),
+                        "Algo fallo al capturar la imagen", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+    private class UploadFileToServer extends AsyncTask<Void, Integer, String> {
+        Integer TipoDocto =0;
+        public UploadFileToServer(Integer tipoDoc){
+            super();
+            TipoDocto = tipoDoc;
+        }
+        @Override
+        protected void onPreExecute() {
+            // setting progress bar to zero
+            if(isFrontal)
+                progresFrontal.setVisibility(View.VISIBLE);
+            else
+                progresTrasera.setVisibility(View.VISIBLE);
+
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... progress) {
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            uploadFile(fileUri.getPath());
+            RegistrarDocumento(TipoDocto);
+            return "Listo";
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            Log.e(TAG, "Response from server: " + result);
+            if(isFrontal)
+                progresFrontal.setVisibility(View.GONE);
+            else
+                progresTrasera.setVisibility(View.GONE);
+            super.onPostExecute(result);
+        }
+    }
+    public int uploadFile(String sourceFileUri) {
+        int serverResponseCode = 0;
+
+        String fileName = sourceFileUri;
+        HttpURLConnection conn = null;
+        DataOutputStream dos = null;
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1 * 1024 * 1024;
+        File sourceFile = new File(sourceFileUri);
+
+        if (!sourceFile.isFile()) {
+            return 0;
+        }
+        else
+        {
+            try {
+
+                // open a URL connection to the Servlet
+                FileInputStream fileInputStream = new FileInputStream(sourceFile);
+                URL url = new URL(Config.FILE_UPLOAD_URL);
+
+                // Open a HTTP  connection to  the URL
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setDoInput(true); // Allow Inputs
+                conn.setDoOutput(true); // Allow Outputs
+                conn.setUseCaches(false); // Don't use a Cached Copy
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Connection", "Keep-Alive");
+                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                conn.setRequestProperty("image", fileName);
+
+                dos = new DataOutputStream(conn.getOutputStream());
+
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"image\";filename=\"" + fileName + "\"" + lineEnd);
+                dos.writeBytes(lineEnd);
+
+                // create a buffer of  maximum size
+                bytesAvailable = fileInputStream.available();
+
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                buffer = new byte[bufferSize];
+
+                // read file and write it into form...
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                while (bytesRead > 0) {
+
+                    dos.write(buffer, 0, bufferSize);
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                }
+
+                // send multipart form data necesssary after file data...
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                // Responses from the server (code and message)
+                serverResponseCode = conn.getResponseCode();
+                String serverResponseMessage = conn.getResponseMessage();
+
+                //close the streams //
+                fileInputStream.close();
+                dos.flush();
+                dos.close();
+
+            } catch (MalformedURLException ex) {
+                //return ("Upload file to server", "error: " + ex.getMessage());
+            } catch (Exception e) {
+                //return("Upload file to server Exception", "Exception : " + e.getMessage(), e);
+            }
+            //dialog.dismiss();
+            return serverResponseCode;
+
+        } // End else block
+    }
+
+    private void RegistrarDocumento(Integer TipoDocumento){
+        String SOAP_ACTION = "http://tempuri.org/IService1/RegistrarDocumento";
+        String METHOD_NAME = "RegistrarDocumento";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("clienteid");
+        pi1.setValue(Sesion.getCliendeID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        PropertyInfo  pi2 = new PropertyInfo();
+        pi2.setName("tipo");
+        pi2.setValue((TipoDocumento == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F?"1":"2"));
+        pi2.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi2);
+
+        PropertyInfo  pi3 = new PropertyInfo();
+        pi3.setName("fileName");
+        pi3.setValue((TipoDocumento == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F?fileNameFrontal:fileNameTrasera));
+        pi3.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi3);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+    //Endregion
+
+
 
 
     @Override
