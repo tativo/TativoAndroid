@@ -175,7 +175,7 @@
                     android:padding="30dp">
                     <ImageView
                         android:id="@+id/imgIfeFrontal"
-                        android:src="@drawable/ine"
+                        android:src="@drawable/inefrontal"
                         android:layout_width="fill_parent"
                         android:layout_height="200dp"
                         />
@@ -208,7 +208,7 @@
                         />
                     <ImageView
                         android:id="@+id/imgIfeTrasera"
-                        android:src="@drawable/ine"
+                        android:src="@drawable/inetrasera"
                         android:layout_width="fill_parent"
                         android:layout_height="200dp"
                         />
