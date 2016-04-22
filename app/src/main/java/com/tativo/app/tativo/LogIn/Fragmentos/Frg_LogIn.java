@@ -151,6 +151,7 @@ public class Frg_LogIn extends Fragment {
                         i = new Intent(getActivity(), Act_Perfil.class);
                         break;
                     default:
+                        Toast.makeText(getActivity().getApplicationContext(),"Inicia tu registro",Toast.LENGTH_LONG).show();
                         i = new Intent(getActivity(), Act_LogIn.class);
                         break;
                 }
