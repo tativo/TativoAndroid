@@ -22,9 +22,11 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,7 @@ import com.tativo.app.tativo.Bloques.Clases.DatosDocumentoPagare;
 import com.tativo.app.tativo.Bloques.Clases.DatosDocumentosContrato;
 import com.tativo.app.tativo.Bloques.Clases.DatosDocumentosOperacion;
 import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
+import com.tativo.app.tativo.Operaciones.Actividades.Act_Perfil;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Contrato;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Cotizador;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Perfil;
@@ -44,6 +47,7 @@ import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
 import com.tativo.app.tativo.Utilidades.Utilerias;
 
+import org.json.JSONObject;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -59,6 +63,8 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Currency;
 import java.util.Date;
 import java.util.Locale;
@@ -69,6 +75,7 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
     Button btnVerDocumentos, btnFotoFrontal, btnFotoTrasera, btnAceptarDocumentos;
     LinearLayout lybtnVerDocumentos, lyCargaDocumentos;
     AutoCompleteTextView txtFirmaDocumentos;
+    ScrollView svDocumentos;
 
     ImageView imgIfeFrontal,imgIfeTrasera;
     LinearLayout progresFrontal,progresTrasera;
@@ -114,6 +121,8 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         datosContrato = new DatosDocumentosContrato();
         datosOperacion = new DatosDocumentosOperacion();
 
+        svDocumentos = (ScrollView) findViewById(R.id.svDocumentos);
+
         lblNobreCompleto = (TextView) findViewById(R.id.lblNobreCompleto);
         lblDireccion = (TextView) findViewById(R.id.lblDireccion);
         lblTelefono = (TextView) findViewById(R.id.lblTelefono);
@@ -153,6 +162,7 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         btnVerDocumentos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                lyCargaDocumentos.setVisibility(View.VISIBLE);
                 FragmentManager fragmento = getFragmentManager();
                 new Frg_Contrato().show(fragmento, "frmContrato");
             }
@@ -168,6 +178,41 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
             @Override
             public void onClick(View v) {
                 captureImage(false);
+            }
+        });
+
+        btnAceptarDocumentos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ValidaGuardar())
+                {
+                    if (Solicitud.getNombreCompleto().toString() == null || Solicitud.getNombreCompleto().equals("") || Solicitud.getNombreCompleto().toString().isEmpty())
+                    {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                            new AsyncEstatusSolicitud().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                        } else {
+                            new AsyncEstatusSolicitud().execute();
+                        }
+                    }
+                    else
+                    {
+                        if(txtFirmaDocumentos.getText().toString().toLowerCase().equals(Solicitud.getNombreCompleto().toLowerCase()))
+                        {
+                            if (!fileNameFrontal.equals(""))
+                            {
+                                if (!fileNameTrasera.equals("")) {
+                                    new AsyncGuardar().execute();
+                                }
+                                else {
+                                    Toast.makeText(getApplicationContext(), "Favor de cargar imagen trasera", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), "Favor de cargar imagen frontal", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    }
+                }
             }
         });
     }
@@ -220,7 +265,103 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
 
 
     //GUARDAR
+    private boolean ValidaGuardar() {
+        ArrayList<Object> Objetos = new ArrayList<Object>();
+        Objetos.add(txtFirmaDocumentos);
+        Collections.reverse(Objetos);
+        boolean requeridos = false;
+        for (Object item:Objetos) {
+            if(item instanceof EditText){
+                if (((EditText) item).getText().toString().trim().length() == 0) {
+                    ((EditText) item).setError(getString(R.string.msjRequerido));
+                    ((EditText) item).requestFocus();
+                    requeridos = true;
+                }
+            }
+            if(item instanceof Spinner){
+                if(((Spinner) item).getSelectedItemPosition() == 0){
+                    ((TextView)((Spinner) item).getSelectedView()).setError(getString(R.string.msjRequerido));
+                    ((Spinner) item).requestFocus();
+                    requeridos = true;
+                }
+            }
+            if(item instanceof CheckBox){
+                ((CheckBox) item).setError(null);
+                if(!((CheckBox) item).isChecked()){
+                    ((CheckBox) item).setError(getString(R.string.msjRequerido));
+                    ((CheckBox) item).requestFocus();
+                    requeridos = true;
+                }
+            }
+        }
+        return !requeridos;
+    }
+    private class AsyncGuardar extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            GuardarDatos();
+            return null;
+        }
 
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            Intent i = new Intent(getApplicationContext(), Act_Perfil.class);
+            startActivity(i);
+            finish();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage(getText(R.string.msjGuardando));
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GuardarDatos() {
+        String SOAP_ACTION = "http://tempuri.org/IService1/SetCatPagareTelefono";
+        String METHOD_NAME = "SetCatPagareTelefono";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("value");
+        pi1.setValue(getEntityToSave());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private String getEntityToSave() {
+        JSONObject DatosEntidad = new JSONObject();
+        try {
+            DatosEntidad.put("Pagareid", "");
+            DatosEntidad.put("Solicitudid", Sesion.getSolicitudID());
+            DatosEntidad.put("Clienteid", Sesion.getCliendeID());
+            DatosEntidad.put("NombreCompleto", Solicitud.getNombreCompleto());
+            DatosEntidad.put("MontoSolicitado", Double.parseDouble("0.0"));
+            DatosEntidad.put("MontoPagar", Double.parseDouble("0.0"));
+            DatosEntidad.put("FechaVence", new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTimeInMillis()));
+            DatosEntidad.put("Fechaaceptacion", new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTimeInMillis()));
+            DatosEntidad.put("Estatusaceptacion", 1);
+            DatosEntidad.put("Firmaaceptacion", txtFirmaDocumentos.getText());
+            DatosEntidad.put("Pin", "");
+            DatosEntidad.put("TieneIFE", true);
+            DatosEntidad.put("UltimaAct", 0);
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+        return DatosEntidad.toString();
+    }
     //GUARDAR
 
 
@@ -746,7 +887,7 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
     @Override
     public void onPossitiveButtonClick() {
         btnVerDocumentos.setBackgroundColor(getResources().getColor(R.color.colorAmarillo));
-        lyCargaDocumentos.setVisibility(View.VISIBLE);
+        svDocumentos.scrollTo(0,svDocumentos.getScrollY() + 600);
     }
 
     @Override

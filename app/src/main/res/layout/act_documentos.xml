@@ -6,7 +6,8 @@
     android:orientation="vertical"
     tools:context=".LogIn.Actividades.Act_LogIn">
 
-    <ScrollView style="@style/TativoScrollView">
+    <ScrollView android:id="@+id/svDocumentos"
+        style="@style/TativoScrollView">
         <LinearLayout android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/TativoRelativeLayoutPrincipal"
@@ -136,7 +137,7 @@
                         android:background="@color/colorAzulOscuro"
                         android:textColor="@color/colorBlanco"
                         android:text="@string/btnVerDocumentos"
-                        android:id="@+id/btnVerDocumentos"/>
+                        android:id="@+id/btnVerDocumentos" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -174,7 +175,7 @@
                     android:padding="30dp">
                     <ImageView
                         android:id="@+id/imgIfeFrontal"
-                        android:src="@drawable/inefrontal"
+                        android:src="@drawable/ine"
                         android:layout_width="fill_parent"
                         android:layout_height="200dp"
                         />
@@ -184,8 +185,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
                         android:orientation="vertical"
-                        android:visibility="gone"
-                        >
+                        android:visibility="gone">
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -198,12 +198,14 @@
                             />
                     </LinearLayout>
                     <Button
+                        android:id="@+id/btnFotoFrontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorAmarillo"
                         android:textColor="@color/colorBlanco"
                         android:text="@string/btnSubirFoto"
-                        android:id="@+id/btnFotoFrontal"/>
+                        android:focusable="true"
+                        />
                     <ImageView
                         android:id="@+id/imgIfeTrasera"
                         android:src="@drawable/ine"
@@ -216,8 +218,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
                         android:orientation="vertical"
-                        android:visibility="gone"
-                        >
+                        android:visibility="gone">
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -267,9 +268,9 @@
                     <android.support.design.widget.TextInputLayout
                         style="@style/TativoTextInputLayout">
                         <AutoCompleteTextView
+                            android:id="@+id/txtFirmaDocumentos"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/txtFirmaDocumentos"
                             android:inputType="textCapWords|textAutoCorrect"
                             android:maxLines="1" />
                     </android.support.design.widget.TextInputLayout>
@@ -280,13 +281,11 @@
                         android:textSize="8dp"
                         android:text="he leído y autorizo el uso de mi forma electrónica en este pagaré"/>
                 </LinearLayout>
-
                 <Button
                     android:layout_marginTop="15dp"
                     android:id="@+id/btnAceptarDocumentos"
                     android:text="@string/btnAceptarDocumentos"
                     style="@style/TativoBotonAceptar"/>
-
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
