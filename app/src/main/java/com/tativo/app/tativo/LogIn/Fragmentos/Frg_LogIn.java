@@ -147,6 +147,9 @@ public class Frg_LogIn extends Fragment {
                     case 6:
                         i = new Intent(getActivity(), Act_Documentos.class);
                         break;
+                    case 7:
+                        i = new Intent(getActivity(), Act_Perfil.class);
+                        break;
                     default:
                         i = new Intent(getActivity(), Act_LogIn.class);
                         break;
