@@ -628,6 +628,9 @@ public class Act_B1_Referencias extends AppCompatActivity {
             DatosEntidad.put("UltimaActEmpresa", EntityReferenciaPersonal.getUltimaActEmpresa());
             DatosEntidad.put("UltimaActRef1", EntityReferenciaPersonal.getUltimaActRef1());
             DatosEntidad.put("UltimaActRef2", EntityReferenciaPersonal.getUltimaActRef2());
+            if(Sesion.isBloqueoReferencia())
+                DatosEntidad.put("BloqueSiguiente",0);
+
         } catch (Exception ex) {
 
         }
