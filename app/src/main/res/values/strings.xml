@@ -385,6 +385,10 @@
     <string name="ntdPasos6">6. Continuar el proceso de solicitud de Tativo</string>
     <string name="ntdbtnCerrar">Cerrar</string>
 
+    <!--Bloque 3.1 Confirmar numero telefonico para envio de PIN -->
+    <string name="lblTituloConfirmarNumero">Confirma tu numero de celular</string>
+    <string name="msgConfirmarNumero"></string>
+
 
 </resources>
 

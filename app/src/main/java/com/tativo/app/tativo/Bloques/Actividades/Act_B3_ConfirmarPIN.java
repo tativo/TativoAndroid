@@ -1,7 +1,9 @@
 package com.tativo.app.tativo.Bloques.Actividades;
 
 import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -16,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.tativo.app.tativo.Bloques.Clases.Catpin;
+import com.tativo.app.tativo.Bloques.Fragmentos.frg_confirmar_telefono;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
@@ -47,6 +50,9 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
     LinearLayout lyProgresBar;
     Globals Sesion;
     ProgressDialog progressDialog;
+    AsyncEsperaPIN tareaEsperarPIN= new AsyncEsperaPIN();
+
+
 
     @Override
     public void onBackPressed() {
@@ -60,7 +66,11 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
         Sesion = (Globals) getApplicationContext();
         LoadFormControls();
         EventManager();
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            tareaEsperarPIN.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            tareaEsperarPIN.execute();
+        }
     }
     private void LoadFormControls() {
         lyProgresBar = (LinearLayout) findViewById(R.id.lyProgresBar);
@@ -76,6 +86,7 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ValidaGuardar()){
+                    tareaEsperarPIN.cancel(true);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new AsyncValidarPIN().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     }else{
@@ -192,4 +203,33 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
         txtPIN.setText(codigo);
         txtPIN.setSelection(txtPIN.getText().length());
     }
+
+    //Region Esperar 60 segundos si aun no se envia el mensaje
+    private class AsyncEsperaPIN extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException ex) {
+                }
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            //Si aun no ha validado el sistema debe mostrar un modal
+            //if (txtPIN.getText().toString().trim().length() == 0) {
+                FragmentManager fragmento = getFragmentManager();
+                new frg_confirmar_telefono().show(fragmento, "frmConfirmarTelefono");
+            //}
+        }
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    //EndRegion
 }

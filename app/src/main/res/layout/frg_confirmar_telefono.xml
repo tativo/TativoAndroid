@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="6dp"
+    >
+    <LinearLayout
+        android:id="@+id/lyConfirmarNumero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGrisTitulo"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="@string/lblTituloConfirmarNumero"
+                android:paddingTop="15dp"
+                android:textSize="18dp"
+                android:layout_marginBottom="15dp"
+                />
+        </LinearLayout>
+        <ScrollView style="@style/TativoScrollView">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGrisCuerpo"
+            android:orientation="vertical"
+            android:padding="25dp"
+            >
+            <TextView
+                android:id="@+id/lblMensajeConfirmacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/msgConfirmarNumero"
+                />
+            <Button
+                android:id="@+id/btnEnviarPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TativoBotonAceptar"
+                android:textAllCaps="false"
+                android:text="Reenviar PIN"
+                android:layout_marginTop="50dp"
+                />
+            <Button
+                android:id="@+id/btnCambiarNumero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TativoBotonAceptar"
+                android:textAllCaps="false"
+                android:text="Cambiar numero"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorAzulOscuro"
+                />
+        </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lyCambiarNumero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGrisTitulo"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="Cambiar numero"
+                android:paddingTop="15dp"
+                android:textSize="18dp"
+                android:layout_marginBottom="15dp"
+                />
+        </LinearLayout>
+        <ScrollView style="@style/TativoScrollView">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorGrisCuerpo"
+                android:orientation="vertical"
+                android:padding="25dp"
+                >
+                <LinearLayout
+                    style="@style/TativoLayoutBordeRelleno"
+                    >
+                    <TextView
+                        style="@style/TativoTextViewEncabezado"
+                        android:text="Captura tu telefono aqui"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    style="@style/TativoLinearLayoutBorde">
+                        <android.support.design.widget.TextInputLayout
+                            style="@style/TativoTextInputLayout">
+                            <AutoCompleteTextView
+                                android:id="@+id/txtNumeroCelular"
+                                android:hint="Numero celular"
+                                android:inputType="phone"
+                                android:maxLines="1"
+                                android:maxLength="14"
+                                style="@style/TativoAutoCompleteTextView"/>
+                        </android.support.design.widget.TextInputLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/colorAmarillo" />
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/TativoTextInputLayout">
+                        <AutoCompleteTextView
+                            android:id="@+id/txtConfirmaNumeroCelular"
+                            android:hint="Confirma numero"
+                            android:inputType="phone"
+                            android:maxLines="1"
+                            android:maxLength="14"
+                            style="@style/TativoAutoCompleteTextView"/>
+                    </android.support.design.widget.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btnGuardarNumeroCelular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/TativoBotonAceptar"
+                        android:textAllCaps="false"
+                        android:text="Guardar"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+
+</LinearLayout>
