@@ -209,7 +209,7 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(60000);
                 } catch (InterruptedException ex) {
                 }
 

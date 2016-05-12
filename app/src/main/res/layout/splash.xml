@@ -4,14 +4,13 @@
     android:layout_height="match_parent"
     android:background="@color/colorBlanco">
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true">
         <pl.droidsonroids.gif.GifTextView
-            android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:background="@drawable/tativogif"
-            />
+            android:layout_width="240px"
+            android:layout_height="110px"
+            android:background="@drawable/tativogif" />
     </LinearLayout>
 </RelativeLayout>

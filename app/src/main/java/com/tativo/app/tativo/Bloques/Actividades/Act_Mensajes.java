@@ -41,8 +41,6 @@ public class Act_Mensajes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_mensajes);
         Sesion = (Globals) getApplicationContext();
-        Sesion.setCliendeID("1CDF7697-38A7-4FCA-8C50-0CE0C7680D7D");
-        Sesion.setSolicitudID("0B2F86B6-3869-4B91-BA7E-9AB1685D86E7");
         LoadFormControls();
         EventManager();
         //new AsyncEstatusSolicitud().execute();
