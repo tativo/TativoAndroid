@@ -70,6 +70,10 @@ public class Act_B4_Laboral extends AppCompatActivity {
 
     Catdatosempleo catdatosempleo;
 
+    AsyncEstatusSolicitud EstatusSolicitud = new AsyncEstatusSolicitud();
+    boolean CancelaEstatusSolicitud = false ;
+
+
     @Override
     public void onBackPressed() {
 
@@ -86,9 +90,9 @@ public class Act_B4_Laboral extends AppCompatActivity {
         new AsyncLoadData().execute();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            new AsyncEstatusSolicitud().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            EstatusSolicitud.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
-            new AsyncEstatusSolicitud().execute();
+            EstatusSolicitud.execute();
         }
     }
 
@@ -149,6 +153,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (ValidaGuardar()) {
+                    EstatusSolicitud.cancel(true);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         new AsyncGuardar().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     } else {
@@ -783,7 +788,15 @@ public class Act_B4_Laboral extends AppCompatActivity {
                     GetEstatusSolicitud();
                     if(Bloqueos.getBloqueoid()!=0)
                         break;
-                    Thread.sleep(30000);
+                    int Segundos = 0;
+                    while(Segundos <=30) {
+                        if(isCancelled()){
+                            CancelaEstatusSolicitud = true;
+                            break;
+                        }
+                        Thread.sleep(1000);
+                        Segundos++;
+                    }
                 } catch (InterruptedException ex) {
                 }
             }
@@ -791,24 +804,26 @@ public class Act_B4_Laboral extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Void result) {
-            //Si salio del ciclo quiere decir que encontro bloqueos
-            if (Bloqueos.getBloqueoid() != 0) {
-                new AlertDialog.Builder(Act_B4_Laboral.this)
-                        .setTitle(R.string.msgRefTitulo)
-                        .setMessage(R.string.msgRefNoContesto)
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.msgRefOk, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Sesion.setBloqueoReferencia(true);
-                                Sesion.setBloqueoCliente(Bloqueos);
-                                Sesion.setSolicitud(Solicitud);
-                                Sesion.setBloqueActual(4);
-                                Intent i = new Intent(getApplicationContext(), Act_B1_Referencias.class);
-                                startActivity(i);
-                                finish();
-                            }
-                        }).create().show();
+            if (!CancelaEstatusSolicitud) {
+                //Si salio del ciclo quiere decir que encontro bloqueos
+                if (Bloqueos.getBloqueoid() != 0) {
+                    new AlertDialog.Builder(Act_B4_Laboral.this)
+                            .setTitle(R.string.msgRefTitulo)
+                            .setMessage(R.string.msgRefNoContesto)
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.msgRefOk, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Sesion.setBloqueoReferencia(true);
+                                    Sesion.setBloqueoCliente(Bloqueos);
+                                    Sesion.setSolicitud(Solicitud);
+                                    Sesion.setBloqueActual(4);
+                                    Intent i = new Intent(getApplicationContext(), Act_B1_Referencias.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            }).create().show();
+                }
             }
         }
 

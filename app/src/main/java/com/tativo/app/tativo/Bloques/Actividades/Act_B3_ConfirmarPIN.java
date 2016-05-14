@@ -51,6 +51,7 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
     Globals Sesion;
     ProgressDialog progressDialog;
     AsyncEsperaPIN tareaEsperarPIN= new AsyncEsperaPIN();
+    boolean CancelatareaEsperarPIN = false ;
 
 
 
@@ -209,7 +210,15 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
                 try {
-                    Thread.sleep(60000);
+                    int Segundos = 0;
+                    while(Segundos <=60) {
+                        if (isCancelled()) {
+                            CancelatareaEsperarPIN = true;
+                            break;
+                        }
+                        Thread.sleep(1000);
+                        Segundos++;
+                    }
                 } catch (InterruptedException ex) {
                 }
 
@@ -217,11 +226,13 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Void result) {
-            //Si aun no ha validado el sistema debe mostrar un modal
-            //if (txtPIN.getText().toString().trim().length() == 0) {
+            if(!CancelatareaEsperarPIN) {
+                //Si aun no ha validado el sistema debe mostrar un modal
+                //if (txtPIN.getText().toString().trim().length() == 0) {
                 FragmentManager fragmento = getFragmentManager();
                 new frg_confirmar_telefono().show(fragmento, "frmConfirmarTelefono");
-            //}
+                //}
+            }
         }
         @Override
         protected void onPreExecute() {

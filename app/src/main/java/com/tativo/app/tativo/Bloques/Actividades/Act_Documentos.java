@@ -88,6 +88,9 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
     DatosDocumentosContrato datosContrato;
     DatosDocumentosOperacion datosOperacion;
 
+    AsyncEstatusSolicitud EstatusSolicitud = new AsyncEstatusSolicitud();
+    boolean CancelaEstatusSolicitud = false ;
+
     @Override
     public void onBackPressed() {
 
@@ -104,11 +107,10 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         //Sesion.setCliendeID("BA984F15-FE77-47A3-BCE0-0667D57AFA24");
         //Sesion.setSolicitudID("21F227A4-31D1-499F-A665-D66226DD6CA1");
         new AsyncInfoBloque().execute();
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            new AsyncEstatusSolicitud().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            EstatusSolicitud.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
-            new AsyncEstatusSolicitud().execute();
+            EstatusSolicitud.execute();
         }
     }
 
@@ -186,13 +188,14 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
             public void onClick(View v) {
                 if (ValidaGuardar())
                 {
-                    if (Solicitud.getNombreCompleto().toString() == null || Solicitud.getNombreCompleto().equals("") || Solicitud.getNombreCompleto().toString().isEmpty())
-                    {
+                    if (Solicitud.getNombreCompleto().toString() == null || Solicitud.getNombreCompleto().equals("") || Solicitud.getNombreCompleto().toString().isEmpty()) {
+                        /*
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                             new AsyncEstatusSolicitud().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                         } else {
                             new AsyncEstatusSolicitud().execute();
                         }
+                        */
                     }
                     else
                     {
@@ -201,6 +204,7 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
                             if (!fileNameFrontal.equals(""))
                             {
                                 if (!fileNameTrasera.equals("")) {
+                                    EstatusSolicitud.cancel(true);
                                     new AsyncGuardar().execute();
                                 }
                                 else {
@@ -508,7 +512,15 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
                     GetEstatusSolicitud();
                     if(Bloqueos.getBloqueoid()!=0)
                         break;
-                    Thread.sleep(30000);
+                    int Segundos = 0;
+                    while(Segundos <=30) {
+                        if(isCancelled()){
+                            CancelaEstatusSolicitud = true;
+                            break;
+                        }
+                        Thread.sleep(1000);
+                        Segundos++;
+                    }
                 } catch (InterruptedException ex) {
                 }
             }
@@ -516,24 +528,26 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         }
         @Override
         protected void onPostExecute(Void result) {
-            //Si salio del ciclo quiere decir que encontro bloqueos
-            if (Bloqueos.getBloqueoid() != 0) {
-                new AlertDialog.Builder(Act_Documentos.this)
-                        .setTitle(R.string.msgRefTitulo)
-                        .setMessage(R.string.msgRefNoContesto)
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.msgRefOk, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Sesion.setBloqueoReferencia(true);
-                                Sesion.setBloqueoCliente(Bloqueos);
-                                Sesion.setSolicitud(Solicitud);
-                                Sesion.setBloqueActual(6);
-                                Intent i = new Intent(getApplicationContext(), Act_B1_Referencias.class);
-                                startActivity(i);
-                                finish();
-                            }
-                        }).create().show();
+            if (!CancelaEstatusSolicitud) {
+                //Si salio del ciclo quiere decir que encontro bloqueos
+                if (Bloqueos.getBloqueoid() != 0) {
+                    new AlertDialog.Builder(Act_Documentos.this)
+                            .setTitle(R.string.msgRefTitulo)
+                            .setMessage(R.string.msgRefNoContesto)
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.msgRefOk, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Sesion.setBloqueoReferencia(true);
+                                    Sesion.setBloqueoCliente(Bloqueos);
+                                    Sesion.setSolicitud(Solicitud);
+                                    Sesion.setBloqueActual(6);
+                                    Intent i = new Intent(getApplicationContext(), Act_B1_Referencias.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            }).create().show();
+                }
             }
         }
 
