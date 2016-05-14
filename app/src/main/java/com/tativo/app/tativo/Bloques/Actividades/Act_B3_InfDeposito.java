@@ -496,7 +496,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
 
                 // Never log a raw card number. Avoid displaying it, but if necessary use getFormattedCardNumber()
                 //resultDisplayStr = "Card Number: " + scanResult.getRedactedCardNumber() + "\n";
-                txtNumeroTarjetaCLABE.setText(scanResult.getRedactedCardNumber());
+                txtNumeroTarjetaCLABE.setText(scanResult.cardNumber);
                 txtNumeroTarjetaCLABE.setSelection(txtNumeroTarjetaCLABE.getText().length());
                 btnFocoInicialB3.requestFocus();
 
