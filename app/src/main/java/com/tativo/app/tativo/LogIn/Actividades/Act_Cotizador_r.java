@@ -567,7 +567,7 @@ public class Act_Cotizador_r extends AppCompatActivity {
                                 Date d = format.parse(sfecha, pp);
 
                                 int i = getIndexFecha(d);
-                                if (i != 0)
+                                if (i >= 0)
                                     spnFechaPago.setCurrentItem(i);
                                 else
                                     Toast.makeText(getApplicationContext(),"Día inhábil para pago",Toast.LENGTH_LONG).show();
@@ -597,7 +597,7 @@ public class Act_Cotizador_r extends AppCompatActivity {
     }
 
     private int getIndexFecha(Date myString) {
-        int index = 0;
+        int index = -1;
         for (int i = 0; i < FechasPago.size(); i++) {
             if (FechasPago.get(i).getFechaPago().getDate() == myString.getDate() ) {
                 index = i;
@@ -605,7 +605,7 @@ public class Act_Cotizador_r extends AppCompatActivity {
         }
         return index;
     }
-    
+
 //PARA EL CALENDARIO
 
 }
