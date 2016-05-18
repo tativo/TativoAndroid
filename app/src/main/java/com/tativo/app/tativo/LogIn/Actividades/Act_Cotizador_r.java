@@ -71,7 +71,7 @@ public class Act_Cotizador_r extends AppCompatActivity {
     boolean touchImporte=false;
 
     int year_x, month_x, day_x;
-    static final int DILOG_ID = 0;
+    //static final int DILOG_ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -475,62 +475,7 @@ public class Act_Cotizador_r extends AppCompatActivity {
     //End Region
 
 
-/*
-    //Para el Date
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        if (id == DILOG_ID) {
-            try {
-                String fecha;
-                Date MaxDate = null;
-                Date MinDate = null;
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-                format.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-                fecha =  ((day_x + 30) + 1) + "/" + (month_x + 1) + "/" + year_x;
-                MaxDate = format.parse(fecha);
-
-                fecha =  (day_x + 2) + "/" + (month_x + 1) + "/" + year_x;
-                MinDate = format.parse(fecha);
-
-                //DatePickerDialog dp = new DatePickerDialog(this, dpickerListner, year_x, month_x, day_x);
-                DatePickerDialog dp = new DatePickerDialog(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,dpickerListner,year_x,month_x,day_x);
-                dp.getDatePicker().setMaxDate(MaxDate.getTime());
-                dp.getDatePicker().setMinDate(MinDate.getTime());
-                dp.getDatePicker().setCalendarViewShown(true);
-                dp.getDatePicker().setSpinnersShown(false);
-
-                return dp;
-            }
-            catch (Exception ex)
-            {
-                return  null;
-            }
-        }
-
-        return  null;
-    }
-
-
-    private DatePickerDialog.OnDateSetListener dpickerListner = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
-        {
-            year_x = year;
-            month_x = monthOfYear+1;
-            day_x = dayOfMonth;
-
-            String sfecha = day_x+"/"+month_x+"/"+year_x;
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
-            ParsePosition pp = new ParsePosition(0);
-            Date d = format.parse(sfecha, pp);
-
-            spnFechaPago.setCurrentItem(FechasPago.indexOf(format.format(d).toString()));
-            //Toast.makeText(getApplicationContext(),format.format(d).toString(),Toast.LENGTH_LONG);
-            //txtFechaNacimiento.setText(format.format(d).toString());
-        }
-    };
-*/
+//PARA EL CALENDARIO
     boolean isOkayClicked = true;
     private void showDatePicker() {
         // TODO Auto-generated method stub
@@ -556,17 +501,14 @@ public class Act_Cotizador_r extends AppCompatActivity {
         }
         catch (Exception ex)
         {
-
         }
-
 
         final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
             // when dialog box is closed, below method will be called.
             public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+                /*
                 if (isOkayClicked)
                 {
-                    //birthday.setText(selectedYear + (selectedMonth + 1) + selectedDay);
-                    //spnImporte.setCurrentItem(Importes.indexOf(2000.00));
                     year_x = selectedYear;
                     month_x = (selectedMonth + 1);
                     day_x = selectedDay;
@@ -584,12 +526,12 @@ public class Act_Cotizador_r extends AppCompatActivity {
                 {
                     Toast.makeText(getApplicationContext(),"Dia no valido",Toast.LENGTH_LONG).show();
                 }
+                */
                 isOkayClicked = false;
             }
         };
 
         final DatePickerDialog datePickerDialog = new DatePickerDialog(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, datePickerListener, year_x, month_x, (day_x+1));
-
 
         datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
             "Cancelar",
@@ -607,18 +549,40 @@ public class Act_Cotizador_r extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     if (which == DialogInterface.BUTTON_POSITIVE) {
                         Calendar n = Calendar.getInstance();
+                        Calendar c = Calendar.getInstance();
                         day_x = datePickerDialog.getDatePicker().getDayOfMonth();
                         month_x = datePickerDialog.getDatePicker().getMonth();
                         year_x = datePickerDialog.getDatePicker().getYear();
 
-                        n.set(year_x, month_x, day_x,0,0,0);
-                        int dow = n.get(n.DAY_OF_WEEK);
-                        if (dow != 1)
-                            isOkayClicked = true;
-                        else {
-                            isOkayClicked = false;
+                        n.set(year_x, month_x , day_x,0,0,0);
+                        if(c.getTime().getDate() != n.getTime().getDate())
+                        {
+                            int dow = n.get(n.DAY_OF_WEEK);
+                            if (dow != 1)
+                            {
+                                isOkayClicked = true;
+                                String sfecha = day_x+"/"+(month_x+1)+"/"+year_x;
+                                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                ParsePosition pp = new ParsePosition(0);
+                                Date d = format.parse(sfecha, pp);
+
+                                int i = getIndexFecha(d);
+                                if (i != 0)
+                                    spnFechaPago.setCurrentItem(i);
+                                else
+                                    Toast.makeText(getApplicationContext(),"Día inhábil para pago",Toast.LENGTH_LONG).show();
+                            }
+                            else
+                            {
+                                isOkayClicked = false;
+                                Toast.makeText(getApplicationContext(),"Día no valido",Toast.LENGTH_LONG).show();
+                            }
                         }
-                        //birthday.setText(selectedYear + (selectedMonth + 1) + selectedDay);
+                        else
+                        {
+                            isOkayClicked = false;
+                            Toast.makeText(getApplicationContext(),"Mismo día",Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             });
@@ -641,13 +605,6 @@ public class Act_Cotizador_r extends AppCompatActivity {
         }
         return index;
     }
-
-
-
-
-
-
-
-
-
+//PARA EL CALENDARIO
+    
 }
