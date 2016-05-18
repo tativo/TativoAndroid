@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.tativo.app.tativo.Bloques.Actividades.Act_Documentos;
 import com.tativo.app.tativo.LogIn.Actividades.Act_Cotizador;
+import com.tativo.app.tativo.LogIn.Actividades.Act_Cotizador_r;
 import com.tativo.app.tativo.LogIn.Actividades.Act_LogIn;
 
 /**
@@ -26,7 +27,7 @@ public class Splash extends Activity {
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{
-                    Intent intent = new Intent(Splash.this, Act_Cotizador.class);
+                    Intent intent = new Intent(Splash.this, Act_Cotizador_r.class);
                     startActivity(intent);
                 }
             }
