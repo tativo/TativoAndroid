@@ -2,53 +2,57 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/TativoRelativeLayoutPrincipal"
-    tools:context=".Bloques.Actividades.Act_VerificaCelular"
+    tools:context=".Bloques.Actividades.Act_B3_ConfirmarPIN"
     android:orientation="vertical" >
 
-    <LinearLayout style="@style/TativoLinearLayoutCentroPantalla"
-        android:id="@+id/linearLayout">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:layout_marginBottom="20dp">
-            <TextView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout style="@style/TativoLinearLayoutCentroPantalla"
+            android:id="@+id/linearLayout">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblMsjPIN" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lyProgresBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/lblMsjPIN" />
+                android:layout_marginBottom="20dp"
+                >
+                <pl.droidsonroids.gif.GifTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/progresbar"
+                    />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLayoutBordeRelleno">
+                <TextView
+                    style="@style/TativoTextViewEncabezado"
+                    android:text="@string/lblTituloPIN" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtPIN"
+                        android:hint="@string/txtPIN"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnConfirmarPIN"
+                android:text="@string/btnConfirmarPIN"
+                style="@style/TativoBotonAceptar"/>
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/lyProgresBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            >
-            <pl.droidsonroids.gif.GifTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/progresbar"
-                />
-        </LinearLayout>
-        <LinearLayout style="@style/TativoLayoutBordeRelleno">
-            <TextView
-                style="@style/TativoTextViewEncabezado"
-                android:text="@string/lblTituloPIN" />
-        </LinearLayout>
-        <LinearLayout style="@style/TativoLinearLayoutBorde">
-            <android.support.design.widget.TextInputLayout
-                style="@style/TativoTextInputLayout">
-                <AutoCompleteTextView
-                    android:id="@+id/txtPIN"
-                    android:hint="@string/txtPIN"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    style="@style/TativoAutoCompleteTextView"/>
-            </android.support.design.widget.TextInputLayout>
-        </LinearLayout>
-        <Button
-            android:id="@+id/btnConfirmarPIN"
-            android:text="@string/btnConfirmarPIN"
-            style="@style/TativoBotonAceptar"/>
-    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

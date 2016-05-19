@@ -532,6 +532,7 @@ public class Act_Cotizador_r extends AppCompatActivity {
         };
 
         final DatePickerDialog datePickerDialog = new DatePickerDialog(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT, datePickerListener, year_x, month_x, (day_x+1));
+        //final DatePickerDialog datePickerDialog = new DatePickerDialog(this, android.R.style.Theme_DeviceDefault_Light_Dialog, datePickerListener, year_x, month_x, (day_x+1));
 
         datePickerDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
             "Cancelar",
