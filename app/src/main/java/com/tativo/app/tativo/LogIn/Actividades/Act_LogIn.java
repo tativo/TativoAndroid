@@ -29,13 +29,13 @@ public class Act_LogIn extends FragmentActivity {
         btnfrgRegistrar = (Button) findViewById(R.id.frgRegistrarse);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Frg_LogIn newFragment = new Frg_LogIn();
+        Frg_Registro newFragment = new Frg_Registro();
         transaction.replace(R.id.flContenedor, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
 
-        btnfrgLogIn.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
-        btnfrgRegistrar.setBackgroundColor(getResources().getColor(R.color.colorAzulOscuro));
+        btnfrgLogIn.setBackgroundColor(getResources().getColor(R.color.colorAzulOscuro));
+        btnfrgRegistrar.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
 
         btnfrgLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
