@@ -37,7 +37,7 @@
     <!--LogIn-->
     <string name="txtLogInContrasena">Contraseña</string>
     <string name="txtLogInUsuario">Correo electrónico</string>
-    <string name="lblTituloLogIn">Inicio de sesion</string>
+    <string name="lblTituloLogIn">Login</string>
     <string name="btnLogIn">Entrar</string>
 
     <!--Registro-->
@@ -49,15 +49,15 @@
     <string name="btnRegistro">Aceptar</string>
 
     <!--Bloque 1 - Referencias -->
-    <string name="lblTituloBloque1Ref1">Referencias 1</string>
-    <string name="lblTituloBloque1Ref2">Referencias 2</string>
-    <string name="lblTituloBloque1RefLaboral">Referencias Laboral</string>
+    <string name="lblTituloBloque1Ref1">Referencia 1</string>
+    <string name="lblTituloBloque1Ref2">Referencia 2</string>
+    <string name="lblTituloBloque1RefLaboral">Referencia Laboral</string>
     <string name="txtApellidos">Apellidos</string>
     <string name="txtAñosAmistad">Años de amistad</string>
     <string name="txtAñosTrabajando">Años trabajando ahí</string>
     <string name="txtNombreEmpresa">Nombre de la empresa</string>
     <string name="btnReferencias">Guardar y continuar</string>
-    <string name="ckReferenciasAcepta">Al otorgar estos datos acepto que Tativo se ponga en contacto con mis referencias para validad que la informacion sea correcta</string>
+    <string name="ckReferenciasAcepta">Al otorgar estos datos acepto que Tativo se ponga en contacto con mis referencias para validar que la informacion sea correcta</string>
     <string name="spnRelacion">Relación</string>
     <string name="spnAmistad">Años de amistad</string>
     <string name="spnTrabajando">Años trabajando ahí</string>
@@ -74,7 +74,7 @@
     <string name="txt4DigitosTarjeta">¿Cuales son los últimos 4 digitos de la tarjeta?</string>
     <string name="lblCreditoHipotecario">¿Tienes crédito hipotecario vigente?</string>
     <string name="lblCreditoAutomotriz">¿Has tenido crédito automotriz en los últimos 2 años?</string>
-    <string name="ckTerminosCondiciones1">Acepto que tativo trate mis datos económicos / financieron para las descritas en este &lt;a href="http://www.tativo.com">Aviso de Privacidad.&lt;/a></string>
+    <string name="ckTerminosCondiciones1">Acepto que tativo trate mis datos económicos / financieros para las descritas en este &lt;a href="http://www.tativo.com">Aviso de Privacidad.&lt;/a></string>
     <string name="ckTerminosCondiciones2">Acepto que tativo utilice mi información personal sensible que yo voluntariamente revele para las finalidades descritas en este &lt;a href="http://www.tativo.com">Aviso de Privacidad&lt;/a>.</string>
     <string name="ckTerminosCondiciones3">Manifiesto que he leído en su totalidad el &lt;a href="http://www.tativo.com">Aviso de Privacidad&lt;/a> y consiento que mis datos personales sean tratados y transferido conforme a los términos y condiciones que se señalan en los términos y condiciones.</string>
     <string name="ckTerminosCondiciones4">Por este conducto autorizo a Tativo para a través de su personal facultado, lleve a cabo investigaciones de mi comportamiento crediticio.</string>
@@ -91,7 +91,7 @@
 
     <!--Bloque 3 - PIN -->
     <string name="lblTituloPIN">Validación de numero celular</string>
-    <string name="lblMsjPIN">Hemos enviado un PIN al celular que ingresaste en un paso anterior. Revisa tu teléfono y haznos el favor de infresarlo aquí. Te esperamos lo que quieras :)</string>
+    <string name="lblMsjPIN">Hemos enviado un PIN al celular que ingresaste en un paso anterior. Revisa tu teléfono y haznos el favor de ingresarlo aquí. Te esperamos lo que quieras :)</string>
     <string name="txtPIN">PIN de seguridad</string>
     <string name="btnConfirmarPIN">Continuar</string>
 
@@ -360,7 +360,7 @@
     <string name="nDmB5">Bloque 5 de 5</string>
 
     <!-- REQUISITOS -->
-    <string name="reqTitulo">Perate tantito</string>
+    <string name="reqTitulo">¡Espérame tantito!</string>
     <string name="reqMSJ1">¿QUÉ NECESITAS PARA COMENZAR A UTILIZAR TATIVO?</string>
     <string name="reqMSJ2">Es muy simple, solo debes contar con los siguientes requisitos</string>
     <string name="req1">Correo electrónico</string>

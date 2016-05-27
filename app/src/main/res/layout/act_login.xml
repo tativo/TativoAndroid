@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/colorBlanco"
-            android:text="Iniciar sesion"
+            android:text="Tengo cuenta"
             android:textAllCaps="false"/>
 
         <Button
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/colorBlanco"
-            android:text="Registrarse"
+            android:text="Quiero registrarme"
             android:textAllCaps="false" />
     </LinearLayout>
 
