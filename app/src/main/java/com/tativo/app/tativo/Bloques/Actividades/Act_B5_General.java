@@ -19,6 +19,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -74,37 +75,48 @@ public class Act_B5_General extends AppCompatActivity {
     Globals Sesion;
     ProgressDialog progressDialog;
 
-    AdapterEstados estadosAdapter;
+    ArrayAdapter<String> estadosAdapter;
+    ArrayList<String> s_lstEstados= new ArrayList<String>();
     ArrayList<Catestado> lstEstados = new ArrayList<Catestado>();
 
-    AdapterTipoVivienda tipoViviendaAdapter;
+    ArrayAdapter<String> tipoViviendaAdapter;
+    ArrayList<String> s_lstTipoVivienda= new ArrayList<String>();
     ArrayList<Cattipovivienda> lstTipoVivienda = new ArrayList<Cattipovivienda>();
 
-    AdapterViveCon viveConAdapter;
+    ArrayAdapter<String> viveConAdapter;
+    ArrayList<String> s_lstViveCon= new ArrayList<String>();
     ArrayList<Catvivecon> lstViveCon = new ArrayList<Catvivecon>();
 
-    AdapterAnio spnCatanioAdapter;
+    ArrayAdapter<String> spnCatanioAdapter;
+    ArrayList<String> s_listaCatanio= new ArrayList<String>();
     ArrayList<Catanio> listaCatanio = new ArrayList<Catanio>();
 
-    AdapterNivelEstudio nivelEstudioAdapter;
+    ArrayAdapter<String> nivelEstudioAdapter;
+    ArrayList<String> s_lstNivelEstudio= new ArrayList<String>();
     ArrayList<Catnivelestudio> lstNivelEstudio = new ArrayList<Catnivelestudio>();
 
-    AdapterCurso cursoAdapter;
+    ArrayAdapter<String> cursoAdapter;
+    ArrayList<String> s_lstCurso= new ArrayList<String>();
     ArrayList<Catcurso> lstCurso = new ArrayList<Catcurso>();
 
-    AdapterNivelIngles nivelInglesAdapter;
+    ArrayAdapter<String> nivelInglesAdapter;
+    ArrayList<String> s_lstNivelIngles= new ArrayList<String>();
     ArrayList<Catnivelingles> lstNivelIngles = new ArrayList<Catnivelingles>();
 
-    AdapterActividadEntretenimiento actividadEntretenimientoAdapter;
+    ArrayAdapter<String> actividadEntretenimientoAdapter;
+    ArrayList<String> s_lstactividadentretenimiento= new ArrayList<String>();
     ArrayList<Catactividadentretenimiento> lstactividadentretenimiento = new ArrayList<Catactividadentretenimiento>();
 
-    AdapterIngresoExtra ingresoExtraAdapter;
+    ArrayAdapter<String> ingresoExtraAdapter;
+    ArrayList<String> s_lstIngresoExtra= new ArrayList<String>();
     ArrayList<Catingresoextra> lstIngresoExtra = new ArrayList<Catingresoextra>();
 
-    AdapterRedesSociales redesSocialesAdapter;
+    ArrayAdapter<String> redesSocialesAdapter;
+    ArrayList<String> s_lstRedesSociales= new ArrayList<String>();
     ArrayList<Catredessociales> lstRedesSociales = new ArrayList<Catredessociales>();
 
-    AdapterDondeInternet dondeInternetAdapter;
+    ArrayAdapter<String> dondeInternetAdapter;
+    ArrayList<String> s_lstDondeInternet= new ArrayList<String>();
     ArrayList<Catdondeinternet> lstDondeInternet = new ArrayList<Catdondeinternet>();
 
     Catdatosgeneral catdatosgeneral;
@@ -365,39 +377,39 @@ public class Act_B5_General extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-            estadosAdapter = new AdapterEstados(lstEstados);
+            estadosAdapter = adapterSpinner(s_lstEstados);
             spnEdoNacimiento.setAdapter(estadosAdapter);
 
-            tipoViviendaAdapter = new AdapterTipoVivienda(lstTipoVivienda);
+            tipoViviendaAdapter = adapterSpinner(s_lstTipoVivienda);
             spnTipoVivienda.setAdapter(tipoViviendaAdapter);
 
-            viveConAdapter = new AdapterViveCon(lstViveCon);
+            viveConAdapter = adapterSpinner(s_lstViveCon);
             spnConQuienVives.setAdapter(viveConAdapter);
 
-            spnCatanioAdapter = new AdapterAnio(listaCatanio);
+            spnCatanioAdapter = adapterSpinner(s_listaCatanio);
             spnViviendoAhi.setAdapter(spnCatanioAdapter);
 
-            nivelEstudioAdapter = new AdapterNivelEstudio(lstNivelEstudio);
+            nivelEstudioAdapter = adapterSpinner(s_lstNivelEstudio);
             spnNivelEstudio.setAdapter(nivelEstudioAdapter);
 
-            cursoAdapter = new AdapterCurso(lstCurso);
+            cursoAdapter = adapterSpinner(s_lstCurso);
             spnCurso.setAdapter(cursoAdapter);
 
-            nivelInglesAdapter = new AdapterNivelIngles(lstNivelIngles);
+            nivelInglesAdapter = adapterSpinner(s_lstNivelIngles);
             spnIngles.setAdapter(nivelInglesAdapter);
 
-            actividadEntretenimientoAdapter = new AdapterActividadEntretenimiento(lstactividadentretenimiento);
+            actividadEntretenimientoAdapter = adapterSpinner(s_lstactividadentretenimiento);
             spnActividad.setAdapter(actividadEntretenimientoAdapter);
 
-            ingresoExtraAdapter = new AdapterIngresoExtra(lstIngresoExtra);
+            ingresoExtraAdapter = adapterSpinner(s_lstIngresoExtra);
             spnIngresoExtra.setAdapter(ingresoExtraAdapter);
 
-            redesSocialesAdapter = new AdapterRedesSociales(lstRedesSociales);
+            redesSocialesAdapter = adapterSpinner(s_lstRedesSociales);
             spnRedesSociales1.setAdapter(redesSocialesAdapter);
             spnRedesSociales2.setAdapter(redesSocialesAdapter);
             spnRedesSociales3.setAdapter(redesSocialesAdapter);
 
-            dondeInternetAdapter = new AdapterDondeInternet(lstDondeInternet);
+            dondeInternetAdapter = adapterSpinner(s_lstDondeInternet);
             spnDondeInternet1.setAdapter(dondeInternetAdapter);
             spnDondeInternet2.setAdapter(dondeInternetAdapter);
             spnDondeInternet3.setAdapter(dondeInternetAdapter);
@@ -433,6 +445,7 @@ public class Act_B5_General extends AppCompatActivity {
                     entidad.setEstadoid(item.getProperty("Estadoid").toString());
                     entidad.setEstado(item.getProperty("Estado").toString());
                     lstEstados.add(entidad);
+                    s_lstEstados.add(item.getProperty("Estado").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -496,6 +509,7 @@ public class Act_B5_General extends AppCompatActivity {
                     entidad.setTipoviviendaid(Integer.parseInt(item.getProperty("Tipoviviendaid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
                     lstTipoVivienda.add(entidad);
+                    s_lstTipoVivienda.add(item.getProperty("Descripcion").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -559,6 +573,7 @@ public class Act_B5_General extends AppCompatActivity {
                     entidad.setViveconid(item.getProperty("Viveconid").toString());
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
                     lstViveCon.add(entidad);
+                    s_lstViveCon.add(item.getProperty("Descripcion").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -622,6 +637,7 @@ public class Act_B5_General extends AppCompatActivity {
                     entidad.setAnioid(Integer.parseInt(item.getProperty("Anioid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
                     listaCatanio.add(entidad);
+                    s_listaCatanio.add(item.getProperty("Descripcion").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -685,6 +701,7 @@ public class Act_B5_General extends AppCompatActivity {
                     entidad.setNivelestudioid(Integer.parseInt(item.getProperty("Nivelestudiosid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
                     lstNivelEstudio.add(entidad);
+                    s_lstNivelEstudio.add(item.getProperty("Descripcion").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -748,6 +765,7 @@ public class Act_B5_General extends AppCompatActivity {
                     entidad.setCursoid(Integer.parseInt(item.getProperty("Cursoid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
                     lstCurso.add(entidad);
+                    s_lstCurso.add(item.getProperty("Descripcion").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -811,6 +829,7 @@ public class Act_B5_General extends AppCompatActivity {
                     entidad.setNivelinglesid(item.getProperty("Nivelinglesid").toString());
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
                     lstNivelIngles.add(entidad);
+                    s_lstNivelIngles.add(item.getProperty("Descripcion").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -874,6 +893,7 @@ public class Act_B5_General extends AppCompatActivity {
                     entidad.setActividadentretenimientoid(Integer.parseInt(item.getProperty("Actividadentretenimientoid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
                     lstactividadentretenimiento.add(entidad);
+                    s_lstactividadentretenimiento.add(item.getProperty("Descripcion").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -937,6 +957,7 @@ public class Act_B5_General extends AppCompatActivity {
                     entidad.setIngresoextraid(Integer.parseInt(item.getProperty("Ingresoextraid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
                     lstIngresoExtra.add(entidad);
+                    s_lstIngresoExtra.add(item.getProperty("Descripcion").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -1000,6 +1021,7 @@ public class Act_B5_General extends AppCompatActivity {
                     entidad.setRedessocialesid(Integer.parseInt(item.getProperty("Redessocialesid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
                     lstRedesSociales.add(entidad);
+                    s_lstRedesSociales.add(item.getProperty("Descripcion").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -1063,6 +1085,7 @@ public class Act_B5_General extends AppCompatActivity {
                     entidad.setDondeinternetid(Integer.parseInt(item.getProperty("Dondeinternetid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
                     lstDondeInternet.add(entidad);
+                    s_lstDondeInternet.add(item.getProperty("Descripcion").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -1108,6 +1131,15 @@ public class Act_B5_General extends AppCompatActivity {
             return text;
         }
     }
+
+    //Adapter generico para los spiner
+    private ArrayAdapter<String> adapterSpinner(ArrayList<String> arrayList )
+    {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Act_B5_General.this, android.R.layout.simple_spinner_item, arrayList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return  adapter;
+    }
+
     //LLENA SPINNER
 
 
@@ -1216,34 +1248,34 @@ public class Act_B5_General extends AppCompatActivity {
         try {
             DatosEntidad.put("Datosgeneralesid", catdatosgeneral.getDatosgeneralesid());
             DatosEntidad.put("Clienteid", Sesion.getCliendeID());
-            DatosEntidad.put("Estadonacimientoid", ((Catestado) spnEdoNacimiento.getSelectedItem()).getEstadoid());
+            DatosEntidad.put("Estadonacimientoid", lstEstados.get(spnEdoNacimiento.getSelectedItemPosition()-1).getEstadoid());
 
             if (spnTipoVivienda.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Tipoviviendaid", ((Cattipovivienda) spnTipoVivienda.getSelectedItem()).getTipoviviendaid());
+                DatosEntidad.put("Tipoviviendaid", lstTipoVivienda.get(spnTipoVivienda.getSelectedItemPosition()-1).getTipoviviendaid());
 
             if (spnConQuienVives.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Viveconid", ((Catvivecon) spnConQuienVives.getSelectedItem()).getViveconid());
+                DatosEntidad.put("Viveconid", lstViveCon.get(spnConQuienVives.getSelectedItemPosition()-1).getViveconid());
 
             if (spnViviendoAhi.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Añoid", ((Catanio) spnViviendoAhi.getSelectedItem()).getAnioid());
+                DatosEntidad.put("Añoid", listaCatanio.get(spnViviendoAhi.getSelectedItemPosition()-1).getAnioid());
 
             DatosEntidad.put("Telefonofijo", txtTelefonoFijo.getText().toString());
             DatosEntidad.put("Automovil", swtTienesAutomovil.isChecked());
             DatosEntidad.put("Espropio", swtEsPropio.isChecked());
 
             if (spnNivelEstudio.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Nivelestudiosid", ((Catnivelestudio) spnNivelEstudio.getSelectedItem()).getNivelestudioid());
+                DatosEntidad.put("Nivelestudiosid", lstNivelEstudio.get(spnNivelEstudio.getSelectedItemPosition()-1).getNivelestudioid());
 
             DatosEntidad.put("Nombreinstitucioneducativa", txtNombreEscuela.getText().toString());
 
             if (spnCurso.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Cursoid", ((Catcurso) spnCurso.getSelectedItem()).getCursoid());
+                DatosEntidad.put("Cursoid", lstCurso.get(spnCurso.getSelectedItemPosition()-1).getCursoid());
 
             if (spnIngles.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Nivelinglesid", ((Catnivelingles) spnIngles.getSelectedItem()).getNivelinglesid());
+                DatosEntidad.put("Nivelinglesid", lstNivelIngles.get(spnIngles.getSelectedItemPosition()-1).getNivelinglesid());
 
             if (spnActividad.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Actividadentretenimientoid", ((Catactividadentretenimiento) spnActividad.getSelectedItem()).getActividadentretenimientoid());
+                DatosEntidad.put("Actividadentretenimientoid", lstactividadentretenimiento.get(spnActividad.getSelectedItemPosition()-1).getActividadentretenimientoid());
 
             if (lyEspecificaActividad.getVisibility() != View.GONE)
                 DatosEntidad.put("Especificacionactividad", txtEspecificaActividad.getText().toString().trim());
@@ -1251,7 +1283,7 @@ public class Act_B5_General extends AppCompatActivity {
                 DatosEntidad.put("Especificacionactividad", "");
 
             if (spnConQuienVives.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Ingresoextraid", ((Catingresoextra) spnIngresoExtra.getSelectedItem()).getIngresoextraid());
+                DatosEntidad.put("Ingresoextraid", lstIngresoExtra.get(spnConQuienVives.getSelectedItemPosition()-1).getIngresoextraid());
 
             if (lyIngresoExtra.getVisibility() != View.GONE)
                 DatosEntidad.put("Actividadingresoextra", txtActivdadIngresoExtra.getText().toString().trim());
@@ -1263,17 +1295,17 @@ public class Act_B5_General extends AppCompatActivity {
             DatosEntidad.put("Tienecomputadora", ckTieneComputadora.isChecked());
             DatosEntidad.put("Paraqueocupaselservicio", txtParaQue.getText().toString());
             if (spnRedesSociales1.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Redessocialesid1", ((Catredessociales) spnRedesSociales1.getSelectedItem()).getRedessocialesid());
+                DatosEntidad.put("Redessocialesid1", lstRedesSociales.get(spnRedesSociales1.getSelectedItemPosition()-1).getRedessocialesid());
             if (spnRedesSociales2.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Redessocialesid2", ((Catredessociales) spnRedesSociales2.getSelectedItem()).getRedessocialesid());
+                DatosEntidad.put("Redessocialesid2", lstRedesSociales.get(spnRedesSociales2.getSelectedItemPosition()-1).getRedessocialesid());
             if (spnRedesSociales3.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Redessocialesid3", ((Catredessociales) spnRedesSociales3.getSelectedItem()).getRedessocialesid());
+                DatosEntidad.put("Redessocialesid3", lstRedesSociales.get(spnRedesSociales3.getSelectedItemPosition()-1).getRedessocialesid());
             if (spnDondeInternet1.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Dondeinternetid1", ((Catdondeinternet) spnDondeInternet1.getSelectedItem()).getDondeinternetid());
+                DatosEntidad.put("Dondeinternetid1", lstDondeInternet.get(spnDondeInternet1.getSelectedItemPosition()-1).getDondeinternetid());
             if (spnDondeInternet2.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Dondeinternetid2", ((Catdondeinternet) spnDondeInternet2.getSelectedItem()).getDondeinternetid());
+                DatosEntidad.put("Dondeinternetid2", lstDondeInternet.get(spnDondeInternet2.getSelectedItemPosition()-1).getDondeinternetid());
             if (spnDondeInternet3.getSelectedItemPosition() > 0)
-                DatosEntidad.put("Dondeinternetid3", ((Catdondeinternet) spnDondeInternet3.getSelectedItem()).getDondeinternetid());
+                DatosEntidad.put("Dondeinternetid3", lstDondeInternet.get(spnDondeInternet3.getSelectedItemPosition()-1).getDondeinternetid());
             DatosEntidad.put("UltimaAct", catdatosgeneral.getUltimaAct());
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(),ex.getMessage(),Toast.LENGTH_LONG).show();

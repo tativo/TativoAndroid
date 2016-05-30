@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -61,11 +62,13 @@ public class Act_B4_Laboral extends AppCompatActivity {
     Boolean NuevaColonia,edicionCP=false;
     DatosCodigoPostal datosCP;
     ArrayList<Catcolonia> lstCatColonia = new ArrayList<Catcolonia>();
-    AdapterColonias ColoniasAdapter;
+    ArrayList<String> s_lstCatColonia= new ArrayList<String>();
+    ArrayAdapter<String> ColoniasAdapter;
     TextView hnEstadoMunicipioTexto, txtAgregarColonia;
     LinearLayout lyNuevaColonia;
 
-    AdapterAreasLaborales AreasLaboralesAdapter;
+    ArrayAdapter<String> AreasLaboralesAdapter;
+    ArrayList<String> s_lstCatAreasLaborales= new ArrayList<String>();
     ArrayList<Catareaslaborales> lstCatAreasLaborales = new ArrayList<Catareaslaborales>();
 
     Catdatosempleo catdatosempleo;
@@ -292,7 +295,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
             {
                 hnEstadoMunicipioTexto.setText(datosCP.getMunicipio() + "/" + datosCP.getEstado());
                 spnColonia.setEnabled(true);
-                ColoniasAdapter = new AdapterColonias(lstCatColonia);
+                ColoniasAdapter = adapterSpinner(s_lstCatColonia);
                 spnColonia.setAdapter(ColoniasAdapter);
             }
             else
@@ -362,7 +365,13 @@ public class Act_B4_Laboral extends AppCompatActivity {
 
 
     //LLENA SPINNER
-    private class AsyncLoadData extends AsyncTask<Void, Void, Void> {
+    //Adapter generico para los spiner
+    private ArrayAdapter<String> adapterSpinner(ArrayList<String> arrayList ) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Act_B4_Laboral.this, android.R.layout.simple_spinner_item, arrayList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        return adapter;
+    }
+        private class AsyncLoadData extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
             GetCatAreasLaborales();
@@ -372,9 +381,8 @@ public class Act_B4_Laboral extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-            AreasLaboralesAdapter = new AdapterAreasLaborales(lstCatAreasLaborales);
+            AreasLaboralesAdapter = adapterSpinner(s_lstCatAreasLaborales);
             spnAreaLaboral.setAdapter(AreasLaboralesAdapter);
-
             new AsyncInfoBloque().execute();
         }
 
@@ -406,6 +414,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
                     entidad.setArealaboralid(Integer.parseInt(item.getProperty("Arealaboralid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
                     lstCatAreasLaborales.add(entidad);
+                    s_lstCatAreasLaborales.add(item.getProperty("Descripcion").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -476,6 +485,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
                     entidad.setColoniaid(item.getProperty("Coloniaid").toString());
                     entidad.setColonia(item.getProperty("Colonia").toString());
                     lstCatColonia.add(entidad);
+                    s_lstCatColonia.add(item.getProperty("Colonia").toString());
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -617,13 +627,13 @@ public class Act_B4_Laboral extends AppCompatActivity {
             if (NuevaColonia)
                 DatosEntidad.put("Colonia", txtNuevaColonia.getText().toString());
             else
-                DatosEntidad.put("Colonia", ((Catcolonia) spnColonia.getSelectedItem()).getColonia().toString());
+                DatosEntidad.put("Colonia", lstCatColonia.get(spnColonia.getSelectedItemPosition()-1).getColonia().toString());
             DatosEntidad.put("Codigopostal", txtCodigoPostal.getText().toString());
             DatosEntidad.put("Paisid", datosCP.getPaisID().toString());
             DatosEntidad.put("Estadoid", datosCP.getEstadoID().toString());
             DatosEntidad.put("Municipioid", datosCP.getMunicipioID().toString());
             DatosEntidad.put("Ciudadid", datosCP.getCiudadID().toString());
-            DatosEntidad.put("Arealaboralid", ((Catareaslaborales) spnAreaLaboral.getSelectedItem()).getArealaboralid());
+            DatosEntidad.put("Arealaboralid", lstCatAreasLaborales.get(spnAreaLaboral.getSelectedItemPosition()-1).getArealaboralid());
             DatosEntidad.put("Descripcionactividad", txtActividades.getText().toString());
             DatosEntidad.put("SueldoMensual", txtSueldoMensual.getText().toString());
             DatosEntidad.put("Paginaweb", txtPaginaEmpresa.getText().toString());
@@ -714,6 +724,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
                         entidad.setColoniaid(item.getProperty("Coloniaid").toString());
                         entidad.setColonia(item.getProperty("Colonia").toString());
                         lstCatColonia.add(entidad);
+                        s_lstCatColonia.add(item.getProperty("Colonia").toString());
                     }
                     if (DatosCodigoPostal.getProperty("PaisID") != null ) {
                         datosCP.setPaisID(DatosCodigoPostal.getProperty("PaisID").toString().trim());
@@ -743,7 +754,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
         if (catdatosempleo.getCodigopostal().trim().length() > 0) {
             hnEstadoMunicipioTexto.setText(datosCP.getMunicipio() + "/" + datosCP.getEstado());
             spnColonia.setEnabled(true);
-            ColoniasAdapter = new AdapterColonias(lstCatColonia);
+            ColoniasAdapter = adapterSpinner(s_lstCatColonia);
             spnColonia.setAdapter(ColoniasAdapter);
         }
         //Preguntamos si el usuario ya ingreso o selecciono una colonia
