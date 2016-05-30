@@ -81,16 +81,16 @@ public class Act_B2_Personal extends AppCompatActivity {
     DatosCodigoPostal datosCP;
     Catdatospersonal catdatospersonal;
     Catidentidadcliente catidentidadcliente;
-    AdapterEstadosCivil EstadosCivilAdapter;
-    AdapterMarcaTelefono MarcaTelefonoAdapter;
-    AdapterColonias ColoniasAdapter;
+    //AdapterEstadosCivil EstadosCivilAdapter;
+    //AdapterMarcaTelefono MarcaTelefonoAdapter;
+    //AdapterColonias ColoniasAdapter;
     ArrayList<Catestadoscivil> lstCatestadoscivil = new ArrayList<Catestadoscivil>();
     ArrayList<Catmarcastelefonos> lstCatMarcaTelefono = new ArrayList<Catmarcastelefonos>();
     ArrayList<Catcolonia> lstCatColonia = new ArrayList<Catcolonia>();
     LinearLayout lyNuevaColonia;
     Boolean NuevaColonia,edicionCP=false;
 
-    ArrayList<String> ITEMS;
+    ArrayList<String> arrayCatEstadoCivil, arrayCatMarcaTelefono, arrayCatColonia;
 
     int year_x, month_x, day_x;
     static final int DILOG_ID = 0;
@@ -125,8 +125,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         btnFocoInicialB2 = (Button) findViewById(R.id.btnFocoInicialB2);
     }
 
-    private void LoadFormControls()
-    {
+    private void LoadFormControls() {
         progressDialog = new ProgressDialog(this);
         datosCP = new DatosCodigoPostal();
 
@@ -198,8 +197,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         txt4DigitosTarjeta.setEnabled(false);
     }
 
-    public void FocusManager()
-    {
+    public void FocusManager() {
         FocusNextControl(R.id.txtDependientes, "T", R.id.spnGenero, "S");
         FocusNextControl(R.id.spnGenero, "S", R.id.spnEstadoCivil, "S");
         FocusNextControl(R.id.spnEstadoCivil, "S", R.id.txtCodigoPostal, "T");
@@ -211,8 +209,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         FocusNextControl(R.id.txtTelefonoCelular, "T", R.id.spnMarcaCelular, "S");
     }
 
-    private void EventManager()
-    {
+    private void EventManager() {
         spnGenero.setOnTouchListener(new spOcultaTeclado());
         spnEstadoCivil.setOnTouchListener(new spOcultaTeclado());
         spnColonia.setOnTouchListener(new spOcultaTeclado());
@@ -357,10 +354,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         });
     }
 
-
-
-    public void FocusNextControl(int o,String ot, int d,String dt)
-    {
+    public void FocusNextControl(int o,String ot, int d,String dt) {
         final EditText destino = (dt.toUpperCase()=="T"?(EditText) findViewById(d):null);
         final Spinner destinoS = (dt.toUpperCase()=="S"?(Spinner) findViewById(d):null);
 
@@ -407,8 +401,7 @@ public class Act_B2_Personal extends AppCompatActivity {
     }
 
     //CODIGO POSTAL
-    private class AsyncTraerDatosCodigoPostal extends AsyncTask<Void, Void, Boolean>
-    {
+    private class AsyncTraerDatosCodigoPostal extends AsyncTask<Void, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Void... params) {
             Boolean encontroCP = false;
@@ -427,14 +420,16 @@ public class Act_B2_Personal extends AppCompatActivity {
             {
                 hnEstadoMunicipioTexto.setText(datosCP.getMunicipio() + "/" + datosCP.getEstado());
                 spnColonia.setEnabled(true);
-                ColoniasAdapter = new AdapterColonias(lstCatColonia);
-                spnColonia.setAdapter(ColoniasAdapter);
+                //ColoniasAdapter = new AdapterColonias(lstCatColonia);
+                ArrayAdapter<String> adapterColonia = adapterSpinner(arrayCatColonia);
+                spnColonia.setAdapter(adapterColonia);
             }
             else
             {
                 lstCatColonia = new ArrayList<Catcolonia>();
-                ColoniasAdapter = new AdapterColonias(lstCatColonia);
-                spnColonia.setAdapter(ColoniasAdapter);
+                //ColoniasAdapter = new AdapterColonias(lstCatColonia);
+                ArrayAdapter<String> adapterColonia = adapterSpinner(arrayCatColonia);
+                spnColonia.setAdapter(adapterColonia);
                 hnEstadoMunicipioTexto.setText("");
                 txtCodigoPostal.setError(getText(R.string.msjCPNoEncontrado));
                 txtCodigoPostal.requestFocus();
@@ -512,15 +507,14 @@ public class Act_B2_Personal extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
             //EstadosCivilAdapter = new AdapterEstadosCivil(lstCatestadoscivil);
-            //spnEstadoCivil.setAdapter(EstadosCivilAdapter);
-            MarcaTelefonoAdapter = new AdapterMarcaTelefono(lstCatMarcaTelefono);
-            spnMarcaCelular.setAdapter(MarcaTelefonoAdapter);
+            ArrayAdapter<String> adapterEstadoCivil = adapterSpinner(arrayCatEstadoCivil);
+            spnEstadoCivil.setAdapter(adapterEstadoCivil);
 
-            //final ArrayAdapter<String> adapter = new ArrayAdapter<String>(Act_B2_Personal.this, android.R.layout.simple_spinner_item, ITEMS);
-            //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            ArrayAdapter<String> adapter = adapterSpinner(ITEMS);
-            spnEstadoCivil.setAdapter(adapter);
+            //MarcaTelefonoAdapter = new AdapterMarcaTelefono(lstCatMarcaTelefono);
+            ArrayAdapter<String> adapterTelefono = adapterSpinner(arrayCatMarcaTelefono);
+            spnMarcaCelular.setAdapter(adapterTelefono);
 
+            /*
             spnEstadoCivil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -537,7 +531,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                 public void onNothingSelected(AdapterView<?> parent) {
 
                 }
-            });
+            });*/
 
             new AsyncInfoBloque().execute();
         }
@@ -553,14 +547,6 @@ public class Act_B2_Personal extends AppCompatActivity {
         }
     }
 
-    public ArrayAdapter<String> adapterSpinner(ArrayList<String> arrayList )
-    {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Act_B2_Personal.this, android.R.layout.simple_spinner_item, arrayList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        return  adapter;
-    }
-
     private void GetCatEstadosCivil(){
         String SOAP_ACTION = "http://tempuri.org/IService1/GetCatEstadosCivil";
         String METHOD_NAME = "GetCatEstadosCivil";
@@ -571,14 +557,14 @@ public class Act_B2_Personal extends AppCompatActivity {
             try {
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
-                ITEMS = new ArrayList<String>();
+                arrayCatEstadoCivil = new ArrayList<String>();
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
                 for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
                     SoapObject item = (SoapObject) listaElementos.getProperty(i);
                     Catestadoscivil entidad = new Catestadoscivil();
                     entidad.setEstadocivilid(Integer.parseInt(item.getProperty("Estadocivilid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
-                    ITEMS.add(item.getProperty("Descripcion").toString());
+                    arrayCatEstadoCivil.add(item.getProperty("Descripcion").toString());
                     lstCatestadoscivil.add(entidad);
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
@@ -588,6 +574,7 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
         }
     }
+    /*
     private class AdapterEstadosCivil extends BaseAdapter implements SpinnerAdapter {
         private final List<Catestadoscivil> data;
 
@@ -622,7 +609,7 @@ public class Act_B2_Personal extends AppCompatActivity {
             text.setText(data.get(position).getDescripcion());
             return text;
         }
-    }
+    }*/
 
     private void GetCatMarcaTelefono(){
         String SOAP_ACTION = "http://tempuri.org/IService1/GetCatMarcasTelefonos";
@@ -633,15 +620,15 @@ public class Act_B2_Personal extends AppCompatActivity {
         if(respuesta != null) {
             try {
                 String[] listaRespuesta;
-
                 listaRespuesta = new String[respuesta.getPropertyCount()];
+                arrayCatMarcaTelefono = new ArrayList<String>();
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
                 for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
                     SoapObject item = (SoapObject) listaElementos.getProperty(i);
                     Catmarcastelefonos entidad = new Catmarcastelefonos();
                     entidad.setMarcaid(Integer.parseInt(item.getProperty("Marcaid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
-
+                    arrayCatMarcaTelefono.add(item.getProperty("Descripcion").toString());
                     lstCatMarcaTelefono.add(entidad);
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
@@ -651,6 +638,7 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
         }
     }
+    /*
     private class AdapterMarcaTelefono extends BaseAdapter implements SpinnerAdapter {
         private final List<Catmarcastelefonos> data;
 
@@ -684,7 +672,7 @@ public class Act_B2_Personal extends AppCompatActivity {
             text.setText(data.get(position).getDescripcion());
             return text;
         }
-    }
+    }*/
 
     private void GetCatColonia(){
         String SOAP_ACTION = "http://tempuri.org/IService1/GetCatcolonia";
@@ -705,6 +693,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                 lstCatColonia = new ArrayList<Catcolonia>();
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
+                arrayCatColonia = new ArrayList<String>();
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
                 for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
                     SoapObject item = (SoapObject) listaElementos.getProperty(i);
@@ -712,6 +701,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                     entidad.setCiudadid(item.getProperty("Ciudadid").toString());
                     entidad.setColoniaid(item.getProperty("Coloniaid").toString());
                     entidad.setColonia(item.getProperty("Colonia").toString());
+                    arrayCatColonia.add(item.getProperty("Colonia").toString());
                     lstCatColonia.add(entidad);
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
@@ -721,6 +711,7 @@ public class Act_B2_Personal extends AppCompatActivity {
             }
         }
     }
+    /*
     private class AdapterColonias extends BaseAdapter implements SpinnerAdapter {
         private final List<Catcolonia> data;
 
@@ -754,7 +745,7 @@ public class Act_B2_Personal extends AppCompatActivity {
             text.setText(data.get(position).getColonia());
             return text;
         }
-    }
+    }*/
     //LLENA SPINNER
 
 
@@ -836,8 +827,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         protected void onProgressUpdate(Void... values) {
         }
     }
-    private void GuardarDatos()
-    {
+    private void GuardarDatos() {
         String SOAP_ACTION = "http://tempuri.org/IService1/SetCatDatosIdentidadTelefono";
         String METHOD_NAME = "SetCatDatosIdentidadTelefono";
         String NAMESPACE = "http://tempuri.org/";
@@ -866,17 +856,20 @@ public class Act_B2_Personal extends AppCompatActivity {
             DatosPersonales.put("Clienteid", Sesion.getCliendeID());
             DatosPersonales.put("Genero", spnGenero.getSelectedItem().toString().substring(0, 1));
             DatosPersonales.put("Fechanacimiento", Utilerias.getDate(txtFechaNacimiento.getText().toString()));
-            DatosPersonales.put("Estadocivilid", ((Catestadoscivil) spnEstadoCivil.getSelectedItem()).getEstadocivilid());
+            //DatosPersonales.put("Estadocivilid", ((Catestadoscivil) spnEstadoCivil.getSelectedItem()).getEstadocivilid());
+            DatosPersonales.put("Estadocivilid", lstCatestadoscivil.get(spnEstadoCivil.getSelectedItemPosition() - 1).getEstadocivilid());
             DatosPersonales.put("Dependientes", txtDependientes.getText().toString());
             DatosPersonales.put("Telefono", txtTelefonoCelular.getText().toString());
-            DatosPersonales.put("Marcaid", ((Catmarcastelefonos) spnMarcaCelular.getSelectedItem()).getMarcaid());
+            //DatosPersonales.put("Marcaid", ((Catmarcastelefonos) spnMarcaCelular.getSelectedItem()).getMarcaid());
+            DatosPersonales.put("Marcaid", lstCatMarcaTelefono.get(spnMarcaCelular.getSelectedItemPosition() - 1).getMarcaid());
             DatosPersonales.put("Calle", txtCalle.getText().toString());
             DatosPersonales.put("Numeroext", txtNumeroExt.getText().toString());
             DatosPersonales.put("Numeroint", txtNumeroInt.getText().toString());
             if (NuevaColonia)
                 DatosPersonales.put("Colonia", txtNuevaColonia.getText().toString());
             else
-                DatosPersonales.put("Colonia", ((Catcolonia) spnColonia.getSelectedItem()).getColonia().toString());
+                //DatosPersonales.put("Colonia", ((Catcolonia) spnColonia.getSelectedItem()).getColonia().toString());
+                DatosPersonales.put("Colonia", lstCatColonia.get(spnColonia.getSelectedItemPosition() - 1).getColonia());
             DatosPersonales.put("Codigopostal", txtCodigoPostal.getText().toString());
             DatosPersonales.put("Paisid", datosCP.getPaisID().toString());
             DatosPersonales.put("Estadoid", datosCP.getEstadoID().toString());
@@ -1028,8 +1021,9 @@ public class Act_B2_Personal extends AppCompatActivity {
         if(catdatospersonal.getCodigopostal().trim().length()>0){
             hnEstadoMunicipioTexto.setText(datosCP.getMunicipio() + "/" + datosCP.getEstado());
             spnColonia.setEnabled(true);
-            ColoniasAdapter = new AdapterColonias(lstCatColonia);
-            spnColonia.setAdapter(ColoniasAdapter);
+            //ColoniasAdapter = new AdapterColonias(lstCatColonia);
+            ArrayAdapter<String> adapterColonia = adapterSpinner(arrayCatColonia);
+            spnColonia.setAdapter(adapterColonia);
         }
         //Preguntamos si el usuario ya ingreso o selecciono una colonia
         if(catdatospersonal.getColonia().trim().length()>0){
@@ -1058,6 +1052,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         swtCreditoHipotecario.setChecked(catidentidadcliente.getCreditohipotecario());
         swtCreditoAutomotriz.setChecked(catidentidadcliente.getCreditoautomotriz());
     }
+
     private int getIndexColonia(String myString) {
         int index = 0;
         for (int i = 0; i < lstCatColonia.size(); i++) {
@@ -1249,11 +1244,17 @@ public class Act_B2_Personal extends AppCompatActivity {
         }
     }
 
-    private void AplicaFormato(int idT, int idR)
-    {
+    private void AplicaFormato(int idT, int idR) {
         TextView t =(TextView) findViewById(idT);
         String s = getResources().getString(idR);
         CharSequence cs = Html.fromHtml(s);
         t.setText(cs);
+    }
+
+    public ArrayAdapter<String> adapterSpinner(ArrayList<String> arrayList ) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Act_B2_Personal.this, android.R.layout.simple_spinner_item, arrayList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        return  adapter;
     }
 }

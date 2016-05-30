@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -75,14 +76,16 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
     ArrayList<Catperiodosdepago> ListaCatperiodosdepago = new ArrayList<Catperiodosdepago>();
     ArrayList<Catformasdepago> ListaCatformasdepago = new ArrayList<Catformasdepago>();
 
-    AdapterCatbanco spnBancoAdapter;
-    AdapterCatformasdepago spnMedioPagoAdapter;
-    AdapterCatperiodosdepago spnFrecuenciaPagoAdapter;
+    //AdapterCatbanco spnBancoAdapter;
+    //AdapterCatformasdepago spnMedioPagoAdapter;
+    //AdapterCatperiodosdepago spnFrecuenciaPagoAdapter;
 
     Catdatosdeposito EntityCatdatosdeposito = new Catdatosdeposito();
 
     AsyncEstatusSolicitud EstatusSolicitud = new AsyncEstatusSolicitud();
     boolean CancelaEstatusSolicitud = false ;
+
+    ArrayList<String> arrayCatBanco, arrayCatFormaPago, arrayCatPeriodoPago;
 
     @Override
     public void onBackPressed() {
@@ -105,8 +108,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         }
     }
 
-    public void FocusNextControl(int o,String ot, int d,String dt )
-    {
+    public void FocusNextControl(int o,String ot, int d,String dt ) {
         final EditText destino = (dt.toUpperCase()=="T"?(EditText) findViewById(d):null);
         final Spinner destinoS = (dt.toUpperCase()=="S"?(Spinner) findViewById(d):null);
         if(ot.toUpperCase()=="T"){
@@ -275,12 +277,19 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-            spnBancoAdapter = new AdapterCatbanco(ListaCatbanco);
-            spnFrecuenciaPagoAdapter = new AdapterCatperiodosdepago(ListaCatperiodosdepago);
-            spnMedioPagoAdapter = new AdapterCatformasdepago(ListaCatformasdepago);
-            spnBanco.setAdapter(spnBancoAdapter);
-            spnMedioPago.setAdapter(spnMedioPagoAdapter);
-            spnFrecuenciaPago.setAdapter(spnFrecuenciaPagoAdapter);
+
+            //spnBancoAdapter = new AdapterCatbanco(ListaCatbanco);
+            ArrayAdapter<String> adapterBanco = adapterSpinner(arrayCatBanco);
+            spnBanco.setAdapter(adapterBanco);
+
+            //spnMedioPagoAdapter = new AdapterCatformasdepago(ListaCatformasdepago);
+            ArrayAdapter<String> adapterMedioPago = adapterSpinner(arrayCatFormaPago);
+            spnMedioPago.setAdapter(adapterMedioPago);
+
+            //spnFrecuenciaPagoAdapter = new AdapterCatperiodosdepago(ListaCatperiodosdepago);
+            ArrayAdapter<String> adapterFrecuenciaPago = adapterSpinner(arrayCatPeriodoPago);
+            spnFrecuenciaPago.setAdapter(adapterFrecuenciaPago);
+
             new AsyncInfoBloque().execute();
         }
 
@@ -304,6 +313,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
             try {
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
+                arrayCatBanco = new ArrayList<String>();
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
                 for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
                     SoapObject item = (SoapObject) listaElementos.getProperty(i);
@@ -312,6 +322,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
                     entidad.setBancoid(item.getProperty("Bancoid").toString());
                     entidad.setCodigo(Integer.parseInt(item.getProperty("Codigo").toString()));
                     entidad.setNombre(item.getProperty("Nombre").toString().trim());
+                    arrayCatBanco.add(item.getProperty("Nombre").toString().trim());
                     ListaCatbanco.add(entidad);
 
                 }
@@ -332,6 +343,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
             try {
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
+                arrayCatFormaPago = new ArrayList<String>();
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
                 for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
                     SoapObject item = (SoapObject) listaElementos.getProperty(i);
@@ -339,8 +351,8 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
                     Catformasdepago entidad = new Catformasdepago();
                     entidad.setFormadepagoid(Integer.parseInt(item.getProperty("Formadepagoid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
+                    arrayCatFormaPago.add(item.getProperty("Descripcion").toString());
                     ListaCatformasdepago.add(entidad);
-
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -359,6 +371,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
             try {
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
+                arrayCatPeriodoPago = new ArrayList<String>();
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
                 for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
                     SoapObject item = (SoapObject) listaElementos.getProperty(i);
@@ -366,8 +379,8 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
                     Catperiodosdepago entidad = new Catperiodosdepago();
                     entidad.setPeriododepagoid(Integer.parseInt(item.getProperty("Periododepagoid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
+                    arrayCatPeriodoPago.add(item.getProperty("Descripcion").toString());
                     ListaCatperiodosdepago.add(entidad);
-
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
                 Boolean ev = Boolean.parseBoolean(esValido.toString());
@@ -376,6 +389,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
             }
         }
     }
+    /*
     private class AdapterCatbanco extends BaseAdapter implements SpinnerAdapter {
         private final List<Catbanco> data;
 
@@ -478,6 +492,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
             return text;
         }
     }
+    */
     //Endregion
 
     //Region CARD IO
@@ -635,11 +650,12 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         try {
             DatosEntidad.put("Datodepositoid", EntityCatdatosdeposito.getDatodepositoid());
             DatosEntidad.put("Clienteid",Sesion.getCliendeID());
-            DatosEntidad.put("Bancoid",  ((Catbanco) spnBanco.getSelectedItem()).getBancoid());
+            //DatosEntidad.put("Bancoid",  ((Catbanco) spnBanco.getSelectedItem()).getBancoid());
+            DatosEntidad.put("Bancoid", ListaCatbanco.get(spnBanco.getSelectedItemPosition() - 1).getBancoid());
             DatosEntidad.put("NumeroDeDeposito", txtNumeroTarjetaCLABE.getText().toString());
             DatosEntidad.put("Recibenomina", swtRecibesNomina.isChecked());
-            DatosEntidad.put("Periododepagoid", ((Catperiodosdepago) spnFrecuenciaPago.getSelectedItem()).getPeriododepagoid());
-            DatosEntidad.put("Formadepagoid", ((Catformasdepago) spnMedioPago.getSelectedItem()).getFormadepagoid());
+            DatosEntidad.put("Periododepagoid", ListaCatperiodosdepago.get(spnFrecuenciaPago.getSelectedItemPosition() - 1).getPeriododepagoid());
+            DatosEntidad.put("Formadepagoid", ListaCatformasdepago.get(spnMedioPago.getSelectedItemPosition() - 1).getFormadepagoid());
             DatosEntidad.put("Fechaproxpago", Utilerias.getDate(txtFechaProximoPago.getText().toString()));
             DatosEntidad.put("UltimaAct", EntityCatdatosdeposito.getUltimaAct());
 
@@ -857,5 +873,12 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
             }
             return false;
         }
+    }
+
+    public ArrayAdapter<String> adapterSpinner(ArrayList<String> arrayList ) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Act_B3_InfDeposito.this, android.R.layout.simple_spinner_item, arrayList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        return  adapter;
     }
 }
