@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -89,6 +90,8 @@ public class Act_B2_Personal extends AppCompatActivity {
     LinearLayout lyNuevaColonia;
     Boolean NuevaColonia,edicionCP=false;
 
+    ArrayList<String> ITEMS;
+
     int year_x, month_x, day_x;
     static final int DILOG_ID = 0;
 
@@ -117,6 +120,8 @@ public class Act_B2_Personal extends AppCompatActivity {
         } else {
             EstatusSolicitud.execute();
         }
+
+
         btnFocoInicialB2 = (Button) findViewById(R.id.btnFocoInicialB2);
     }
 
@@ -214,6 +219,8 @@ public class Act_B2_Personal extends AppCompatActivity {
         spnMarcaCelular.setOnTouchListener(new spOcultaTeclado());
 
         txtTelefonoCelular.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
+
 
         txtFechaNacimiento.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -504,10 +511,34 @@ public class Act_B2_Personal extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-            EstadosCivilAdapter = new AdapterEstadosCivil(lstCatestadoscivil);
-            spnEstadoCivil.setAdapter(EstadosCivilAdapter);
+            //EstadosCivilAdapter = new AdapterEstadosCivil(lstCatestadoscivil);
+            //spnEstadoCivil.setAdapter(EstadosCivilAdapter);
             MarcaTelefonoAdapter = new AdapterMarcaTelefono(lstCatMarcaTelefono);
             spnMarcaCelular.setAdapter(MarcaTelefonoAdapter);
+
+            //final ArrayAdapter<String> adapter = new ArrayAdapter<String>(Act_B2_Personal.this, android.R.layout.simple_spinner_item, ITEMS);
+            //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            ArrayAdapter<String> adapter = adapterSpinner(ITEMS);
+            spnEstadoCivil.setAdapter(adapter);
+
+            spnEstadoCivil.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    Catestadoscivil cEC = new Catestadoscivil();
+                    if (position >= 0) {
+                        //cEC = (Catestadoscivil) spnEstadoCivil.getItemAtPosition(position);
+                        cEC = (Catestadoscivil) lstCatestadoscivil.get(position);
+                    }
+                    Toast.makeText(parent.getContext(), String.valueOf(cEC.getEstadocivilid()) + "-" +  cEC.getDescripcion() ,Toast.LENGTH_LONG).show();
+                    //Toast.makeText(parent.getContext(),((Catestadoscivil) parent.getItemAtPosition(position)).getEstadocivilid(),Toast.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+
             new AsyncInfoBloque().execute();
         }
 
@@ -522,6 +553,14 @@ public class Act_B2_Personal extends AppCompatActivity {
         }
     }
 
+    public ArrayAdapter<String> adapterSpinner(ArrayList<String> arrayList )
+    {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Act_B2_Personal.this, android.R.layout.simple_spinner_item, arrayList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        return  adapter;
+    }
+
     private void GetCatEstadosCivil(){
         String SOAP_ACTION = "http://tempuri.org/IService1/GetCatEstadosCivil";
         String METHOD_NAME = "GetCatEstadosCivil";
@@ -532,12 +571,14 @@ public class Act_B2_Personal extends AppCompatActivity {
             try {
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
+                ITEMS = new ArrayList<String>();
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
                 for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
                     SoapObject item = (SoapObject) listaElementos.getProperty(i);
                     Catestadoscivil entidad = new Catestadoscivil();
                     entidad.setEstadocivilid(Integer.parseInt(item.getProperty("Estadocivilid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
+                    ITEMS.add(item.getProperty("Descripcion").toString());
                     lstCatestadoscivil.add(entidad);
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
@@ -568,12 +609,13 @@ public class Act_B2_Personal extends AppCompatActivity {
         }
         @Override
         public View getView(int position, View recycle, ViewGroup parent) {
+
             TextView text;
             if (recycle != null){
                 text = (TextView) recycle;
             } else {
                 text = (TextView) getLayoutInflater().inflate(
-                        android.R.layout.simple_dropdown_item_1line, parent, false
+                        android.R.layout.simple_spinner_item, parent, false
                 );
             }
             text.setTextColor(Color.BLACK);
@@ -591,6 +633,7 @@ public class Act_B2_Personal extends AppCompatActivity {
         if(respuesta != null) {
             try {
                 String[] listaRespuesta;
+
                 listaRespuesta = new String[respuesta.getPropertyCount()];
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
                 for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
@@ -598,6 +641,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                     Catmarcastelefonos entidad = new Catmarcastelefonos();
                     entidad.setMarcaid(Integer.parseInt(item.getProperty("Marcaid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
+
                     lstCatMarcaTelefono.add(entidad);
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
