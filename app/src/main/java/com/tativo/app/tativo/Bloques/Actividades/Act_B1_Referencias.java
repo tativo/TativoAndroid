@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -46,8 +47,8 @@ public class Act_B1_Referencias extends AppCompatActivity {
     Button btnReferencias,btnFocoInicial;
     Spinner spnRelacionRef1,spnRelacionRef2,spnAmistadRef1,spnAmistadRef2,spnTrabajando;
     EditText txtNombreRef1,txtApellidosRef1,txtTelefonoCelularRef1,txtNombreRef2,txtApellidosRef2,txtTelefonoCelularRef2,txtNombreEmpresa,txtTelefonoRefLaboral;
-    AdapterRelacionPersonal spnRelacionRefAdapter;
-    AdapterAnio spnCatanioAdapter;
+    //AdapterRelacionPersonal spnRelacionRefAdapter;
+    //AdapterAnio spnCatanioAdapter;
     ArrayList<Catrelacionespersonal> listaCatrelacionespersonal = new ArrayList<Catrelacionespersonal>();
     ArrayList<Catanio> listaCatanio = new ArrayList<Catanio>();
     CheckBox ckReferenciasAcepta;
@@ -55,6 +56,8 @@ public class Act_B1_Referencias extends AppCompatActivity {
     Globals Sesion;
     LinearLayout lyReferencia1,lyReferencia2,lyReferenciaLaboral;
     boolean r1 = false, r2 = false, rl = false;
+
+    ArrayList<String> arrayCatRalacionPersonal, arrayCatAnio;
 
     @Override
     public void onBackPressed() {
@@ -92,8 +95,7 @@ public class Act_B1_Referencias extends AppCompatActivity {
         FocusNextControl(R.id.txtTelefonoRefLaboral, "T", R.id.spnTrabajando, "S");
     }
 
-    public void FocusNextControl(int o,String ot, int d,String dt )
-    {
+    public void FocusNextControl(int o,String ot, int d,String dt ) {
         final EditText destino = (dt.toUpperCase()=="T"?(EditText) findViewById(d):null);
         final Spinner destinoS = (dt.toUpperCase()=="S"?(Spinner) findViewById(d):null);
         if(ot.toUpperCase()=="T"){
@@ -226,14 +228,18 @@ public class Act_B1_Referencias extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             //progressDialog.dismiss();
-            spnRelacionRefAdapter = new AdapterRelacionPersonal(listaCatrelacionespersonal);
-            spnCatanioAdapter = new AdapterAnio(listaCatanio);
+            //spnRelacionRefAdapter = new AdapterRelacionPersonal(listaCatrelacionespersonal);
+            //spnCatanioAdapter = new AdapterAnio(listaCatanio);
 
-            spnRelacionRef1.setAdapter(spnRelacionRefAdapter);
-            spnRelacionRef2.setAdapter(spnRelacionRefAdapter);
-            spnAmistadRef1.setAdapter(spnCatanioAdapter);
-            spnAmistadRef2.setAdapter(spnCatanioAdapter);
-            spnTrabajando.setAdapter(spnCatanioAdapter);
+            ArrayAdapter<String> adapterRelacionPersonal = adapterSpinner(arrayCatRalacionPersonal);
+            spnRelacionRef1.setAdapter(adapterRelacionPersonal);
+            spnRelacionRef2.setAdapter(adapterRelacionPersonal);
+
+            ArrayAdapter<String> adapterAnios = adapterSpinner(arrayCatAnio);
+            spnAmistadRef1.setAdapter(adapterAnios);
+            spnAmistadRef2.setAdapter(adapterAnios);
+
+            spnTrabajando.setAdapter(adapterAnios);
 
             new AsyncInfoBloque().execute();
         }
@@ -258,12 +264,14 @@ public class Act_B1_Referencias extends AppCompatActivity {
             try {
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
+                arrayCatRalacionPersonal = new ArrayList<String>();
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
                 for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
                     SoapObject item = (SoapObject) listaElementos.getProperty(i);
                     Catrelacionespersonal entidad = new Catrelacionespersonal();
                     entidad.setRelacionid(Integer.parseInt(item.getProperty("Relacionid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
+                    arrayCatRalacionPersonal.add(item.getProperty("Descripcion").toString());
                     listaCatrelacionespersonal.add(entidad);
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
@@ -283,12 +291,14 @@ public class Act_B1_Referencias extends AppCompatActivity {
             try {
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
+                arrayCatAnio = new ArrayList<String>();
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);
                 for (int i = 0; i < listaElementos.getPropertyCount(); i++) {
                     SoapObject item = (SoapObject) listaElementos.getProperty(i);
                     Catanio entidad = new Catanio();
                     entidad.setAnioid(Integer.parseInt(item.getProperty("Anioid").toString()));
                     entidad.setDescripcion(item.getProperty("Descripcion").toString());
+                    arrayCatAnio.add(item.getProperty("Descripcion").toString());
                     listaCatanio.add(entidad);
                 }
                 SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
@@ -298,6 +308,7 @@ public class Act_B1_Referencias extends AppCompatActivity {
             }
         }
     }
+    /*
     private class AdapterRelacionPersonal extends BaseAdapter implements SpinnerAdapter {
         private final List<Catrelacionespersonal> data;
 
@@ -366,6 +377,7 @@ public class Act_B1_Referencias extends AppCompatActivity {
             return text;
         }
     }
+    */
     //Endregion
 
     //Region Existe Info del BLOQUE
@@ -604,20 +616,25 @@ public class Act_B1_Referencias extends AppCompatActivity {
         try {
             DatosEntidad.put("NombreRef1", txtNombreRef1.getText().toString());
             DatosEntidad.put("ApellidosRef1",txtApellidosRef1.getText().toString());
-            DatosEntidad.put("RelacionidRef1",  ((Catrelacionespersonal) spnRelacionRef1.getSelectedItem()).getRelacionid());
+            //DatosEntidad.put("RelacionidRef1",  ((Catrelacionespersonal) spnRelacionRef1.getSelectedItem()).getRelacionid());
+            DatosEntidad.put("RelacionidRef1",  listaCatrelacionespersonal.get(spnRelacionRef1.getSelectedItemPosition() - 1).getRelacionid());
             DatosEntidad.put("TelefonoRef1", txtTelefonoCelularRef1.getText().toString());
-            DatosEntidad.put("AñoidRef1", ((Catanio) spnAmistadRef1.getSelectedItem()).getAnioid());
+            //DatosEntidad.put("AñoidRef1", ((Catanio) spnAmistadRef1.getSelectedItem()).getAnioid());
+            DatosEntidad.put("AñoidRef1", listaCatanio.get(spnAmistadRef1.getSelectedItemPosition() - 1).getAnioid());
 
             DatosEntidad.put("NombreRef2", txtNombreRef2.getText().toString());
             DatosEntidad.put("ApellidosRef2",txtApellidosRef2.getText().toString());
-            DatosEntidad.put("RelacionidRef2", ((Catrelacionespersonal) spnRelacionRef2.getSelectedItem()).getRelacionid());
+            //DatosEntidad.put("RelacionidRef2", ((Catrelacionespersonal) spnRelacionRef2.getSelectedItem()).getRelacionid());
+            DatosEntidad.put("RelacionidRef2", listaCatrelacionespersonal.get(spnRelacionRef2.getSelectedItemPosition() - 1).getRelacionid());
             DatosEntidad.put("TelefonoRef2", txtTelefonoCelularRef2.getText().toString());
-            DatosEntidad.put("AñoidRef2", ((Catanio) spnAmistadRef2.getSelectedItem()).getAnioid());
+            //DatosEntidad.put("AñoidRef2", ((Catanio) spnAmistadRef2.getSelectedItem()).getAnioid());
+            DatosEntidad.put("AñoidRef1", listaCatanio.get(spnAmistadRef2.getSelectedItemPosition() - 1).getAnioid());
 
 
             DatosEntidad.put("NombreEmpresa", txtNombreEmpresa.getText().toString());
             DatosEntidad.put("TelefonoEmpresa", txtTelefonoRefLaboral.getText().toString());
-            DatosEntidad.put("AñoidEmpresa", ((Catanio) spnTrabajando.getSelectedItem()).getAnioid());
+            //DatosEntidad.put("AñoidEmpresa", ((Catanio) spnTrabajando.getSelectedItem()).getAnioid());
+            DatosEntidad.put("AñoidEmpresa", listaCatanio.get(spnTrabajando.getSelectedItemPosition() - 1).getAnioid());
 
             //Campos de los controles ocultos debemos considerar que tienen valor para el momento en que
             //la app lo posicione sobre el bloque actual carge los datos que guardo con anterioridad
@@ -647,5 +664,12 @@ public class Act_B1_Referencias extends AppCompatActivity {
             }
             return false;
         }
+    }
+
+    public ArrayAdapter<String> adapterSpinner(ArrayList<String> arrayList ) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Act_B1_Referencias.this, android.R.layout.simple_spinner_item, arrayList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        return  adapter;
     }
 }
