@@ -299,7 +299,8 @@ public class Act_B5_General extends AppCompatActivity {
                     initializedAdapter = parent.getAdapter();
                     return;
                 }
-                Catactividadentretenimiento cat = (Catactividadentretenimiento) parent.getItemAtPosition(position);
+                //Catactividadentretenimiento cat = (Catactividadentretenimiento) parent.getItemAtPosition(position);
+                Catactividadentretenimiento cat = lstactividadentretenimiento.get(position);
                 if (cat.getDescripcion().toString().toLowerCase().equals("otro")) {
                     lyEspecificaActividad.setVisibility(View.VISIBLE);
                     txtEspecificaActividad.requestFocus();
@@ -324,7 +325,7 @@ public class Act_B5_General extends AppCompatActivity {
                     initializedAdapter = parent.getAdapter();
                     return;
                 }
-                Catingresoextra cat = (Catingresoextra) parent.getItemAtPosition(position);
+                Catingresoextra cat = lstIngresoExtra.get(position);
                 if (cat.getDescripcion().toString().equals("$0")) {
                     lyIngresoExtra.setVisibility(View.GONE);
                     txtParaQue.requestFocus();

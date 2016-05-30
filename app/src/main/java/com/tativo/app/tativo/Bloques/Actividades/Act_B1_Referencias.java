@@ -83,13 +83,13 @@ public class Act_B1_Referencias extends AppCompatActivity {
         FocusNextControl(R.id.txtApellidosRef1, "T", R.id.spnRelacionRef1, "S");
         FocusNextControl(R.id.spnRelacionRef1, "S", R.id.txtTelefonoCelularRef1, "T");
         FocusNextControl(R.id.txtTelefonoCelularRef1, "T", R.id.spnAmistadRef1, "S");
-        FocusNextControl(R.id.spnAmistadRef1, "S", R.id.txtNombreRef2, "T");
+        //FocusNextControl(R.id.spnAmistadRef1, "S", R.id.txtNombreRef2, "T");
 
         FocusNextControl(R.id.txtNombreRef2, "T", R.id.txtApellidosRef2, "T");
         FocusNextControl(R.id.txtApellidosRef2, "T", R.id.spnRelacionRef2, "S");
         FocusNextControl(R.id.spnRelacionRef2, "S", R.id.txtTelefonoCelularRef2, "T");
         FocusNextControl(R.id.txtTelefonoCelularRef2, "T", R.id.spnAmistadRef2, "S");
-        FocusNextControl(R.id.spnAmistadRef2, "S", R.id.txtNombreEmpresa, "T");
+        //FocusNextControl(R.id.spnAmistadRef2, "S", R.id.txtNombreEmpresa, "T");
 
         FocusNextControl(R.id.txtNombreEmpresa, "T", R.id.txtTelefonoRefLaboral, "T");
         FocusNextControl(R.id.txtTelefonoRefLaboral, "T", R.id.spnTrabajando, "S");
@@ -198,7 +198,53 @@ public class Act_B1_Referencias extends AppCompatActivity {
     }
     private void EventManager() {
         spnRelacionRef1.setOnTouchListener(new spOcultaTeclado());
+        spnRelacionRef1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position >= 0)
+                {
+                    if (listaCatrelacionespersonal.get(spnRelacionRef1.getSelectedItemPosition() - 1).getDescripcion().equals("Familiar"))
+                    {
+                        spnAmistadRef1.setSelection(getIndexAnio("Mas de 10 años"));
+                        spnAmistadRef1.setEnabled(false);
+                    }
+                    else {
+                        spnAmistadRef1.setSelection(0);
+                        spnAmistadRef1.setEnabled(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         spnRelacionRef2.setOnTouchListener(new spOcultaTeclado());
+        spnRelacionRef2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position >= 0)
+                {
+                    if (listaCatrelacionespersonal.get(spnRelacionRef2.getSelectedItemPosition() - 1).getDescripcion().equals("Familiar"))
+                    {
+                        spnAmistadRef2.setSelection(getIndexAnio("Mas de 10 años"));
+                        spnAmistadRef2.setEnabled(false);
+                    }
+                    else {
+                        spnAmistadRef2.setSelection(0);
+                        spnAmistadRef2.setEnabled(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         spnAmistadRef1.setOnTouchListener(new spOcultaTeclado());
         spnAmistadRef2.setOnTouchListener(new spOcultaTeclado());
         spnTrabajando.setOnTouchListener(new spOcultaTeclado());
@@ -628,7 +674,7 @@ public class Act_B1_Referencias extends AppCompatActivity {
             DatosEntidad.put("RelacionidRef2", listaCatrelacionespersonal.get(spnRelacionRef2.getSelectedItemPosition() - 1).getRelacionid());
             DatosEntidad.put("TelefonoRef2", txtTelefonoCelularRef2.getText().toString());
             //DatosEntidad.put("AñoidRef2", ((Catanio) spnAmistadRef2.getSelectedItem()).getAnioid());
-            DatosEntidad.put("AñoidRef1", listaCatanio.get(spnAmistadRef2.getSelectedItemPosition() - 1).getAnioid());
+            DatosEntidad.put("AñoidRef2", listaCatanio.get(spnAmistadRef2.getSelectedItemPosition() - 1).getAnioid());
 
 
             DatosEntidad.put("NombreEmpresa", txtNombreEmpresa.getText().toString());
@@ -671,5 +717,15 @@ public class Act_B1_Referencias extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         return  adapter;
+    }
+
+    private int getIndexAnio(String myString) {
+        int index = 0;
+        for (int i = 0; i < listaCatanio.size(); i++) {
+            if (listaCatanio.get(i).getDescripcion().toUpperCase().trim().equals(myString.toUpperCase())) {
+                index = i + 1;
+            }
+        }
+        return index;
     }
 }
