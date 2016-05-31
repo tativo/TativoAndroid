@@ -62,10 +62,10 @@ public class Act_B4_Laboral extends AppCompatActivity {
     Boolean NuevaColonia,edicionCP=false;
     DatosCodigoPostal datosCP;
     ArrayList<Catcolonia> lstCatColonia = new ArrayList<Catcolonia>();
-    ArrayList<String> s_lstCatColonia= new ArrayList<String>();
+    ArrayList<String> s_lstCatColonia;
     ArrayAdapter<String> ColoniasAdapter;
     TextView hnEstadoMunicipioTexto, txtAgregarColonia;
-    LinearLayout lyNuevaColonia;
+    LinearLayout lyNuevaColonia, lyColonia;
 
     ArrayAdapter<String> AreasLaboralesAdapter;
     ArrayList<String> s_lstCatAreasLaborales= new ArrayList<String>();
@@ -105,6 +105,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
         datosCP = new DatosCodigoPostal();
         NuevaColonia = false;
 
+
         catdatosempleo = new Catdatosempleo();
         catdatosempleo.setDatosempleoid("");
         catdatosempleo.setUltimaAct(0);
@@ -116,6 +117,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
         hnEstadoMunicipioTexto = (TextView) findViewById(R.id.hnEstadoMunicipioTexto);
 
         lyNuevaColonia = (LinearLayout) findViewById(R.id.lyNuevaColonia);
+        lyColonia = (LinearLayout) findViewById(R.id.lyColonia);
 
         btnCancelNuevacolonia = (Button) findViewById(R.id.btnCancelNuevacolonia);
 
@@ -131,6 +133,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
         spnColonia = (MaterialSpinner) findViewById(R.id.spnColonia);
         spnAreaLaboral = (MaterialSpinner) findViewById(R.id.spnAreaLaboral);
 
+        txtAgregarColonia.setEnabled(false);
         spnColonia.setEnabled(false);
     }
 
@@ -179,6 +182,8 @@ public class Act_B4_Laboral extends AppCompatActivity {
                             hnEstadoMunicipioTexto.setText("");
                             spnColonia.setSelection(0);
                             spnColonia.setEnabled(false);
+                            lyColonia.setBackgroundResource(R.drawable.border_disable);
+                            txtAgregarColonia.setEnabled(false);
                         }
                     }
                     edicionCP = false;
@@ -211,6 +216,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
                 spnColonia.setSelection(0);
                 spnColonia.setEnabled(false);
                 NuevaColonia = true;
+                lyColonia.setBackgroundResource(R.drawable.border_disable);
                 txtNuevaColonia.requestFocus();
             }
         });
@@ -221,6 +227,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
                 lyNuevaColonia.setVisibility(View.GONE);
                 spnColonia.setEnabled(true);
                 NuevaColonia = false;
+                lyColonia.setBackgroundResource(R.drawable.border);
                 txtCalle.requestFocus();
             }
         });
@@ -297,6 +304,8 @@ public class Act_B4_Laboral extends AppCompatActivity {
                 spnColonia.setEnabled(true);
                 ColoniasAdapter = adapterSpinner(s_lstCatColonia);
                 spnColonia.setAdapter(ColoniasAdapter);
+                txtAgregarColonia.setEnabled(true);
+                lyColonia.setBackgroundResource(R.drawable.border);
             }
             else
             {
@@ -304,6 +313,8 @@ public class Act_B4_Laboral extends AppCompatActivity {
                 txtCodigoPostal.setError(getText(R.string.msjCPNoEncontrado));
                 txtCodigoPostal.requestFocus();
                 spnColonia.setEnabled(false);
+                lyColonia.setBackgroundResource(R.drawable.border_disable);
+                txtAgregarColonia.setEnabled(false);
             }
         }
 
@@ -475,6 +486,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
         if(respuesta != null) {
             try {
                 lstCatColonia = new ArrayList<Catcolonia>();
+                s_lstCatColonia= new ArrayList<String>();
                 String[] listaRespuesta;
                 listaRespuesta = new String[respuesta.getPropertyCount()];
                 SoapObject listaElementos = (SoapObject) respuesta.getProperty(0);

@@ -97,7 +97,8 @@
                     android:id="@+id/swtTienesAutomovil"
                     style="@style/TativoSwitch"/>
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBordeSwitch">
+            <LinearLayout android:id="@+id/lyEsPropio"
+                style="@style/TativoLinearLayoutBordeSwitchDisable">
                 <TextView
                     android:id="@+id/lblEsPropio"
                     android:hint="@string/swtEsPropio"

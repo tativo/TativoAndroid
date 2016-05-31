@@ -70,7 +70,7 @@ public class Act_B5_General extends AppCompatActivity {
     Switch swtTienesAutomovil, swtEsPropio;
     CheckBox ckTieneCelular, ckTieneTablet, ckTieneComputadora;
     Button btnInfGeneral, btnFocoInicialB5;
-    LinearLayout lyEspecificaActividad, lyIngresoExtra;
+    LinearLayout lyEspecificaActividad, lyIngresoExtra, lyEsPropio;
 
     Globals Sesion;
     ProgressDialog progressDialog;
@@ -185,6 +185,7 @@ public class Act_B5_General extends AppCompatActivity {
 
         lyEspecificaActividad = (LinearLayout) findViewById(R.id.lyEspecificaActividad);
         lyIngresoExtra = (LinearLayout) findViewById(R.id.lyIngresoExtra);
+        lyEsPropio = (LinearLayout) findViewById(R.id.lyEsPropio);
 
         btnFocoInicialB5 = (Button) findViewById(R.id.btnFocoInicialB5);
         btnInfGeneral = (Button) findViewById(R.id.btnInfGeneral);
@@ -283,10 +284,15 @@ public class Act_B5_General extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked)
+                {
                     swtEsPropio.setEnabled(true);
+                    lyEsPropio.setBackgroundResource(R.drawable.border);
+                }
+
                 else {
                     swtEsPropio.setChecked(false);
                     swtEsPropio.setEnabled(false);
+                    lyEsPropio.setBackgroundResource(R.drawable.border_disable);
                 }
             }
         });

@@ -87,7 +87,7 @@ public class Act_B2_Personal extends AppCompatActivity {
     ArrayList<Catestadoscivil> lstCatestadoscivil = new ArrayList<Catestadoscivil>();
     ArrayList<Catmarcastelefonos> lstCatMarcaTelefono = new ArrayList<Catmarcastelefonos>();
     ArrayList<Catcolonia> lstCatColonia = new ArrayList<Catcolonia>();
-    LinearLayout lyNuevaColonia;
+    LinearLayout lyNuevaColonia, ly4DigitosTarjeta, lyColonia;
     Boolean NuevaColonia,edicionCP=false;
 
     ArrayList<String> arrayCatEstadoCivil, arrayCatMarcaTelefono, arrayCatColonia;
@@ -142,7 +142,9 @@ public class Act_B2_Personal extends AppCompatActivity {
         txtNuevaColonia = (AutoCompleteTextView) findViewById(R.id.txtNuevaColonia);
 
         txtAgregarColonia = (TextView) findViewById(R.id.txtAgregarColonia);
+        lyColonia = (LinearLayout) findViewById(R.id.lyColonia);
         lyNuevaColonia = (LinearLayout) findViewById(R.id.lyNuevaColonia);
+        ly4DigitosTarjeta = (LinearLayout) findViewById(R.id.ly4DigitosTarjeta);
         btnCancelNuevacolonia = (Button) findViewById(R.id.btnCancelNuevacolonia);
 
         spnGenero = (MaterialSpinner) findViewById(R.id.spnGenero);
@@ -178,12 +180,14 @@ public class Act_B2_Personal extends AppCompatActivity {
 
         hnEstadoMunicipioTexto = (TextView) findViewById(R.id.hnEstadoMunicipioTexto);
 
-        NuevaColonia = false;
+
         final Calendar cal = Calendar.getInstance();
         year_x = cal.get(Calendar.YEAR);
         month_x = cal.get(Calendar.MONTH);
         day_x = cal.get(Calendar.DAY_OF_MONTH);
 
+        NuevaColonia = false;
+        txtAgregarColonia.setEnabled(false);
         spnColonia.setEnabled(false);
 
         catdatospersonal = new Catdatospersonal();
@@ -245,10 +249,12 @@ public class Act_B2_Personal extends AppCompatActivity {
                 if (isChecked) {
                     txt4DigitosTarjeta.setEnabled(true);
                     txt4DigitosTarjeta.requestFocus();
+                    ly4DigitosTarjeta.setBackgroundResource(R.drawable.border);
                 } else {
                     txt4DigitosTarjeta.setEnabled(false);
                     txt4DigitosTarjeta.setText("");
                     txtTelefonoCelular.requestFocus();
+                    ly4DigitosTarjeta.setBackgroundResource(R.drawable.border_disable);
                 }
             }
         });
@@ -266,6 +272,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                             hnEstadoMunicipioTexto.setText("");
                             spnColonia.setSelection(0);
                             spnColonia.setEnabled(false);
+                            lyColonia.setBackgroundResource(R.drawable.border_disable);
                         }
                     }
                     edicionCP = false;
@@ -308,6 +315,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                 spnColonia.setSelection(0);
                 spnColonia.setEnabled(false);
                 NuevaColonia = true;
+                lyColonia.setBackgroundResource(R.drawable.border_disable);
                 txtNuevaColonia.requestFocus();
             }
         });
@@ -317,6 +325,7 @@ public class Act_B2_Personal extends AppCompatActivity {
                 lyNuevaColonia.setVisibility(View.GONE);
                 spnColonia.setEnabled(true);
                 NuevaColonia = false;
+                lyColonia.setBackgroundResource(R.drawable.border);
                 txtCalle.requestFocus();
             }
         });
@@ -420,20 +429,20 @@ public class Act_B2_Personal extends AppCompatActivity {
             {
                 hnEstadoMunicipioTexto.setText(datosCP.getMunicipio() + "/" + datosCP.getEstado());
                 spnColonia.setEnabled(true);
+                lyColonia.setBackgroundResource(R.drawable.border);
                 //ColoniasAdapter = new AdapterColonias(lstCatColonia);
                 ArrayAdapter<String> adapterColonia = adapterSpinner(arrayCatColonia);
                 spnColonia.setAdapter(adapterColonia);
+                txtAgregarColonia.setEnabled(true);
             }
             else
             {
-                lstCatColonia = new ArrayList<Catcolonia>();
-                //ColoniasAdapter = new AdapterColonias(lstCatColonia);
-                ArrayAdapter<String> adapterColonia = adapterSpinner(arrayCatColonia);
-                spnColonia.setAdapter(adapterColonia);
                 hnEstadoMunicipioTexto.setText("");
                 txtCodigoPostal.setError(getText(R.string.msjCPNoEncontrado));
                 txtCodigoPostal.requestFocus();
                 spnColonia.setEnabled(false);
+                lyColonia.setBackgroundResource(R.drawable.border_disable);
+                txtAgregarColonia.setEnabled(false);
             }
         }
 

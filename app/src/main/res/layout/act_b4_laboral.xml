@@ -42,8 +42,10 @@
                     android:id="@+id/hnEstadoMunicipioTexto"
                     android:singleLine="false"/>
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde">
+            <LinearLayout android:id="@+id/lyColonia"
+                style="@style/TativoLinearLayoutBordeDisable">
                 <RelativeLayout
+                    android:background="@android:color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
