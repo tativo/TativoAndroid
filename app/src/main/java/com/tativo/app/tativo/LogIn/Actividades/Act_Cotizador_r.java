@@ -73,6 +73,11 @@ public class Act_Cotizador_r extends AppCompatActivity {
     int year_x, month_x, day_x;
     //static final int DILOG_ID = 0;
 
+    //Configuracion de la imagen.
+    int i = 0;
+    AsyncImageHandler imageHandler =   new AsyncImageHandler();
+    boolean CancelaImageHandler = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,16 +214,21 @@ public class Act_Cotizador_r extends AppCompatActivity {
     //End Region
 
     //Region Manejador de imagenes de la pantalla principal
-    int i = 0;
-    AsyncImageHandler imageHandler = null;
     private class AsyncImageHandler extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
-            int i=1;
-            while (i<=3) {
+            int MiliSegundos = 0;
+            while(true) {
                 try {
+                    if (isCancelled()) {
+                        CancelaImageHandler = true;
+                        break;
+                    }
 
-                    if(i==2){
+                    if(MiliSegundos>3500)
+                        break;
+
+                    if(MiliSegundos==2000){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -229,7 +239,7 @@ public class Act_Cotizador_r extends AppCompatActivity {
                             }
                         });
                     }
-                    if(i==3){
+                    if(MiliSegundos==3500){
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -240,12 +250,8 @@ public class Act_Cotizador_r extends AppCompatActivity {
                             }
                         });
                     }
-                    if(i==1){
-                        Thread.sleep(2000);
-                    }else{
-                        Thread.sleep(1500);
-                    }
-                    i++;
+                    Thread.sleep(500);
+                    MiliSegundos += 500;
                 } catch (InterruptedException ex) {
                 }
             }
@@ -288,7 +294,6 @@ public class Act_Cotizador_r extends AppCompatActivity {
             spnFechaPago.setViewAdapter(new FechaPagoAdapter(getApplicationContext(), FechasPago));
             spnImporte.setViewAdapter(new ImporteAdapter(getApplicationContext(), Importes));
             spnImporte.setCurrentItem(Importes.indexOf(2000.00));
-            imageHandler =   new AsyncImageHandler();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                 imageHandler.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             } else {
