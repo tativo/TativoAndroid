@@ -91,8 +91,7 @@ public class Frg_Contrato extends DialogFragment  {
         return builder.create();
     }
 
-    public void LoadFormControls()
-    {
+    public void LoadFormControls() {
         progressDialog = new ProgressDialog(getActivity());
 
         datosPagare = new DatosDocumentoPagare();
@@ -155,8 +154,7 @@ public class Frg_Contrato extends DialogFragment  {
         btnAceptaPagare.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
     }
 
-    public void EventManager()
-    {
+    public void EventManager() {
         ckTerminosCaratula.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -228,26 +226,25 @@ public class Frg_Contrato extends DialogFragment  {
         });
     }
 
-    public void CargaDocumentosContrato()
-    {
+    public void CargaDocumentosContrato() {
         //CONTRATO
-        String[] c = {"xXxXxXxXxXx"};
+        String[] c = {datosContrato.getEmpresa_Nombre()};
         AplicaFormato(R.id.lblContratoOperacionP1, R.string.lblContratoOperacionP1, c);
         AplicaFormato(R.id.lblAntecedentes, R.string.lblAntecedentes, null);
 
-        c = new String[]{"www.tativo.com"};
+        c = new String[]{datosContrato.getEmpresa_PaginaWEB()};
         AplicaFormato(R.id.lblAntecedentesP1, R.string.lblAntecedentesP1, c);
         AplicaFormato(R.id.lblDeclaraciones, R.string.lblDeclaraciones, null);
         AplicaFormato(R.id.lblDeclaracionesP1, R.string.lblDeclaracionesP1, null);
 
-        c = new String[]{"01","20 de Abril de 2016","Nombre Licenciado","001"};
+        c = new String[]{datosContrato.getEmpresa_EscrituraPublica()};
         AplicaFormato(R.id.lblDeclaracionesP1a, R.string.lblDeclaracionesP1a, c);
         AplicaFormato(R.id.lblDeclaracionesP1b, R.string.lblDeclaracionesP1b, null);
 
-        c = new String[]{"xXxXxXxXxXx"};
+        c = new String[]{datosContrato.getEmpresa_RFC()};
         AplicaFormato(R.id.lblDeclaracionesP1c, R.string.lblDeclaracionesP1c, c);
 
-        c = new String[]{"xXxXxXxXxXx"};
+        c = new String[]{datosContrato.getEmpresa_Direccion()};
         AplicaFormato(R.id.lblDeclaracionesP1d, R.string.lblDeclaracionesP1d, c);
 
         c = new String[]{"xXxXxXxXxXx"};
@@ -272,7 +269,7 @@ public class Frg_Contrato extends DialogFragment  {
         AplicaFormato(R.id.lblClausulas, R.string.lblClausulas, null);
         AplicaFormato(R.id.lblClausulasPrimera, R.string.lblClausulasPrimera, null);
 
-        c = new String[]{datosContrato.getNumeroDeDeposito()};
+        c = new String[]{"---------"};
         AplicaFormato(R.id.lblClausulasPrimeraP2, R.string.lblClausulasPrimeraP2, c);
         AplicaFormato(R.id.lblClausulasSegunda, R.string.lblClausulasSegunda, null);
         AplicaFormato(R.id.lblClausulasTercera, R.string.lblClausulasTercera, null);
@@ -290,19 +287,9 @@ public class Frg_Contrato extends DialogFragment  {
         AplicaFormato(R.id.lblClausulasSextaP3, R.string.lblClausulasSextaP3, null);
 
 
-        lblDomiciliacionNombre.setText(datosContrato.getNombreCompleto());
-        lblDomiciliacionBanco.setText(datosContrato.getBanco());
-        if (datosContrato.getNumeroDeDeposito().toString().length() == 16)
-        {
-            lblDomiciliacionTarjetaDebido.setText(datosContrato.getNumeroDeDeposito());
-            lblDomiciliacionCLABE.setText("-");
-        }
-        else
-        {
-            lblDomiciliacionCLABE.setText(datosContrato.getNumeroDeDeposito());
-            lblDomiciliacionTarjetaDebido.setText("-");
-        }
-
+        lblDomiciliacionEmisor.setText(datosContrato.getEmpresa_Nombre());
+        lblDomiciliacionRFC.setText(datosContrato.getEmpresa_RFC());
+        lblDomiciliacionDomicilio.setText(datosContrato.getEmpresa_Direccion());
 
 
         AplicaFormato(R.id.lblClausulasSeptima, R.string.lblClausulasSeptima, null);
@@ -321,22 +308,25 @@ public class Frg_Contrato extends DialogFragment  {
         AplicaFormato(R.id.lblClausulasDecimaSegundaP2, R.string.lblClausulasDecimaSegundaP2, null);
         AplicaFormato(R.id.lblClausulasDecimaSegundaI, R.string.lblClausulasDecimaSegundaI, null);
         AplicaFormato(R.id.lblClausulasDecimaSegundaII, R.string.lblClausulasDecimaSegundaII, null);
-        AplicaFormato(R.id.lblClausulasDecimaTercera, R.string.lblClausulasDecimaTercera, null);
+
+        c = new String[]{datosContrato.getEmpresa_CorreoAtencion()};
+        AplicaFormato(R.id.lblClausulasDecimaTercera, R.string.lblClausulasDecimaTercera, c);
         AplicaFormato(R.id.lblClausulasDecimaCuarta, R.string.lblClausulasDecimaCuarta, null);
         AplicaFormato(R.id.lblClausulasDecimaQuinta, R.string.lblClausulasDecimaQuinta, null);
         AplicaFormato(R.id.lblClausulasDecimaQuintaI, R.string.lblClausulasDecimaQuintaI, null);
         AplicaFormato(R.id.lblClausulasDecimaQuintaII, R.string.lblClausulasDecimaQuintaII, null);
 
-        c = new String[]{"www.tativo.com","www.tativo.com"};
+        c = new String[]{datosContrato.getEmpresa_PaginaWEB(),datosContrato.getEmpresa_PaginaWEB()};
         AplicaFormato(R.id.lblClausulasDecimaQuintaIII, R.string.lblClausulasDecimaQuintaIII, c);
         AplicaFormato(R.id.lblClausulasDecimaQuintaIIIP2, R.string.lblClausulasDecimaQuintaIIIP2, null);
 
-        c = new String[]{"www.tativo.com"};
+        c = new String[]{datosContrato.getEmpresa_PaginaWEB()};
         AplicaFormato(R.id.lblClausulasDecimaSexta, R.string.lblClausulasDecimaSexta, c);
         AplicaFormato(R.id.lblClausulasDecimaSextaP2, R.string.lblClausulasDecimaSextaP2, null);
         AplicaFormato(R.id.lblClausulasDecimaSextaP3, R.string.lblClausulasDecimaSextaP3, null);
 
-        c = new String[]{"www.tativo.com","3","(667) 716-7418",datosContrato.getCorreo()};
+        c = new String[]{datosContrato.getEmpresa_PaginaWEB(),datosContrato.getEmpresa_Direccion().replace(',','.'),datosContrato.getEmpresa_Telefono(),datosContrato.getCorreo()};
+        //c = new String[]{"","","",""};
         AplicaFormato(R.id.lblClausulasDecimaSeptima, R.string.lblClausulasDecimaSeptima, c);
         AplicaFormato(R.id.lblClausulasDecimaSeptimaP2, R.string.lblClausulasDecimaSeptimaP2, null);
         AplicaFormato(R.id.lblClausulasDecimaSeptimaP3, R.string.lblClausulasDecimaSeptimaP3, null);
@@ -353,8 +343,7 @@ public class Frg_Contrato extends DialogFragment  {
         //CONTRATO
     }
 
-    public void  CargaDocumentosPagare()
-    {
+    public void  CargaDocumentosPagare() {
         NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
         nf.setMaximumFractionDigits(2);
 
@@ -367,7 +356,7 @@ public class Frg_Contrato extends DialogFragment  {
         p = new String[]{nf.format(datosPagare.getFinanciamiento())};
         AplicaFormato(R.id.lblBuenoPor, R.string.lblBuenoPor, p);
 
-        p = new String[]{new SimpleDateFormat("dd 'de' MMMM 'de' yyyy").format(datosPagare.getFechaVence()), nf.format(datosPagare.getFinanciamiento()),datosPagare.getFinanciamientoLetra()};
+        p = new String[]{new SimpleDateFormat("dd 'de' MMMM 'de' yyyy").format(datosPagare.getFechaVence()), datosPagare.getEmpresa_Direccion(), nf.format(datosPagare.getFinanciamiento()),datosPagare.getFinanciamientoLetra()};
         AplicaFormato(R.id.lblPagareP1, R.string.lblPagareP1, p);
 
         p = new String[]{datosPagare.getFolio(),new SimpleDateFormat("dd 'de' MMMM 'de' yyyy").format(datosPagare.getFechaSolicitud())};
@@ -404,8 +393,7 @@ public class Frg_Contrato extends DialogFragment  {
         //PAGARE
     }
 
-    private void AplicaFormato(int idT, int idR, @Nullable String[] lstP)
-    {
+    private void AplicaFormato(int idT, int idR, @Nullable String[] lstP) {
         //String par = TextUtils.htmlEncode("prueba");
         TextView t =(TextView) v.findViewById(idT);
         String s = getResources().getString(idR);
@@ -523,6 +511,8 @@ public class Frg_Contrato extends DialogFragment  {
                         datosPagare.setCiudad(iPagare.getProperty("Ciudad").toString());
                         datosPagare.setMunicipio(iPagare.getProperty("Municipio").toString());
                         datosPagare.setEstado(iPagare.getProperty("Estado").toString());
+
+                        datosPagare.setEmpresa_Direccion(iPagare.getProperty("Empresa_Direccion").toString());
                     }
 
                     if(iCaratula.getProperty("ClienteID") != null)
@@ -544,6 +534,12 @@ public class Frg_Contrato extends DialogFragment  {
                         datosCaratula.setNumeroContrato(iCaratula.getProperty("NumeroContrato").toString());
                         datosCaratula.setFechaContrato(iCaratula.getProperty("FechaContrato").toString());
                         datosCaratula.setPlazo(Integer.parseInt(iCaratula.getProperty("Plazo").toString()));
+
+                        datosCaratula.setEmpresa_Nombre(iCaratula.getProperty("Empresa_Nombre").toString());
+                        datosCaratula.setEmpresa_RFC(iCaratula.getProperty("Empresa_RFC").toString());
+                        datosCaratula.setEmpresa_Direccion(iCaratula.getProperty("Empresa_Direccion").toString());
+                        datosCaratula.setEmpresa_Telefono(iCaratula.getProperty("Empresa_Telefono").toString());
+                        datosCaratula.setEmpresa_Correo(iCaratula.getProperty("Empresa_Correo").toString());
                     }
 
                     if(iContrato.getProperty("Clienteid") != null)
@@ -555,7 +551,15 @@ public class Frg_Contrato extends DialogFragment  {
                         datosContrato.setNumeroDeDeposito(iContrato.getProperty("NumeroDeDeposito").toString());
                         datosContrato.setRFC(iContrato.getPrimitivePropertyAsString("RFC").toString());
                         datosContrato.setNacionalidad(iContrato.getPrimitivePropertyAsString("Nacionalidad").toString());
-                        //datosContrato.setNacionalidad(String.valueOf(iContrato.getProperty("Nacionalidad")));
+
+                        datosContrato.setEmpresa_Nombre(iContrato.getProperty("Empresa_Nombre").toString());
+                        datosContrato.setEmpresa_PaginaWEB(iContrato.getProperty("Empresa_PaginaWEB").toString());
+                        datosContrato.setEmpresa_EscrituraPublica(iContrato.getProperty("Empresa_EscrituraPublica").toString());
+                        datosContrato.setEmpresa_RFC(iContrato.getProperty("Empresa_RFC").toString());
+                        datosContrato.setEmpresa_ContratoAdhesion(iContrato.getProperty("Empresa_ContratoAdhesion").toString());
+                        datosContrato.setEmpresa_CorreoAtencion(iContrato.getProperty("Empresa_CorreoAtencion").toString());
+                        datosContrato.setEmpresa_Direccion(iContrato.getProperty("Empresa_Direccion").toString());
+                        datosContrato.setEmpresa_Telefono(iContrato.getProperty("Empresa_Telefono").toString());
                     }
                 }
             } catch (Exception e) {
@@ -569,7 +573,11 @@ public class Frg_Contrato extends DialogFragment  {
 
         if (datosCaratula.getClienteID() != null)
         {
-            //TextView lblCaratulaNombreComercial, lblCaratulaRFC, lblCaratulaDireccion, lblCaratulaTelefono, lblCaratulaCorreo, , ,
+            lblCaratulaNombreComercial.setText(datosCaratula.getEmpresa_Nombre());
+            lblCaratulaRFC.setText(datosCaratula.getEmpresa_RFC());
+            lblCaratulaDireccion.setText(datosCaratula.getEmpresa_Direccion());
+            lblCaratulaTelefono.setText(datosCaratula.getEmpresa_Telefono());
+            lblCaratulaCorreo.setText(datosCaratula.getEmpresa_Correo());
 
             lblCaratulaNombreCompleto.setText(datosCaratula.getNombreCompleto());
             lblCaratulaDireccionAcreditado.setText(datosCaratula.getDomicilio());

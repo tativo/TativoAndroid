@@ -23,6 +23,11 @@ public class DatosDocumentoCaratula {
     private String NumeroContrato;
     private String FechaContrato;
     private int Plazo;
+    private String Empresa_Nombre;
+    private String Empresa_RFC;
+    private String Empresa_Direccion;
+    private String Empresa_Telefono;
+    private String Empresa_Correo;
 
     public String getClienteID() {
         return ClienteID;
@@ -158,5 +163,45 @@ public class DatosDocumentoCaratula {
 
     public void setPlazo(int plazo) {
         Plazo = plazo;
+    }
+
+    public String getEmpresa_Nombre() {
+        return Empresa_Nombre;
+    }
+
+    public void setEmpresa_Nombre(String empresa_Nombre) {
+        Empresa_Nombre = empresa_Nombre;
+    }
+
+    public String getEmpresa_RFC() {
+        return Empresa_RFC;
+    }
+
+    public void setEmpresa_RFC(String empresa_RFC) {
+        Empresa_RFC = empresa_RFC;
+    }
+
+    public String getEmpresa_Direccion() {
+        return Empresa_Direccion;
+    }
+
+    public void setEmpresa_Direccion(String empresa_Direccion) {
+        Empresa_Direccion = empresa_Direccion;
+    }
+
+    public String getEmpresa_Telefono() {
+        return Empresa_Telefono;
+    }
+
+    public void setEmpresa_Telefono(String empresa_Telefono) {
+        Empresa_Telefono = empresa_Telefono;
+    }
+
+    public String getEmpresa_Correo() {
+        return Empresa_Correo;
+    }
+
+    public void setEmpresa_Correo(String empresa_Correo) {
+        Empresa_Correo = empresa_Correo;
     }
 }

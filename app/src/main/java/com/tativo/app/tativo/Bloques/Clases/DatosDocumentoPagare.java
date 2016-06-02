@@ -32,6 +32,8 @@ public class DatosDocumentoPagare {
     private String Ciudad;
     private String Municipio;
     private String Estado;
+    private String Empresa_Direccion;
+
 
     public String getFolio() {
         return Folio;
@@ -239,5 +241,13 @@ public class DatosDocumentoPagare {
 
     public void setEstado(String estado) {
         Estado = estado;
+    }
+
+    public String getEmpresa_Direccion() {
+        return Empresa_Direccion;
+    }
+
+    public void setEmpresa_Direccion(String empresa_Direccion) {
+        Empresa_Direccion = empresa_Direccion;
     }
 }

@@ -12,6 +12,15 @@ public class DatosDocumentosContrato {
     private String RFC;
     private String Nacionalidad;
 
+    private String Empresa_Nombre;
+    private String Empresa_PaginaWEB;
+    private String Empresa_EscrituraPublica;
+    private String Empresa_RFC;
+    private String Empresa_ContratoAdhesion;
+    private String Empresa_CorreoAtencion;
+    private String Empresa_Direccion;
+    private String Empresa_Telefono;
+
     public String getClienteid() {
         return Clienteid;
     }
@@ -66,5 +75,69 @@ public class DatosDocumentosContrato {
 
     public void setNacionalidad(String nacionalidad) {
         Nacionalidad = nacionalidad;
+    }
+
+    public String getEmpresa_Nombre() {
+        return Empresa_Nombre;
+    }
+
+    public void setEmpresa_Nombre(String empresa_Nombre) {
+        Empresa_Nombre = empresa_Nombre;
+    }
+
+    public String getEmpresa_PaginaWEB() {
+        return Empresa_PaginaWEB;
+    }
+
+    public void setEmpresa_PaginaWEB(String empresa_PaginaWEB) {
+        Empresa_PaginaWEB = empresa_PaginaWEB;
+    }
+
+    public String getEmpresa_EscrituraPublica() {
+        return Empresa_EscrituraPublica;
+    }
+
+    public void setEmpresa_EscrituraPublica(String empresa_EscrituraPublica) {
+        Empresa_EscrituraPublica = empresa_EscrituraPublica;
+    }
+
+    public String getEmpresa_RFC() {
+        return Empresa_RFC;
+    }
+
+    public void setEmpresa_RFC(String empresa_RFC) {
+        Empresa_RFC = empresa_RFC;
+    }
+
+    public String getEmpresa_ContratoAdhesion() {
+        return Empresa_ContratoAdhesion;
+    }
+
+    public void setEmpresa_ContratoAdhesion(String empresa_ContratoAdhesion) {
+        Empresa_ContratoAdhesion = empresa_ContratoAdhesion;
+    }
+
+    public String getEmpresa_CorreoAtencion() {
+        return Empresa_CorreoAtencion;
+    }
+
+    public void setEmpresa_CorreoAtencion(String empresa_CorreoAtencion) {
+        Empresa_CorreoAtencion = empresa_CorreoAtencion;
+    }
+
+    public String getEmpresa_Direccion() {
+        return Empresa_Direccion;
+    }
+
+    public void setEmpresa_Direccion(String empresa_Direccion) {
+        Empresa_Direccion = empresa_Direccion;
+    }
+
+    public String getEmpresa_Telefono() {
+        return Empresa_Telefono;
+    }
+
+    public void setEmpresa_Telefono(String empresa_Telefono) {
+        Empresa_Telefono = empresa_Telefono;
     }
 }
