@@ -84,7 +84,7 @@
                         android:gravity="left"
                         android:paddingLeft="15dp">
                         <ImageView
-                            android:layout_width="38dp"
+                            android:layout_width="42dp"
                             android:layout_height="38dp"
                             android:background="@drawable/email"/>
                     </LinearLayout>
@@ -157,7 +157,7 @@
                         android:gravity="left"
                         android:paddingLeft="15dp">
                         <ImageView
-                            android:layout_width="48dp"
+                            android:layout_width="54dp"
                             android:layout_height="36dp"
                             android:background="@drawable/id"/>
                     </LinearLayout>
@@ -181,7 +181,7 @@
                         android:gravity="right"
                         android:paddingRight="15dp">
                         <ImageView
-                            android:layout_width="48dp"
+                            android:layout_width="52dp"
                             android:layout_height="36dp"
                             android:background="@drawable/card"/>
                     </LinearLayout>
