@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,11 +13,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,8 +54,10 @@ public class Frg_Contrato extends DialogFragment  {
     LinearLayout lyContratoCaratula, lyContratoOperacion, lyContratoPagare;
     TextView lblCaratulaNombreComercial, lblCaratulaRFC, lblCaratulaDireccion, lblCaratulaTelefono, lblCaratulaCorreo, lblCaratulaNombreCompleto, lblCaratulaDireccionAcreditado, lblCaratulaTelefonoAcreditado, lblCaratulaCorreoAcreditado, lblBancoDeposito, lblCLABEnoTarjeta, lblInteresOrdinaria, lblInteresMoratoria, lblMontoSolicitado, lblCaratulaInteres, lblCaratulaIVA, lblCaratulaTotalPagar, lblCaratulaFechaInicio, lblCaratulaPlazo, lblCaratulaFechaLimite;
     TextView lblDomiciliacionEmisor, lblDomiciliacionRFC, lblDomiciliacionDomicilio, lblDomiciliacionNombre, lblDomiciliacionReferencia, lblDomiciliacionTitularCuenta, lblDomiciliacionCLABE, lblDomiciliacionBanco, lblDomiciliacionTarjetaDebido;
+    TextView lblRepresentanteLegal,lblFirmaCliente;
     CheckBox ckTerminosCaratula, ckTerminosContrato, ckTerminosPagare;
     Button btnAceptaCaratula, btnAceptaContrato, btnAceptaPagare;
+    ImageView imgFirmaRepresentante;
 
     Globals Sesion;
     ProgressDialog progressDialog;
@@ -133,8 +139,9 @@ public class Frg_Contrato extends DialogFragment  {
         lblDomiciliacionBanco = (TextView) v.findViewById(R.id.lblDomiciliacionBanco);
         lblDomiciliacionTarjetaDebido = (TextView) v.findViewById(R.id.lblDomiciliacionTarjetaDebido);
 
-
-
+        imgFirmaRepresentante = (ImageView) v.findViewById(R.id.imgFirmaRepresentante);
+        lblRepresentanteLegal = (TextView) v.findViewById(R.id.lblRepresentanteLegal);
+        lblFirmaCliente = (TextView) v.findViewById(R.id.lblFirmaCliente);
 
         ckTerminosCaratula = (CheckBox) v.findViewById(R.id.ckTerminosCaratula);
         ckTerminosContrato = (CheckBox) v.findViewById(R.id.ckTerminosContrato);
@@ -269,7 +276,11 @@ public class Frg_Contrato extends DialogFragment  {
         AplicaFormato(R.id.lblClausulas, R.string.lblClausulas, null);
         AplicaFormato(R.id.lblClausulasPrimera, R.string.lblClausulasPrimera, null);
 
-        c = new String[]{"---------"};
+        if (datosContrato.getNumeroDeDeposito().toString().length() == 16)
+            c = new String[]{"a la tarjeta número [" + datosContrato.getNumeroDeDeposito().toString() + "]"};
+        else
+            c = new String[]{"a la CLABE interbancaria [" + datosContrato.getNumeroDeDeposito().toString() + "]"};
+
         AplicaFormato(R.id.lblClausulasPrimeraP2, R.string.lblClausulasPrimeraP2, c);
         AplicaFormato(R.id.lblClausulasSegunda, R.string.lblClausulasSegunda, null);
         AplicaFormato(R.id.lblClausulasTercera, R.string.lblClausulasTercera, null);
@@ -290,7 +301,6 @@ public class Frg_Contrato extends DialogFragment  {
         lblDomiciliacionEmisor.setText(datosContrato.getEmpresa_Nombre());
         lblDomiciliacionRFC.setText(datosContrato.getEmpresa_RFC());
         lblDomiciliacionDomicilio.setText(datosContrato.getEmpresa_Direccion());
-
 
         AplicaFormato(R.id.lblClausulasSeptima, R.string.lblClausulasSeptima, null);
         AplicaFormato(R.id.lblClausulasSeptimaP2, R.string.lblClausulasSeptimaP2, null);
@@ -340,6 +350,14 @@ public class Frg_Contrato extends DialogFragment  {
         AplicaFormato(R.id.lblClausulasVigesimaPrimera, R.string.lblClausulasVigesimaPrimera, null);
         AplicaFormato(R.id.lblClausulasVigesimaSegunda, R.string.lblClausulasVigesimaSegunda, null);
         AplicaFormato(R.id.lblClausulasVigesimaSegundaP2, R.string.lblClausulasVigesimaSegundaP2, null);
+
+        byte[] strimg =  Base64.decode(datosContrato.getFirmaRepresentanteLegal(), Base64.DEFAULT);
+        Bitmap img = BitmapFactory.decodeByteArray(strimg,0,strimg.length);
+        imgFirmaRepresentante.setImageBitmap(img);
+
+        lblRepresentanteLegal.setText(datosContrato.getRepresentanteLegal());
+        lblFirmaCliente.setText(datosContrato.getNombreCompleto());
+
         //CONTRATO
     }
 
@@ -551,6 +569,8 @@ public class Frg_Contrato extends DialogFragment  {
                         datosContrato.setNumeroDeDeposito(iContrato.getProperty("NumeroDeDeposito").toString());
                         datosContrato.setRFC(iContrato.getPrimitivePropertyAsString("RFC").toString());
                         datosContrato.setNacionalidad(iContrato.getPrimitivePropertyAsString("Nacionalidad").toString());
+                        datosContrato.setRepresentanteLegal(iContrato.getPrimitivePropertyAsString("RepresentanteLegal").toString());
+                        datosContrato.setFirmaRepresentanteLegal(iContrato.getPrimitivePropertyAsString("FirmaRepresentanteLegal").toString());
 
                         datosContrato.setEmpresa_Nombre(iContrato.getProperty("Empresa_Nombre").toString());
                         datosContrato.setEmpresa_PaginaWEB(iContrato.getProperty("Empresa_PaginaWEB").toString());

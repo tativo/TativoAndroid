@@ -305,6 +305,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorGrisCuerpo"
                 android:orientation="vertical">
+
+
                 <TextView
                     android:id="@+id/lblContratoOperacionP1"
                     style="@style/TativoTextoContrato" />
@@ -797,25 +799,97 @@
                 <TextView
                     android:id="@+id/lblClausulasVigesimaSegundaP2"
                     style="@style/TativoTextoContrato" />
-                <TextView
-                    android:id="@+id/lblContratoAcreditante"
-                    style="@style/TativoTextoContrato" />
-                <TextView
-                    android:id="@+id/lblContratoAcreditado"
-                    style="@style/TativoTextoContrato" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="10dp"
+                            android:textStyle="bold"
+                            android:text="EL ACREDITANTE"/>
+                        <ImageView
+                            android:id="@+id/imgFirmaRepresentante"
+                            android:layout_width="130dp"
+                            android:layout_height="50dp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/colorAzulOscuro"/>
+                        <TextView
+                            android:id="@+id/lblRepresentanteLegal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="10dp"
+                            android:gravity="center"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="8dp"
+                            android:text="(Representante Legal)"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="10dp"
+                            android:textStyle="bold"
+                            android:text="EL ACREDITADO"/>
+                        <TextView
+                            android:id="@+id/lblFirmaCliente"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:textSize="10dp"
+                            android:textStyle="italic"
+                            android:gravity="center|bottom"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@color/colorAzulOscuro"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="10dp"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </LinearLayout>
+
 
                 <CheckBox
                     android:id="@+id/ckTerminosContrato"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/ckTerminosContrato"
-                    android:checked="false"/>
+                    android:checked="false" />
                 <Button
                     android:id="@+id/btnAceptaContrato"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/btnSiguiente"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginBottom="10dp"
                     android:textAllCaps="false"
                     android:background="@color/colorAzulOscuro"
@@ -823,7 +897,7 @@
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-    <!-- OPERACION  -->
+    <!-- CONTRATO OPERACION  -->
 
     <!-- PAGARE  -->
     <LinearLayout

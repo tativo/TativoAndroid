@@ -279,7 +279,7 @@
                         android:layout_height="wrap_content"
                         android:textAlignment="center"
                         android:textSize="8dp"
-                        android:text="he leído y autorizo el uso de mi forma electrónica en este pagaré"/>
+                        android:text="he leído y autorizo el uso de mi firma electrónica en este pagaré"/>
                 </LinearLayout>
                 <Button
                     android:layout_marginTop="15dp"

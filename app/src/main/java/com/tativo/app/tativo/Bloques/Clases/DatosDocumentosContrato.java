@@ -11,6 +11,8 @@ public class DatosDocumentosContrato {
     private String NumeroDeDeposito;
     private String RFC;
     private String Nacionalidad;
+    private String RepresentanteLegal;
+    private String FirmaRepresentanteLegal;
 
     private String Empresa_Nombre;
     private String Empresa_PaginaWEB;
@@ -139,5 +141,21 @@ public class DatosDocumentosContrato {
 
     public void setEmpresa_Telefono(String empresa_Telefono) {
         Empresa_Telefono = empresa_Telefono;
+    }
+
+    public String getRepresentanteLegal() {
+        return RepresentanteLegal;
+    }
+
+    public void setRepresentanteLegal(String representanteLegal) {
+        RepresentanteLegal = representanteLegal;
+    }
+
+    public String getFirmaRepresentanteLegal() {
+        return FirmaRepresentanteLegal;
+    }
+
+    public void setFirmaRepresentanteLegal(String firmaRepresentanteLegal) {
+        FirmaRepresentanteLegal = firmaRepresentanteLegal;
     }
 }
