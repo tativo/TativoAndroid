@@ -10,9 +10,9 @@
     <string name="txtCodigoPostal">Código Postal</string>
     <string name="txtNuevaColonia">Agregar colonia</string>
     <string name="txtCalle">Calle</string>
-    <string name="txtNumeroExt">Numero Ext.</string>
-    <string name="txtNumeroInt">Numero Int.</string>
-    <string name="txtTelefonoCelular">Teléfono Celular</string>
+    <string name="txtNumeroExt">Numero Exterior</string>
+    <string name="txtNumeroInt">Numero Interior</string>
+    <string name="txtTelefonoCelular">Teléfono Celular con LADA</string>
     <string name="spnBanco">Banco</string>
     <string name="spnHintMaterialSpinner">Elige una opción</string>
     <string name="swtTextON">Si</string>
@@ -21,7 +21,7 @@
     <string name="msgRefTitulo">Referencias</string>
     <string name="msgRefOk">De acuerdo</string>
     <string name="msgCamposRequeridos">Favor de llenar todos los campos requeridos</string>
-    <string name="hnTelefono">Teléfono</string>
+    <string name="hnTelefono">Teléfono con LADA</string>
     <string name="hnCorreo">Correo electrónico</string>
     <string name="hnNumeroTarjetaCLABE">Número de tarjeta o CLABE</string>
     <string name="hnMonto">Monto solicitado (capital)</string>
@@ -57,7 +57,7 @@
     <string name="txtAñosTrabajando">Años trabajando ahí</string>
     <string name="txtNombreEmpresa">Nombre de la empresa</string>
     <string name="btnReferencias">Guardar y continuar</string>
-    <string name="ckReferenciasAcepta">Al otorgar estos datos acepto que Tativo se ponga en contacto con mis referencias para validar que la informacion sea correcta</string>
+    <string name="ckReferenciasAcepta">Al otorgar estos datos acepto que Tativo se ponga en contacto con mis referencias para validar que la informacion sea correcta.</string>
     <string name="spnRelacion">Relación</string>
     <string name="spnAmistad">Años de amistad</string>
     <string name="spnTrabajando">Años trabajando ahí</string>
@@ -81,7 +81,7 @@
     <string name="btnInfPersonal">Continuar</string>
 
     <!--Bloque 3 - Informacion Deposito -->
-    <string name="lblTarjetaDebito">¿Cuentas con tarjeta de débito?</string>
+    <string name="lblTarjetaDebito">¿Y si no tengo una tarjeta de debito?</string>
     <string name="lblRecibesNomina">¿Es donde recibes tu nomina?</string>
     <string name="spnFrecuenciaPago">Frecuencia de pago</string>
     <string name="spnMedioPago">Medio de Pago</string>
@@ -371,7 +371,7 @@
 
 
     <!-- No Cuenta con Tarjeta de Debito -->
-    <string name="ntdTitulo">Antes, un pequeño anuncio</string>
+    <string name="ntdTitulo">OK, en ese caso</string>
     <string name="ntdMSJ">Como no tienes tarjeta de débito te recomendamos adquirir alguna tarjeta express (como la tarjeta saldazo de OXXO). Estos son los pasos y las cosas que te van a pedir.</string>
     <string name="ntdRequisitos">Requisitos</string>
     <string name="ntdRequisitos1">1. Identificacion vigente</string>

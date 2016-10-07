@@ -68,9 +68,11 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
     ProgressDialog progressDialog;
 
     Button btnDatosDeposito, btnCardIO,btnFocoInicialB3,btnFechaProximoPago;
-    Switch swtTarjetaDebito,swtRecibesNomina;
+    Switch swtRecibesNomina;
     Spinner spnBanco,spnFrecuenciaPago,spnMedioPago;
     EditText txtNumeroTarjetaCLABE,txtFechaProximoPago;
+    TextView lblTarjetaDebito;
+
 
     ArrayList<Catbanco> ListaCatbanco = new ArrayList<Catbanco>();
     ArrayList<Catperiodosdepago> ListaCatperiodosdepago = new ArrayList<Catperiodosdepago>();
@@ -161,6 +163,9 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         //Progress Bar
         progressDialog = new ProgressDialog(Act_B3_InfDeposito.this);
 
+
+        lblTarjetaDebito = (TextView) findViewById(R.id.lblTarjetaDebito);
+
         //Combos
         spnBanco = (Spinner) findViewById(R.id.spnBanco);
         spnBanco.setFocusable(true);
@@ -180,10 +185,6 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
         //txtFechaProximoPago.addTextChangedListener(tw);
 
         //Switch
-        swtTarjetaDebito =(Switch) findViewById(R.id.swtTarjetaDebito);
-        //swtTarjetaDebito.setFocusable(true);
-        //swtTarjetaDebito.setFocusableInTouchMode(true);
-
         swtRecibesNomina =(Switch) findViewById(R.id.swtRecibesNomina);
         //swtRecibesNomina.setFocusable(true);
         //swtRecibesNomina.setFocusableInTouchMode(true);
@@ -211,6 +212,14 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
 
     }
     private void EventManager() {
+
+        lblTarjetaDebito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                new Frg_NoTarjetaDebito().show(fragmentManager,"frmNoTarjetaDebito");
+            }
+        });
 
         spnBanco.setOnTouchListener(new spOcultaTeclado());
         spnFrecuenciaPago.setOnTouchListener(new spOcultaTeclado());
@@ -252,16 +261,6 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
             }
         });
 
-        swtTarjetaDebito.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked)
-                {
-                    FragmentManager fragmentManager = getFragmentManager();
-                    new Frg_NoTarjetaDebito().show(fragmentManager,"frmNoTarjetaDebito");
-                }
-            }
-        });
     }
 
     //Region Llenar datos del formulario
