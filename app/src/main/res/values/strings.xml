@@ -90,11 +90,12 @@
 
 
     <!--Bloque 3 - PIN -->
+    <string name="msjTituloPIN">Solo un dato mas</string>
     <string name="lblTituloPIN">Validación de numero celular</string>
-    <string name="lblMsjPIN">Hemos enviado un PIN al celular que ingresaste en un paso anterior. Revisa tu teléfono y haznos el favor de ingresarlo aquí. Te esperamos lo que quieras :)</string>
+    <string name="lblMsjPIN">Hemos enviado un PIN al celular que ingresaste en un paso anterior. Revisa tu teléfono y haznos el favor de ingresarlo aquí. Si por alguna razón no te llega, en unos 30 segundos podrás ingresar un nuevo celular.</string>
     <string name="txtPIN">PIN de seguridad</string>
     <string name="btnConfirmarPIN">Continuar</string>
-
+    <string name="NollegaPIN">Pasó el tiempo suficiente para que te llegara el código y vemos que no has ingresado el PIN, ¿recibiste el SMS al celular  &lt;b>%1$s&lt;/b> ?</string>
 
     <!--Bloque 4 - Informacion Laboral -->
     <string name="spnAreaLaboral">Área que laboras</string>

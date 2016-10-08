@@ -5,54 +5,102 @@
     tools:context=".Bloques.Actividades.Act_B3_ConfirmarPIN"
     android:orientation="vertical" >
 
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout style="@style/TativoLinearLayoutCentroPantalla"
-            android:id="@+id/linearLayout">
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorGrisTitulo">
+            <TextView
+                android:id="@+id/lblMSJTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:text="@string/msjTituloPIN"
+                />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:layout_marginBottom="20dp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lblMsjPIN" />
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/lyProgresBar"
+                android:id="@+id/lyMsjTextoMensajes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                >
-                <pl.droidsonroids.gif.GifTextView
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:background="@color/colorGrisCuerpo">
+
+
+                <LinearLayout style="@style/TativoLinearLayoutCentroPantalla"
+                    android:id="@+id/linearLayout">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="20dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lblMsjPIN" />
+                    </LinearLayout>
+                    <LinearLayout style="@style/TativoLayoutBordeRelleno">
+                        <TextView
+                            style="@style/TativoTextViewEncabezado"
+                            android:text="@string/lblTituloPIN" />
+                    </LinearLayout>
+                    <LinearLayout style="@style/TativoLinearLayoutBorde">
+                        <android.support.design.widget.TextInputLayout
+                            style="@style/TativoTextInputLayout">
+                            <AutoCompleteTextView
+                                android:id="@+id/txtPIN"
+                                android:hint="@string/txtPIN"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                style="@style/TativoAutoCompleteTextView"/>
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+                    <Button
+                        android:id="@+id/btnConfirmarPIN"
+                        android:text="@string/btnConfirmarPIN"
+                        style="@style/TativoBotonAceptar"/>
+                </LinearLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/progresbar"
-                    />
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="52dp"
+                        android:text="01"
+                        android:gravity="center"/>
+                    <ProgressBar
+                        android:id="@+id/circularProgressbar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:indeterminate="false"
+                        android:max="30"
+                        android:progress="10"
+                        android:layout_centerInParent="true"
+                        android:progressDrawable="@drawable/pb_circle"
+                        android:secondaryProgress="30" />
+                </RelativeLayout>
+
+
             </LinearLayout>
-            <LinearLayout style="@style/TativoLayoutBordeRelleno">
-                <TextView
-                    style="@style/TativoTextViewEncabezado"
-                    android:text="@string/lblTituloPIN" />
-            </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde">
-                <android.support.design.widget.TextInputLayout
-                    style="@style/TativoTextInputLayout">
-                    <AutoCompleteTextView
-                        android:id="@+id/txtPIN"
-                        android:hint="@string/txtPIN"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        style="@style/TativoAutoCompleteTextView"/>
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
-            <Button
-                android:id="@+id/btnConfirmarPIN"
-                android:text="@string/btnConfirmarPIN"
-                style="@style/TativoBotonAceptar"/>
-        </LinearLayout>
-    </ScrollView>
+
+        </ScrollView>
+    </LinearLayout>
 </RelativeLayout>

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
     LinearLayout lyProgresBar;
     Globals Sesion;
     ProgressDialog progressDialog;
+    ProgressBar progressBar;
     AsyncEsperaPIN tareaEsperarPIN= new AsyncEsperaPIN();
     boolean CancelatareaEsperarPIN = false ;
 
@@ -74,13 +76,15 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
         }
     }
     private void LoadFormControls() {
-        lyProgresBar = (LinearLayout) findViewById(R.id.lyProgresBar);
         //Progress Bar
         progressDialog = new ProgressDialog(Act_B3_ConfirmarPIN.this);
         //Cajas de texto
         txtPIN = (EditText) findViewById(R.id.txtPIN);
         //Botones
         btnConfirmarPIN = (Button) findViewById(R.id.btnConfirmarPIN);
+        //ProgressBar
+        progressBar = (ProgressBar) findViewById(R.id.circularProgressbar);
+
     }
     private void EventManager() {
         btnConfirmarPIN.setOnClickListener(new View.OnClickListener() {
@@ -211,13 +215,14 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
                 try {
                     int Segundos = 0;
-                    while(Segundos <=60) {
+                    while(Segundos <=30) {
                         if (isCancelled()) {
                             CancelatareaEsperarPIN = true;
                             break;
                         }
                         Thread.sleep(1000);
                         Segundos++;
+
                     }
                 } catch (InterruptedException ex) {
                 }
