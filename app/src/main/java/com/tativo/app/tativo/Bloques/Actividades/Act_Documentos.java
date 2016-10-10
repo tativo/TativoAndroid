@@ -35,6 +35,7 @@ import com.tativo.app.tativo.Bloques.Clases.CatBloqueoCliente;
 import com.tativo.app.tativo.Bloques.Clases.DatosDocumentoCaratula;
 import com.tativo.app.tativo.Bloques.Clases.DatosDocumentoPagare;
 import com.tativo.app.tativo.Bloques.Clases.DatosDocumentosContrato;
+import com.tativo.app.tativo.Bloques.Clases.DatosDocumentosInfoPago;
 import com.tativo.app.tativo.Bloques.Clases.DatosDocumentosOperacion;
 import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
 import com.tativo.app.tativo.Operaciones.Actividades.Act_Perfil;
@@ -71,7 +72,8 @@ import java.util.Locale;
 
 public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.DialogResponseContrato {
 
-    TextView lblNobreCompleto, lblDireccion, lblTelefono, lblCorreo, lblNombreBanco, lblNumeroTarjetaCLABE, lblMonto, lblInteres, lblIVA, lblTotalPagar, lblFechaInicio, lblPlazo, lblFechaLimite;
+    TextView lblNobreCompleto, lblDireccion, lblTelefono, lblCorreo, lblNombreBanco, lblNumeroTarjetaCLABE, lblMonto;
+    TextView lblFechaInicio, lblPlazo_Compromiso, lblPlazo_Limite, lblFecha_Compromiso, lblFecha_Limite, lblInteres_Compromiso, lblInteres_Limite, lblIVA_Compromiso, lblIVA_Limite, lblTotal_Compromiso, lblTotal_Limite;
     Button btnVerDocumentos, btnFotoFrontal, btnFotoTrasera, btnAceptarDocumentos;
     LinearLayout lybtnVerDocumentos, lyCargaDocumentos;
     AutoCompleteTextView txtFirmaDocumentos;
@@ -87,6 +89,7 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
     DatosDocumentoCaratula datosCaratula;
     DatosDocumentosContrato datosContrato;
     DatosDocumentosOperacion datosOperacion;
+    DatosDocumentosInfoPago datosInfoPago;
 
     AsyncEstatusSolicitud EstatusSolicitud = new AsyncEstatusSolicitud();
     boolean CancelaEstatusSolicitud = false ;
@@ -122,6 +125,7 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         datosCaratula = new DatosDocumentoCaratula();
         datosContrato = new DatosDocumentosContrato();
         datosOperacion = new DatosDocumentosOperacion();
+        datosInfoPago = new DatosDocumentosInfoPago();
 
         svDocumentos = (ScrollView) findViewById(R.id.svDocumentos);
 
@@ -132,12 +136,18 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         lblNombreBanco = (TextView) findViewById(R.id.lblNombreBanco);
         lblNumeroTarjetaCLABE = (TextView) findViewById(R.id.lblNumeroTarjetaCLABE);
         lblMonto = (TextView) findViewById(R.id.lblMonto);
-        lblInteres = (TextView) findViewById(R.id.lblInteres);
-        lblIVA = (TextView) findViewById(R.id.lblIVA);
-        lblTotalPagar = (TextView) findViewById(R.id.lblTotalPagar);
         lblFechaInicio = (TextView) findViewById(R.id.lblFechaInicio);
-        lblPlazo = (TextView) findViewById(R.id.lblPlazo);
-        lblFechaLimite = (TextView) findViewById(R.id.lblFechaLimite);
+        lblFecha_Compromiso = (TextView) findViewById(R.id.lblFechaCompromiso);
+        lblFecha_Limite = (TextView) findViewById(R.id.lblFechaLimite);
+        lblPlazo_Compromiso = (TextView) findViewById(R.id.lblPlazoCompromiso);
+        lblPlazo_Limite = (TextView) findViewById(R.id.lblPlazoLimite);
+        lblInteres_Compromiso = (TextView) findViewById(R.id.lblInteresCompromiso);
+        lblInteres_Limite = (TextView) findViewById(R.id.lblInteresLimite);
+        lblIVA_Compromiso = (TextView) findViewById(R.id.lblIVACompromiso);
+        lblIVA_Limite = (TextView) findViewById(R.id.lblIVALimite);
+        lblTotal_Compromiso = (TextView) findViewById(R.id.lblTotalCompromiso);
+        lblTotal_Limite = (TextView) findViewById(R.id.lblTotalLimite);
+
 
         btnVerDocumentos = (Button) findViewById(R.id.btnVerDocumentos);
         btnFotoFrontal = (Button) findViewById(R.id.btnFotoFrontal);
@@ -419,6 +429,7 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
                     SoapObject iPagare = (SoapObject) iOperacion.getProperty("DatosPagare");
                     SoapObject iCaratula = (SoapObject) iOperacion.getProperty("DatosCaratula");
                     SoapObject iContrato = (SoapObject) iOperacion.getProperty("DatosContrato");
+                    SoapObject iInfoPago = (SoapObject) iOperacion.getProperty("DatosInfPago");
 
                     if(iPagare.getProperty("ClienteID") != null)
                     {
@@ -455,6 +466,19 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
                         datosCaratula.setNumeroContrato(iCaratula.getProperty("NumeroContrato").toString());
                         datosCaratula.setFechaContrato(iCaratula.getProperty("FechaContrato").toString());
                         datosCaratula.setPlazo(Integer.parseInt(iCaratula.getProperty("Plazo").toString()));
+
+
+                        datosInfoPago.setFechaInicio(new SimpleDateFormat("yyyy-MM-dd").parse(iInfoPago.getProperty("FechaInicio").toString().substring(0, 10)));
+                        datosInfoPago.setPlazo_Compromiso(Integer.parseInt(iInfoPago.getProperty("Plazo_Compromiso").toString()));
+                        datosInfoPago.setPlazo_Limite(Integer.parseInt(iInfoPago.getProperty("Plazo_Limite").toString()));
+                        datosInfoPago.setFecha_Compromiso(new SimpleDateFormat("yyyy-MM-dd").parse(iInfoPago.getProperty("Fecha_Compromiso").toString().substring(0, 10)));
+                        datosInfoPago.setFecha_Limite(new SimpleDateFormat("yyyy-MM-dd").parse(iInfoPago.getProperty("Fecha_Limite").toString().substring(0, 10)));
+                        datosInfoPago.setInteres_Compromiso(Double.parseDouble(iInfoPago.getProperty("Interes_Compromiso").toString()));
+                        datosInfoPago.setInteres_Limite(Double.parseDouble(iInfoPago.getProperty("Interes_Limite").toString()));
+                        datosInfoPago.setIVA_Compromiso(Double.parseDouble(iInfoPago.getProperty("IVA_Compromiso").toString()));
+                        datosInfoPago.setIVA_Limite(Double.parseDouble(iInfoPago.getProperty("IVA_Limite").toString()));
+                        datosInfoPago.setTotal_Compromiso(Double.parseDouble(iInfoPago.getProperty("Total_Compromiso").toString()));
+                        datosInfoPago.setTotal_Limite(Double.parseDouble(iInfoPago.getProperty("Total_Limite").toString()));
                     }
 
                     if(iContrato.getProperty("Clienteid") != null)
@@ -487,12 +511,18 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
             lblNombreBanco.setText(datosCaratula.getBanco());
             lblNumeroTarjetaCLABE.setText(datosCaratula.getNumeroDeTarjeta());
             lblMonto.setText(nf.format(datosCaratula.getCapital()));
-            lblInteres.setText(nf.format(datosCaratula.getInteres()));
-            lblIVA.setText(nf.format(datosCaratula.getIVA()));
-            lblTotalPagar.setText(nf.format(datosCaratula.getTotalPagar()));
-            lblFechaInicio.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaSolicitud()));
-            lblPlazo.setText(String.valueOf(datosCaratula.getPlazo()));
-            lblFechaLimite.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaVence()));
+
+            lblFechaInicio.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosInfoPago.getFechaInicio()));
+            lblPlazo_Compromiso.setText(String.valueOf(datosInfoPago.getPlazo_Compromiso()));
+            lblPlazo_Limite.setText(String.valueOf(datosInfoPago.getPlazo_Limite()));
+            lblInteres_Compromiso.setText(nf.format(datosInfoPago.getInteres_Compromiso()));
+            lblInteres_Limite.setText(nf.format(datosInfoPago.getInteres_Limite()));
+            lblIVA_Compromiso.setText(nf.format(datosInfoPago.getIVA_Compromiso()));
+            lblIVA_Limite.setText(nf.format(datosInfoPago.getIVA_Limite()));
+            lblTotal_Compromiso.setText(nf.format(datosInfoPago.getTotal_Compromiso()));
+            lblTotal_Limite.setText(nf.format(datosInfoPago.getTotal_Limite()));
+            lblFecha_Compromiso.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosInfoPago.getFecha_Compromiso()));
+            lblFecha_Limite.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosInfoPago.getFecha_Limite()));
         }
 
 

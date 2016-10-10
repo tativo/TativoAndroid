@@ -18,7 +18,7 @@ public class Splash extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
+        setContentView(R.layout.splashscreen);
 
         Thread timerThread = new Thread(){
             public void run(){

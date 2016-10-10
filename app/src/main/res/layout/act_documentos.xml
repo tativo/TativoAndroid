@@ -36,7 +36,7 @@
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
-                    android:hint="@string/hnTelefono" />
+                    android:hint="@string/hnTel" />
                 <TextView style="@style/TativoTextView"
                     android:id="@+id/lblTelefono" />
             </LinearLayout>
@@ -47,6 +47,10 @@
                 <TextView style="@style/TativoTextView"
                     android:id="@+id/lblCorreo" />
             </LinearLayout>
+
+
+
+
             <LinearLayout style="@style/TativoLayoutBordeRelleno">
                 <TextView style="@style/TativoTextViewEncabezado"
                     android:text="@string/lblInformacionDeposito"/>
@@ -72,27 +76,14 @@
                 <TextView style="@style/TativoTextView"
                     android:id="@+id/lblMonto" />
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde"
-                android:padding="8dp">
-                <TextView style="@style/TativoTextViewHint"
-                    android:hint="@string/hnInteres" />
-                <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblInteres" />
+
+            <LinearLayout style="@style/TativoLayoutBordeRelleno">
+                <TextView style="@style/TativoTextViewEncabezado"
+                    android:text="@string/lblInformacionPago"/>
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde"
-                android:padding="8dp">
-                <TextView style="@style/TativoTextViewHint"
-                    android:hint="@string/hnIVA" />
-                <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblIVA" />
-            </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde"
-                android:padding="8dp">
-                <TextView style="@style/TativoTextViewHint"
-                    android:hint="@string/hnTotal" />
-                <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblTotalPagar" />
-            </LinearLayout>
+
+
+
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:padding="8dp">
                 <TextView style="@style/TativoTextViewHint"
@@ -100,21 +91,120 @@
                 <TextView style="@style/TativoTextView"
                     android:id="@+id/lblFechaInicio" />
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde"
-                android:padding="8dp">
-                <TextView style="@style/TativoTextViewHint"
-                    android:hint="@string/hnPlazo" />
-                <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblPlazo" />
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:padding="8dp"
+                    android:layout_weight="1" >
+                    <TextView style="@style/TativoTextViewHint"
+                        android:hint="@string/hnPlazoCompromiso" />
+                    <TextView style="@style/TativoTextView"
+                        android:id="@+id/lblPlazoCompromiso" />
+                </LinearLayout>
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:padding="8dp"
+                    android:layout_weight="1" >
+                    <TextView style="@style/TativoTextViewHint"
+                        android:hint="@string/hnPlazoLimite" />
+                    <TextView style="@style/TativoTextView"
+                        android:id="@+id/lblPlazoLimite" />
+                </LinearLayout>
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde"
-                android:padding="8dp"
-                android:layout_marginBottom="20dp">
-                <TextView style="@style/TativoTextViewHint"
-                    android:hint="@string/hnFechaLimite" />
-                <TextView style="@style/TativoTextView"
-                    android:id="@+id/lblFechaLimite" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:padding="8dp"
+                    android:layout_weight="1" >
+                    <TextView style="@style/TativoTextViewHint"
+                        android:hint="@string/hnFechaCompromiso" />
+                    <TextView style="@style/TativoTextView"
+                        android:id="@+id/lblFechaCompromiso" />
+                </LinearLayout>
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:padding="8dp"
+                    android:layout_weight="1" >
+                    <TextView style="@style/TativoTextViewHint"
+                        android:hint="@string/hnFechaLimite" />
+                    <TextView style="@style/TativoTextView"
+                        android:id="@+id/lblFechaLimite" />
+                </LinearLayout>
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:padding="8dp"
+                    android:layout_weight="1" >
+                    <TextView style="@style/TativoTextViewHint"
+                        android:hint="@string/hnInteresCompromiso" />
+                    <TextView style="@style/TativoTextView"
+                        android:id="@+id/lblInteresCompromiso" />
+                </LinearLayout>
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:padding="8dp"
+                    android:layout_weight="1" >
+                    <TextView style="@style/TativoTextViewHint"
+                        android:hint="@string/hnInteresLimite" />
+                    <TextView style="@style/TativoTextView"
+                        android:id="@+id/lblInteresLimite" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:padding="8dp"
+                    android:layout_weight="1" >
+                    <TextView style="@style/TativoTextViewHint"
+                        android:hint="@string/hnIVACompromiso" />
+                    <TextView style="@style/TativoTextView"
+                        android:id="@+id/lblIVACompromiso" />
+                </LinearLayout>
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:padding="8dp"
+                    android:layout_weight="1" >
+                    <TextView style="@style/TativoTextViewHint"
+                        android:hint="@string/hnIVALimite" />
+                    <TextView style="@style/TativoTextView"
+                        android:id="@+id/lblIVALimite" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:padding="8dp"
+                    android:layout_weight="1" >
+                    <TextView style="@style/TativoTextViewHint"
+                        android:hint="@string/hnTotalCompromiso" />
+                    <TextView style="@style/TativoTextView"
+                        android:id="@+id/lblTotalCompromiso" />
+                </LinearLayout>
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:padding="8dp"
+                    android:layout_weight="1" >
+                    <TextView style="@style/TativoTextViewHint"
+                        android:hint="@string/hnTotalLimite" />
+                    <TextView style="@style/TativoTextView"
+                        android:id="@+id/lblTotalLimite" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

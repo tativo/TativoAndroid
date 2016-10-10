@@ -25,12 +25,11 @@
     <string name="hnCorreo">Correo electrónico</string>
     <string name="hnNumeroTarjetaCLABE">Número de tarjeta o CLABE</string>
     <string name="hnMonto">Monto solicitado (capital)</string>
-    <string name="hnInteres">Interés</string>
-    <string name="hnIVA">IVA</string>
-    <string name="hnTotal">Total a pagar</string>
-    <string name="hnFechaInicio">Fecha de inicio</string>
-    <string name="hnPlazo">Plazo</string>
-    <string name="hnFechaLimite">Fecha límite de pago</string>
+
+
+
+
+
     <string name="btnSiguiente">Siguiente</string>
     <string name="lblNoAplica">N/A</string>
 
@@ -96,6 +95,9 @@
     <string name="txtPIN">PIN de seguridad</string>
     <string name="btnConfirmarPIN">Continuar</string>
     <string name="NollegaPIN">Pasó el tiempo suficiente para que te llegara el código y vemos que no has ingresado el PIN, ¿recibiste el SMS al celular  &lt;b>%1$s&lt;/b> ?</string>
+    <string name="btnReenviarPIN">Volver a enviar el pin</string>
+    <string name="btnCambiarNumero">Ingresar otro número celular</string>
+
 
     <!--Bloque 4 - Informacion Laboral -->
     <string name="spnAreaLaboral">Área que laboras</string>
@@ -109,7 +111,7 @@
     <string name="spnTipoVivienda">Tipo de vivienda</string>
     <string name="spnConQuienVives">¿Con quién vives?</string>
     <string name="spnViviendoAhi">Años viviendo ahí</string>
-    <string name="txtTelefonoFijo">Teléfono fijo</string>
+    <string name="txtTelefonoFijo">Teléfono fijo con LADA</string>
     <string name="swtTienesAutomovil">¿Tienes automóvil?</string>
     <string name="swtEsPropio">¿Es propio?</string>
     <string name="spnNivelEstudio">Nivel de estudios</string>
@@ -121,11 +123,11 @@
     <string name="spIngresoExtra">¿Cuánto ingreso extra aproximado tienes al mes?</string>
     <string name="txtActivdadIngresoExtra">¿De qué actividad(es) proviene(n) este ingreso extra?</string>
     <string name="lblDispositivos">¿Cuentas con alguno de los siguientes dispositivos?</string>
-    <string name="ckDispositivo1">Celular inteligente</string>
+    <string name="ckDispositivo1">Smartphone</string>
     <string name="ckDispositivo2">Tablet</string>
     <string name="ckDispositivo3">Computadora</string>
-    <string name="txtParaQue">¿Para qué ocupas el servicio?</string>
-    <string name="lblRedesSociales">¿Qué redes sociales utilizas más?</string>
+    <string name="txtParaQue">¿Para qué ocupas el servicio de prestamo?</string>
+    <string name="lblRedesSociales">En orden de mayor a menor ¿qué redes sociales utilizas más?</string>
     <string name="lblDondeInternet">En orden de mayor a menor, ¿en dónde utilizas más internet?</string>
     <string name="btnInfGeneral">Enviar</string>
 
@@ -133,13 +135,29 @@
     <string name="lblInformacionAcreditado">Información de acreditado</string>
     <string name="hnNombreCompleto">Nombre completo</string>
     <string name="hnDireccion">Dirección</string>
+    <string name="hnTel">Teléfono</string>
+
+    <string name="hnFechaInicio">Fecha de inicio</string>
+    <string name="hnPlazoCompromiso">Plazo compromiso</string>
+    <string name="hnPlazoLimite">Plazo límite</string>
+    <string name="hnFechaCompromiso">Compromiso de pago</string>
+    <string name="hnFechaLimite">Límite de pago</string>
+    <string name="hnInteresCompromiso">Interés</string>
+    <string name="hnInteresLimite">Interés</string>
+    <string name="hnIVACompromiso">IVA</string>
+    <string name="hnIVALimite">IVA</string>
+    <string name="hnTotalCompromiso">Total compromiso</string>
+    <string name="hnTotalLimite">Total limite</string>
 
     <string name="lblInformacionDeposito">Información de depósito</string>
     <string name="hnNombreBanco">Nombre de banco</string>
+    <string name="lblInformacionPago">Información de pago</string>
 
     <string name="btnVerDocumentos">Ver documentos</string>
     <string name="btnSubirFoto">Seleccionar y subir</string>
     <string name="btnAceptarDocumentos">Enviar</string>
+
+
 
     <!--Bloque 6.1 - Caratula Contrato -->
     <string name="lblttCaratulaContrato">Carátula de Contrato</string>
@@ -282,6 +300,12 @@
     <string name="lblPagareP13">ID: &lt;b>%1$s&lt;/b></string>
     <string name="lblPagareP14">IP: &lt;b>%1$s&lt;/b></string>
     <string name="ckTerminosPagare">Acepto los términos y condiciones plasmados en el pagaré.</string>
+
+    <string name="hnInteres">Interés</string>
+    <string name="hnIVA">IVA</string>
+    <string name="hnTotal">Total</string>
+    <string name="hnPlazo">Pazo</string>
+
 
     <!-- MENSAJES -->
     <string name="msjFormatoCorreoInvalido">Formato de correo invalido</string>

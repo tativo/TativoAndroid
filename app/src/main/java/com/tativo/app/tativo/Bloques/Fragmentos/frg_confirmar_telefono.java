@@ -38,7 +38,7 @@ import java.util.Collections;
 public class frg_confirmar_telefono extends DialogFragment {
     LinearLayout lyConfirmarNumero,lyCambiarNumero;
     Button btnEnviarPin,btnCambiarNumero,btnGuardarNumeroCelular;
-    TextView lblMensajeConfirmacion;
+    TextView lblMensajeConfirmacion, lblMensajeConfirmacion2;
     EditText txtNumeroCelular,txtConfirmaNumeroCelular;
     Globals Sesion;
     Catdatospersonal catdatospersonal;
@@ -65,6 +65,7 @@ public class frg_confirmar_telefono extends DialogFragment {
         btnCambiarNumero = (Button) v.findViewById(R.id.btnCambiarNumero);
         btnGuardarNumeroCelular = (Button) v.findViewById(R.id.btnGuardarNumeroCelular);
         lblMensajeConfirmacion = (TextView) v.findViewById(R.id.lblMensajeConfirmacion);
+        lblMensajeConfirmacion2 = (TextView) v.findViewById(R.id.lblMensajeConfirmacion2);
         txtNumeroCelular = (EditText) v.findViewById(R.id.txtNumeroCelular);
         txtConfirmaNumeroCelular = (EditText) v.findViewById(R.id.txtConfirmaNumeroCelular);
         lyConfirmarNumero = (LinearLayout)  v.findViewById(R.id.lyConfirmarNumero);
@@ -272,7 +273,8 @@ public class frg_confirmar_telefono extends DialogFragment {
         @Override
         protected void onPostExecute(Void result) {
             progressDialog.dismiss();
-            lblMensajeConfirmacion.setText("Hemos enviado un PIN al numero "+catdatospersonal.getTelefono()+" si tu numero es correcto intenta de nuevo porfavor");
+            lblMensajeConfirmacion.setText("Pasó el tiempo suficiente para que te llegara el código y vemos que no has ingresado el PIN, ¿recibiste el SMS al celular "+catdatospersonal.getTelefono()+"?");
+            lblMensajeConfirmacion2.setText("Si el celular anterior no es el tuyo puedes cambiarlo dando clic en el botón \"Ingresar otro número celular\". Si en efecto ese es tu celular podemos enviarte de nuevo el pin, dando clic en \"Volver a enviar pin\"");
         }
 
         @Override

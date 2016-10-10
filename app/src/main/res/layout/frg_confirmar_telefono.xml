@@ -3,15 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="6dp"
-    >
+    android:padding="6dp">
     <LinearLayout
         android:id="@+id/lyConfirmarNumero"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-
-        >
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,40 +26,41 @@
                 />
         </LinearLayout>
         <ScrollView style="@style/TativoScrollView">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorGrisCuerpo"
-            android:orientation="vertical"
-            android:padding="25dp"
-            >
-            <TextView
-                android:id="@+id/lblMensajeConfirmacion"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/msgConfirmarNumero"
-                />
-            <Button
-                android:id="@+id/btnEnviarPin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TativoBotonAceptar"
-                android:textAllCaps="false"
-                android:text="Reenviar PIN"
-                android:layout_marginTop="50dp"
-                />
-            <Button
-                android:id="@+id/btnCambiarNumero"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/TativoBotonAceptar"
-                android:textAllCaps="false"
-                android:text="Cambiar numero"
-                android:layout_marginTop="10dp"
-                android:background="@color/colorAzulOscuro"
-                />
-        </LinearLayout>
-
+                android:background="@color/colorGrisCuerpo"
+                android:orientation="vertical"
+                android:padding="25dp">
+                <TextView
+                    android:id="@+id/lblMensajeConfirmacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/msgConfirmarNumero" />
+                <TextView
+                    android:id="@+id/lblMensajeConfirmacion2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/msgConfirmarNumero" />
+                <Button
+                    android:id="@+id/btnEnviarPin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TativoBotonAceptar"
+                    android:textAllCaps="false"
+                    android:text="@string/btnReenviarPIN"
+                    android:layout_marginTop="50dp"
+                    />
+                <Button
+                    android:id="@+id/btnCambiarNumero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TativoBotonAceptar"
+                    android:textAllCaps="false"
+                    android:text="@string/btnCambiarNumero"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/colorAzulOscuro" />
+            </LinearLayout>
         </ScrollView>
     </LinearLayout>
 
@@ -71,8 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,8 +83,7 @@
                 android:text="Cambiar numero"
                 android:paddingTop="15dp"
                 android:textSize="18dp"
-                android:layout_marginBottom="15dp"
-                />
+                android:layout_marginBottom="15dp" />
         </LinearLayout>
         <ScrollView style="@style/TativoScrollView">
             <LinearLayout
@@ -95,11 +91,9 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorGrisCuerpo"
                 android:orientation="vertical"
-                android:padding="25dp"
-                >
+                android:padding="25dp">
                 <LinearLayout
-                    style="@style/TativoLayoutBordeRelleno"
-                    >
+                    style="@style/TativoLayoutBordeRelleno">
                     <TextView
                         style="@style/TativoTextViewEncabezado"
                         android:text="Captura tu telefono aqui"
@@ -141,15 +135,9 @@
                         android:layout_height="wrap_content"
                         style="@style/TativoBotonAceptar"
                         android:textAllCaps="false"
-                        android:text="Guardar"
-                        />
-
+                        android:text="Guardar" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </ScrollView>
     </LinearLayout>
-
-
 </LinearLayout>

@@ -33,6 +33,7 @@ import com.tativo.app.tativo.Operaciones.Actividades.Act_Perfil;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
+import com.tativo.app.tativo.Utilidades.Utilerias;
 
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
@@ -190,7 +191,7 @@ public class Frg_LogIn extends Fragment {
 
         pi1 = new PropertyInfo();
         pi1.setName("Password");
-        pi1.setValue(textPassword.getText().toString().trim());
+        pi1.setValue(Utilerias.MD5(textPassword.getText().toString().trim()));
         pi1.setType(PropertyInfo.STRING_CLASS);
         valores.add(pi1);
 
