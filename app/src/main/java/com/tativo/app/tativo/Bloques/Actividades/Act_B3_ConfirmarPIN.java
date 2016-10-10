@@ -1,6 +1,7 @@
 package com.tativo.app.tativo.Bloques.Actividades;
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -17,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tativo.app.tativo.Bloques.Clases.Catpin;
 import com.tativo.app.tativo.Bloques.Fragmentos.frg_confirmar_telefono;
@@ -30,7 +32,7 @@ import org.ksoap2.serialization.SoapObject;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Act_B3_ConfirmarPIN extends AppCompatActivity {
+public class Act_B3_ConfirmarPIN extends AppCompatActivity implements  frg_confirmar_telefono.DialogResponse {
 
     public static Act_B3_ConfirmarPIN INSTANCE = null;
     private synchronized static void createInstance() {
@@ -54,6 +56,7 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
     ProgressBar progressBar;
     AsyncEsperaPIN tareaEsperarPIN= new AsyncEsperaPIN();
     boolean CancelatareaEsperarPIN = false ;
+    TextView txtProgressBar;
 
 
 
@@ -84,6 +87,8 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
         btnConfirmarPIN = (Button) findViewById(R.id.btnConfirmarPIN);
         //ProgressBar
         progressBar = (ProgressBar) findViewById(R.id.circularProgressbar);
+
+        txtProgressBar = (TextView) findViewById(R.id.txtProgressBar);
 
     }
     private void EventManager() {
@@ -210,11 +215,12 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
     }
 
     //Region Esperar 60 segundos si aun no se envia el mensaje
-    private class AsyncEsperaPIN extends AsyncTask<Void, Void, Void> {
+    private class AsyncEsperaPIN extends AsyncTask<Void, Integer, Void> {
         @Override
         protected Void doInBackground(Void... params) {
                 try {
                     int Segundos = 0;
+                    Integer ProgressUpdate = 0;
                     while(Segundos <=30) {
                         if (isCancelled()) {
                             CancelatareaEsperarPIN = true;
@@ -222,7 +228,8 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
                         }
                         Thread.sleep(1000);
                         Segundos++;
-
+                        publishProgress(ProgressUpdate);
+                        ProgressUpdate++;
                     }
                 } catch (InterruptedException ex) {
                 }
@@ -235,17 +242,31 @@ public class Act_B3_ConfirmarPIN extends AppCompatActivity {
                 //Si aun no ha validado el sistema debe mostrar un modal
                 //if (txtPIN.getText().toString().trim().length() == 0) {
                 FragmentManager fragmento = getFragmentManager();
-                new frg_confirmar_telefono().show(fragmento, "frmConfirmarTelefono");
+                DialogFragment dialogo =new frg_confirmar_telefono();
+                dialogo.show(fragmento, "frmConfirmarTelefono");
+
                 //}
             }
         }
         @Override
         protected void onPreExecute() {
         }
-
         @Override
-        protected void onProgressUpdate(Void... values) {
+        protected void onProgressUpdate(Integer... values) {
+            Integer contador = 30 -values[0];
+            progressBar.setProgress(values[0]);
+            txtProgressBar.setText(contador.toString());
         }
     }
     //EndRegion
+    @Override
+    public void onPossitiveButtonClick() {
+        tareaEsperarPIN= new AsyncEsperaPIN();
+        CancelatareaEsperarPIN = false ;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            tareaEsperarPIN.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            tareaEsperarPIN.execute();
+        }
+    }
 }

@@ -80,10 +80,11 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center">
                     <TextView
+                        android:id="@+id/txtProgressBar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="52dp"
-                        android:text="01"
+                        android:text="30"
                         android:gravity="center"/>
                     <ProgressBar
                         android:id="@+id/circularProgressbar"
@@ -92,7 +93,7 @@
                         android:layout_height="120dp"
                         android:indeterminate="false"
                         android:max="30"
-                        android:progress="10"
+                        android:progress="0"
                         android:layout_centerInParent="true"
                         android:progressDrawable="@drawable/pb_circle"
                         android:secondaryProgress="30" />
