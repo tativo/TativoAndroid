@@ -1,5 +1,6 @@
 package com.tativo.app.tativo.Bloques.Fragmentos;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
@@ -39,7 +40,7 @@ import java.util.Collections;
 public class frg_confirmar_telefono extends DialogFragment {
     LinearLayout lyConfirmarNumero, lyCambiarNumero;
     Button btnEnviarPin, btnCambiarNumero, btnGuardarNumeroCelular;
-    TextView lblMensajeConfirmacion;
+    TextView lblMensajeConfirmacion, lblMensajeConfirmacion2;
     EditText txtNumeroCelular, txtConfirmaNumeroCelular;
     Globals Sesion;
     Catdatospersonal catdatospersonal;
@@ -67,6 +68,7 @@ public class frg_confirmar_telefono extends DialogFragment {
         btnCambiarNumero = (Button) v.findViewById(R.id.btnCambiarNumero);
         btnGuardarNumeroCelular = (Button) v.findViewById(R.id.btnGuardarNumeroCelular);
         lblMensajeConfirmacion = (TextView) v.findViewById(R.id.lblMensajeConfirmacion);
+        lblMensajeConfirmacion2 = (TextView) v.findViewById(R.id.lblMensajeConfirmacion2);
         txtNumeroCelular = (EditText) v.findViewById(R.id.txtNumeroCelular);
         txtConfirmaNumeroCelular = (EditText) v.findViewById(R.id.txtConfirmaNumeroCelular);
         lyConfirmarNumero = (LinearLayout) v.findViewById(R.id.lyConfirmarNumero);
