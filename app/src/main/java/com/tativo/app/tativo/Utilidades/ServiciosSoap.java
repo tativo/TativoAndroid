@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class ServiciosSoap {
     public SoapObject RespuestaServicios(String SOAP_ACTION,String METHOD_NAME,String NAMESPACE,ArrayList<PropertyInfo> listaValores)
     {
-        String URL = "http://tativo.com.mx/WcfTativo/Service1.svc?wsdl";
+        String URL = "http://tativo.com.mx/WcfTativotest/Service1.svc?wsdl";
         SoapObject respuesta;
 
         try {
