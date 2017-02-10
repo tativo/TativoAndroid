@@ -1,107 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/TativoRelativeLayoutPrincipal"
     tools:context=".Bloques.Actividades.Act_B3_ConfirmarPIN"
     android:orientation="vertical" >
 
 
-    <LinearLayout
+
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_height="match_parent">
         <LinearLayout
+            android:id="@+id/lyMsjTextoMensajes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorGrisTitulo">
-            <TextView
-                android:id="@+id/lblMSJTitulo"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:text="@string/msjTituloPIN"
-                />
-        </LinearLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:orientation="vertical"
+            android:background="@color/colorGrisCuerpo">
             <LinearLayout
-                android:id="@+id/lyMsjTextoMensajes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="15dp"
-                android:background="@color/colorGrisCuerpo">
-
-
-                <LinearLayout style="@style/TativoLinearLayoutCentroPantalla"
-                    android:id="@+id/linearLayout">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="20dp">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/lblMsjPIN" />
-                    </LinearLayout>
-                    <LinearLayout style="@style/TativoLayoutBordeRelleno">
-                        <TextView
-                            style="@style/TativoTextViewEncabezado"
-                            android:text="@string/lblTituloPIN" />
-                    </LinearLayout>
-                    <LinearLayout style="@style/TativoLinearLayoutBorde">
-                        <android.support.design.widget.TextInputLayout
-                            style="@style/TativoTextInputLayout">
-                            <AutoCompleteTextView
-                                android:id="@+id/txtPIN"
-                                android:hint="@string/txtPIN"
-                                android:inputType="text"
-                                android:maxLines="1"
-                                style="@style/TativoAutoCompleteTextView"/>
-                        </android.support.design.widget.TextInputLayout>
-                    </LinearLayout>
-                    <Button
-                        android:id="@+id/btnConfirmarPIN"
-                        android:text="@string/btnConfirmarPIN"
-                        style="@style/TativoBotonAceptar"/>
-                </LinearLayout>
-
-                <RelativeLayout
+                android:background="@color/colorGrisTitulo">
+                <TextView
+                    android:id="@+id/lblMSJTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:text="@string/msjTituloPIN"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblMsjPIN" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLayoutBordeRelleno">
+                <TextView
+                    style="@style/TativoTextViewEncabezado"
+                    android:text="@string/lblTituloPIN" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtPIN"
+                        android:hint="@string/txtPIN"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnConfirmarPIN"
+                android:text="@string/btnConfirmarPIN"
+                style="@style/TativoBotonAceptar"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+                <TextView
+                    android:id="@+id/txtProgressBar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center">
-                    <TextView
-                        android:id="@+id/txtProgressBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="52dp"
-                        android:text="30"
-                        android:gravity="center"/>
-                    <ProgressBar
-                        android:id="@+id/circularProgressbar"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:indeterminate="false"
-                        android:max="30"
-                        android:progress="0"
-                        android:layout_centerInParent="true"
-                        android:progressDrawable="@drawable/pb_circle"
-                        android:secondaryProgress="30" />
-                </RelativeLayout>
-
-
-            </LinearLayout>
-
-        </ScrollView>
-    </LinearLayout>
-</RelativeLayout>
+                    android:layout_marginTop="52dp"
+                    android:text="30"
+                    android:gravity="center"/>
+                <ProgressBar
+                    android:id="@+id/circularProgressbar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:indeterminate="false"
+                    android:max="30"
+                    android:progress="0"
+                    android:layout_centerInParent="true"
+                    android:progressDrawable="@drawable/pb_circle"
+                    android:secondaryProgress="30" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

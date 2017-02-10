@@ -498,7 +498,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
     public void onScanPress(View v) {
         Intent scanIntent = new Intent(this, CardIOActivity.class);
         // customize these values to suit your needs.
-        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, true); // default: false
+        scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_EXPIRY, false); // default: false
         scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_CVV, false); // default: false
         scanIntent.putExtra(CardIOActivity.EXTRA_REQUIRE_POSTAL_CODE, false); // default: false
         // MY_SCAN_REQUEST_CODE is arbitrary and is only used within this activity.

@@ -28,6 +28,8 @@ public class DatosDocumentoCaratula {
     private String Empresa_Direccion;
     private String Empresa_Telefono;
     private String Empresa_Correo;
+    private Double Tasa;
+    private Double TasaMoratoria;
 
     public String getClienteID() {
         return ClienteID;
@@ -203,5 +205,21 @@ public class DatosDocumentoCaratula {
 
     public void setEmpresa_Correo(String empresa_Correo) {
         Empresa_Correo = empresa_Correo;
+    }
+
+    public double getTasa() {
+        return Tasa;
+    }
+
+    public void setTasa(double tasa) {
+        Tasa = tasa;
+    }
+
+    public double getTasaMoratoria() {
+        return TasaMoratoria;
+    }
+
+    public void setTasaMoratoria(double tasaMoratoria) {
+        TasaMoratoria = tasaMoratoria;
     }
 }

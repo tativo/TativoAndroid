@@ -18,6 +18,8 @@ public class DatosDocumentosInfoPago {
     private Double IVA_Limite;
     private Double Total_Compromiso;
     private Double Total_Limite;
+    private String Plazo_CompromisoTXT;
+    private String Plazo_LimiteTXT;
 
     public Date getFechaInicio() {
         return FechaInicio;
@@ -105,5 +107,21 @@ public class DatosDocumentosInfoPago {
 
     public void setTotal_Limite(Double total_Limite) {
         Total_Limite = total_Limite;
+    }
+
+    public String getPlazo_CompromisoTXT() {
+        return Plazo_CompromisoTXT;
+    }
+
+    public void setPlazo_CompromisoTXT(String plazo_CompromisoTXT) {
+        Plazo_CompromisoTXT = plazo_CompromisoTXT;
+    }
+
+    public String getPlazo_LimiteTXT() {
+        return Plazo_LimiteTXT;
+    }
+
+    public void setPlazo_LimiteTXT(String plazo_LimiteTXT) {
+        Plazo_LimiteTXT = plazo_LimiteTXT;
     }
 }

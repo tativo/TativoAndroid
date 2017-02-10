@@ -173,29 +173,35 @@
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde">
-                <android.support.design.widget.TextInputLayout
-                    style="@style/TativoTextInputLayout">
-                    <AutoCompleteTextView
-                        android:id="@+id/txtNumeroExt"
-                        android:hint="@string/txtNumeroExt"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:maxLength="100"
-                        style="@style/TativoAutoCompleteTextView"/>
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
-            <LinearLayout style="@style/TativoLinearLayoutBorde">
-                <android.support.design.widget.TextInputLayout
-                    style="@style/TativoTextInputLayout">
-                    <AutoCompleteTextView
-                        android:id="@+id/txtNumeroInt"
-                        android:hint="@string/txtNumeroInt"
-                        android:inputType="text"
-                        android:maxLines="1"
-                        android:maxLength="100"
-                        style="@style/TativoAutoCompleteTextView"/>
-                </android.support.design.widget.TextInputLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:layout_weight="1">
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/TativoTextInputLayout">
+                        <AutoCompleteTextView
+                            android:id="@+id/txtNumeroExt"
+                            android:hint="@string/txtNumeroExt"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:maxLength="100"
+                            style="@style/TativoAutoCompleteTextView"/>
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout style="@style/TativoLinearLayoutBorde"
+                    android:layout_weight="1">
+                    <android.support.design.widget.TextInputLayout
+                        style="@style/TativoTextInputLayout">
+                        <AutoCompleteTextView
+                            android:id="@+id/txtNumeroInt"
+                            android:hint="@string/txtNumeroInt"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:maxLength="100"
+                            style="@style/TativoAutoCompleteTextView"/>
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
                 <android.support.design.widget.TextInputLayout

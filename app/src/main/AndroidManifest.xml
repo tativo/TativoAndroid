@@ -59,6 +59,8 @@
         </activity>
         <activity android:name=".LogIn.Actividades.Act_Cotizador"
             android:screenOrientation="portrait" />
+        <activity android:name=".LogIn.Actividades.Act_tatibot"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Bloques.Actividades.Act_B1_Referencias"
             android:configChanges="screenSize|orientation" />

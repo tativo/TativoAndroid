@@ -1,6 +1,7 @@
 package com.tativo.app.tativo.LogIn.Fragmentos;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.tativo.app.tativo.LogIn.Actividades.Act_LogIn;
+import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Contrato;
 import com.tativo.app.tativo.R;
 
 /**
@@ -45,17 +47,50 @@ public class Frg_Requisitos extends DialogFragment {
         builder.setView(v);
 
         Button ir = (Button) v.findViewById(R.id.btnIrARegistro);
+        Button cerrar = (Button) v.findViewById(R.id.btnCerrarRequisitos);
 
         ir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Act_LogIn.class);
-                startActivity(i);
-                getActivity().finish();
+                //Intent i = new Intent(getActivity(), Act_LogIn.class);
+                //startActivity(i);
+                //getActivity().finish();
+                listener.onPossitiveButtonClick();
+                dismiss();
+            }
+        });
+
+        cerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onNegativeButtonClick();
+                dismiss();
             }
         });
 
 
         return builder.create();
+    }
+
+    public interface DialogResponseRequisitos {
+        void onPossitiveButtonClick();
+        void onNegativeButtonClick();
+    }
+
+    Frg_Requisitos.DialogResponseRequisitos listener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            listener = (Frg_Requisitos.DialogResponseRequisitos) activity;
+
+        } catch (ClassCastException e) {
+            throw new ClassCastException(
+                    activity.toString() +
+                            " no implementó DialogResponseContrato");
+
+        }
     }
 }

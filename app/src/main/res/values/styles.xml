@@ -133,7 +133,17 @@
         <item name="android:textSize">18dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorBlanco</item>
-        <item name="android:drawableRight">@drawable/sig</item>
+        <!--<item name="android:drawableRight">@drawable/sig</item>-->
+    </style>
+
+    <style name="TativoBotonCerrar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/border_azuloscuro</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorAzulOscuro</item>
+        <item name="android:borderlessButtonStyle">@color/colorAzulOscuro</item>
     </style>
 
     <style name="TativoRelativeLayoutPrincipal">
@@ -246,6 +256,11 @@
         <item>vacio</item>
     </string-array>
 
+
+    <style name="TativoSubTitulo">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/colorAzulOscuro</item>
+    </style>
 
 
 </resources>

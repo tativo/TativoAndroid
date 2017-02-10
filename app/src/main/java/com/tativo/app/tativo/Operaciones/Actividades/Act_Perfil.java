@@ -1,6 +1,8 @@
 package com.tativo.app.tativo.Operaciones.Actividades;
 
 import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,33 +15,48 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
+import com.tativo.app.tativo.Operaciones.Clases.DatosPerfilCliente;
+import com.tativo.app.tativo.Operaciones.Clases.HistorialOperacion;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Cotizador;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Nav;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Perfil;
 import com.tativo.app.tativo.R;
+import com.tativo.app.tativo.Utilidades.Globals;
+import com.tativo.app.tativo.Utilidades.ServiciosSoap;
+
+import org.ksoap2.serialization.PropertyInfo;
+import org.ksoap2.serialization.SoapObject;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class Act_Perfil extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private String drawerTitle;
+    Globals Sesion;
+    //DatosSolicitud Solicitud = new DatosSolicitud();
+    DatosPerfilCliente datosPerfilCliente = new DatosPerfilCliente();
+    HistorialOperacion datosOperacionActual = new HistorialOperacion();
+    //AsyncEstatusSolicitud EstatusSolicitud = new AsyncEstatusSolicitud();
+
+    Bundle sIntanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_perfil);
 
+        sIntanceState = savedInstanceState;
+        Sesion = (Globals) getApplicationContext();
+
+        new AsyncGetPerfilHistorialCliente().execute();
+
         setToolbar(); // Setear Toolbar como action bar
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        if (navigationView != null) {
-            setupDrawerContent(navigationView);
-        }
-
-        drawerTitle = "Perfil";
-        if (savedInstanceState == null) {
-            selectItem(drawerTitle);
-        }
     }
 
     private void setToolbar() {
@@ -54,8 +71,7 @@ public class Act_Perfil extends AppCompatActivity {
 
         }
     }
-
-    private void setupDrawerContent(NavigationView navigationView) {
+    private void setupDrawerContent(final NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -126,4 +142,168 @@ public class Act_Perfil extends AppCompatActivity {
         setTitle(title); // Setear título actual
 
     }
+
+/*
+    //Region Estatus Solicitud
+    private class AsyncEstatusSolicitud extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            GetEstatusSolicitud();
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GetEstatusSolicitud(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetEstatusSolicitud";
+        String METHOD_NAME = "GetEstatusSolicitud";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("ClienteID");
+        pi1.setValue(Sesion.getCliendeID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+
+                if(Boolean.parseBoolean(respuesta.getProperty("EsValido").toString())){
+                    SoapObject Datos = (SoapObject) respuesta.getProperty("Datos");
+                    SoapObject datosSolicitud = (SoapObject) Datos.getProperty("datosSolicitud");
+
+                    //Llenamos los datos de la solicitud
+                    Solicitud.setEstatusCliente(datosSolicitud.getProperty("EstatusCliente").toString());
+                    Solicitud.setPagareEnviado(Boolean.parseBoolean(datosSolicitud.getProperty("PagareEnviado").toString()));
+                    Solicitud.setPagareAceptado(Boolean.parseBoolean(datosSolicitud.getProperty("PagareAceptado").toString()));
+                    Solicitud.setDentroDeHorario(Boolean.parseBoolean(datosSolicitud.getProperty("DentroDeHorario").toString()));
+                    Solicitud.setSolicitudid(datosSolicitud.getProperty("Solicitudid").toString());
+                    Solicitud.setImporteSolicitud(Double.parseDouble(datosSolicitud.getProperty("ImporteSolicitud").toString()));
+                    Solicitud.setImporteSolicitud(Double.parseDouble(datosSolicitud.getProperty("ImporteSolicitud").toString()));
+                    Solicitud.setIntereses(Double.parseDouble(datosSolicitud.getProperty("Intereses").toString()));
+                    Solicitud.setIVA(Double.parseDouble(datosSolicitud.getProperty("IVA").toString()));
+                    Solicitud.setTotalPagar(Double.parseDouble(datosSolicitud.getProperty("TotalPagar").toString()));
+                    //Solicitud.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(datosSolicitud.getProperty("FechaSolicitud").toString()));
+                    Solicitud.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd").parse(datosSolicitud.getProperty("FechaSolicitud").toString().substring(0, 10)));
+                    Solicitud.setDiasUso(Integer.parseInt(datosSolicitud.getProperty("DiasUso").toString()));
+                    Solicitud.setFechaVence(new SimpleDateFormat("yyyy-MM-dd").parse(datosSolicitud.getProperty("FechaVence").toString().substring(0, 10)));
+                    Solicitud.setNombreCompleto(datosSolicitud.getProperty("NombreCompleto").toString());
+                    Solicitud.setBloqueCliente(Integer.parseInt(datosSolicitud.getProperty("BloqueCliente").toString()));
+                    Solicitud.setPinEnviado(Boolean.parseBoolean(datosSolicitud.getProperty("PinEnviado").toString()));
+                    Solicitud.setPin(datosSolicitud.getProperty("Pin").toString());
+                }else{
+                    //Toast.makeText(getApplicationContext(),"Error: "+respuesta.getProperty("Mensaje").toString(),Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                //Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    //Region Estatus Solicitud
+*/
+
+
+    //Consultar GetPerfilHistorialCliente
+    private class AsyncGetPerfilHistorialCliente extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            GetPerfilHistorialCliente();
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void result) {
+            SetPerfilHitorialCliente();
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GetPerfilHistorialCliente(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetPerfilHistorialCliente";
+        String METHOD_NAME = "GetPerfilHistorialCliente";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("ClienteID");
+        pi1.setValue(Sesion.getCliendeID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+
+                if(Boolean.parseBoolean(respuesta.getProperty("EsValido").toString())){
+                    SoapObject Datos = (SoapObject) respuesta.getProperty("Datos");
+                    SoapObject datosPefil = (SoapObject) Datos.getProperty("PerfilCliente");
+                    SoapObject sOperacionActual = (SoapObject) Datos.getProperty("OperacionActual");
+
+                    //Llenamos los datos de la solicitud
+                    //datosPerfilCliente.setBanco(datosPefil.getProperty("Banco").toString());
+                    //datosPerfilCliente.setCalificacion(datosPefil.getProperty("Calificacion").toString());
+                    //datosPerfilCliente.setNombreCompleto(datosPefil.getProperty("NombreCompleto").toString());
+                    //datosPerfilCliente.setNumeroTarjeta(datosPefil.getProperty("NumeroTarjeta").toString());
+                    datosPerfilCliente.setSolicitudActiva(Boolean.parseBoolean(datosPefil.getProperty("SolicitudActiva").toString()));
+
+                    if (sOperacionActual.getPropertyCount() > 0) {
+                        datosOperacionActual.setSolicitudid(sOperacionActual.getProperty("Solicitudid").toString());
+                    }
+
+                }else{
+                    //Toast.makeText(getApplicationContext(),"Error: "+respuesta.getProperty("Mensaje").toString(),Toast.LENGTH_LONG).show();
+                }
+            } catch (Exception e) {
+                //Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private void SetPerfilHitorialCliente(){
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
+
+        if(datosPerfilCliente.isSolicitudActiva())
+        {
+                drawerTitle = "Perfil";
+                navigationView.setCheckedItem(R.id.nav_Perfil);
+        }
+        else
+        {
+            if(datosOperacionActual.getSolicitudid() != null) {
+                drawerTitle = "Perfil";
+                navigationView.setCheckedItem(R.id.nav_Perfil);
+            }
+            else {
+                drawerTitle = "Cotizador";
+                navigationView.setCheckedItem(R.id.nav_Cotizador);
+            }
+        }
+
+        if (sIntanceState == null) {
+            selectItem(drawerTitle);
+        }
+    }
+    //Consultar GetPerfilHistorialCliente
+
 }

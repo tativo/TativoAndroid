@@ -1,6 +1,7 @@
 package com.tativo.app.tativo.LogIn.Fragmentos;
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,10 +47,10 @@ import java.util.ArrayList;
 /**
  * Created by SISTEMAS1 on 29/02/2016.
  */
-public class Frg_LogIn extends Fragment {
+public class Frg_LogIn extends DialogFragment {
 
     Globals Sesion;
-    Button btnLogIn, btnPrueba;
+    Button btnLogIn, btnCerrarLogIn;
     View v;
     ProgressDialog progressDialog;
     TextView lblMsjError;
@@ -62,6 +64,8 @@ public class Frg_LogIn extends Fragment {
     @Override
     public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+
         v = inflater.inflate(R.layout.frg_login,container,false);
         Sesion = (Globals) getActivity().getApplicationContext();
         LoadFormControls();
@@ -77,8 +81,7 @@ public class Frg_LogIn extends Fragment {
         txtUsuario = (AutoCompleteTextView) v.findViewById(R.id.txtUsuario);
         textPassword = (AutoCompleteTextView) v.findViewById(R.id.txtPassword);
         lblMsjError = (TextView) v.findViewById(R.id.lblMsjError);
-
-        btnPrueba = (Button) v.findViewById(R.id.btnPrueba);
+        btnCerrarLogIn = (Button) v.findViewById(R.id.btnCerrarLogIn);
     }
 
     private void EventManager()
@@ -96,12 +99,10 @@ public class Frg_LogIn extends Fragment {
             }
         });
 
-        btnPrueba.setOnClickListener(new View.OnClickListener() {
+        btnCerrarLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), Act_Perfil.class);
-                startActivity(i);
-                getActivity().finish();
+                dismiss();
             }
         });
     }

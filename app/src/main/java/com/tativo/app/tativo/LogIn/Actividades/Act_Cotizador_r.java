@@ -8,6 +8,7 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 
 import android.graphics.Typeface;
@@ -27,8 +28,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tativo.app.tativo.Bloques.Actividades.Act_B3_InfDeposito;
 import com.tativo.app.tativo.Bloques.Clases.Cattasasfinanciamiento;
 import com.tativo.app.tativo.LogIn.Clases.CatFechasPago;
+import com.tativo.app.tativo.LogIn.Fragmentos.Frg_LogIn;
 import com.tativo.app.tativo.LogIn.Fragmentos.Frg_Requisitos;
 
 import com.tativo.app.tativo.R;
@@ -54,12 +57,12 @@ import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 
-public class Act_Cotizador_r extends AppCompatActivity {
+public class Act_Cotizador_r extends AppCompatActivity implements Frg_Requisitos.DialogResponseRequisitos {
 
     LinearLayout divPantalla,divPantallaTitulo,divPantallaImagen1,divPantallaImagen2,divPantallaCotizacion;
-    TextView lblTitulo1,lblTitulo2,lblTitulo3,lblQuiero,lblPago,lblCotizacion1,lblCotizacion2,lblCotizacion3,lblCotizacion4,lblCotizacion5,lblCotizacion6;
+    TextView lblTitulo1,lblTitulo2,lblTitulo3,lblQuiero,lblPago,lblCotizacion1,lblCotizacion2,lblCotizacion3,lblCotizacion4,lblCotizacion5,lblCotizacion6, txtRequisitos;
     WheelView spnImporte,spnFechaPago;
-    Button btnListo;
+    Button btnListo, btnMiCuenta;
     ImageButton btnCalendario;
 
     List<CatFechasPago> FechasPago = new ArrayList<CatFechasPago>();
@@ -153,6 +156,8 @@ public class Act_Cotizador_r extends AppCompatActivity {
         spnImporte.setViewAdapter(new ImporteAdapter(getApplicationContext(), Importes));
 
         btnListo = (Button) findViewById(R.id.btnListo);
+        btnMiCuenta = (Button) findViewById(R.id.btnMiCuenta);
+        txtRequisitos = (TextView) findViewById(R.id.txtRequisitos);
         btnCalendario = (ImageButton) findViewById(R.id.btnCalendario);
 
         final Calendar cal = Calendar.getInstance();
@@ -194,9 +199,27 @@ public class Act_Cotizador_r extends AppCompatActivity {
         btnListo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Globals g = (Globals) getApplicationContext();
-                g.setImporteSolicitado(Importes.get(spnImporte.getCurrentItem()));
-                g.setFechaPago(FechasPago.get(spnFechaPago.getCurrentItem()).getFechaPago());
+                //Globals g = (Globals) getApplicationContext();
+                //g.setImporteSolicitado(Importes.get(spnImporte.getCurrentItem()));
+                //g.setFechaPago(FechasPago.get(spnFechaPago.getCurrentItem()).getFechaPago());
+                FragmentManager fragmento = getFragmentManager();
+                new Frg_Requisitos().show(fragmento,"frmRequisitos");
+            }
+        });
+
+
+        btnMiCuenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmento = getFragmentManager();
+                new Frg_LogIn().show(fragmento,"frmLogIn");
+            }
+        });
+
+
+        txtRequisitos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 FragmentManager fragmento = getFragmentManager();
                 new Frg_Requisitos().show(fragmento,"frmRequisitos");
             }
@@ -480,7 +503,7 @@ public class Act_Cotizador_r extends AppCompatActivity {
     //End Region
 
 
-//PARA EL CALENDARIO
+    //PARA EL CALENDARIO
     boolean isOkayClicked = true;
     private void showDatePicker() {
         // TODO Auto-generated method stub
@@ -612,6 +635,26 @@ public class Act_Cotizador_r extends AppCompatActivity {
         return index;
     }
 
-//PARA EL CALENDARIO
+    //PARA EL CALENDARIO
+
+
+
+    //REQUISITOS -->
+    @Override
+    public void onPossitiveButtonClick() {
+        Globals g = (Globals) getApplicationContext();
+        g.setImporteSolicitado(Importes.get(spnImporte.getCurrentItem()));
+        g.setFechaPago(FechasPago.get(spnFechaPago.getCurrentItem()).getFechaPago());
+
+        Intent i = new Intent(getApplicationContext(), Act_LogIn.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void onNegativeButtonClick() {
+        //Toast.makeText(this,"No se aceptaron los terminos",Toast.LENGTH_LONG).show();
+    }
+    //<-- REQUISITOS
 
 }

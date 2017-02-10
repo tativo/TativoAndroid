@@ -6,44 +6,131 @@
     tools:context=".LogIn.Actividades.Act_LogIn"
     android:orientation="vertical">
 
-    <ScrollView style="@style/TativoScrollView"
-        android:layout_marginTop="55dp">
+    <ScrollView style="@style/TativoScrollView">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/TativoRelativeLayoutPrincipal"
             android:orientation="vertical">
-            <FrameLayout
-                android:id="@+id/flContenedor"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
-            </FrameLayout>
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/txtRequisitos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Requisitos"
+                        android:textStyle="bold"
+                        android:textSize="16dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right">
+                    <Button
+                        android:id="@+id/btnMiCuenta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="33dp"
+                        android:text="Mi Cuenta"
+                        android:background="@color/colorAzulOscuro"
+                        android:textColor="@color/colorBlanco" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/lblRegistro"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_margin="10dp" />
+
+            <LinearLayout style="@style/TativoLayoutBordeRelleno">
+                <TextView
+                    style="@style/TativoTextViewTitulo"
+                    android:text="@string/lblTituRegistro" />
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtNombre"
+                        android:hint="@string/txtNombre"
+                        android:inputType="textAutoComplete|textCapWords"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtApellidoPaterno"
+                        android:hint="@string/txtApellidoPaterno"
+                        android:inputType="textAutoComplete|textCapWords"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtApellidoMaterno"
+                        android:hint="@string/txtApellidoMaterno"
+                        android:inputType="textAutoComplete|textCapWords"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtCorreo"
+                        android:hint="@string/hnCorreo"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtContrasena"
+                        android:hint="@string/txtContrasena"
+                        android:inputType="textPassword"
+                        android:password="true"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/TativoLinearLayoutBorde">
+                <android.support.design.widget.TextInputLayout
+                    style="@style/TativoTextInputLayout">
+                    <AutoCompleteTextView
+                        android:id="@+id/txtConfirmaContrasena"
+                        android:hint="@string/txtConfirmacionContrasena"
+                        android:inputType="textPassword"
+                        android:password="true"
+                        android:maxLines="1"
+                        style="@style/TativoAutoCompleteTextView"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnRegistro"
+                android:text="@string/btnRegistro"
+                style="@style/TativoBotonAceptar"/>
         </LinearLayout>
     </ScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:alpha="0.95"
-        android:touchscreenBlocksFocus="false">
-        <Button
-            android:id="@+id/frgIniciarSesion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/colorBlanco"
-            android:text="Tengo cuenta"
-            android:textAllCaps="false"/>
-
-        <Button
-            android:id="@+id/frgRegistrarse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/colorBlanco"
-            android:text="Quiero registrarme"
-            android:textAllCaps="false" />
-    </LinearLayout>
-
 </RelativeLayout>

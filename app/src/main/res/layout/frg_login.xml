@@ -6,17 +6,6 @@
 
     <LinearLayout style="@style/TativoLinearLayoutCentroPantalla"
         android:id="@+id/linearLayout">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="10dp">
-            <ImageView
-                android:layout_width="130dp"
-                android:layout_height="50dp"
-                android:id="@+id/imageView"
-                android:background="@drawable/tativo"/>
-        </LinearLayout>
         <TextView
             android:id="@+id/lblMsjError"
             android:layout_width="match_parent"
@@ -53,16 +42,34 @@
                     style="@style/TativoAutoCompleteTextView"/>
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
-        <Button
-            android:id="@+id/btnLogIn"
-            android:text="@string/btnLogIn"
-            android:drawableRight="@drawable/sig"
-            style="@style/TativoBotonAceptar"/>
-        <Button
-            android:id="@+id/btnPrueba"
-            android:text="ir a Prueba"
-            android:drawableRight="@drawable/sig"
-            android:background="@color/colorAzulSeleccion"
-            style="@style/TativoBotonAceptar" android:visibility="gone" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_marginTop="10px"
+                android:layout_marginRight="5px">
+                <Button
+                    android:id="@+id/btnLogIn"
+                    android:text="@string/btnLogIn"
+                    style="@style/TativoBotonAceptar"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_marginTop="10px"
+                android:layout_marginLeft="5px">
+                <Button
+                    android:id="@+id/btnCerrarLogIn"
+                    android:text="@string/btnCerrar"
+                    android:drawableRight="@drawable/sig"
+                    style="@style/TativoBotonCerrar"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

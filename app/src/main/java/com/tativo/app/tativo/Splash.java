@@ -8,6 +8,7 @@ import com.tativo.app.tativo.Bloques.Actividades.Act_Documentos;
 import com.tativo.app.tativo.LogIn.Actividades.Act_Cotizador;
 import com.tativo.app.tativo.LogIn.Actividades.Act_Cotizador_r;
 import com.tativo.app.tativo.LogIn.Actividades.Act_LogIn;
+import com.tativo.app.tativo.LogIn.Actividades.Act_tatibot;
 
 /**
  * Created by SISTEMAS1 on 01/03/2016.

@@ -1,12 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/TativoRelativeLayoutPrincipal"
     tools:context=".LogIn.Actividades.Act_LogIn"
-    android:gravity="center_horizontal">
-            <ImageView
-                android:layout_width="130dp"
-                android:layout_height="50dp"
-                android:id="@+id/imageView"
-                android:background="@drawable/tativo" />
-</RelativeLayout>
+    android:orientation="vertical">
+
+    <ScrollView style="@style/TativoScrollView">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TativoRelativeLayoutPrincipal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="¿Qué esperas?"
+                android:gravity="center"
+                android:layout_marginBottom="12dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorAzulOscuro"/>
+            <TextView
+                style="@style/TativoSubTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cumple tus deseos"
+                android:gravity="center"
+                android:layout_marginBottom="12dp"
+                android:textSize="14sp"
+                android:textColor="@color/colorAzulOscuro"/>
+            <LinearLayout
+                style="@style/TativoLinearLayoutBorde"
+                android:orientation="vertical"
+                android:padding="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="5dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginRight="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Quiero"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginLeft="5dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Pago el"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginRight="5dp">
+                        <EditText
+                            android:id="@+id/txtRecotizarImporte"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:hint="$ 1,000"
+                            android:gravity="center"
+                            android:background="@color/colorAmarillo"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginLeft="5dp">
+                        <EditText
+                            android:id="@+id/txtRecotizarFecha"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:hint="03/02/2017"
+                            android:gravity="center"
+                            android:background="@color/colorAmarillo"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(multiplos de 100 hasta $2,000)"
+                            android:textSize="10dp"
+                            android:layout_marginTop="3dp"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(hasta 30 dias)"
+                            android:textSize="10dp"
+                            android:layout_marginTop="3dp"                    />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorGrisCuerpo"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"></LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Así quedaría tu préstamo"
+                    android:gravity="center"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="15dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="préstamo"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="comisión"
+                            android:gravity="center"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="pago total"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/lblRecotizarImporte"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="$3,000"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/lblRecotizarComision"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="$23.20"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:id="@+id/lblRecotizarTotal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="$3,023.20"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="16sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorGrisCuerpo"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"></LinearLayout>
+
+                <TextView
+                    android:id="@+id/lblRecotizarFechaCompromiso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="A pagar el 04 de Febrero 2017 (1 días)"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textStyle="italic"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnRecotizarSolicita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                style="@style/TativoBotonAceptar"
+                android:text="¡Solicita ya!"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+</LinearLayout>

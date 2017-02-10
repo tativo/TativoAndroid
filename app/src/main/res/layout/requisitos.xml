@@ -36,16 +36,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorGrisCuerpo"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reqMSJ1"
-                    android:gravity="center"
-                    android:paddingTop="20dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:layout_below="@+id/lblReqTitulo"
-                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -206,14 +196,41 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="15dp"
                     android:background="@color/colorGrisTitulo"/>
-                <Button
-                    android:id="@+id/btnIrARegistro"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorAzulOscuro"
-                    android:textAllCaps="false"
-                    android:text="@string/reqbtnCerrar"
-                    style="@style/TativoBotonAceptar"/>
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_margin="5dp">
+                        <Button
+                            android:id="@+id/btnIrARegistro"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorAzulOscuro"
+                            android:textAllCaps="false"
+                            android:text="@string/reqbtnIrAlRegistro"
+                            style="@style/TativoBotonAceptar"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:layout_margin="5dp">
+                        <Button
+                            android:id="@+id/btnCerrarRequisitos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:text="@string/reqbtnCerrarVentana"
+                            style="@style/TativoBotonCerrar"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

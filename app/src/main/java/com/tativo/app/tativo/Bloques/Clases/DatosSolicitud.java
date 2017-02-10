@@ -9,17 +9,20 @@ public class DatosSolicitud {
 
     private String EstatusCliente;
     private boolean PagareEnviado;
+    private boolean PagareAceptado;
     private boolean DentroDeHorario;
     private String Solicitudid;
     private double ImporteSolicitud;
-    private double Intereses ;
-    private double IVA ;
+    private double Intereses;
+    private double IVA;
     private double TotalPagar;
     private Date FechaSolicitud;
     private int DiasUso;
     private Date FechaVence;
     private String NombreCompleto;
     private int BloqueCliente;
+    private boolean PinEnviado;
+    private String Pin;
 
     public String getEstatusCliente() {
         return EstatusCliente;
@@ -123,5 +126,29 @@ public class DatosSolicitud {
 
     public void setBloqueCliente(int bloqueCliente) {
         BloqueCliente = bloqueCliente;
+    }
+
+    public boolean isPagareAceptado() {
+        return PagareAceptado;
+    }
+
+    public void setPagareAceptado(boolean pagareAceptado) {
+        PagareAceptado = pagareAceptado;
+    }
+
+    public boolean isPinEnviado() {
+        return PinEnviado;
+    }
+
+    public void setPinEnviado(boolean pinEnviado) {
+        PinEnviado = pinEnviado;
+    }
+
+    public String getPin() {
+        return Pin;
+    }
+
+    public void setPin(String pin) {
+        Pin = pin;
     }
 }

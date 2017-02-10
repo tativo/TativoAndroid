@@ -225,6 +225,10 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
                                 Toast.makeText(getApplicationContext(), "Favor de cargar imagen frontal", Toast.LENGTH_LONG).show();
                             }
                         }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Nombre completo y firma no son iguales", Toast.LENGTH_LONG).show();
+                        }
                     }
                 }
             }
@@ -497,7 +501,6 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
             }
         }
     }
-
     private void SetInfoBloque() {
         NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
         nf.setMaximumFractionDigits(2);

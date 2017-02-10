@@ -150,16 +150,14 @@
                         <TextView style="@style/TativoTextViewHint"
                             android:hint="@string/hnCalculoOrdinaria" />
                         <TextView android:id="@+id/lblInteresOrdinaria"
-                            style="@style/TativoTextView"
-                            android:text="@string/lblCalculoOrdinaria"/>
+                            style="@style/TativoTextView" />
                     </LinearLayout>
                     <LinearLayout style="@style/TativoLinearLayoutBorde"
                         android:padding="8dp">
                         <TextView style="@style/TativoTextViewHint"
                             android:hint="@string/hnCalculoMoratoria" />
                         <TextView android:id="@+id/lblInteresMoratoria"
-                            style="@style/TativoTextView"
-                            android:text="@string/lblCalculoMoratoria"/>
+                            style="@style/TativoTextView" />
                     </LinearLayout>
                     <LinearLayout style="@style/TativoLinearLayoutBorde"
                         android:padding="8dp">
@@ -168,46 +166,57 @@
                         <TextView android:id="@+id/lblMontoSolicitado"
                             style="@style/TativoTextView"/>
                     </LinearLayout>
-                    <LinearLayout style="@style/TativoLinearLayoutBorde"
-                        android:padding="8dp">
-                        <TextView style="@style/TativoTextViewHint"
-                            android:hint="@string/hnInteres" />
-                        <TextView android:id="@+id/lblCaratulaInteres"
-                            style="@style/TativoTextView"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout style="@style/TativoLinearLayoutBorde"
+                            android:padding="8dp" android:layout_weight="1">
+                            <TextView style="@style/TativoTextViewHint"
+                                android:hint="@string/hnInteres" />
+                            <TextView android:id="@+id/lblCaratulaInteres"
+                                style="@style/TativoTextView"/>
+                        </LinearLayout>
+                        <LinearLayout style="@style/TativoLinearLayoutBorde"
+                            android:padding="8dp" android:layout_weight="1">
+                            <TextView style="@style/TativoTextViewHint"
+                                android:hint="@string/hnIVA" />
+                            <TextView android:id="@+id/lblCaratulaIVA"
+                                style="@style/TativoTextView"/>
+                        </LinearLayout>
                     </LinearLayout>
                     <LinearLayout style="@style/TativoLinearLayoutBorde"
-                        android:padding="8dp">
-                        <TextView style="@style/TativoTextViewHint"
-                            android:hint="@string/hnIVA" />
-                        <TextView android:id="@+id/lblCaratulaIVA"
-                            style="@style/TativoTextView"/>
-                    </LinearLayout>
-                    <LinearLayout style="@style/TativoLinearLayoutBorde"
-                        android:padding="8dp">
+                        android:padding="8dp" android:layout_weight="1">
                         <TextView style="@style/TativoTextViewHint"
                             android:hint="@string/hnTotal" />
                         <TextView android:id="@+id/lblCaratulaTotalPagar"
                             style="@style/TativoTextView"/>
                     </LinearLayout>
-                    <LinearLayout style="@style/TativoLinearLayoutBorde"
-                        android:padding="8dp">
-                        <TextView style="@style/TativoTextViewHint"
-                            android:hint="@string/hnFechaInicio" />
-                        <TextView android:id="@+id/lblCaratulaFechaInicio"
-                            style="@style/TativoTextView"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout style="@style/TativoLinearLayoutBorde"
+                            android:padding="8dp" android:layout_weight="1">
+                            <TextView style="@style/TativoTextViewHint"
+                                android:hint="@string/hnFechaInicio" />
+                            <TextView android:id="@+id/lblCaratulaFechaInicio"
+                                style="@style/TativoTextView"/>
+                        </LinearLayout>
+                        <LinearLayout style="@style/TativoLinearLayoutBorde"
+                            android:padding="8dp" android:layout_weight="1">
+                            <TextView style="@style/TativoTextViewHint"
+                                android:hint="@string/hnFechaLimite" />
+                            <TextView android:id="@+id/lblCaratulaFechaLimite"
+                                style="@style/TativoTextView"/>
+                        </LinearLayout>
                     </LinearLayout>
+
+
                     <LinearLayout style="@style/TativoLinearLayoutBorde"
-                        android:padding="8dp">
+                        android:padding="8dp" android:layout_weight="1">
                         <TextView style="@style/TativoTextViewHint"
                             android:hint="@string/hnPlazo" />
                         <TextView android:id="@+id/lblCaratulaPlazo"
-                            style="@style/TativoTextView"/>
-                    </LinearLayout>
-                    <LinearLayout style="@style/TativoLinearLayoutBorde"
-                        android:padding="8dp">
-                        <TextView style="@style/TativoTextViewHint"
-                            android:hint="@string/hnFechaLimite" />
-                        <TextView android:id="@+id/lblCaratulaFechaLimite"
                             style="@style/TativoTextView"/>
                     </LinearLayout>
 
@@ -216,24 +225,33 @@
                         <TextView style="@style/TativoTextViewEncabezado"
                             android:text="@string/lblComisiones"/>
                     </LinearLayout>
-                    <LinearLayout style="@style/TativoLinearLayoutBorde"
-                        android:padding="8dp">
-                        <TextView style="@style/TativoTextViewHint"
-                            android:hint="@string/hnAnalisis" />
-                        <TextView
-                            android:text="@string/lblNoAplica"
-                            style="@style/TativoTextView"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout style="@style/TativoLinearLayoutBorde"
+                            android:padding="8dp" android:layout_weight="1">
+                            <TextView style="@style/TativoTextViewHint"
+                                android:hint="@string/hnAnalisis" />
+                            <TextView
+                                android:text="@string/lblNoAplica"
+                                style="@style/TativoTextView"/>
+                        </LinearLayout>
+                        <LinearLayout style="@style/TativoLinearLayoutBorde"
+                            android:padding="8dp" android:layout_weight="1">
+                            <TextView style="@style/TativoTextViewHint"
+                                android:hint="@string/hnOperacion" />
+                            <TextView
+                                android:text="@string/lblNoAplica"
+                                style="@style/TativoTextView"/>
+                        </LinearLayout>
                     </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                     <LinearLayout style="@style/TativoLinearLayoutBorde"
-                        android:padding="8dp">
-                        <TextView style="@style/TativoTextViewHint"
-                            android:hint="@string/hnOperacion" />
-                        <TextView
-                            android:text="@string/lblNoAplica"
-                            style="@style/TativoTextView"/>
-                    </LinearLayout>
-                    <LinearLayout style="@style/TativoLinearLayoutBorde"
-                        android:padding="8dp">
+                        android:padding="8dp" android:layout_weight="1">
                         <TextView style="@style/TativoTextViewHint"
                             android:hint="@string/hnApertura" />
                         <TextView
@@ -241,14 +259,14 @@
                             style="@style/TativoTextView"/>
                     </LinearLayout>
                     <LinearLayout style="@style/TativoLinearLayoutBorde"
-                        android:padding="8dp">
+                        android:padding="8dp" android:layout_weight="1">
                         <TextView style="@style/TativoTextViewHint"
                             android:hint="@string/hnCobranza" />
                         <TextView
                             android:text="@string/lblNoAplica"
                             style="@style/TativoTextView"/>
                     </LinearLayout>
-
+                </LinearLayout>
                     <CheckBox
                         android:id="@+id/ckTerminosCaratula"
                         android:layout_width="match_parent"
@@ -401,6 +419,12 @@
                     android:id="@+id/lblClausulasCuarta"
                     style="@style/TativoTextoContrato" />
                 <TextView
+                    android:id="@+id/lblClausulasCuartaP2"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasCuartaP3"
+                    style="@style/TativoTextoContrato" />
+                <TextView
                     android:id="@+id/lblClausulasQuinta"
                     style="@style/TativoTextoContrato" />
                 <TextView
@@ -409,6 +433,13 @@
                 <TextView
                     android:id="@+id/lblClausulasQuintaP3"
                     style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasQuintaP4"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasQuintaP5"
+                    style="@style/TativoTextoContrato" />
+                <!--
                 <TextView
                     android:id="@+id/lblClausulasComisiones"
                     style="@style/TativoTextoContrato" />
@@ -424,16 +455,18 @@
                 <TextView
                     android:id="@+id/lblClausulasProrrogaP4"
                     style="@style/TativoTextoContrato" />
+                    -->
                 <TextView
                     android:id="@+id/lblClausulasSexta"
                     style="@style/TativoTextoContrato" />
+                <!--
                 <TextView
                     android:id="@+id/lblClausulasSextaP2"
                     style="@style/TativoTextoContrato" />
                 <TextView
                     android:id="@+id/lblClausulasSextaP3"
                     style="@style/TativoTextoContrato" />
-
+                    -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -695,11 +728,18 @@
                     android:id="@+id/lblClausulasSeptimaP2"
                     style="@style/TativoTextoContrato" />
                 <TextView
+                    android:id="@+id/lblClausulasSeptimaP3"
+                    style="@style/TativoTextoContrato" />
+                <TextView
                     android:id="@+id/lblClausulasOctava"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasOctavaP1"
                     style="@style/TativoTextoContrato" />
                 <TextView
                     android:id="@+id/lblClausulasNovena"
                     style="@style/TativoTextoContrato" />
+                <!--
                 <TextView
                     android:id="@+id/lblClausulasNovenaI"
                     style="@style/TativoTextoContrato" />
@@ -709,6 +749,7 @@
                 <TextView
                     android:id="@+id/lblClausulasNovenaIII"
                     style="@style/TativoTextoContrato" />
+                    -->
                 <TextView
                     android:id="@+id/lblClausulasDecima"
                     style="@style/TativoTextoContrato" />
@@ -725,8 +766,18 @@
                     android:id="@+id/lblClausulasDecimaPrimera"
                     style="@style/TativoTextoContrato" />
                 <TextView
+                    android:id="@+id/lblClausulasDecimaPrimeraI"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasDecimaPrimeraII"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasDecimaPrimeraIII"
+                    style="@style/TativoTextoContrato" />
+                <TextView
                     android:id="@+id/lblClausulasDecimaSegunda"
                     style="@style/TativoTextoContrato" />
+                <!--
                 <TextView
                     android:id="@+id/lblClausulasDecimaSegundaP2"
                     style="@style/TativoTextoContrato" />
@@ -736,15 +787,29 @@
                 <TextView
                     android:id="@+id/lblClausulasDecimaSegundaII"
                     style="@style/TativoTextoContrato" />
+                    -->
                 <TextView
                     android:id="@+id/lblClausulasDecimaTercera"
                     style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasDecimaTerceraP1"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasDecimaTerceraI"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasDecimaTerceraII"
+                    style="@style/TativoTextoContrato" />
+
+
+
                 <TextView
                     android:id="@+id/lblClausulasDecimaCuarta"
                     style="@style/TativoTextoContrato" />
                 <TextView
                     android:id="@+id/lblClausulasDecimaQuinta"
                     style="@style/TativoTextoContrato" />
+                <!--
                 <TextView
                     android:id="@+id/lblClausulasDecimaQuintaI"
                     style="@style/TativoTextoContrato" />
@@ -757,15 +822,26 @@
                 <TextView
                     android:id="@+id/lblClausulasDecimaQuintaIIIP2"
                     style="@style/TativoTextoContrato" />
+                    -->
                 <TextView
                     android:id="@+id/lblClausulasDecimaSexta"
                     style="@style/TativoTextoContrato" />
                 <TextView
-                    android:id="@+id/lblClausulasDecimaSextaP2"
+                    android:id="@+id/lblClausulasDecimaSextaI"
                     style="@style/TativoTextoContrato" />
                 <TextView
-                    android:id="@+id/lblClausulasDecimaSextaP3"
+                    android:id="@+id/lblClausulasDecimaSextaII"
                     style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasDecimaSextaIII"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasDecimaSextaP2"
+                    style="@style/TativoTextoContrato" />
+                <!--
+                <TextView
+                    android:id="@+id/lblClausulasDecimaSextaP3"
+                    style="@style/TativoTextoContrato" />-->
                 <TextView
                     android:id="@+id/lblClausulasDecimaSeptima"
                     style="@style/TativoTextoContrato" />
@@ -775,20 +851,37 @@
                 <TextView
                     android:id="@+id/lblClausulasDecimaSeptimaP3"
                     style="@style/TativoTextoContrato" />
+                <!--
                 <TextView
                     android:id="@+id/lblClausulasDecimaSeptimaP4"
-                    style="@style/TativoTextoContrato" />
+                    style="@style/TativoTextoContrato" />-->
                 <TextView
                     android:id="@+id/lblClausulasDecimaOctava"
                     style="@style/TativoTextoContrato" />
                 <TextView
+                    android:id="@+id/lblClausulasDecimaOctavaP2"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasDecimaOctavaP3"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasDecimaOctavaP4"
+                    style="@style/TativoTextoContrato" />
+
+
+
+                <TextView
                     android:id="@+id/lblClausulasDecimaNovena"
                     style="@style/TativoTextoContrato" />
+                <!--
                 <TextView
                     android:id="@+id/lblClausulasDecimaNovenaP2"
-                    style="@style/TativoTextoContrato" />
+                    style="@style/TativoTextoContrato" />-->
                 <TextView
                     android:id="@+id/lblClausulasVigesima"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasVigesimaP1"
                     style="@style/TativoTextoContrato" />
                 <TextView
                     android:id="@+id/lblClausulasVigesimaPrimera"
@@ -796,8 +889,14 @@
                 <TextView
                     android:id="@+id/lblClausulasVigesimaSegunda"
                     style="@style/TativoTextoContrato" />
-                <TextView
+                <!--<TextView
                     android:id="@+id/lblClausulasVigesimaSegundaP2"
+                    style="@style/TativoTextoContrato" />-->
+                <TextView
+                    android:id="@+id/lblClausulasVigesimaTercera"
+                    style="@style/TativoTextoContrato" />
+                <TextView
+                    android:id="@+id/lblClausulasVigesimaTerceraP2"
                     style="@style/TativoTextoContrato" />
 
 
@@ -820,7 +919,7 @@
                             android:textSize="10dp"
                             android:textStyle="bold"
                             android:text="EL ACREDITANTE"/>
-                        <ImageView
+                        <!--<ImageView
                             android:id="@+id/imgFirmaRepresentante"
                             android:layout_width="130dp"
                             android:layout_height="50dp" />
@@ -829,13 +928,14 @@
                             android:layout_height="1px"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:background="@color/colorAzulOscuro"/>
+                            android:background="@color/colorAzulOscuro"/>-->
                         <TextView
                             android:id="@+id/lblRepresentanteLegal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="10dp"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:padding="5dp"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -859,16 +959,18 @@
                         <TextView
                             android:id="@+id/lblFirmaCliente"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="wrap_content"
                             android:textSize="10dp"
                             android:textStyle="italic"
-                            android:gravity="center|bottom"/>
+                            android:gravity="center"
+                            android:padding="5dp"/>
+                        <!--
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1px"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:background="@color/colorAzulOscuro"/>
+                            android:background="@color/colorAzulOscuro"/>-->
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
