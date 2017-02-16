@@ -352,6 +352,7 @@
 
     <string name="hnPerfilSinOperaciones">Sin Operaciones</string>
     <string name="lblPerfilSinOperaciones">Nos dimos cuenta que en tu última solicitud saliste sin firmar los documentos. Ayúdanos a terminar tu solicitud para enviarte tu dinero.</string>
+    <string name="lblPerfilSinOperacionActiva">Por el momento aquí no hay nada porque tu operación está siendo generada por nuestro equipo. En un momento recibirás un SMS indicándote que en efecto, ya recibiste tu depósito.</string>
     <string name="hnPerfilFirmarDocumentos">Firmar documentos</string>
 
 

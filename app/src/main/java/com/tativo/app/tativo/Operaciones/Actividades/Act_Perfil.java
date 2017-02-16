@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.tativo.app.tativo.Bloques.Clases.DatosSolicitud;
 import com.tativo.app.tativo.Operaciones.Clases.DatosPerfilCliente;
@@ -21,6 +22,7 @@ import com.tativo.app.tativo.Operaciones.Clases.HistorialOperacion;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Cotizador;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Nav;
 import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_Perfil;
+import com.tativo.app.tativo.Operaciones.Fragmentos.Frg_ResumenOperacion;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
@@ -32,7 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Act_Perfil extends AppCompatActivity {
+public class Act_Perfil extends AppCompatActivity implements Frg_ResumenOperacion.DialogResponseResumenOperacion {
 
     private DrawerLayout drawerLayout;
     private String drawerTitle;
@@ -45,14 +47,27 @@ public class Act_Perfil extends AppCompatActivity {
     Bundle sIntanceState;
 
     @Override
+    public void onBackPressed() {
+
+        //super.onBackPressed();
+
+    }
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.act_perfil);
 
         sIntanceState = savedInstanceState;
         Sesion = (Globals) getApplicationContext();
 
-        new AsyncGetPerfilHistorialCliente().execute();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new AsyncGetPerfilHistorialCliente().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new AsyncGetPerfilHistorialCliente().execute();
+        }
 
         setToolbar(); // Setear Toolbar como action bar
 
@@ -142,6 +157,7 @@ public class Act_Perfil extends AppCompatActivity {
         setTitle(title); // Setear título actual
 
     }
+
 
 /*
     //Region Estatus Solicitud
@@ -255,18 +271,18 @@ public class Act_Perfil extends AppCompatActivity {
                 if(Boolean.parseBoolean(respuesta.getProperty("EsValido").toString())){
                     SoapObject Datos = (SoapObject) respuesta.getProperty("Datos");
                     SoapObject datosPefil = (SoapObject) Datos.getProperty("PerfilCliente");
-                    SoapObject sOperacionActual = (SoapObject) Datos.getProperty("OperacionActual");
+                    SoapObject sOA = (SoapObject) Datos.getProperty("OperacionActual");
 
-                    //Llenamos los datos de la solicitud
-                    //datosPerfilCliente.setBanco(datosPefil.getProperty("Banco").toString());
-                    //datosPerfilCliente.setCalificacion(datosPefil.getProperty("Calificacion").toString());
-                    //datosPerfilCliente.setNombreCompleto(datosPefil.getProperty("NombreCompleto").toString());
-                    //datosPerfilCliente.setNumeroTarjeta(datosPefil.getProperty("NumeroTarjeta").toString());
+
                     datosPerfilCliente.setSolicitudActiva(Boolean.parseBoolean(datosPefil.getProperty("SolicitudActiva").toString()));
 
-                    if (sOperacionActual.getPropertyCount() > 0) {
+                    SoapObject sOperacionActual = null;
+                    if(sOA.getPropertyCount() > 0)
+                    {
+                        sOperacionActual = (SoapObject) sOA.getProperty(0);
                         datosOperacionActual.setSolicitudid(sOperacionActual.getProperty("Solicitudid").toString());
                     }
+
 
                 }else{
                     //Toast.makeText(getApplicationContext(),"Error: "+respuesta.getProperty("Mensaje").toString(),Toast.LENGTH_LONG).show();
@@ -305,5 +321,55 @@ public class Act_Perfil extends AppCompatActivity {
         }
     }
     //Consultar GetPerfilHistorialCliente
+
+    @Override
+    public void onPossitiveButtonClick() {
+        Bundle args = new Bundle();
+        Fragment fragment = null;
+        args.putString(Frg_Perfil.ARG_SECTION_TITLE, "Perfil");
+        fragment = Frg_Perfil.newInstance("Perfil");
+
+        fragment.setArguments(args);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.navconten, fragment)
+                .commit();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new AsyncGetPerfilHistorialCliente().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new AsyncGetPerfilHistorialCliente().execute();
+        }
+
+    }
+
+    @Override
+    public void onNegativeButtonClick() {
+
+        Bundle args = new Bundle();
+        Fragment fragment = null;
+        args.putString(Frg_Perfil.ARG_SECTION_TITLE, "Perfil");
+        fragment = Frg_Perfil.newInstance("Perfil");
+
+        fragment.setArguments(args);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager
+                .beginTransaction()
+                .replace(R.id.navconten, fragment)
+                .commit();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new AsyncGetPerfilHistorialCliente().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new AsyncGetPerfilHistorialCliente().execute();
+        }
+
+        Toast.makeText(
+                this,
+                "No se aceptaron los terminos",
+                Toast.LENGTH_LONG)
+                .show();
+    }
 
 }

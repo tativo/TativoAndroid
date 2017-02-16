@@ -137,4 +137,14 @@ public class Utilerias extends Activity {
         return null;
     }
 
+    private boolean isNumber(String text){
+        if(text != null || !text.equals("")) {
+            char[] characters = text.toCharArray();
+            for (int i = 0; i < text.length(); i++) {
+                if (characters[i] < 48 || characters[i] > 57)
+                    return false;
+            }
+        }
+        return true;
+    }
 }

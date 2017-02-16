@@ -531,6 +531,7 @@ public class Act_Cotizador_r extends AppCompatActivity implements Frg_Requisitos
         {
         }
 
+
         final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
             // when dialog box is closed, below method will be called.
             public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
@@ -577,6 +578,50 @@ public class Act_Cotizador_r extends AppCompatActivity implements Frg_Requisitos
             new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     if (which == DialogInterface.BUTTON_POSITIVE) {
+
+                        Calendar calendario = Calendar.getInstance();
+                        day_x = datePickerDialog.getDatePicker().getDayOfMonth();
+                        month_x = datePickerDialog.getDatePicker().getMonth();
+                        year_x = datePickerDialog.getDatePicker().getYear();
+                        calendario.set(year_x, month_x, day_x,0,0,0);
+                        int DiaSemana = calendario.get(calendario.DAY_OF_WEEK);
+
+                        long MaxDias = (datePickerDialog.getDatePicker().getMaxDate() / 1000 / 60 / 60 / 24);
+                        long MinDias = (datePickerDialog.getDatePicker().getMinDate() / 1000 / 60 / 60 / 24);
+                        long Dias = (calendario.getTimeInMillis() / 1000 / 60 / 60 / 24);
+
+                        //SI ESTA FUERA DE RANGO
+                        if (Dias < MinDias || Dias > MaxDias)
+                        {
+                            Toast.makeText(getApplicationContext(),"Día fuera de rango",Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            //SI ES DIFERENTE DE DOMINGO
+                            if(DiaSemana != 1)
+                            {
+                                String sfecha = day_x+"/"+(month_x+1)+"/"+year_x;
+                                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                                ParsePosition pp = new ParsePosition(0);
+                                Date d = format.parse(sfecha, pp);
+
+                                int i = getIndexFecha(d);
+                                if (i >= 0)
+                                    spnFechaPago.setCurrentItem(i);
+                                else
+                                    Toast.makeText(getApplicationContext(),"Día inhábil para pago",Toast.LENGTH_LONG).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(getApplicationContext(),"Día inhábil para pago",Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+
+
+
+
+                        /*
                         Calendar n = Calendar.getInstance();
                         Calendar c = Calendar.getInstance();
                         day_x = datePickerDialog.getDatePicker().getDayOfMonth();
@@ -611,17 +656,17 @@ public class Act_Cotizador_r extends AppCompatActivity implements Frg_Requisitos
                         {
                             isOkayClicked = false;
                             Toast.makeText(getApplicationContext(),"Mismo día",Toast.LENGTH_LONG).show();
-                        }
+                        }*/
                     }
                 }
             });
 
 
-        datePickerDialog.setCancelable(true);
+        //datePickerDialog.setCancelable(true);
         datePickerDialog.getDatePicker().setMaxDate(MaxDate.getTime());
         datePickerDialog.getDatePicker().setMinDate(MinDate.getTime());
-        datePickerDialog.getDatePicker().setCalendarViewShown(true);
-        datePickerDialog.getDatePicker().setSpinnersShown(false);
+        //datePickerDialog.getDatePicker().setCalendarViewShown(true);
+        //datePickerDialog.getDatePicker().setSpinnersShown(false);
         datePickerDialog.show();
     }
 

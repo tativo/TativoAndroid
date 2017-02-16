@@ -9,6 +9,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!--
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgPerfil"
         android:layout_width="64dp"
@@ -18,19 +19,20 @@
         android:src="@drawable/tracysanz"
         app:border_color="@android:color/white"
         app:border_width="1dp"/>
+        -->
 
     <!-- Nombre de Usuario -->
     <TextView
         android:id="@+id/lblNombreUsuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tracy Saenz"
+        android:text="Tativo"
         android:textColor="@color/colorAzulOscuro"
         android:textStyle="bold" />
     <TextView
         android:id="@+id/lblCorreoUsuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="tracysanz@gmail.com"
+        android:text="atencion@tativo.com"
         android:textColor="@color/colorAzulOscuro"/>
 </LinearLayout>

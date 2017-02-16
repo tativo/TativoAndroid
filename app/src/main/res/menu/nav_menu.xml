@@ -10,6 +10,7 @@
             android:id="@+id/nav_Perfil"
             android:icon="@drawable/user"
             android:title="Perfil" />
+        <!--
         <item
             android:id="@+id/nav_Operaciones"
             android:icon="@drawable/money"
@@ -23,8 +24,8 @@
             android:id="@+id/nav_Servicios"
             android:icon="@drawable/treestructure"
             android:title="Servicios" />
-
-        <!-- Sección de configuración -->
+            -->
+        <!-- Sección de configuración
         <item
             android:id="@+id/configuration_section"
             android:title="Configuracion">
@@ -39,6 +40,6 @@
                     android:title="Cerrar cesion" />
             </menu>
         </item>
+        -->
     </group>
-
 </menu>

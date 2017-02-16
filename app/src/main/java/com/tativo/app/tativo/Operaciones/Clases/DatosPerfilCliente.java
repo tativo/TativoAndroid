@@ -1,5 +1,8 @@
 package com.tativo.app.tativo.Operaciones.Clases;
 
+
+import java.util.Date;
+
 /**
  * Created by sistemasprimos on 04/03/16.
  */
@@ -9,6 +12,8 @@ public class DatosPerfilCliente {
     private String Banco;
     private String Calificacion;
     private boolean SolicitudActiva;
+    private Date FechaCalculo;
+
 
     public String getNombreCompleto() {
         return NombreCompleto;
@@ -48,5 +53,13 @@ public class DatosPerfilCliente {
 
     public void setSolicitudActiva(boolean solicitudActiva) {
         SolicitudActiva = solicitudActiva;
+    }
+
+    public Date getFechaCalculo() {
+        return FechaCalculo;
+    }
+
+    public void setFechaCalculo(Date fechaCalculo) {
+        FechaCalculo = fechaCalculo;
     }
 }

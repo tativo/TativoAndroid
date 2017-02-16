@@ -1,25 +1,24 @@
 package com.tativo.app.tativo.Operaciones.Fragmentos;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Html;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,10 +27,12 @@ import com.tativo.app.tativo.Bloques.Clases.DatosDocumentoCaratula;
 import com.tativo.app.tativo.Bloques.Clases.DatosDocumentoPagare;
 import com.tativo.app.tativo.Bloques.Clases.DatosDocumentosContrato;
 import com.tativo.app.tativo.Bloques.Clases.DatosDocumentosInfoPago;
+import com.tativo.app.tativo.Bloques.Clases.DatosDocumentosOperacion;
 import com.tativo.app.tativo.R;
 import com.tativo.app.tativo.Utilidades.Globals;
 import com.tativo.app.tativo.Utilidades.ServiciosSoap;
 
+import org.json.JSONObject;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -39,77 +40,101 @@ import org.ksoap2.serialization.SoapPrimitive;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 /**
  * Created by SISTEMAS1 on 09/04/2016.
  */
-public class Frg_Contrato extends DialogFragment  {
+public class Frg_ResumenOperacion extends DialogFragment {
 
-    private static final String TAG = Frg_Contrato.class.getSimpleName();
+    private static final String TAG = Frg_ResumenOperacion.class.getSimpleName();
 
-    public Frg_Contrato() {
+    public Frg_ResumenOperacion() {
     }
 
     View v;
-    LinearLayout lyContratoCaratula, lyContratoOperacion, lyContratoPagare;
+    Globals Sesion;
+
+    TextView lblNobreCompleto, lblDireccion, lblTelefono, lblCorreo, lblNombreBanco, lblNumeroTarjetaCLABE, lblMonto;
+    //RESUMEN
+    TextView lblFechaInicio, lblPlazo_Compromiso, lblPlazo_Limite, lblFecha_Compromiso, lblFecha_Limite, lblInteres_Compromiso, lblInteres_Limite, lblIVA_Compromiso, lblIVA_Limite, lblTotal_Compromiso, lblTotal_Limite;
+
     TextView lblCaratulaNombreComercial, lblCaratulaRFC, lblCaratulaDireccion, lblCaratulaTelefono, lblCaratulaCorreo, lblCaratulaNombreCompleto, lblCaratulaDireccionAcreditado, lblCaratulaTelefonoAcreditado, lblCaratulaCorreoAcreditado, lblBancoDeposito, lblCLABEnoTarjeta, lblMontoSolicitado, lblCaratulaInteres, lblCaratulaIVA, lblCaratulaTotalPagar, lblCaratulaFechaInicio, lblCaratulaPlazo, lblCaratulaFechaLimite;
     TextView lblDomiciliacionEmisor, lblDomiciliacionRFC, lblDomiciliacionDomicilio, lblDomiciliacionNombre, lblDomiciliacionReferencia, lblDomiciliacionTitularCuenta, lblDomiciliacionCLABE, lblDomiciliacionBanco, lblDomiciliacionTarjetaDebido;
     TextView lblRepresentanteLegal,lblFirmaCliente;
-    CheckBox ckTerminosCaratula, ckTerminosContrato, ckTerminosPagare;
-    Button btnAceptaCaratula, btnAceptaContrato, btnAceptaPagare;
-    /*ImageView imgFirmaRepresentante;*/
 
-    Globals Sesion;
+    EditText txtFirmaDocumentos;
+
     ProgressDialog progressDialog;
 
+    Button btnVerDocumentos, btnAceptaCaratula, btnAceptaContrato, btnAceptaPagare, btnAceptarDocumentos;
+
+    LinearLayout lyResumenDocumentos, lybtnVerDocumentos, lyContratoCaratula, lyContratoOperacion, lyContratoPagare, lyFirmaDocumentos;
+
+    CheckBox ckTerminosCaratula, ckTerminosContrato, ckTerminosPagare;
+
+    DatosDocumentoPagare datosPagare;
     DatosDocumentoCaratula datosCaratula;
     DatosDocumentosContrato datosContrato;
-    DatosDocumentoPagare datosPagare;
+    DatosDocumentosOperacion datosOperacion;
     DatosDocumentosInfoPago datosInfoPago;
 
-    @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return createRequisitos();
-    }
+    public View onCreateView (LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
-    /**
-     * Crea un diálogo con personalizado para comportarse
-     * como formulario de login
-     *
-     * @return Diálogo
-     */
-    public AlertDialog createRequisitos() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        v = inflater.inflate(R.layout.frg_contrato, null);
-
+        v = inflater.inflate(R.layout.frm_resumenoperacion,container,false);
         Sesion = (Globals) getActivity().getApplicationContext();
-
         LoadFormControls();
+        EventManager();
+
+        /*
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new AsyncInfoBloque().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
             new AsyncInfoBloque().execute();
-        }
-        EventManager();
+        }*/
 
-        builder.setView(v);
-        return builder.create();
+        new AsyncInfoBloque().execute();
+
+        return v;
     }
 
-    public void LoadFormControls() {
+    private void LoadFormControls(){
         progressDialog = new ProgressDialog(getActivity());
 
         datosPagare = new DatosDocumentoPagare();
         datosCaratula = new DatosDocumentoCaratula();
         datosContrato = new DatosDocumentosContrato();
+        datosOperacion = new DatosDocumentosOperacion();
         datosInfoPago = new DatosDocumentosInfoPago();
 
+        lyResumenDocumentos = (LinearLayout) v.findViewById(R.id.lyResumenDocumentos);
+        lybtnVerDocumentos = (LinearLayout) v.findViewById(R.id.lybtnVerDocumentos);
         lyContratoCaratula = (LinearLayout) v.findViewById(R.id.lyContratoCaratula);
         lyContratoOperacion = (LinearLayout) v.findViewById(R.id.lyContratoOperacion);
         lyContratoPagare = (LinearLayout) v.findViewById(R.id.lyContratoPagare);
+        lyFirmaDocumentos = (LinearLayout) v.findViewById(R.id.lyFirmaDocumentos);
+
+        lblNobreCompleto = (TextView) v.findViewById(R.id.lblNobreCompleto);
+        lblDireccion = (TextView) v.findViewById(R.id.lblDireccion);
+        lblTelefono = (TextView) v.findViewById(R.id.lblTelefono);
+        lblCorreo = (TextView) v.findViewById(R.id.lblCorreo);
+        lblNombreBanco = (TextView) v.findViewById(R.id.lblNombreBanco);
+        lblNumeroTarjetaCLABE = (TextView) v.findViewById(R.id.lblNumeroTarjetaCLABE);
+        lblMonto = (TextView) v.findViewById(R.id.lblMonto);
+        lblFechaInicio = (TextView) v.findViewById(R.id.lblFechaInicio);
+        lblFecha_Compromiso = (TextView) v.findViewById(R.id.lblFechaCompromiso);
+        lblFecha_Limite = (TextView) v.findViewById(R.id.lblFechaLimite);
+        lblPlazo_Compromiso = (TextView) v.findViewById(R.id.lblPlazoCompromiso);
+        lblPlazo_Limite = (TextView) v.findViewById(R.id.lblPlazoLimite);
+        lblInteres_Compromiso = (TextView) v.findViewById(R.id.lblInteresCompromiso);
+        lblInteres_Limite = (TextView) v.findViewById(R.id.lblInteresLimite);
+        lblIVA_Compromiso = (TextView) v.findViewById(R.id.lblIVACompromiso);
+        lblIVA_Limite = (TextView) v.findViewById(R.id.lblIVALimite);
+        lblTotal_Compromiso = (TextView) v.findViewById(R.id.lblTotalCompromiso);
+        lblTotal_Limite = (TextView) v.findViewById(R.id.lblTotalLimite);
 
         lblCaratulaNombreComercial = (TextView) v.findViewById(R.id.lblCaratulaNombreComercial);
         lblCaratulaRFC = (TextView) v.findViewById(R.id.lblCaratulaRFC);
@@ -140,17 +165,20 @@ public class Frg_Contrato extends DialogFragment  {
         lblDomiciliacionBanco = (TextView) v.findViewById(R.id.lblDomiciliacionBanco);
         lblDomiciliacionTarjetaDebido = (TextView) v.findViewById(R.id.lblDomiciliacionTarjetaDebido);
 
-        /*imgFirmaRepresentante = (ImageView) v.findViewById(R.id.imgFirmaRepresentante);*/
         lblRepresentanteLegal = (TextView) v.findViewById(R.id.lblRepresentanteLegal);
         lblFirmaCliente = (TextView) v.findViewById(R.id.lblFirmaCliente);
+
+        btnVerDocumentos = (Button) v.findViewById(R.id.btnVerDocumentos);
+        btnAceptaCaratula = (Button) v.findViewById(R.id.btnAceptaCaratula);
+        btnAceptaContrato = (Button) v.findViewById(R.id.btnAceptaContrato);
+        btnAceptaPagare = (Button) v.findViewById(R.id.btnAceptaPagare);
+        btnAceptarDocumentos = (Button) v.findViewById(R.id.btnAceptarDocumentos);
 
         ckTerminosCaratula = (CheckBox) v.findViewById(R.id.ckTerminosCaratula);
         ckTerminosContrato = (CheckBox) v.findViewById(R.id.ckTerminosContrato);
         ckTerminosPagare = (CheckBox) v.findViewById(R.id.ckTerminosPagare);
 
-        btnAceptaCaratula = (Button) v.findViewById(R.id.btnAceptaCaratula);
-        btnAceptaContrato = (Button) v.findViewById(R.id.btnAceptaContrato);
-        btnAceptaPagare = (Button) v.findViewById(R.id.btnAceptaPagare);
+        txtFirmaDocumentos = (EditText) v.findViewById(R.id.txtFirmaDocumentos);
 
         btnAceptaCaratula.setEnabled(false);
         btnAceptaCaratula.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
@@ -162,7 +190,15 @@ public class Frg_Contrato extends DialogFragment  {
         btnAceptaPagare.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
     }
 
-    public void EventManager() {
+    private void EventManager() {
+        btnVerDocumentos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lyResumenDocumentos.setVisibility(View.GONE);
+                lyContratoCaratula.setVisibility(View.VISIBLE);
+            }
+        });
+
         ckTerminosCaratula.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -184,7 +220,6 @@ public class Frg_Contrato extends DialogFragment  {
                 lyContratoOperacion.setVisibility(View.VISIBLE);
             }
         });
-
 
         ckTerminosContrato.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -208,7 +243,6 @@ public class Frg_Contrato extends DialogFragment  {
             }
         });
 
-
         ckTerminosPagare.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -227,16 +261,269 @@ public class Frg_Contrato extends DialogFragment  {
             @Override
             public void onClick(View v) {
                 lyContratoPagare.setVisibility(View.GONE);
-                lyContratoCaratula.setVisibility(View.VISIBLE);
-                listener.onPossitiveButtonClick();
-                dismiss();
+                lybtnVerDocumentos.setVisibility(View.GONE);
+                lyResumenDocumentos.setVisibility(View.VISIBLE);
+                lyFirmaDocumentos.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnAceptarDocumentos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (datosPagare.getNombreCompleto().toString() == null || datosPagare.getNombreCompleto().equals("") || datosPagare.getNombreCompleto().toString().isEmpty())
+                {
+
+                }
+                else
+                {
+                    if(txtFirmaDocumentos.getText().toString().toLowerCase().equals(datosPagare.getNombreCompleto().toLowerCase()))
+                    {
+                        new AsyncGuardar().execute();
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity().getApplicationContext(), "Nombre completo y firma no son iguales", Toast.LENGTH_LONG).show();
+                    }
+                }
             }
         });
     }
 
+
+
+
+
+
+    //Info del BLOQUE
+    private class AsyncInfoBloque extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            GetInfoBloque();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            SetInfoBloque();
+            CargaDocumentosContrato();
+            CargaDocumentosPagare();
+        }
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage("Cargando...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GetInfoBloque(){
+        String SOAP_ACTION = "http://tempuri.org/IService1/GetDatosDocumentos";
+        String METHOD_NAME = "GetDatosDocumentos";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("SolicitudID");
+        pi1.setValue(Sesion.getSolicitudID());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
+        if(respuesta != null) {
+            try
+            {
+                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
+                Boolean ev = Boolean.parseBoolean(esValido.toString());
+                if (ev)
+                {
+                    String[] listaRespuesta;
+                    listaRespuesta = new String[respuesta.getPropertyCount()];
+                    SoapObject iOperacion = (SoapObject) respuesta.getProperty(0);
+                    SoapObject iPagare = (SoapObject) iOperacion.getProperty("DatosPagare");
+                    SoapObject iCaratula = (SoapObject) iOperacion.getProperty("DatosCaratula");
+                    SoapObject iContrato = (SoapObject) iOperacion.getProperty("DatosContrato");
+                    SoapObject iInfoPago = (SoapObject) iOperacion.getProperty("DatosInfPago");
+
+                    if(iPagare.getProperty("ClienteID") != null)
+                    {
+                        datosPagare.setFolio(iPagare.getProperty("Folio").toString());
+                        datosPagare.setCodigo(Integer.parseInt(iPagare.getProperty("Codigo").toString()));
+                        datosPagare.setCodigoLargo(iPagare.getProperty("CodigoLargo").toString());
+                        datosPagare.setClienteID(iPagare.getProperty("ClienteID").toString());
+                        datosPagare.setNombreCompleto(iPagare.getProperty("NombreCompleto").toString());
+                        datosPagare.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd").parse(iPagare.getProperty("FechaSolicitud").toString().substring(0, 10)));
+                        datosPagare.setFinanciamiento(Double.parseDouble(iPagare.getProperty("Financiamiento").toString()));
+                        datosPagare.setFechaDocu(iPagare.getProperty("FechaDocu").toString());
+                        datosPagare.setFechaVence(new SimpleDateFormat("yyyy-MM-dd").parse(iPagare.getProperty("FechaVence").toString().substring(0, 10)));
+                        datosPagare.setTasa(Double.parseDouble(iPagare.getProperty("tasa").toString()));
+                        datosPagare.setTasaMoratoria(Double.parseDouble(iPagare.getProperty("TasaMoratoria").toString()));
+                        datosPagare.setDomicilio(iPagare.getProperty("Domicilio").toString());
+
+                        datosPagare.setPlazo(Integer.parseInt(iPagare.getProperty("Plazo").toString()));
+                        datosPagare.setFinanciamientoLetra(iPagare.getProperty("FinanciamientoLetra").toString());
+                        datosPagare.setTasaLetra(iPagare.getProperty("tasaLetra").toString());
+                        datosPagare.setTasaMoratoriaLetra(iPagare.getProperty("TasaMoratoriaLetra").toString());
+                        datosPagare.setFechaDocuLetra(iPagare.getProperty("FechaDocuLetra").toString());
+                        datosPagare.setFechaVenceLetra(iPagare.getProperty("FechaVenceLetra").toString());
+                        datosPagare.setCalle(iPagare.getProperty("Calle").toString());
+                        datosPagare.setNumeroExt(iPagare.getProperty("NumeroExt").toString());
+                        datosPagare.setNumeroInt(iPagare.getProperty("NumeroInt").toString());
+                        datosPagare.setColonia(iPagare.getProperty("Colonia").toString());
+                        datosPagare.setCodigoPostal(iPagare.getProperty("CodigoPostal").toString());
+                        datosPagare.setCiudad(iPagare.getProperty("Ciudad").toString());
+                        datosPagare.setMunicipio(iPagare.getProperty("Municipio").toString());
+                        datosPagare.setEstado(iPagare.getProperty("Estado").toString());
+
+                        datosPagare.setEmpresa_Direccion(iPagare.getProperty("Empresa_Direccion").toString());
+                    }
+
+                    if(iCaratula.getProperty("ClienteID") != null)
+                    {
+                        datosCaratula.setClienteID(iCaratula.getProperty("ClienteID").toString());
+                        datosCaratula.setNombreCompleto(iCaratula.getProperty("NombreCompleto").toString());
+                        datosCaratula.setDomicilio(iCaratula.getProperty("Domicilio").toString());
+                        datosCaratula.setTelefono(iCaratula.getProperty("Telefono").toString());
+                        datosCaratula.setCorreo(iCaratula.getProperty("Correo").toString());
+                        datosCaratula.setBanco(iCaratula.getProperty("Banco").toString());
+                        datosCaratula.setNumeroDeTarjeta(iCaratula.getProperty("NumeroDeTarjeta").toString());
+                        datosCaratula.setClabe(iCaratula.getProperty("Clabe").toString());
+                        datosCaratula.setCapital(Double.parseDouble(iCaratula.getProperty("Capital").toString()));
+                        datosCaratula.setInteres(Double.parseDouble(iCaratula.getProperty("Interes").toString()));
+                        datosCaratula.setIVA(Double.parseDouble(iCaratula.getProperty("IVA").toString()));
+                        datosCaratula.setTotalPagar(Double.parseDouble(iCaratula.getProperty("TotalPagar").toString()));
+                        datosCaratula.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd").parse(iCaratula.getProperty("FechaSolicitud").toString().substring(0, 10)));
+                        datosCaratula.setFechaVence(new SimpleDateFormat("yyyy-MM-dd").parse(iCaratula.getProperty("FechaVence").toString().substring(0, 10)));
+                        datosCaratula.setNumeroContrato(iCaratula.getProperty("NumeroContrato").toString());
+                        datosCaratula.setFechaContrato(iCaratula.getProperty("FechaContrato").toString());
+                        datosCaratula.setPlazo(Integer.parseInt(iCaratula.getProperty("Plazo").toString()));
+                        datosCaratula.setTasa(Double.parseDouble(iCaratula.getProperty("tasa").toString()));
+                        datosCaratula.setTasaMoratoria(Double.parseDouble(iCaratula.getProperty("TasaMoratoria").toString()));
+
+                        datosCaratula.setEmpresa_Nombre(iCaratula.getProperty("Empresa_Nombre").toString());
+                        datosCaratula.setEmpresa_RFC(iCaratula.getProperty("Empresa_RFC").toString());
+                        datosCaratula.setEmpresa_Direccion(iCaratula.getProperty("Empresa_Direccion").toString());
+                        datosCaratula.setEmpresa_Telefono(iCaratula.getProperty("Empresa_Telefono").toString());
+                        datosCaratula.setEmpresa_Correo(iCaratula.getProperty("Empresa_Correo").toString());
+                    }
+
+                    if(iContrato.getProperty("Clienteid") != null)
+                    {
+                        datosContrato.setClienteid(iContrato.getProperty("Clienteid").toString());
+                        datosContrato.setNombreCompleto(iContrato.getProperty("NombreCompleto").toString());
+                        datosContrato.setCorreo(iContrato.getProperty("Correo").toString());
+                        datosContrato.setBanco(iContrato.getProperty("Banco").toString());
+                        datosContrato.setNumeroDeDeposito(iContrato.getProperty("NumeroDeDeposito").toString());
+                        datosContrato.setRFC(iContrato.getPrimitivePropertyAsString("RFC").toString());
+                        datosContrato.setNacionalidad(iContrato.getPrimitivePropertyAsString("Nacionalidad").toString());
+                        datosContrato.setRepresentanteLegal(iContrato.getPrimitivePropertyAsString("RepresentanteLegal").toString());
+                        datosContrato.setFirmaRepresentanteLegal(iContrato.getPrimitivePropertyAsString("FirmaRepresentanteLegal").toString());
+
+                        datosContrato.setEmpresa_Nombre(iContrato.getProperty("Empresa_Nombre").toString());
+                        datosContrato.setEmpresa_PaginaWEB(iContrato.getProperty("Empresa_PaginaWEB").toString());
+                        datosContrato.setEmpresa_EscrituraPublica(iContrato.getProperty("Empresa_EscrituraPublica").toString());
+                        datosContrato.setEmpresa_RFC(iContrato.getProperty("Empresa_RFC").toString());
+                        datosContrato.setEmpresa_ContratoAdhesion(iContrato.getProperty("Empresa_ContratoAdhesion").toString());
+                        datosContrato.setEmpresa_CorreoAtencion(iContrato.getProperty("Empresa_CorreoAtencion").toString());
+                        datosContrato.setEmpresa_Direccion(iContrato.getProperty("Empresa_Direccion").toString());
+                        datosContrato.setEmpresa_Telefono(iContrato.getProperty("Empresa_Telefono").toString());
+
+
+                        datosInfoPago.setFechaInicio(new SimpleDateFormat("yyyy-MM-dd").parse(iInfoPago.getProperty("FechaInicio").toString().substring(0, 10)));
+                        datosInfoPago.setPlazo_Compromiso(Integer.parseInt(iInfoPago.getProperty("Plazo_Compromiso").toString()));
+                        datosInfoPago.setPlazo_Limite(Integer.parseInt(iInfoPago.getProperty("Plazo_Limite").toString()));
+                        datosInfoPago.setFecha_Compromiso(new SimpleDateFormat("yyyy-MM-dd").parse(iInfoPago.getProperty("Fecha_Compromiso").toString().substring(0, 10)));
+                        datosInfoPago.setFecha_Limite(new SimpleDateFormat("yyyy-MM-dd").parse(iInfoPago.getProperty("Fecha_Limite").toString().substring(0, 10)));
+                        datosInfoPago.setInteres_Compromiso(Double.parseDouble(iInfoPago.getProperty("Interes_Compromiso").toString()));
+                        datosInfoPago.setInteres_Limite(Double.parseDouble(iInfoPago.getProperty("Interes_Limite").toString()));
+                        datosInfoPago.setIVA_Compromiso(Double.parseDouble(iInfoPago.getProperty("IVA_Compromiso").toString()));
+                        datosInfoPago.setIVA_Limite(Double.parseDouble(iInfoPago.getProperty("IVA_Limite").toString()));
+                        datosInfoPago.setTotal_Compromiso(Double.parseDouble(iInfoPago.getProperty("Total_Compromiso").toString()));
+                        datosInfoPago.setTotal_Limite(Double.parseDouble(iInfoPago.getProperty("Total_Limite").toString()));
+                        datosInfoPago.setPlazo_CompromisoTXT(iInfoPago.getProperty("Plazo_CompromisoTXT").toString());
+                        datosInfoPago.setPlazo_LimiteTXT(iInfoPago.getProperty("Plazo_LimiteTXT").toString());
+                    }
+
+                }
+            } catch (Exception e) {
+                Toast.makeText(getActivity().getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private void SetInfoBloque() {
+        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        nf.setMaximumFractionDigits(2);
+
+        NumberFormat nfn = NumberFormat.getInstance(Locale.getDefault());
+        nfn.setMaximumFractionDigits(2);
+
+        if (datosCaratula.getClienteID() != null)
+        {
+            lblNobreCompleto.setText(datosCaratula.getNombreCompleto());
+            lblDireccion.setText(datosCaratula.getDomicilio());
+            lblTelefono.setText(datosCaratula.getTelefono());
+            lblCorreo.setText(datosCaratula.getCorreo());
+            lblNombreBanco.setText(datosCaratula.getBanco());
+            lblNumeroTarjetaCLABE.setText(datosCaratula.getNumeroDeTarjeta());
+            lblMonto.setText(nf.format(datosCaratula.getCapital()));
+
+            lblFechaInicio.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosInfoPago.getFechaInicio()));
+            lblPlazo_Compromiso.setText(String.valueOf(datosInfoPago.getPlazo_Compromiso()));
+            lblPlazo_Limite.setText(String.valueOf(datosInfoPago.getPlazo_Limite()));
+            lblInteres_Compromiso.setText(nf.format(datosInfoPago.getInteres_Compromiso()));
+            lblInteres_Limite.setText(nf.format(datosInfoPago.getInteres_Limite()));
+            lblIVA_Compromiso.setText(nf.format(datosInfoPago.getIVA_Compromiso()));
+            lblIVA_Limite.setText(nf.format(datosInfoPago.getIVA_Limite()));
+            lblTotal_Compromiso.setText(nf.format(datosInfoPago.getTotal_Compromiso()));
+            lblTotal_Limite.setText(nf.format(datosInfoPago.getTotal_Limite()));
+            lblFecha_Compromiso.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosInfoPago.getFecha_Compromiso()));
+            lblFecha_Limite.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosInfoPago.getFecha_Limite()));
+        }
+
+
+
+        if (datosCaratula.getClienteID() != null)
+        {
+            String[] a = {"PARAMETRO_1"};
+
+            lblCaratulaNombreComercial.setText(datosCaratula.getEmpresa_Nombre());
+            lblCaratulaRFC.setText(datosCaratula.getEmpresa_RFC());
+            lblCaratulaDireccion.setText(datosCaratula.getEmpresa_Direccion());
+            lblCaratulaTelefono.setText(datosCaratula.getEmpresa_Telefono());
+            lblCaratulaCorreo.setText(datosCaratula.getEmpresa_Correo());
+
+            lblCaratulaNombreCompleto.setText(datosCaratula.getNombreCompleto());
+            lblCaratulaDireccionAcreditado.setText(datosCaratula.getDomicilio());
+            lblCaratulaTelefonoAcreditado.setText(datosCaratula.getTelefono());
+            lblCaratulaCorreoAcreditado.setText(datosCaratula.getCorreo());
+
+            lblBancoDeposito.setText(datosCaratula.getBanco());
+            lblCLABEnoTarjeta.setText(datosCaratula.getNumeroDeTarjeta());
+
+            a = new String[]{nfn.format(datosCaratula.getTasa()).toString() + " %"};
+            AplicaFormato(R.id.lblInteresOrdinaria, R.string.lblCalculoOrdinaria, a);
+
+            a = new String[]{nfn.format(datosCaratula.getTasaMoratoria()).toString() + " %"};
+            AplicaFormato(R.id.lblInteresMoratoria, R.string.lblCalculoMoratoria, a);
+
+            lblMontoSolicitado.setText(nf.format(datosCaratula.getCapital()));
+            lblCaratulaInteres.setText(nf.format(datosCaratula.getInteres()));
+            lblCaratulaIVA.setText(nf.format(datosCaratula.getIVA()));
+            lblCaratulaTotalPagar.setText(nf.format(datosCaratula.getTotalPagar()));
+
+            lblCaratulaFechaInicio.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaSolicitud()));
+            lblCaratulaPlazo.setText(String.valueOf(datosCaratula.getPlazo()));
+            lblCaratulaFechaLimite.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaVence()));
+        }
+    }
+    //Info del BLOQUE
+
     public void CargaDocumentosContrato() {
 
-        NumberFormat nfn = NumberFormat.getInstance(Locale.US);
+        NumberFormat nfn = NumberFormat.getInstance(Locale.getDefault());
         nfn.setMaximumFractionDigits(2);
 
         //CONTRATO
@@ -259,7 +546,7 @@ public class Frg_Contrato extends DialogFragment  {
         c = new String[]{datosContrato.getEmpresa_Direccion()};
         AplicaFormato(R.id.lblDeclaracionesP1d, R.string.lblDeclaracionesP1d, c);
 
-        c = new String[]{"xXxXxXxXxXx"};
+        c = new String[]{"en trámite"};
         AplicaFormato(R.id.lblDeclaracionesP1e, R.string.lblDeclaracionesP1e, c);
         AplicaFormato(R.id.lblDeclaracionesP2, R.string.lblDeclaracionesP2, null);
 
@@ -412,12 +699,11 @@ public class Frg_Contrato extends DialogFragment  {
 
         //CONTRATO
     }
-
     public void  CargaDocumentosPagare() {
-        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
+        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.getDefault());
         nf.setMaximumFractionDigits(2);
 
-        NumberFormat nfn = NumberFormat.getInstance(Locale.US);
+        NumberFormat nfn = NumberFormat.getInstance(Locale.getDefault());
         nfn.setMaximumFractionDigits(2);
 
         String[] p = {"PARAMETRO_1"};
@@ -465,7 +751,6 @@ public class Frg_Contrato extends DialogFragment  {
         //AplicaFormato(R.id.lblPagareP14, R.string.lblPagareP14, p);
         //PAGARE
     }
-
     private void AplicaFormato(int idT, int idR, @Nullable String[] lstP) {
         //String par = TextUtils.htmlEncode("prueba");
         TextView t =(TextView) v.findViewById(idT);
@@ -477,19 +762,88 @@ public class Frg_Contrato extends DialogFragment  {
         t.setText(cs);
     }
 
-    public interface DialogResponseContrato {
+
+    //GUARDAR
+    private class AsyncGuardar extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            GuardarDatos();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            progressDialog.dismiss();
+            listener.onPossitiveButtonClick();
+            dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setMessage(getText(R.string.msjGuardando));
+            progressDialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+    }
+    private void GuardarDatos() {
+        String SOAP_ACTION = "http://tempuri.org/IService1/SetCatPagareTelefono";
+        String METHOD_NAME = "SetCatPagareTelefono";
+        String NAMESPACE = "http://tempuri.org/";
+
+        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        PropertyInfo pi1 = new PropertyInfo();
+        pi1.setName("value");
+        pi1.setValue(getEntityToSave());
+        pi1.setType(PropertyInfo.STRING_CLASS);
+        valores.add(pi1);
+        ServiciosSoap oServiciosSoap = new ServiciosSoap();
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
+        if(respuesta != null) {
+            try {
+            } catch (Exception e) {
+                Toast.makeText(getActivity().getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+    private String getEntityToSave() {
+        JSONObject DatosEntidad = new JSONObject();
+        try {
+            DatosEntidad.put("Pagareid", "");
+            DatosEntidad.put("Solicitudid", Sesion.getSolicitudID());
+            DatosEntidad.put("Clienteid", Sesion.getCliendeID());
+            DatosEntidad.put("NombreCompleto", datosCaratula.getNombreCompleto());
+            DatosEntidad.put("MontoSolicitado", Double.parseDouble("0.0"));
+            DatosEntidad.put("MontoPagar", Double.parseDouble("0.0"));
+            DatosEntidad.put("FechaVence", new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTimeInMillis()));
+            DatosEntidad.put("Fechaaceptacion", new SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().getTimeInMillis()));
+            DatosEntidad.put("Estatusaceptacion", 1);
+            DatosEntidad.put("Firmaaceptacion", txtFirmaDocumentos.getText());
+            DatosEntidad.put("Pin", "");
+            DatosEntidad.put("TieneIFE", true);
+            DatosEntidad.put("UltimaAct", 0);
+        } catch (Exception ex) {
+            Toast.makeText(getActivity().getApplicationContext(),ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+        return DatosEntidad.toString();
+    }
+    //GUARDAR
+
+
+    //Respuesta
+    public interface DialogResponseResumenOperacion {
         void onPossitiveButtonClick();
         void onNegativeButtonClick();
     }
-
-    DialogResponseContrato listener;
-
+    DialogResponseResumenOperacion listener;
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
         try {
-            listener = (DialogResponseContrato) activity;
+            listener = (DialogResponseResumenOperacion) activity;
 
         } catch (ClassCastException e) {
             throw new ClassCastException(
@@ -498,208 +852,6 @@ public class Frg_Contrato extends DialogFragment  {
 
         }
     }
+    //Respuesta
 
-
-
-
-    //Info del BLOQUE
-    private class AsyncInfoBloque extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            GetInfoBloque();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            progressDialog.dismiss();
-            CargaDocumentosContrato();
-            CargaDocumentosPagare();
-            SetInfoBloque();
-        }
-        @Override
-        protected void onPreExecute() {
-            progressDialog.setMessage("Cargando...");
-            progressDialog.show();
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        }
-    }
-    private void GetInfoBloque(){
-        String SOAP_ACTION = "http://tempuri.org/IService1/GetDatosDocumentos";
-        String METHOD_NAME = "GetDatosDocumentos";
-        String NAMESPACE = "http://tempuri.org/";
-
-        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
-        PropertyInfo pi1 = new PropertyInfo();
-        pi1.setName("SolicitudID");
-        pi1.setValue(Sesion.getSolicitudID());
-        pi1.setType(PropertyInfo.STRING_CLASS);
-        valores.add(pi1);
-
-        ServiciosSoap oServiciosSoap = new ServiciosSoap();
-        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION,METHOD_NAME,NAMESPACE,valores);
-        if(respuesta != null) {
-            try
-            {
-                SoapPrimitive esValido = (SoapPrimitive) respuesta.getProperty(1);
-                Boolean ev = Boolean.parseBoolean(esValido.toString());
-                if (ev)
-                {
-                    String[] listaRespuesta;
-                    listaRespuesta = new String[respuesta.getPropertyCount()];
-                    SoapObject iOperacion = (SoapObject) respuesta.getProperty(0);
-                    SoapObject iPagare = (SoapObject) iOperacion.getProperty("DatosPagare");
-                    SoapObject iCaratula = (SoapObject) iOperacion.getProperty("DatosCaratula");
-                    SoapObject iContrato = (SoapObject) iOperacion.getProperty("DatosContrato");
-                    SoapObject iInfoPago = (SoapObject) iOperacion.getProperty("DatosInfPago");
-
-                    if(iPagare.getProperty("ClienteID") != null)
-                    {
-                        datosPagare.setFolio(iPagare.getProperty("Folio").toString());
-                        datosPagare.setCodigo(Integer.parseInt(iPagare.getProperty("Codigo").toString()));
-                        datosPagare.setCodigoLargo(iPagare.getProperty("CodigoLargo").toString());
-                        datosPagare.setClienteID(iPagare.getProperty("ClienteID").toString());
-                        datosPagare.setNombreCompleto(iPagare.getProperty("NombreCompleto").toString());
-                        datosPagare.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd").parse(iPagare.getProperty("FechaSolicitud").toString().substring(0, 10)));
-                        datosPagare.setFinanciamiento(Double.parseDouble(iPagare.getProperty("Financiamiento").toString()));
-                        datosPagare.setFechaDocu(iPagare.getProperty("FechaDocu").toString());
-                        datosPagare.setFechaVence(new SimpleDateFormat("yyyy-MM-dd").parse(iPagare.getProperty("FechaVence").toString().substring(0, 10)));
-                        datosPagare.setTasa(Double.parseDouble(iPagare.getProperty("tasa").toString()));
-                        datosPagare.setTasaMoratoria(Double.parseDouble(iPagare.getProperty("TasaMoratoria").toString()));
-                        datosPagare.setDomicilio(iPagare.getProperty("Domicilio").toString());
-
-                        datosPagare.setPlazo(Integer.parseInt(iPagare.getProperty("Plazo").toString()));
-                        datosPagare.setFinanciamientoLetra(iPagare.getProperty("FinanciamientoLetra").toString());
-                        datosPagare.setTasaLetra(iPagare.getProperty("tasaLetra").toString());
-                        datosPagare.setTasaMoratoriaLetra(iPagare.getProperty("TasaMoratoriaLetra").toString());
-                        datosPagare.setFechaDocuLetra(iPagare.getProperty("FechaDocuLetra").toString());
-                        datosPagare.setFechaVenceLetra(iPagare.getProperty("FechaVenceLetra").toString());
-                        datosPagare.setCalle(iPagare.getProperty("Calle").toString());
-                        datosPagare.setNumeroExt(iPagare.getProperty("NumeroExt").toString());
-                        datosPagare.setNumeroInt(iPagare.getProperty("NumeroInt").toString());
-                        datosPagare.setColonia(iPagare.getProperty("Colonia").toString());
-                        datosPagare.setCodigoPostal(iPagare.getProperty("CodigoPostal").toString());
-                        datosPagare.setCiudad(iPagare.getProperty("Ciudad").toString());
-                        datosPagare.setMunicipio(iPagare.getProperty("Municipio").toString());
-                        datosPagare.setEstado(iPagare.getProperty("Estado").toString());
-
-                        datosPagare.setEmpresa_Direccion(iPagare.getProperty("Empresa_Direccion").toString());
-                    }
-
-                    if(iCaratula.getProperty("ClienteID") != null)
-                    {
-                        datosCaratula.setClienteID(iCaratula.getProperty("ClienteID").toString());
-                        datosCaratula.setNombreCompleto(iCaratula.getProperty("NombreCompleto").toString());
-                        datosCaratula.setDomicilio(iCaratula.getProperty("Domicilio").toString());
-                        datosCaratula.setTelefono(iCaratula.getProperty("Telefono").toString());
-                        datosCaratula.setCorreo(iCaratula.getProperty("Correo").toString());
-                        datosCaratula.setBanco(iCaratula.getProperty("Banco").toString());
-                        datosCaratula.setNumeroDeTarjeta(iCaratula.getProperty("NumeroDeTarjeta").toString());
-                        datosCaratula.setClabe(iCaratula.getProperty("Clabe").toString());
-                        datosCaratula.setCapital(Double.parseDouble(iCaratula.getProperty("Capital").toString()));
-                        datosCaratula.setInteres(Double.parseDouble(iCaratula.getProperty("Interes").toString()));
-                        datosCaratula.setIVA(Double.parseDouble(iCaratula.getProperty("IVA").toString()));
-                        datosCaratula.setTotalPagar(Double.parseDouble(iCaratula.getProperty("TotalPagar").toString()));
-                        datosCaratula.setFechaSolicitud(new SimpleDateFormat("yyyy-MM-dd").parse(iCaratula.getProperty("FechaSolicitud").toString().substring(0, 10)));
-                        datosCaratula.setFechaVence(new SimpleDateFormat("yyyy-MM-dd").parse(iCaratula.getProperty("FechaVence").toString().substring(0, 10)));
-                        datosCaratula.setNumeroContrato(iCaratula.getProperty("NumeroContrato").toString());
-                        datosCaratula.setFechaContrato(iCaratula.getProperty("FechaContrato").toString());
-                        datosCaratula.setPlazo(Integer.parseInt(iCaratula.getProperty("Plazo").toString()));
-                        datosCaratula.setTasa(Double.parseDouble(iCaratula.getProperty("tasa").toString()));
-                        datosCaratula.setTasaMoratoria(Double.parseDouble(iCaratula.getProperty("TasaMoratoria").toString()));
-
-                        datosCaratula.setEmpresa_Nombre(iCaratula.getProperty("Empresa_Nombre").toString());
-                        datosCaratula.setEmpresa_RFC(iCaratula.getProperty("Empresa_RFC").toString());
-                        datosCaratula.setEmpresa_Direccion(iCaratula.getProperty("Empresa_Direccion").toString());
-                        datosCaratula.setEmpresa_Telefono(iCaratula.getProperty("Empresa_Telefono").toString());
-                        datosCaratula.setEmpresa_Correo(iCaratula.getProperty("Empresa_Correo").toString());
-                    }
-
-                    if(iContrato.getProperty("Clienteid") != null)
-                    {
-                        datosContrato.setClienteid(iContrato.getProperty("Clienteid").toString());
-                        datosContrato.setNombreCompleto(iContrato.getProperty("NombreCompleto").toString());
-                        datosContrato.setCorreo(iContrato.getProperty("Correo").toString());
-                        datosContrato.setBanco(iContrato.getProperty("Banco").toString());
-                        datosContrato.setNumeroDeDeposito(iContrato.getProperty("NumeroDeDeposito").toString());
-                        datosContrato.setRFC(iContrato.getPrimitivePropertyAsString("RFC").toString());
-                        datosContrato.setNacionalidad(iContrato.getPrimitivePropertyAsString("Nacionalidad").toString());
-                        datosContrato.setRepresentanteLegal(iContrato.getPrimitivePropertyAsString("RepresentanteLegal").toString());
-                        datosContrato.setFirmaRepresentanteLegal(iContrato.getPrimitivePropertyAsString("FirmaRepresentanteLegal").toString());
-
-                        datosContrato.setEmpresa_Nombre(iContrato.getProperty("Empresa_Nombre").toString());
-                        datosContrato.setEmpresa_PaginaWEB(iContrato.getProperty("Empresa_PaginaWEB").toString());
-                        datosContrato.setEmpresa_EscrituraPublica(iContrato.getProperty("Empresa_EscrituraPublica").toString());
-                        datosContrato.setEmpresa_RFC(iContrato.getProperty("Empresa_RFC").toString());
-                        datosContrato.setEmpresa_ContratoAdhesion(iContrato.getProperty("Empresa_ContratoAdhesion").toString());
-                        datosContrato.setEmpresa_CorreoAtencion(iContrato.getProperty("Empresa_CorreoAtencion").toString());
-                        datosContrato.setEmpresa_Direccion(iContrato.getProperty("Empresa_Direccion").toString());
-                        datosContrato.setEmpresa_Telefono(iContrato.getProperty("Empresa_Telefono").toString());
-
-
-                        datosInfoPago.setFechaInicio(new SimpleDateFormat("yyyy-MM-dd").parse(iInfoPago.getProperty("FechaInicio").toString().substring(0, 10)));
-                        datosInfoPago.setPlazo_Compromiso(Integer.parseInt(iInfoPago.getProperty("Plazo_Compromiso").toString()));
-                        datosInfoPago.setPlazo_Limite(Integer.parseInt(iInfoPago.getProperty("Plazo_Limite").toString()));
-                        datosInfoPago.setFecha_Compromiso(new SimpleDateFormat("yyyy-MM-dd").parse(iInfoPago.getProperty("Fecha_Compromiso").toString().substring(0, 10)));
-                        datosInfoPago.setFecha_Limite(new SimpleDateFormat("yyyy-MM-dd").parse(iInfoPago.getProperty("Fecha_Limite").toString().substring(0, 10)));
-                        datosInfoPago.setInteres_Compromiso(Double.parseDouble(iInfoPago.getProperty("Interes_Compromiso").toString()));
-                        datosInfoPago.setInteres_Limite(Double.parseDouble(iInfoPago.getProperty("Interes_Limite").toString()));
-                        datosInfoPago.setIVA_Compromiso(Double.parseDouble(iInfoPago.getProperty("IVA_Compromiso").toString()));
-                        datosInfoPago.setIVA_Limite(Double.parseDouble(iInfoPago.getProperty("IVA_Limite").toString()));
-                        datosInfoPago.setTotal_Compromiso(Double.parseDouble(iInfoPago.getProperty("Total_Compromiso").toString()));
-                        datosInfoPago.setTotal_Limite(Double.parseDouble(iInfoPago.getProperty("Total_Limite").toString()));
-                        datosInfoPago.setPlazo_CompromisoTXT(iInfoPago.getProperty("Plazo_CompromisoTXT").toString());
-                        datosInfoPago.setPlazo_LimiteTXT(iInfoPago.getProperty("Plazo_LimiteTXT").toString());
-                    }
-                }
-            } catch (Exception e) {
-                Toast.makeText(v.getContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-    private void SetInfoBloque() {
-        NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
-        nf.setMaximumFractionDigits(2);
-
-        NumberFormat nfn = NumberFormat.getInstance(Locale.US);
-        nfn.setMaximumFractionDigits(2);
-
-        if (datosCaratula.getClienteID() != null)
-        {
-            String[] a = {"PARAMETRO_1"};
-
-            lblCaratulaNombreComercial.setText(datosCaratula.getEmpresa_Nombre());
-            lblCaratulaRFC.setText(datosCaratula.getEmpresa_RFC());
-            lblCaratulaDireccion.setText(datosCaratula.getEmpresa_Direccion());
-            lblCaratulaTelefono.setText(datosCaratula.getEmpresa_Telefono());
-            lblCaratulaCorreo.setText(datosCaratula.getEmpresa_Correo());
-
-            lblCaratulaNombreCompleto.setText(datosCaratula.getNombreCompleto());
-            lblCaratulaDireccionAcreditado.setText(datosCaratula.getDomicilio());
-            lblCaratulaTelefonoAcreditado.setText(datosCaratula.getTelefono());
-            lblCaratulaCorreoAcreditado.setText(datosCaratula.getCorreo());
-
-            lblBancoDeposito.setText(datosCaratula.getBanco());
-            lblCLABEnoTarjeta.setText(datosCaratula.getNumeroDeTarjeta());
-
-            a = new String[]{nfn.format(datosCaratula.getTasa()).toString() + " %"};
-            AplicaFormato(R.id.lblInteresOrdinaria, R.string.lblCalculoOrdinaria, a);
-
-            a = new String[]{nfn.format(datosCaratula.getTasaMoratoria()).toString() + " %"};
-            AplicaFormato(R.id.lblInteresMoratoria, R.string.lblCalculoMoratoria, a);
-
-            lblMontoSolicitado.setText(nf.format(datosCaratula.getCapital()));
-            lblCaratulaInteres.setText(nf.format(datosCaratula.getInteres()));
-            lblCaratulaIVA.setText(nf.format(datosCaratula.getIVA()));
-            lblCaratulaTotalPagar.setText(nf.format(datosCaratula.getTotalPagar()));
-
-            lblCaratulaFechaInicio.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaSolicitud()));
-            lblCaratulaPlazo.setText(String.valueOf(datosCaratula.getPlazo()));
-            lblCaratulaFechaLimite.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosCaratula.getFechaVence()));
-        }
-    }
-    //Info del BLOQUE
 }

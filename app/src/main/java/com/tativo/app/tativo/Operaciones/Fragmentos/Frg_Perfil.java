@@ -55,7 +55,7 @@ public class Frg_Perfil extends Fragment {
              lblPerfilClasificacion, lblPerfilFechaCalculada, lblPerfilMontoSolicitado,
              lblPerfilCompromiso, lblPerfilFechaInicio, lblPerfilFechaVencimiento,
             lblPerfilDiasTranscurridos, lblPerfilDiasVencimiento, lblPerfilSandoDelDia;
-    LinearLayout lyPerfilSolicitar, lyPerfilDatos, lyPerfilSinOperaciones;
+    LinearLayout lyPerfilSolicitar, lyPerfilDatos, lyPerfilSinOperaciones, lyPerfilSinOperacionesActivas;
 
     Globals Sesion;
     DatosPerfilCliente datosPerfilCliente;
@@ -87,7 +87,12 @@ public class Frg_Perfil extends Fragment {
                         -Mostrar Mensaje de solicitar
                 -Mostrar Mensaje de solicitar
         */
-        new AsyncGetPerfilHistorialCliente().execute();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            new AsyncGetPerfilHistorialCliente().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } else {
+            new AsyncGetPerfilHistorialCliente().execute();
+        }
 
 
         return v;
@@ -100,6 +105,7 @@ public class Frg_Perfil extends Fragment {
         lyPerfilSolicitar =(LinearLayout) v.findViewById(R.id.lyPerfilSolicitar);
         lyPerfilDatos = (LinearLayout) v.findViewById(R.id.lyPerfilDatos);
         lyPerfilSinOperaciones = (LinearLayout) v.findViewById(R.id.lyPerfilSinOperaciones);
+        lyPerfilSinOperacionesActivas = (LinearLayout) v.findViewById(R.id.lyPerfilSinOperacionesActivas);
         btnPerfilSolicitarPrestamo = (Button) v.findViewById(R.id.btnPerfilSolicitarPrestamo);
         btnPerfilFirmarDocumentos = (Button) v.findViewById(R.id.btnPerfilFirmarDocumentos);
         lblPerfilNombreCompleto = (TextView) v.findViewById(R.id.lblPerfilNombreCompleto);
@@ -135,6 +141,16 @@ public class Frg_Perfil extends Fragment {
                         .commit();
             }
         });
+
+        btnPerfilFirmarDocumentos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.app.FragmentManager fragmento = getActivity().getFragmentManager();
+                Frg_ResumenOperacion ofra = new Frg_ResumenOperacion();
+                ofra.setCancelable(false);
+                ofra.show(fragmento,"frmResumenOperacion");
+            }
+        });
     }
 
     //Region Estatus Solicitud
@@ -147,11 +163,27 @@ public class Frg_Perfil extends Fragment {
         @Override
         protected void onPostExecute(Void result) {
 
-            if (Solicitud.isPagareEnviado()) {
+            if (Solicitud.isPagareEnviado() && Solicitud.isPagareAceptado())
+            {
+                lyPerfilSolicitar.setVisibility(View.GONE);
+                lyPerfilSinOperaciones.setVisibility(View.GONE);
+                lyPerfilSinOperacionesActivas.setVisibility(View.VISIBLE);
+                lyPerfilDatos.setVisibility(View.GONE);
+            }
+            else if (Solicitud.isPagareEnviado())
+            {
                 lyPerfilSolicitar.setVisibility(View.GONE);
                 lyPerfilSinOperaciones.setVisibility(View.VISIBLE);
+                lyPerfilSinOperacionesActivas.setVisibility(View.GONE);
                 lyPerfilDatos.setVisibility(View.GONE);
                 //Consultar GetDatosDocumentos
+            }
+            else
+            {
+                lyPerfilSolicitar.setVisibility(View.GONE);
+                lyPerfilSinOperaciones.setVisibility(View.GONE);
+                lyPerfilSinOperacionesActivas.setVisibility(View.GONE);
+                lyPerfilDatos.setVisibility(View.GONE);
             }
         }
 
@@ -253,7 +285,7 @@ public class Frg_Perfil extends Fragment {
                 if(Boolean.parseBoolean(respuesta.getProperty("EsValido").toString())){
                     SoapObject Datos = (SoapObject) respuesta.getProperty("Datos");
                     SoapObject datosPefil = (SoapObject) Datos.getProperty("PerfilCliente");
-                    SoapObject sOperacionActual = (SoapObject) Datos.getProperty("OperacionActual");
+                    SoapObject sOA = (SoapObject) Datos.getProperty("OperacionActual");
 
                     //Llenamos los datos de la solicitud
                     datosPerfilCliente.setBanco(datosPefil.getProperty("Banco").toString());
@@ -261,9 +293,11 @@ public class Frg_Perfil extends Fragment {
                     datosPerfilCliente.setNombreCompleto(datosPefil.getProperty("NombreCompleto").toString());
                     datosPerfilCliente.setNumeroTarjeta(datosPefil.getProperty("NumeroTarjeta").toString());
                     datosPerfilCliente.setSolicitudActiva(Boolean.parseBoolean(datosPefil.getProperty("SolicitudActiva").toString()));
+                    datosPerfilCliente.setFechaCalculo(new SimpleDateFormat("yyyy-MM-dd").parse(datosPefil.getProperty("FechaCalculo").toString().substring(0, 10)));
 
-                    if (sOperacionActual.getPropertyCount() > 0)
+                    if (sOA.getPropertyCount() > 0)
                     {
+                        SoapObject sOperacionActual = (SoapObject) sOA.getProperty(0);
                         datosOperacionActual.setClienteid(sOperacionActual.getProperty("Clienteid").toString());
                         datosOperacionActual.setSolicitudid(sOperacionActual.getProperty("Solicitudid").toString());
                         datosOperacionActual.setFolio(Integer.parseInt(sOperacionActual.getProperty("Folio").toString()));
@@ -302,19 +336,22 @@ public class Frg_Perfil extends Fragment {
         lblPerfilNombreBanco.setText(datosPerfilCliente.getBanco());
         lblPerfilNumTarjetaCLABE.setText(datosPerfilCliente.getNumeroTarjeta());
         lblPerfilClasificacion.setText(datosPerfilCliente.getCalificacion());
+        lblPerfilFechaCalculada.setText(new SimpleDateFormat("dd/MMMM/yyyy",Locale.getDefault()).format(datosPerfilCliente.getFechaCalculo()));
+
         if (datosOperacionActual.getSolicitudid() != null)
         {
             lyPerfilSolicitar.setVisibility(View.GONE);
             lyPerfilSinOperaciones.setVisibility(View.GONE);
+            lyPerfilSinOperacionesActivas.setVisibility(View.GONE);
             lyPerfilDatos.setVisibility(View.VISIBLE);
 
-            lblPerfilFechaCalculada.setText("");
             lblPerfilMontoSolicitado.setText(nf.format(datosOperacionActual.getFinanciamiento()));
             lblPerfilCompromiso.setText(datosOperacionActual.getPlazoSolicitud());
             lblPerfilFechaInicio.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosOperacionActual.getFechaInicio()));
             lblPerfilFechaVencimiento.setText(new SimpleDateFormat("dd/MM/yyyy").format(datosOperacionActual.getFechaVencimiento()));
             lblPerfilDiasTranscurridos.setText(String.valueOf(datosOperacionActual.getDiasUso()));
             lblPerfilDiasVencimiento.setText(String.valueOf(datosOperacionActual.getDiasVencimiento()));
+            lblPerfilSandoDelDia.setText(nf.format(datosOperacionActual.getTotal()));
         }
         else
         {
@@ -330,6 +367,7 @@ public class Frg_Perfil extends Fragment {
             {
                 lyPerfilSolicitar.setVisibility(View.VISIBLE);
                 lyPerfilSinOperaciones.setVisibility(View.GONE);
+                lyPerfilSinOperacionesActivas.setVisibility(View.GONE);
                 lyPerfilDatos.setVisibility(View.GONE);
             }
         }

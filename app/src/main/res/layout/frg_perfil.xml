@@ -155,13 +155,42 @@
             </LinearLayout>
 
 
+            <!--Sin Operacion Activa-->
+            <LinearLayout
+                android:id="@+id/lyPerfilSinOperacionesActivas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    style="@style/TativoLinearLayoutBordeGris">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/hnPerfilSinOperaciones"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/lblPerfilSinOperacionActiva"
+                        android:gravity="center"/>
+                </LinearLayout>
+            </LinearLayout>
+
             <!--DATOS DE PERFIL-->
             <LinearLayout
                 android:id="@+id/lyPerfilDatos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -178,18 +207,26 @@
                         android:gravity="center"
                         android:text="Información de operación" />
                 </LinearLayout>
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Información calculada al día:"
-                    android:textSize="12sp"/>
-                <TextView
-                    android:id="@+id/lblPerfilFechaCalculada"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="04/02/2017"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="16sp"/>
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Información calculada al día:"
+                        android:textSize="12sp"
+                        android:layout_marginRight="5dp"/>
+                    <TextView
+                        android:id="@+id/lblPerfilFechaCalculada"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="04/02/2017"
+                        android:textSize="11sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+
 
                 <LinearLayout
                     style="@style/TativoLinearLayoutBordeGris">
@@ -322,7 +359,7 @@
                         android:textSize="24sp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:text="$3,023.07"
+                        android:text="- - -"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="30dp"/>
                 </LinearLayout>
