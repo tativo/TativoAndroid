@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -50,6 +52,10 @@ import java.util.Collections;
 import java.util.List;
 
 import fr.ganfra.materialspinner.MaterialSpinner;
+
+import java.text.DecimalFormat;
+
+import android.text.InputFilter;
 
 public class Act_B4_Laboral extends AppCompatActivity {
 
@@ -135,6 +141,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
 
         txtAgregarColonia.setEnabled(false);
         spnColonia.setEnabled(false);
+
     }
 
     public void FocusManager()
@@ -209,6 +216,8 @@ public class Act_B4_Laboral extends AppCompatActivity {
         });
         */
 
+
+
         txtAgregarColonia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,6 +240,34 @@ public class Act_B4_Laboral extends AppCompatActivity {
                 txtCalle.requestFocus();
             }
         });
+
+
+        txtSueldoMensual.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus)
+                {
+                    if(txtSueldoMensual.getText().length() > 0)
+                    {
+                        Integer valor = Integer.parseInt(txtSueldoMensual.getText().toString());
+                        DecimalFormat formateador = new DecimalFormat("$##,##0");
+                        String txt = formateador.format(valor).toString();
+                        InputFilter[] fa= new InputFilter[1];
+                        fa[0] = new InputFilter.LengthFilter(txt.toString().length());
+                        txtSueldoMensual.setFilters(fa);
+                        txtSueldoMensual.setText(txt);
+                    }
+                }
+                else
+                {
+                    InputFilter[] fa= new InputFilter[1];
+                    fa[0] = new InputFilter.LengthFilter(5);
+                    txtSueldoMensual.setFilters(fa);
+                    txtSueldoMensual.setText("");
+                }
+            }
+        });
+
     }
 
     public void FocusNextControl(int o,String ot, int d,String dt)
@@ -607,24 +644,24 @@ public class Act_B4_Laboral extends AppCompatActivity {
         protected void onProgressUpdate(Void... values) {
         }
     }
-    private void GuardarDatos()
-    {
+    private void GuardarDatos() {
         String SOAP_ACTION = "http://tempuri.org/IService1/SetCatdatosempleoTelefono";
         String METHOD_NAME = "SetCatdatosempleoTelefono";
         String NAMESPACE = "http://tempuri.org/";
 
-        ArrayList<PropertyInfo> valores =  new ArrayList<PropertyInfo>();
+        ArrayList<PropertyInfo> valores = new ArrayList<PropertyInfo>();
         PropertyInfo pi1 = new PropertyInfo();
         pi1.setName("value");
         pi1.setValue(getEntityToSave());
         pi1.setType(PropertyInfo.STRING_CLASS);
         valores.add(pi1);
         ServiciosSoap oServiciosSoap = new ServiciosSoap();
-        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE,valores);
-        if(respuesta != null) {
+        SoapObject respuesta = oServiciosSoap.RespuestaServicios(SOAP_ACTION, METHOD_NAME, NAMESPACE, valores);
+        if (respuesta != null) {
             try {
+
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(),"Error: "+e.getMessage(),Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -647,7 +684,7 @@ public class Act_B4_Laboral extends AppCompatActivity {
             DatosEntidad.put("Ciudadid", datosCP.getCiudadID().toString());
             DatosEntidad.put("Arealaboralid", lstCatAreasLaborales.get(spnAreaLaboral.getSelectedItemPosition()-1).getArealaboralid());
             DatosEntidad.put("Descripcionactividad", txtActividades.getText().toString());
-            DatosEntidad.put("SueldoMensual", txtSueldoMensual.getText().toString());
+            DatosEntidad.put("SueldoMensual", txtSueldoMensual.getText().toString().replace("$","").replace(",",""));
             DatosEntidad.put("Paginaweb", txtPaginaEmpresa.getText().toString());
             DatosEntidad.put("UltimaAct", catdatosempleo.getUltimaAct());
 
@@ -925,4 +962,10 @@ public class Act_B4_Laboral extends AppCompatActivity {
             return false;
         }
     }
+
+    //private void AplicaFormatoMoneda(String formato, AutoCompleteTextView control){
+//        Integer valor = Integer.parseInt(control.getText().toString());
+//        DecimalFormat formateador = new DecimalFormat(formato);
+//        formateador.format(valor);
+//    };
 }

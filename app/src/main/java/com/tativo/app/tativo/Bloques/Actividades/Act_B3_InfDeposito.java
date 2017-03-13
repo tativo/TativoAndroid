@@ -12,6 +12,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -63,6 +65,7 @@ import io.card.payment.CreditCard;
 public class Act_B3_InfDeposito extends AppCompatActivity {
 
     int year_x, month_x, day_x;
+    boolean validaCadena = false;
     private static final int MY_SCAN_REQUEST_CODE = 2;
     Globals Sesion;
     ProgressDialog progressDialog;
@@ -71,7 +74,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
     Switch swtRecibesNomina;
     Spinner spnBanco,spnFrecuenciaPago,spnMedioPago;
     EditText txtNumeroTarjetaCLABE,txtFechaProximoPago;
-    TextView lblTarjetaDebito;
+    TextView lblTarjetaDebito, lblErrorNumeroTarjeta;
 
 
     ArrayList<Catbanco> ListaCatbanco = new ArrayList<Catbanco>();
@@ -156,6 +159,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
     }
     public void FocusManager(){
         FocusNextControl(R.id.spnBanco, "S", R.id.txtNumeroTarjetaCLABE, "T");
+        FocusNextControl(R.id.txtNumeroTarjetaCLABE, "T", R.id.spnFrecuenciaPago, "S");
         FocusNextControl(R.id.spnFrecuenciaPago, "S", R.id.spnMedioPago, "S");
         FocusNextControl(R.id.spnMedioPago, "S", R.id.txtFechaProximoPago, "T");
     }
@@ -165,6 +169,7 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
 
 
         lblTarjetaDebito = (TextView) findViewById(R.id.lblTarjetaDebito);
+        lblErrorNumeroTarjeta = (TextView) findViewById(R.id.lblErrorNumeroTarjeta);
 
         //Combos
         spnBanco = (Spinner) findViewById(R.id.spnBanco);
@@ -261,6 +266,56 @@ public class Act_B3_InfDeposito extends AppCompatActivity {
             }
         });
 
+        txtNumeroTarjetaCLABE.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(validaCadena)
+                {
+                    if (txtNumeroTarjetaCLABE.getText().length() > 0 && txtNumeroTarjetaCLABE.getText().length() < 16) {
+                        lblErrorNumeroTarjeta.setText("Son menos de 16 números ¿la información es correcta?");
+                    }
+                    else if(txtNumeroTarjetaCLABE.getText().length() == 17) {
+                        lblErrorNumeroTarjeta.setText("Son 17 números no parece un número CLABE");
+                    }
+                    else if(txtNumeroTarjetaCLABE.getText().length() == 0)
+                    {
+                        lblErrorNumeroTarjeta.setText("Necesitamos este dato");
+                    }
+                    else
+                    {
+                        lblErrorNumeroTarjeta.setText("");
+                    }
+                }
+            }
+        });
+
+        txtNumeroTarjetaCLABE.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (txtNumeroTarjetaCLABE.getText().length() > 0 && txtNumeroTarjetaCLABE.getText().length() < 16) {
+                    lblErrorNumeroTarjeta.setText("Son menos de 16 números ¿la información es correcta?");
+                    validaCadena = true;
+                }
+                else if(txtNumeroTarjetaCLABE.getText().length() == 17) {
+                    lblErrorNumeroTarjeta.setText("Son 17 números no parece un número CLABE");
+                    validaCadena = true;
+                }
+                else
+                {
+                    lblErrorNumeroTarjeta.setText("");
+                }
+            }
+        });
     }
 
     //Region Llenar datos del formulario

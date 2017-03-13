@@ -45,8 +45,8 @@
     <string name="lblTituRegistro">Información Personal</string>
     <string name="txtApellidoPaterno">Apellido Paterno</string>
     <string name="txtApellidoMaterno">Apellido Materno</string>
-    <string name="txtContrasena">Elige una contraseña</string>
-    <string name="txtConfirmacionContrasena">Confirma tu contraseña</string>
+    <string name="hnContrasena">Elige una contraseña</string>
+    <string name="hnConfirmacionContrasena">Confirma tu contraseña</string>
     <string name="btnRegistro">Aceptar</string>
 
     <!--Bloque 1 - Referencias -->
@@ -77,7 +77,7 @@
     <string name="lblCreditoAutomotriz">¿Has tenido crédito automotriz en los últimos 2 años?</string>
     <string name="ckTerminosCondiciones1">Acepto que tativo trate mis datos económicos / financieros para las descritas en este &lt;a href="https://tativo.com/page/aviso-de-privacidad">Aviso de Privacidad.&lt;/a></string>
     <string name="ckTerminosCondiciones2">Acepto que tativo utilice mi información personal sensible que yo voluntariamente revele para las finalidades descritas en este &lt;a href="https://tativo.com/page/aviso-de-privacidad">Aviso de Privacidad&lt;/a>.</string>
-    <string name="ckTerminosCondiciones3">Manifiesto que he leído en su totalidad el &lt;a href="https://tativo.com/page/aviso-de-privacidad">Aviso de Privacidad&lt;/a> y consiento que mis datos personales sean tratados y transferido conforme a los términos y condiciones que se señalan en los términos y condiciones.</string>
+    <string name="ckTerminosCondiciones3">Manifiesto que he leído en su totalidad el &lt;a href="https://tativo.com/page/aviso-de-privacidad">Aviso de Privacidad&lt;/a> y consiento que mis datos personales sean tratados y transferidos conforme a los términos y condiciones que se señalan en dicho documento.</string>
     <string name="ckTerminosCondiciones4">Por este conducto autorizo a Tativo para a través de su personal facultado, lleve a cabo investigaciones de mi comportamiento crediticio.</string>
     <string name="btnInfPersonal">Continuar</string>
 
@@ -352,7 +352,8 @@
 
     <string name="hnPerfilSinOperaciones">Sin Operaciones</string>
     <string name="lblPerfilSinOperaciones">Nos dimos cuenta que en tu última solicitud saliste sin firmar los documentos. Ayúdanos a terminar tu solicitud para enviarte tu dinero.</string>
-    <string name="lblPerfilSinOperacionActiva">Por el momento aquí no hay nada porque tu operación está siendo generada por nuestro equipo. En un momento recibirás un SMS indicándote que en efecto, ya recibiste tu depósito.</string>
+    <string name="lblPerfilSinOperacionActiva">Hola, te informo que ya cuentas con una solicitud en proceso, si tienes alguna duda o pregunta puedes comunicarte al (01800) 400-12-12.</string>
+    <string name="lblOperacionActiva">Hola, veo que ya tienes actualmente un préstamo activo, selecciona el siguiente botón para ver la información de tu operación.</string>
     <string name="hnPerfilFirmarDocumentos">Firmar documentos</string>
 
 
@@ -361,6 +362,8 @@
     <string name="msjFormatoCorreoInvalido">Formato de correo invalido</string>
     <string name="msjCorreoDuplicado">Este correo ya fue registrado</string>
     <string name="msjValidandoCorreo">Validando correo...</string>
+    <string name="msjContrasena">Contraseña demasiado corta</string>
+    <string name="msjContrasenaConfirma">Confirmacion de contraseña demasiado corta</string>
     <string name="msjConfirmacionContrasena">Las confirmacion no es igual</string>
     <string name="msjRequerido">Campo requerido</string>
     <string name="msjGuardando">Guardando datos...</string>
@@ -368,6 +371,7 @@
     <string name="msjCPNoEncontrado">Codigo postal no encontrado</string>
     <string name="msjBuscando">Buscando...</string>
     <string name="msjCargando">Cargando...</string>
+
 
     <!-- Cuando los datos no se guardaron -->
     <string name="msjNoGuardadoTitulo">Algo ha ocurrido</string>
@@ -445,7 +449,6 @@
     <string name="reqbtnIrAlRegistro">ir al registro</string>
     <string name="reqbtnCerrarVentana">Cerrar ventana</string>
 
-
     <!-- No Cuenta con Tarjeta de Debito -->
     <string name="ntdTitulo">OK, en ese caso</string>
     <string name="ntdP1">Como no tienes tarjeta de débito te recomendamos adquirir alguna tarjeta express.</string>
@@ -466,6 +469,23 @@
     <string name="lblTituloConfirmarNumero">Confirma tu numero de celular</string>
     <string name="msgConfirmarNumero"></string>
 
+    <!-- AVISO DE PRIVACIDAD -->
+    <string name="adpTitulo">&lt;b>AVISO DE PRIVACIDAD&lt;/b></string>
+    <string name="adpResponsable">Responsable: &lt;b>Tativo S.A. de C.V. (Tativo)&lt;/b></string>
+    <string name="adpDomicilio">Domicilio: &lt;b>Álvaro Obregón 585-6 Sur, Col. Jorge Almada, C.P. 80200, Culiacán, Sinaloa.&lt;/b></string>
+    <string name="adpSitioWEB">Sitio web: &lt;b>www.tativo.com&lt;/b></string>
+
+    <string name="adpParrafo1">En Tativo sabemos que lo más importante son nuestros clientes y usuarios, por ese motivo estamos comprometidos a respetar su privacidad y proteger los datos personales que nos proporcionan, los cuales serán tratados conforme a las disposiciones de la Ley Federal de Protección de Datos Personales en Posesión de los Particulares y demás legislación aplicable, observando en todo momento los principios de licitud, consentimiento, información, calidad, finalidad, lealtad, proporcionalidad y responsabilidad en el tratamiento de datos personales.</string>
+    <string name="adpParrafo2">Tativo tratará los datos personales que nos proporcionen nuestros clientes y usuarios con la finalidad de análisis, aprovechamiento, consulta, disposición, evaluación, uso, manejo, modificación, transferencia y almacenamiento, con el objeto de otorgarles los servicios y/o productos solicitados, ofrecerles otros servicios y/o productos, informarles sobre promociones y cambios en los mismos y evaluar la calidad del servicio que les brindamos. Para las finalidades antes mencionadas, requerimos que usted nos proporcione de manera voluntaria los datos que señalamos a continuación: nombre completo, género, lugar y fecha de nacimiento, nacionalidad, profesión, estado civil, domicilio particular, teléfono fijo y móvil, correo electrónico, identificación oficial digitalizada, datos laborales y bancarios, así como información de gustos, hobbies y preferencias tecnológicas; por lo que al proporcionarnos dicha información manifiesta su consentimiento expreso para su tratamiento.</string>
+    <string name="adpParrafo3">Tativo también recaba información no personal cuando usted visita nuestro sitio de Internet o utiliza nuestros servicios en línea, a través de cookies o web beacons que son archivos de texto que son descargados automáticamente por el sitio web y almacenados en el disco duro de su equipo o pueden ser imágenes insertadas en la página o correo electrónico, y mediante los cuales obtenemos datos como el tipo de navegador y sistema operativo, la dirección IP, proveedor de internet, las páginas que visita, los vínculos que sigue y el sitio que visitó antes del nuestro, con la finalidad de determinar sus preferencias cuando se conecta y monitorear sus comportamientos dentro de nuestro sitio para ofrecerle una experiencia de navegación personalizada. Las cookies y web beacons pueden ser borradas, aceptadas o bloqueadas según se deseé por el cliente o usuario, para esto solo debe configurar convenientemente el navegador web que utilice.</string>
+    <string name="adpParrafo4">Usted puede limitar el uso o divulgación de sus datos personales; así como también, podrá ejercer su derecho de acceder, rectificar y cancelar dichos datos, así como de oponerse al tratamiento de los mismos o revocar el consentimiento que para tal fin nos haya otorgado, mediante una solicitud que envíe al domicilio arriba señalado o a la dirección de correo electrónico que más adelante se menciona. Para conocer dichos procedimientos, requisitos y plazos, se puede poner en contacto con nuestro departamento de atención al cliente al teléfono (01800) 400-1212 o al correo &lt;a href="mailto:atencion@tativo.com">atencion@tativo.com&lt;/a>. El tiempo en que se dará respuesta a la solicitud será dentro de un plazo máximo de 20 (veinte) días hábiles, contados desde la fecha en que se recibió la misma.</string>
+    <string name="adpParrafo5">El Instituto Federal de Acceso a la Información y Protección de Datos (IFAI) es la autoridad encargada de atender las inconformidades de los titulares de los datos personales ante las respuestas o falta de las mismas por parte de los responsables del uso de los datos personales. Para ello, se ha instrumentado un procedimiento denominado “protección de derechos”, mediante el cual podrá presentar una solicitud de protección de derechos ante el IFAI, a fin de que el Instituto resuelva si procede o no la respuesta que fue otorgada, o requiera al responsable que atienda la solicitud de ejercicio de derechos ARCO.</string>
+    <string name="adpParrafo6">&lt;b>Tativo&lt;/b> podrá transferir sus datos personales a sus empresas filiales o socios comerciales que se comprometan por medios legales a garantizar las medidas de seguridad necesarias para proteger dichos datos personales, quienes en todo momento estarán obligados a darle el mismo tratamiento que &lt;b>Tativo&lt;/b>, con el único objeto y finalidad de proveer servicios necesarios para nuestra operación o para ofrecerle otros servicios y/o productos, por lo que se entiende que al proporcionar sus datos personales usted acepta y autoriza su transferencia de conformidad con el párrafo siguiente:</string>
+    <string name="adpParrafo7">&lt;i>En este acto acepto y otorgo mi consentimiento expreso para que &lt;b>Tativo&lt;/b> utilice, transfiera y trate mis datos personales exclusivamente para los fines que se mencionan en el presente Aviso de Privacidad.&lt;/i></string>
+    <string name="adpParrafo8">En &lt;b>Tativo&lt;/b> se han tomado las medidas de seguridad necesarias para salvaguardar su información, mediante controles físicos y electrónicos que impidan el acceso a la misma a terceros no autorizados.</string>
+    <string name="adpParrafo9">&lt;b>Tativo&lt;b> por este medio no solicita datos personales sensibles y se reserva el derecho de efectuar en cualquier momento modificaciones o actualizaciones al presente Aviso de Privacidad. Cualquier modificación al mismo podrá consultarla a través de nuestra página web &lt;a href="www.tativo.com">www.tativo.com&lt;/a></string>
+    <string name="adpParrafo10">El presente Aviso de Privacidad está sujeto a los términos y condiciones de nuestra página &lt;a href="www.tativo.com">www.tativo.com&lt;/a>, lo que constituye un acuerdo legal entre usted y Tativo, por lo que si proporciona sus datos personales o utiliza los servicios de dicha página web, se entiende que usted ha leído, comprendido y aceptado los términos y condiciones allí expuestos.</string>
+    <string name="adpParrafo11">Fecha última actualización: %1$s</string>
 
 </resources>
 

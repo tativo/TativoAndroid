@@ -95,7 +95,8 @@
                     style="@style/TativoTextViewSwitch"/>
                 <Switch
                     android:id="@+id/swtTienesAutomovil"
-                    style="@style/TativoSwitch"/>
+                    style="@style/TativoSwitch"
+                    app:theme="@style/switchActivo"/>
             </LinearLayout>
             <LinearLayout android:id="@+id/lyEsPropio"
                 style="@style/TativoLinearLayoutBordeSwitchDisable">
@@ -107,7 +108,8 @@
                     style="@style/TativoTextViewSwitch"/>
                 <Switch
                     android:id="@+id/swtEsPropio"
-                    style="@style/TativoSwitch"/>
+                    style="@style/TativoSwitch"
+                    app:theme="@style/switchActivo"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
                 <fr.ganfra.materialspinner.MaterialSpinner

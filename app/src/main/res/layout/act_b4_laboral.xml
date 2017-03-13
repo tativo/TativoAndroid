@@ -160,11 +160,9 @@
                         android:id="@+id/txtSueldoMensual"
                         android:hint="@string/txtSueldoMensual"
                         android:inputType="number"
-                        android:maxLength="9"
+
                         android:maxLines="1"
-                        style="@style/TativoAutoCompleteTextView"
-                        android:numeric="decimal"
-                        android:digits="0123456789"/>
+                        style="@style/TativoAutoCompleteTextView" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde">
@@ -186,7 +184,6 @@
                         android:id="@+id/txtActividades"
                         android:hint="@string/txtActividades"
                         android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
-                        android:singleLine="false"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>

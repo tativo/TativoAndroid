@@ -136,13 +136,13 @@ public class Frg_Registro extends Fragment{
             txtCorreo.requestFocus();
             return false;
         }
-        if (txtContrasena.getText().toString().trim().length() == 0) {
-            txtContrasena.setError(getString(R.string.msjRequerido));
+        if (txtContrasena.getText().toString().trim().length() < 8) {
+            txtContrasena.setError(getString(R.string.msjContrasena));
             txtContrasena.requestFocus();
             return false;
         }
-        if (txtConfirmaContrasena.getText().toString().trim().length() == 0) {
-            txtConfirmaContrasena.setError(getString(R.string.msjRequerido));
+        if (txtConfirmaContrasena.getText().toString().trim().length() < 8) {
+            txtConfirmaContrasena.setError(getString(R.string.msjContrasenaConfirma));
             txtConfirmaContrasena.requestFocus();
             return false;
         }

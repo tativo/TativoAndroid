@@ -246,7 +246,9 @@
                     android:id="@+id/swtTarjetaCredito"
                     android:gravity="center_horizontal"
                     android:textOn="Si"
-                    android:textOff="No" />
+                    android:textOff="No"
+                    app:theme="@style/switchActivo"
+                    />
             </LinearLayout>
             <LinearLayout android:id="@+id/ly4DigitosTarjeta"
                 style="@style/TativoLinearLayoutBordeDisable">
@@ -281,7 +283,8 @@
                     android:id="@+id/swtCreditoHipotecario"
                     android:gravity="center_horizontal"
                     android:textOn="Si"
-                    android:textOff="No" />
+                    android:textOff="No"
+                    app:theme="@style/switchActivo"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:orientation="horizontal"
@@ -302,7 +305,8 @@
                     android:id="@+id/swtCreditoAutomotriz"
                     android:gravity="center_horizontal"
                     android:textOn="Si"
-                    android:textOff="No" />
+                    android:textOff="No"
+                    app:theme="@style/switchActivo"/>
             </LinearLayout>
             <LinearLayout style="@style/TativoLinearLayoutBorde"
                 android:paddingRight="10dp">

@@ -34,6 +34,7 @@ import com.tativo.app.tativo.LogIn.Clases.CatFechasPago;
 import com.tativo.app.tativo.LogIn.Fragmentos.Frg_LogIn;
 import com.tativo.app.tativo.LogIn.Fragmentos.Frg_Requisitos;
 
+import com.tativo.app.tativo.LogIn.Fragmentos.Frg_RequisitosHome;
 import com.tativo.app.tativo.R;
 
 import com.tativo.app.tativo.Utilidades.Globals;
@@ -57,7 +58,7 @@ import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.AbstractWheelTextAdapter;
 
-public class Act_Cotizador_r extends AppCompatActivity implements Frg_Requisitos.DialogResponseRequisitos {
+public class Act_Cotizador_r extends AppCompatActivity implements Frg_Requisitos.DialogResponseRequisitos, Frg_RequisitosHome.DialogResponseRequisitos {
 
     LinearLayout divPantalla,divPantallaTitulo,divPantallaImagen1,divPantallaImagen2,divPantallaCotizacion;
     TextView lblTitulo1,lblTitulo2,lblTitulo3,lblQuiero,lblPago,lblCotizacion1,lblCotizacion2,lblCotizacion3,lblCotizacion4,lblCotizacion5,lblCotizacion6, txtRequisitos;
@@ -221,7 +222,7 @@ public class Act_Cotizador_r extends AppCompatActivity implements Frg_Requisitos
             @Override
             public void onClick(View v) {
                 FragmentManager fragmento = getFragmentManager();
-                new Frg_Requisitos().show(fragmento,"frmRequisitos");
+                new Frg_RequisitosHome().show(fragmento,"frmRequisitoshome");
             }
         });
 
@@ -603,9 +604,9 @@ public class Act_Cotizador_r extends AppCompatActivity implements Frg_Requisitos
                                 String sfecha = day_x+"/"+(month_x+1)+"/"+year_x;
                                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
                                 ParsePosition pp = new ParsePosition(0);
-                                Date d = format.parse(sfecha, pp);
+                                sfecha = format.format(format.parse(sfecha, pp));
 
-                                int i = getIndexFecha(d);
+                                int i = getIndexFecha(sfecha);
                                 if (i >= 0)
                                     spnFechaPago.setCurrentItem(i);
                                 else
@@ -670,10 +671,12 @@ public class Act_Cotizador_r extends AppCompatActivity implements Frg_Requisitos
         datePickerDialog.show();
     }
 
-    private int getIndexFecha(Date myString) {
+    private int getIndexFecha(String myString) {
         int index = -1;
         for (int i = 0; i < FechasPago.size(); i++) {
-            if (FechasPago.get(i).getFechaPago().getDate() == myString.getDate() ) {
+            SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            String sd = s.format(FechasPago.get(i).getFechaPago());
+            if (sd.equals(myString) ) {
                 index = i;
             }
         }

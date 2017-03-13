@@ -263,4 +263,12 @@
     </style>
 
 
+
+
+    <style name="switchActivo" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/colorVerdeOscuro</item>
+        <item name="colorSwitchThumbNormal">@color/colorAzulOscuro</item>
+    </style>
+
 </resources>

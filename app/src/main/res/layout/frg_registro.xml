@@ -44,6 +44,7 @@
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
+
             <LinearLayout style="@style/TativoLinearLayoutBorde">
                 <android.support.design.widget.TextInputLayout
                     style="@style/TativoTextInputLayout">
@@ -55,15 +56,16 @@
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
+
             <LinearLayout style="@style/TativoLinearLayoutBorde">
                 <android.support.design.widget.TextInputLayout
                     style="@style/TativoTextInputLayout">
                     <AutoCompleteTextView
                         android:id="@+id/txtContrasena"
-                        android:hint="@string/txtContrasena"
+                        android:hint="@string/hnContrasena"
                         android:inputType="textPassword"
-                        android:password="true"
                         android:maxLines="1"
+                        android:maxLength="250"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -72,10 +74,10 @@
                     style="@style/TativoTextInputLayout">
                     <AutoCompleteTextView
                         android:id="@+id/txtConfirmaContrasena"
-                        android:hint="@string/txtConfirmacionContrasena"
+                        android:hint="@string/hnConfirmacionContrasena"
                         android:inputType="textPassword"
-                        android:password="true"
                         android:maxLines="1"
+                        android:maxLength="250"
                         style="@style/TativoAutoCompleteTextView"/>
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
