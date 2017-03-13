@@ -934,6 +934,7 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
     @Override
     public void onPossitiveButtonClick() {
         btnVerDocumentos.setBackgroundColor(getResources().getColor(R.color.colorAmarillo));
+        btnVerDocumentos.setEnabled(false);
         svDocumentos.scrollTo(0,svDocumentos.getScrollY() + 600);
     }
 

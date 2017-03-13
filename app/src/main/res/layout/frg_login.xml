@@ -67,7 +67,6 @@
                 <Button
                     android:id="@+id/btnCerrarLogIn"
                     android:text="@string/btnCerrar"
-                    android:drawableRight="@drawable/sig"
                     style="@style/TativoBotonCerrar"/>
             </LinearLayout>
         </LinearLayout>

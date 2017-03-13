@@ -7,13 +7,27 @@
     android:padding="6dp"
     tools:context="com.tativo.app.tativo.Operaciones.Actividades.Act_Perfil">
 
+    <LinearLayout
+        android:id="@+id/lyGenerando"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Generando documentos"/>
+    </LinearLayout>
+
     <!-- CARATULA  -->
     <LinearLayout
         android:id="@+id/lyContratoCaratula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -272,7 +286,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/ckTerminosCaratula"
-                        android:layout_marginTop="30dp" />
+                        android:layout_marginTop="30dp"
+                        />
                     <Button
                         android:id="@+id/btnAceptaCaratula"
                         android:layout_width="match_parent"
@@ -322,8 +337,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorGrisCuerpo"
-                android:orientation="vertical">
-
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/lblContratoOperacionP1"
@@ -1034,7 +1049,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorGrisCuerpo"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"

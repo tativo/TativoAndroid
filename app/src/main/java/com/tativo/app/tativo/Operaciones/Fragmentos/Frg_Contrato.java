@@ -52,7 +52,7 @@ public class Frg_Contrato extends DialogFragment  {
     }
 
     View v;
-    LinearLayout lyContratoCaratula, lyContratoOperacion, lyContratoPagare;
+    LinearLayout lyGenerando, lyContratoCaratula, lyContratoOperacion, lyContratoPagare;
     TextView lblCaratulaNombreComercial, lblCaratulaRFC, lblCaratulaDireccion, lblCaratulaTelefono, lblCaratulaCorreo, lblCaratulaNombreCompleto, lblCaratulaDireccionAcreditado, lblCaratulaTelefonoAcreditado, lblCaratulaCorreoAcreditado, lblBancoDeposito, lblCLABEnoTarjeta, lblMontoSolicitado, lblCaratulaInteres, lblCaratulaIVA, lblCaratulaTotalPagar, lblCaratulaFechaInicio, lblCaratulaPlazo, lblCaratulaFechaLimite;
     TextView lblDomiciliacionEmisor, lblDomiciliacionRFC, lblDomiciliacionDomicilio, lblDomiciliacionNombre, lblDomiciliacionReferencia, lblDomiciliacionTitularCuenta, lblDomiciliacionCLABE, lblDomiciliacionBanco, lblDomiciliacionTarjetaDebido;
     TextView lblRepresentanteLegal,lblFirmaCliente;
@@ -107,6 +107,7 @@ public class Frg_Contrato extends DialogFragment  {
         datosContrato = new DatosDocumentosContrato();
         datosInfoPago = new DatosDocumentosInfoPago();
 
+        lyGenerando = (LinearLayout) v.findViewById(R.id.lyGenerando);
         lyContratoCaratula = (LinearLayout) v.findViewById(R.id.lyContratoCaratula);
         lyContratoOperacion = (LinearLayout) v.findViewById(R.id.lyContratoOperacion);
         lyContratoPagare = (LinearLayout) v.findViewById(R.id.lyContratoPagare);
@@ -152,14 +153,14 @@ public class Frg_Contrato extends DialogFragment  {
         btnAceptaContrato = (Button) v.findViewById(R.id.btnAceptaContrato);
         btnAceptaPagare = (Button) v.findViewById(R.id.btnAceptaPagare);
 
-        btnAceptaCaratula.setEnabled(false);
-        btnAceptaCaratula.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
+        //btnAceptaCaratula.setEnabled(false);
+        //btnAceptaCaratula.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
 
-        btnAceptaContrato.setEnabled(false);
-        btnAceptaContrato.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
+        //btnAceptaContrato.setEnabled(false);
+        //btnAceptaContrato.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
 
-        btnAceptaPagare.setEnabled(false);
-        btnAceptaPagare.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
+        //btnAceptaPagare.setEnabled(false);
+        //btnAceptaPagare.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
     }
 
     public void EventManager() {
@@ -167,21 +168,30 @@ public class Frg_Contrato extends DialogFragment  {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    btnAceptaCaratula.setEnabled(true);
-                    btnAceptaCaratula.setBackgroundColor(getResources().getColor(R.color.colorAzulOscuro));
+                    //btnAceptaCaratula.setEnabled(true);
+                    //btnAceptaCaratula.setBackgroundColor(getResources().getColor(R.color.colorAzulOscuro));
+                    ckTerminosCaratula.setBackgroundResource(0);
                 }
-                else {
-                    btnAceptaCaratula.setEnabled(false);
-                    btnAceptaCaratula.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
-                }
+                //else {
+                //    btnAceptaCaratula.setEnabled(false);
+                //    btnAceptaCaratula.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
+                //}
             }
         });
 
         btnAceptaCaratula.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lyContratoCaratula.setVisibility(View.GONE);
-                lyContratoOperacion.setVisibility(View.VISIBLE);
+                if(ckTerminosCaratula.isChecked())
+                {
+                    lyContratoCaratula.setVisibility(View.GONE);
+                    lyContratoOperacion.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    ckTerminosCaratula.setBackgroundResource(R.drawable.borderrojo);
+                }
+
             }
         });
 
@@ -190,21 +200,30 @@ public class Frg_Contrato extends DialogFragment  {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    btnAceptaContrato.setEnabled(true);
-                    btnAceptaContrato.setBackgroundColor(getResources().getColor(R.color.colorAzulOscuro));
+                    //btnAceptaContrato.setEnabled(true);
+                    //btnAceptaContrato.setBackgroundColor(getResources().getColor(R.color.colorAzulOscuro));
+                    ckTerminosContrato.setBackgroundResource(0);
                 }
-                else {
-                    btnAceptaContrato.setEnabled(false);
-                    btnAceptaContrato.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
-                }
+                //else {
+                //    btnAceptaContrato.setEnabled(false);
+                //    btnAceptaContrato.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
+                //}
             }
         });
 
         btnAceptaContrato.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lyContratoOperacion.setVisibility(View.GONE);
-                lyContratoPagare.setVisibility(View.VISIBLE);
+                if(ckTerminosContrato.isChecked())
+                {
+                    lyContratoOperacion.setVisibility(View.GONE);
+                    lyContratoPagare.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    ckTerminosContrato.setBackgroundResource(R.drawable.borderrojo);
+                }
+
             }
         });
 
@@ -213,23 +232,31 @@ public class Frg_Contrato extends DialogFragment  {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    btnAceptaPagare.setEnabled(true);
-                    btnAceptaPagare.setBackgroundColor(getResources().getColor(R.color.colorAzulOscuro));
+                    //btnAceptaPagare.setEnabled(true);
+                    //btnAceptaPagare.setBackgroundColor(getResources().getColor(R.color.colorAzulOscuro));
+                    ckTerminosPagare.setBackgroundResource(0);
                 }
-                else {
-                    btnAceptaPagare.setEnabled(false);
-                    btnAceptaPagare.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
-                }
+                //else {
+                //    btnAceptaPagare.setEnabled(false);
+                //    btnAceptaPagare.setBackgroundColor(getResources().getColor(R.color.colorAzulSeleccion));
+                //}
             }
         });
 
         btnAceptaPagare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                lyContratoPagare.setVisibility(View.GONE);
-                lyContratoCaratula.setVisibility(View.VISIBLE);
-                listener.onPossitiveButtonClick();
-                dismiss();
+                if(ckTerminosPagare.isChecked())
+                {
+                    lyContratoPagare.setVisibility(View.GONE);
+                    lyContratoCaratula.setVisibility(View.VISIBLE);
+                    listener.onPossitiveButtonClick();
+                    dismiss();
+                }
+                else
+                {
+                    ckTerminosPagare.setBackgroundResource(R.drawable.borderrojo);
+                }
             }
         });
     }
@@ -512,10 +539,12 @@ public class Frg_Contrato extends DialogFragment  {
 
         @Override
         protected void onPostExecute(Void result) {
-            progressDialog.dismiss();
             CargaDocumentosContrato();
             CargaDocumentosPagare();
             SetInfoBloque();
+            lyGenerando.setVisibility(View.GONE);
+            lyContratoCaratula.setVisibility(View.VISIBLE);
+            progressDialog.dismiss();
         }
         @Override
         protected void onPreExecute() {
