@@ -234,6 +234,8 @@
 
 
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -268,8 +270,7 @@
                         android:id="@+id/imgIfeFrontal"
                         android:src="@drawable/inefrontal"
                         android:layout_width="fill_parent"
-                        android:layout_height="200dp"
-                        />
+                        android:layout_height="200dp" />
                     <LinearLayout
                         android:id="@+id/progresFrontal"
                         android:layout_width="match_parent"
@@ -285,8 +286,7 @@
                         <pl.droidsonroids.gif.GifTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/progresbar"
-                            />
+                            android:background="@drawable/progresbar" />
                     </LinearLayout>
                     <Button
                         android:id="@+id/btnFotoFrontal"
@@ -295,14 +295,12 @@
                         android:background="@color/colorAmarillo"
                         android:textColor="@color/colorBlanco"
                         android:text="@string/btnSubirFoto"
-                        android:focusable="true"
-                        />
+                        android:focusable="true" />
                     <ImageView
                         android:id="@+id/imgIfeTrasera"
                         android:src="@drawable/inetrasera"
                         android:layout_width="fill_parent"
-                        android:layout_height="200dp"
-                        />
+                        android:layout_height="200dp" />
                     <LinearLayout
                         android:id="@+id/progresTrasera"
                         android:layout_width="match_parent"
@@ -329,6 +327,39 @@
                         android:text="@string/btnSubirFoto"
                         android:layout_marginTop="10dp"
                         android:id="@+id/btnFotoTrasera"/>
+
+                    <ImageView
+                        android:id="@+id/imgSelfie"
+                        android:src="@drawable/inetrasera"
+                        android:layout_width="fill_parent"
+                        android:layout_height="200dp" />
+                    <LinearLayout
+                        android:id="@+id/progresSelfie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Enviando foto"
+                            />
+                        <pl.droidsonroids.gif.GifTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/progresbar"
+                            />
+                    </LinearLayout>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorAmarillo"
+                        android:textColor="@color/colorBlanco"
+                        android:text="@string/btnSubirFoto"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/btnFotoSelfie"/>
+
                 </LinearLayout>
 
                 <LinearLayout

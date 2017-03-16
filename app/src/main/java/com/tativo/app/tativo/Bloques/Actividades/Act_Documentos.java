@@ -74,13 +74,13 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
 
     TextView lblNobreCompleto, lblDireccion, lblTelefono, lblCorreo, lblNombreBanco, lblNumeroTarjetaCLABE, lblMonto;
     TextView lblFechaInicio, lblPlazo_Compromiso, lblPlazo_Limite, lblFecha_Compromiso, lblFecha_Limite, lblInteres_Compromiso, lblInteres_Limite, lblIVA_Compromiso, lblIVA_Limite, lblTotal_Compromiso, lblTotal_Limite;
-    Button btnVerDocumentos, btnFotoFrontal, btnFotoTrasera, btnAceptarDocumentos;
+    Button btnVerDocumentos, btnFotoFrontal, btnFotoTrasera, btnFotoSelfie, btnAceptarDocumentos;
     LinearLayout lybtnVerDocumentos, lyCargaDocumentos;
     AutoCompleteTextView txtFirmaDocumentos;
     ScrollView svDocumentos;
 
-    ImageView imgIfeFrontal,imgIfeTrasera;
-    LinearLayout progresFrontal,progresTrasera;
+    ImageView imgIfeFrontal,imgIfeTrasera, imgSelfie;
+    LinearLayout progresFrontal,progresTrasera, progresSelfie;
 
     Globals Sesion;
     ProgressDialog progressDialog;
@@ -152,6 +152,7 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         btnVerDocumentos = (Button) findViewById(R.id.btnVerDocumentos);
         btnFotoFrontal = (Button) findViewById(R.id.btnFotoFrontal);
         btnFotoTrasera = (Button) findViewById(R.id.btnFotoTrasera);
+        btnFotoSelfie = (Button) findViewById(R.id.btnFotoSelfie);
         btnAceptarDocumentos = (Button) findViewById(R.id.btnAceptarDocumentos);
 
         lybtnVerDocumentos = (LinearLayout) findViewById(R.id.lybtnVerDocumentos);
@@ -164,6 +165,9 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
 
         imgIfeTrasera = (ImageView) findViewById(R.id.imgIfeTrasera);
         progresTrasera = (LinearLayout) findViewById(R.id.progresTrasera);
+
+        imgSelfie = (ImageView) findViewById(R.id.imgSelfie);
+        progresSelfie = (LinearLayout) findViewById(R.id.progresSelfie);
     }
 
     public void FocusManager() {
@@ -182,14 +186,21 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         btnFotoFrontal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                captureImage(true);
+                captureImage(1);
             }
         });
 
         btnFotoTrasera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                captureImage(false);
+                captureImage(2);
+            }
+        });
+
+        btnFotoSelfie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                captureImage(3);
             }
         });
 
@@ -654,21 +665,27 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
     //Region CAPTURA DE IMAGENES
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F = 100;
     private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T = 200;
+    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE_S = 300;
 
     public static final int MEDIA_TYPE_IMAGE_FRONTAL = 1;
     public static final int MEDIA_TYPE_IMAGE_TRASERA = 2;
+    public static final int MEDIA_TYPE_IMAGE_SELFIE = 3;
     private Uri fileUri;
-    private String fileNameFrontal="",fileNameTrasera="";
+    private String fileNameFrontal="",fileNameTrasera="",fileNameSelfie="";
     private static final String TAG = Act_Documentos.class.getSimpleName();
-    private boolean isFrontal=false;
+    //private boolean isFrontal=false;
+    private int tipoImg = 0;
 
 
-    private void captureImage(boolean isFrontal) {
+    private void captureImage(int tipImg) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        fileUri = getOutputMediaFileUri((isFrontal ? MEDIA_TYPE_IMAGE_FRONTAL:MEDIA_TYPE_IMAGE_TRASERA));
+        int NoImg  = (tipImg == 1 ? MEDIA_TYPE_IMAGE_FRONTAL : (tipImg == 2 ? MEDIA_TYPE_IMAGE_TRASERA : MEDIA_TYPE_IMAGE_SELFIE));
+        //fileUri = getOutputMediaFileUri((isFrontal ? MEDIA_TYPE_IMAGE_FRONTAL:MEDIA_TYPE_IMAGE_TRASERA));
+        fileUri = getOutputMediaFileUri(NoImg);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
         // start the image capture Intent
-        startActivityForResult(intent, (isFrontal ? CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F:CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T));
+        //startActivityForResult(intent, (isFrontal ? CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F:CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T));
+        startActivityForResult(intent, (tipImg == 1 ? CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F : (tipImg == 2 ? CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T : CAMERA_CAPTURE_IMAGE_REQUEST_CODE_S)));
     }
     public Uri getOutputMediaFileUri(int type) {
         return Uri.fromFile(getOutputMediaFile(type));
@@ -704,7 +721,12 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
             fileNameTrasera =Sesion.getCliendeID().replace("-","")+"_T"+String.valueOf(MEDIA_TYPE_IMAGE_TRASERA)+ "_" + timeStamp + ".jpg";
             mediaFile = new File(mediaStorageDir.getPath() + File.separator
                     + fileNameTrasera);
-        } else {
+        } else if (type == MEDIA_TYPE_IMAGE_SELFIE) {
+            fileNameSelfie =Sesion.getCliendeID().replace("-","")+"_T"+String.valueOf(MEDIA_TYPE_IMAGE_SELFIE)+ "_" + timeStamp + ".jpg";
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + fileNameSelfie);
+        }
+        else {
             return null;
         }
         return mediaFile;
@@ -735,19 +757,26 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // if the result is capturing Image
-        if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T || requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F) {
+        if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T || requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F || requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_S) {
             if (resultCode == RESULT_OK) {
                 // bimatp factory
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 8;
                 final Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(), options);
                 if(requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F){
-                    isFrontal = true;
+                    //isFrontal = true;
+                    tipoImg = 1;
                     imgIfeFrontal.setImageBitmap(bitmap);
-                }else{
-                    isFrontal = false;
+                }else if(requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T){
+                    //isFrontal = false;
+                    tipoImg = 2;
                     imgIfeTrasera.setImageBitmap(bitmap);
+                }else{
+                    //isFrontal = false;
+                    tipoImg = 3;
+                    imgSelfie.setImageBitmap(bitmap);
                 }
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                     new UploadFileToServer(requestCode).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 } else {
@@ -779,10 +808,12 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         @Override
         protected void onPreExecute() {
             // setting progress bar to zero
-            if(isFrontal)
+            if(tipoImg == 1)
                 progresFrontal.setVisibility(View.VISIBLE);
-            else
+            else if(tipoImg == 2)
                 progresTrasera.setVisibility(View.VISIBLE);
+            else
+                progresSelfie.setVisibility(View.VISIBLE);
 
             super.onPreExecute();
         }
@@ -800,10 +831,13 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         @Override
         protected void onPostExecute(String result) {
             Log.e(TAG, "Response from server: " + result);
-            if(isFrontal)
+            if(tipoImg == 1)
                 progresFrontal.setVisibility(View.GONE);
-            else
+            else if(tipoImg == 2)
                 progresTrasera.setVisibility(View.GONE);
+            else
+                progresSelfie.setVisibility(View.GONE);
+
             super.onPostExecute(result);
         }
     }
@@ -827,7 +861,6 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
         else
         {
             try {
-
                 // open a URL connection to the Servlet
                 FileInputStream fileInputStream = new FileInputStream(sourceFile);
                 URL url = new URL(Config.FILE_UPLOAD_URL);
@@ -859,12 +892,10 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
                 bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 
                 while (bytesRead > 0) {
-
                     dos.write(buffer, 0, bufferSize);
                     bytesAvailable = fileInputStream.available();
                     bufferSize = Math.min(bytesAvailable, maxBufferSize);
                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
                 }
 
                 // send multipart form data necesssary after file data...
@@ -905,13 +936,13 @@ public class Act_Documentos extends AppCompatActivity implements Frg_Contrato.Di
 
         PropertyInfo  pi2 = new PropertyInfo();
         pi2.setName("tipo");
-        pi2.setValue((TipoDocumento == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F?"1":"2"));
+        pi2.setValue((TipoDocumento == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F?"1": (TipoDocumento == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T ? "2":"3")));
         pi2.setType(PropertyInfo.STRING_CLASS);
         valores.add(pi2);
 
         PropertyInfo  pi3 = new PropertyInfo();
         pi3.setName("fileName");
-        pi3.setValue((TipoDocumento == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F?fileNameFrontal:fileNameTrasera));
+        pi3.setValue((TipoDocumento == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_F ? fileNameFrontal: (TipoDocumento == CAMERA_CAPTURE_IMAGE_REQUEST_CODE_T ? fileNameTrasera : fileNameSelfie)));
         pi3.setType(PropertyInfo.STRING_CLASS);
         valores.add(pi3);
 
